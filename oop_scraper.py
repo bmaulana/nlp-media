@@ -106,6 +106,8 @@ class DailyMailScraper(Scraper):
             return None
 
         res = soup.find('div', {'itemprop': 'articleBody'})
+        if res is None:
+            return None
         res = res.find_all('p')
         res = [x.text for x in res]
         res = ' '.join(res)
