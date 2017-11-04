@@ -1,12 +1,10 @@
-#!/usr/local/bin/python
-
-from bs4 import BeautifulSoup
-import requests
 import abc
+import requests
+from bs4 import BeautifulSoup
 
 
 class Scraper(metaclass=abc.ABCMeta):
-    def get_soup(self, url, parser=""):
+    def get_soup(self, url, parser=''):
         try:
             r = requests.get(url).text
         except:
@@ -50,7 +48,10 @@ class DailyExpressScraper(Scraper):
         res = ' '.join(res)
         res.replace('\xe2\x80', '')
 
-        return {'section': section, 'subsection': subsection, 'text': res}
+        datetime = soup.find('meta', itemprop="datepublished")
+        datetime = datetime['content'] if datetime else ''
+
+        return {'datetime': datetime, 'section': section, 'subsection': subsection, 'text': res}
 
     def search_phrase(self, phrase, num_articles):
         url = 'http://www.express.co.uk/search?s='
@@ -109,7 +110,11 @@ class DailyMailScraper(Scraper):
         res = [x.text for x in res]
         res = ' '.join(res)
         res.replace('\xc2\xa0', '')
-        return {'section': section, 'text': res}
+
+        datetime = soup.find('meta', property='article:published_time')
+        datetime = datetime['content'] if datetime else ''
+
+        return {'datetime': datetime, 'section': section, 'text': res}
 
     def search_phrase(self, phrase, num_articles):
         url = 'http://www.dailymail.co.uk/home/search.html?sel=site&searchPhrase='
