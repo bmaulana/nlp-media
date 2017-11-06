@@ -25,6 +25,7 @@ def main():
         for line in f:
             saved_links.append(list(json.loads(line).keys())[0])
 
+    # TODo for multi-word search phrases, ensure these words are next to each other in article
     page_links = scraper.search_phrase(sys.argv[1], num_articles)
     print("Number of articles found", len(page_links))
 
