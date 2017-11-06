@@ -25,53 +25,85 @@ def main():
 
     if len(sys.argv) > 2 and sys.argv[2] == 'day':
         days = {}
+        earliest = datetime.date.today()
         for d in datetimes:
             day = d.date()
+            if day < earliest:
+                earliest = day
             if day in days:
                 days[day] += 1
             else:
                 days[day] = 1
 
+        while earliest < datetime.date.today():
+            if earliest not in days:
+                days[earliest] = 0
+            earliest += datetime.timedelta(days=1)
+
+        keys = list(days.keys())
+        keys.sort()
+
         print(days)
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d/%m/%Y'))
         plt.gca().xaxis.set_major_locator(mdates.DayLocator())
-        plt.plot(days.keys(), days.values())
+        plt.plot(keys, [days[x] for x in keys])
         plt.gcf().autofmt_xdate()
         plt.xlabel('Day')
 
     elif len(sys.argv) > 2 and sys.argv[2] == 'week':
-        week_starts = {}
         weeks = {}
+        earliest = datetime.date.today()
         for d in datetimes:
-            isocal = d.date().isocalendar()
-            week = (isocal[0], isocal[1])
+            week = d.date() - datetime.timedelta(days=d.date().isocalendar()[2]-1)
+            if week < earliest:
+                earliest = week
             if week in weeks:
                 weeks[week] += 1
             else:
                 weeks[week] = 1
-                week_starts[week] = d.date() - datetime.timedelta(days=isocal[2]-1)
 
-        # comment out plt.gca()... and plt.gcf()... to show months only
-        print([(week_starts[week], weeks[week]) for week in list(weeks.keys())])
+        while earliest < datetime.date.today():
+            if earliest not in weeks:
+                weeks[earliest] = 0
+            earliest += datetime.timedelta(days=7)
+
+        keys = list(weeks.keys())
+        keys.sort()
+
+        print(weeks)
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d/%m/%Y'))
         plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator(0))
-        plt.plot([week_starts[week] for week in list(weeks.keys())], weeks.values())
+        plt.plot(keys, [weeks[x] for x in keys])
         plt.gcf().autofmt_xdate()
         plt.xlabel('Week starting')
 
     elif len(sys.argv) > 2 and sys.argv[2] == 'month':
         months = {}
+        earliest = datetime.date.today()
         for d in datetimes:
             month = d.date().replace(day=1)
+            if month < earliest:
+                earliest = month
             if month in months:
                 months[month] += 1
             else:
                 months[month] = 1
 
+        while earliest < datetime.date.today():
+            if earliest not in months:
+                months[earliest] = 0
+            if earliest.month is not 12:
+                earliest = datetime.date(earliest.year, earliest.month + 1, 1)
+            else:
+                earliest = datetime.date(earliest.year + 1, 1, 1)
+
+        keys = list(months.keys())
+        keys.sort()
+
         print(months)
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m/%Y'))
         plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
-        plt.plot(months.keys(), months.values())
+        plt.plot(keys, [months[x] for x in keys])
         plt.gcf().autofmt_xdate()
         plt.xlabel('Month')
 
