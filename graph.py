@@ -110,6 +110,7 @@ def main():
     else:
         return  # do not show graph
 
+    plt.title(sys.argv[1])
     plt.ylabel('#articles')
     plt.show()
 
