@@ -15,7 +15,10 @@ def main():
     else:
         print('Unknown Source')
         return
-    fname = scraper.get_fname(sys.argv[1])
+
+    if not os.path.exists('./out/'):
+        os.makedirs('./out/')
+    fname = './out/' + scraper.get_fname(sys.argv[1])
     print(fname)
     num_articles = int(sys.argv[3]) if len(sys.argv) > 3 else -1
 

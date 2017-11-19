@@ -6,22 +6,18 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 
-def get_json_array(path):
-    arr = []
-    with open(path) as f:
-        for line in f:
-            arr.append(json.loads(line))
-    return arr
-
-
+# TODO aggregate same topic across multiple sources
 def main():
-    path = sys.argv[1] + '.json'
-    articles = get_json_array(path)
+    path = './out-filtered/' + sys.argv[1] + '.json'
 
     datetimes = []
-    for a in articles:
-        raw = list(a.values())[0]['datetime']
-        datetimes.append(dateutil.parser.parse(raw))
+    with open(path) as f:
+        for line in f:
+            raw = list(json.loads(line).values())[0]['datetime']
+            try:
+                datetimes.append(dateutil.parser.parse(raw))
+            except ValueError:  # no datetime
+                continue
 
     if len(sys.argv) > 2 and sys.argv[2] == 'day':
         days = {}
@@ -102,7 +98,6 @@ def main():
 
         print(months)
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m/%Y'))
-        plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
         plt.plot(keys, [months[x] for x in keys])
         plt.gcf().autofmt_xdate()
         plt.xlabel('Month')
