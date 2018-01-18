@@ -153,3 +153,15 @@ class DailyMailScraper(Scraper):
 
     def get_fname(self, phrase):
         return 'DM-{}.json'.format(phrase)
+
+
+class GuardianScraper(Scraper):
+    # TODO
+    def get_fname(self, phrase):
+        pass
+
+    def search_phrase(self, phrase, num_articles):
+        pass
+
+    def get_article_text(self, page_link):
+        pass

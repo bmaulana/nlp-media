@@ -8,6 +8,10 @@ import matplotlib.dates as mdates
 
 # TODO aggregate same topic across multiple sources
 def main():
+    """
+    Format: python graph.py filename(without .json) [day/week/month]
+    """
+
     path = './out-filtered/' + sys.argv[1] + '.json'
 
     datetimes = []

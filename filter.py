@@ -9,6 +9,10 @@ def tokenise(text):
 
 
 def main():
+    """
+    Format: python filter.py filename(without .json)
+    """
+
     if not os.path.exists('./out-filtered/'):
         os.makedirs('./out-filtered/')
     in_path = './out/' + sys.argv[1] + '.json'
@@ -24,7 +28,7 @@ def main():
         text = list(text.values())[0]['text']
         text = tokenise(text)
 
-        # TODO do more advanced n-gram filtering
+        # TODO do more advanced n-gram, tf-idf filtering
         if topic.lower() in text.lower():
             out_lines += 1
             # TODO tokenise output (use json.dumps(text))
