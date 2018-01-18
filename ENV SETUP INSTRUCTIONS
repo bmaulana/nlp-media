@@ -1,0 +1,6 @@
+1) install Anaconda (https://www.anaconda.com/download/)
+2) conda update conda
+3) conda create -n nlp-media anaconda
+4) activate nlp-media
+5) conda install -n nlp-media spacy
+6) python -m spacy download en_core_web_lg
