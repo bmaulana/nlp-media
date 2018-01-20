@@ -9,6 +9,7 @@ def main():
     """
     Format: python crawler.py query source [max. articles]
     """
+    # TODO enable using multiple keywords per topic (e.g. 'Autism' or 'Autistic')
 
     if len(sys.argv) < 3:
         sys.exit('Format: py crawler.py query source [max. articles]\n')
@@ -33,7 +34,7 @@ def main():
         for line in f:
             saved_links.append(list(json.loads(line).keys())[0])
 
-    # TODo for multi-word search phrases, ensure these words are next to each other in article
+    # TODO for multi-word search phrases, ensure these words are next to each other in article
     start_time = time.time()
     page_links = scraper.search_phrase(sys.argv[1], num_articles)
     print("Number of articles found", len(page_links))
