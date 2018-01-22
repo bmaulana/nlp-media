@@ -5,18 +5,17 @@ import oop_scraper as scr
 import time
 
 
-def main():
+def main(query, source, num_articles, keywords=None):
     """
     Format: python crawler.py query source [max. articles]
     """
     # TODO enable using multiple keywords per topic (e.g. 'Autism' or 'Autistic')
+    if keywords is None:
+        keywords = [query]
 
-    if len(sys.argv) < 3:
-        sys.exit('Format: py crawler.py query source [max. articles]\n')
-
-    if sys.argv[2] == 'DE':
+    if source == 'DE':
         scraper = scr.DailyExpressScraper()
-    elif sys.argv[2] == 'DM':
+    elif source == 'DM':
         scraper = scr.DailyMailScraper()
     else:
         print('Unknown Source')
@@ -24,9 +23,8 @@ def main():
 
     if not os.path.exists('./out/'):
         os.makedirs('./out/')
-    fname = './out/' + scraper.get_fname(sys.argv[1])
+    fname = './out/' + scraper.get_fname(query)
     print(fname)
-    num_articles = int(sys.argv[3]) if len(sys.argv) > 3 else -1
 
     saved_links = []
     if os.path.isfile(fname):
@@ -34,14 +32,14 @@ def main():
         for line in f:
             saved_links.append(list(json.loads(line).keys())[0])
 
-    # TODO for multi-word search phrases, ensure these words are next to each other in article
     start_time = time.time()
-    page_links = scraper.search_phrase(sys.argv[1], num_articles)
+    page_links = scraper.search_phrase(query, num_articles)
     print("Number of articles found", len(page_links))
     print(time.time() - start_time, "seconds spent finding articles")
 
     start_time = time.time()
     g = open(fname, 'a')
+    # TODO Save keywords to the first line of JSON for use by other scripts.
     count, skip_count = 0, 0
     for link in page_links:
         print(count, "/", len(page_links), "articles parsed", end="\r")
@@ -67,4 +65,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) < 3:
+        sys.exit('Format: py crawler.py query source [max. articles]\n')
+    main(sys.argv[1], sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else -1)

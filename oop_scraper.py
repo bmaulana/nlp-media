@@ -15,14 +15,17 @@ class Scraper(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def search_phrase(self, phrase, num_articles):
+        # Return list of page links
         pass
 
     @abc.abstractmethod
     def get_article_text(self, page_link):
+        # Return JSON representation of article text, datetime, section and TODO title
         pass
 
     @abc.abstractmethod
     def get_fname(self, phrase):
+        # Get output filename to store articles with this source (e.g. DM-<phrase>.json)
         pass
 
 

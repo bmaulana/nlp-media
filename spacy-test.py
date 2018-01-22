@@ -11,8 +11,7 @@ spacy.displacy.serve(doc, style='dep')
 # now open 'localhost:5000' in your web browser
 
 '''
-TODO parse all documents from output file,
-print all sentences with keyword,
+TODO parse.py: parse all documents from output file, print all sentences with keyword,
 parse these sentences (POS tag, head, child(ren) for each token; noun chunks)
 find (nested) children of the keyword (or if multiple words, root of key noun phrase)
 print all entities (see if common disability names are recognised as entities)
