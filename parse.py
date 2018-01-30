@@ -18,7 +18,7 @@ def main(fname):
 
     path = './out-filtered/' + fname + '.json'
     topic = fname.split('-', 1)[1]
-    pattern = [[{'LOWER': topic.lower()}]]  # TODO one for each keyword in the topic
+    pattern = [[{'LOWER': topic.lower()}]]  # TODO one for each keyword in the topic, and match stem instead
     matcher.add(0, None, *pattern)
 
     f_in = open(path, 'r')

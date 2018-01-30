@@ -1,4 +1,5 @@
 import abc
+import json
 import requests
 from bs4 import BeautifulSoup
 
@@ -20,7 +21,7 @@ class Scraper(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get_article_text(self, page_link):
-        # Return JSON representation of article text, datetime, section and TODO title
+        # Return JSON representation of article text, datetime, section and title
         pass
 
     @abc.abstractmethod
@@ -44,17 +45,21 @@ class DailyExpressScraper(Scraper):
         if soup is None:
             return None
 
-        selector = ('#singleArticle > div.ctx_content.p402_premium '
-                    '> div > section > p')
+        selector = '#singleArticle > div.ctx_content.p402_premium > div > section > p'
         res = soup.select(selector)
         res = [r.text for r in res if not len(r.attrs)]
         res = ' '.join(res)
         res.replace('\xe2\x80', '')
 
-        datetime = soup.find('meta', itemprop="datepublished")
+        datetime = soup.find('meta', property="article:published_time")
         datetime = datetime['content'] if datetime else ''
+        title = soup.find('meta', property="og:title")
+        title = title['content'] if title else ''
 
-        return {'datetime': datetime, 'section': section, 'subsection': subsection, 'text': res}
+        source = 'Daily Express'
+
+        return {'source': source, 'title': title, 'datetime': datetime, 'section': section, 'subsection': subsection,
+                'text': res}
 
     def search_phrase(self, phrase, num_articles):
         url = 'http://www.express.co.uk/search?s='
@@ -87,7 +92,7 @@ class DailyExpressScraper(Scraper):
 
         page_links = []
         for r in res:
-            page_links.append(r.attrs['href'][24:])  # remove duplicate http://www.express.co.uk
+            page_links.append(r.attrs['href'])
         return page_links
 
     def get_fname(self, phrase):
@@ -116,10 +121,14 @@ class DailyMailScraper(Scraper):
         res = ' '.join(res)
         res.replace('\xc2\xa0', '')
 
+        title = soup.find('meta', property='og:title')
+        title = title['content'] if title else ''
         datetime = soup.find('meta', property='article:published_time')
         datetime = datetime['content'] if datetime else ''
 
-        return {'datetime': datetime, 'section': section, 'text': res}
+        source = 'Daily Mail'
+
+        return {'source': source, 'title': title, 'datetime': datetime, 'section': section, 'text': res}
 
     def search_phrase(self, phrase, num_articles):
         url = 'http://www.dailymail.co.uk/home/search.html?sel=site&searchPhrase='
@@ -127,8 +136,7 @@ class DailyMailScraper(Scraper):
         print(url)
         soup = self.get_soup(url)
 
-        selector = ('#searchCommand > div.alpha > div > div + div '
-                    '> div.sch-pagesummary.gr5ox')
+        selector = '#searchCommand > div.alpha > div > div + div > div.sch-pagesummary.gr5ox'
         n_pages = soup.select(selector)[0].text
         n_pages = int(n_pages[n_pages.find('of') + 3:].strip())
 
@@ -159,12 +167,62 @@ class DailyMailScraper(Scraper):
 
 
 class GuardianScraper(Scraper):
-    # TODO
+    def __init__(self):
+        self.api_key = "7f2c7c42-2600-4292-a417-1b8efc5271a6"
+
     def get_fname(self, phrase):
-        pass
+        return 'Guardian-{}.json'.format(phrase)
 
     def search_phrase(self, phrase, num_articles):
-        pass
+        url = 'https://content.guardianapis.com/search?q='
+        url += '\"' + phrase + '\"'
+        url += '&api-key='
+        url += self.api_key
+        print(url)
+
+        page_links = []
+        page = 0
+        while num_articles > 0:
+            try:
+                page += 1
+                param = '&page=' + str(page) + '&page-size=' + str(min(50, num_articles))
+                num_articles -= 50
+
+                r = requests.get(url + param)
+                data = json.loads(r.text)
+
+                if data['response']['status'] == 'error' or data['response']['total'] == 0:
+                    break
+                data = data['response']['results']
+
+                for i in data:
+                    page_links.append(i['apiUrl'])
+
+            except:
+                print('\nServer not available. Skipped %s\n' % url)
+                break
+
+        return page_links
 
     def get_article_text(self, page_link):
-        pass
+        url = page_link + '?api-key=' + self.api_key + '&show-fields=body'
+
+        try:
+            r = requests.get(url)
+            data = json.loads(r.text)
+
+            source = 'Guardian'
+            title = data['response']['content']['webTitle']
+            datetime = data['response']['content']['webPublicationDate']
+            section = data['response']['content']['sectionName']
+
+            soup = BeautifulSoup(data['response']['content']['fields']['body'], 'html5lib')
+            res = soup.find_all('p')
+            res = [x.text for x in res]
+            res = ' '.join(res)
+            res.replace('[]\\', '')
+            return {'source': source, 'title': title, 'datetime': datetime, 'section': section, 'text': res}
+
+        except:
+            print('\nServer not available. Skipped %s\n' % url)
+            return None

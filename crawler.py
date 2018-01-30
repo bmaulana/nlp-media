@@ -17,6 +17,8 @@ def main(query, source, num_articles, keywords=None):
         scraper = scr.DailyExpressScraper()
     elif source == 'DM':
         scraper = scr.DailyMailScraper()
+    elif source == 'Guardian':
+        scraper = scr.GuardianScraper()
     else:
         print('Unknown Source')
         return
@@ -26,11 +28,11 @@ def main(query, source, num_articles, keywords=None):
     fname = './out/' + scraper.get_fname(query)
     print(fname)
 
-    saved_links = []
+    saved_links = set()
     if os.path.isfile(fname):
         f = open(fname, 'rb')
         for line in f:
-            saved_links.append(list(json.loads(line).keys())[0])
+            saved_links.add(list(json.loads(line).keys())[0])
 
     start_time = time.time()
     page_links = scraper.search_phrase(query, num_articles)
