@@ -21,7 +21,7 @@ class Scraper(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get_article_text(self, page_link):
-        # Return JSON representation of article text, datetime, section and title
+        # Return JSON representation of article source, text, datetime, section and title
         pass
 
     @abc.abstractmethod
@@ -167,8 +167,8 @@ class DailyMailScraper(Scraper):
 
 
 class GuardianScraper(Scraper):
-    def __init__(self):
-        self.api_key = "7f2c7c42-2600-4292-a417-1b8efc5271a6"
+    def __init__(self, api_key):
+        self.api_key = api_key
 
     def get_fname(self, phrase):
         return 'Guardian-{}.json'.format(phrase)

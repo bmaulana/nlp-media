@@ -4,6 +4,8 @@ import os
 import oop_scraper as scr
 import time
 
+guardian_api_key = "7f2c7c42-2600-4292-a417-1b8efc5271a6"
+
 
 def main(query, source, num_articles, keywords=None):
     """
@@ -13,12 +15,13 @@ def main(query, source, num_articles, keywords=None):
     if keywords is None:
         keywords = [query]
 
+    # TODO pass Scraper class constructor in parameter to main (instead of a string 'source')
     if source == 'DE':
         scraper = scr.DailyExpressScraper()
     elif source == 'DM':
         scraper = scr.DailyMailScraper()
     elif source == 'Guardian':
-        scraper = scr.GuardianScraper()
+        scraper = scr.GuardianScraper(guardian_api_key)
     else:
         print('Unknown Source')
         return
@@ -64,6 +67,8 @@ def main(query, source, num_articles, keywords=None):
     time_spent = time.time()-start_time
     print(int(time_spent // 60), 'minutes', time_spent % 60, "seconds spent parsing articles")
     g.close()
+
+    # TODO return filename (to use as parameter for filter)
 
 
 if __name__ == '__main__':

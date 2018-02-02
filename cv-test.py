@@ -3,11 +3,12 @@ from sklearn.feature_extraction.text import TfidfTransformer
 
 vectorizer = CountVectorizer()
 corpus = [
-    'This is the first document.',
-    'This is the second document document.',
+    'This is the first [document].',
+    'This is the second [document] [document].',
     'And the third one.',
     'Is this the first document?',
-    "Does it split words like John's or They've?"
+    "Does it split words like John's or They've?",
+    'Does it detect the difference between document and [document]?'
 ]
 
 matrix = vectorizer.fit_transform(corpus)
@@ -21,7 +22,7 @@ transformer = TfidfTransformer(smooth_idf=False)
 tfidf = transformer.fit_transform(matrix)
 print(tfidf.toarray())
 
-keyword_index = tfidf[:, vectorizer.vocabulary_.get('document')].toarray().reshape([1, 5])
+keyword_index = tfidf[:, vectorizer.vocabulary_.get('document')].toarray().reshape([1, len(corpus)])
 print(type(keyword_index))
 keyword_index.sort()
 print(keyword_index)
