@@ -4,7 +4,7 @@ import os
 import oop_scraper as scr
 import time
 
-guardian_api_key = "7f2c7c42-2600-4292-a417-1b8efc5271a6"
+GUARDIAN_API_KEY = "7f2c7c42-2600-4292-a417-1b8efc5271a6"
 
 
 def main(query, source, num_articles, keywords=None):
@@ -21,7 +21,7 @@ def main(query, source, num_articles, keywords=None):
     elif source == 'DM':
         scraper = scr.DailyMailScraper()
     elif source == 'Guardian':
-        scraper = scr.GuardianScraper(guardian_api_key)
+        scraper = scr.GuardianScraper(GUARDIAN_API_KEY)
     else:
         print('Unknown Source')
         return

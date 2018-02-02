@@ -6,12 +6,12 @@ from sklearn.feature_extraction.text import CountVectorizer
 from nltk.stem.snowball import SnowballStemmer
 # from sklearn.feature_extraction.text import TfidfTransformer
 
-keyword_token = 'KEYWORDTOKEN'  # something that shouldn't naturally occur in a document
+KEYWORD_TOKEN = 'KEYWORDTOKEN'  # something that shouldn't naturally occur in a document
 
 
 def main(fname, keywords=None):
     """
-    Format: python filter.py filename(without extension) keywords(comma-delimited)
+    Format: python filter.py filename(without extension) [keywords(comma-delimited)]
     """
 
     # TODO add filename to parameter (easier to use with crawler in a script)
@@ -25,10 +25,13 @@ def main(fname, keywords=None):
     in_lines, out_lines = 0, 0
 
     # TODO read keywords from file: first line is list of valid keywords for the topic.
+    # TODO does not work with >1-gram keywords (e.g. "Down's Syndrome")
+
     stemmer = SnowballStemmer('english')
     if keywords is None:
         keywords = [topic]
-    keywords = [stemmer.stem(word) for word in keywords]
+    keywords = set([stemmer.stem(word) for word in keywords])
+    print(keywords)
 
     data, corpus = [], []  # TODO will this fit in memory with millions of articles?
     for line in f_in:
@@ -36,15 +39,17 @@ def main(fname, keywords=None):
         data.append(js)
 
         text = list(js.values())[0]['text'].split()
-        text = [stemmer.stem(word) for word in text]
-        # TODO if word in list of stemmed keywords, replace with 'keyword_token'
-        # TODO does not work with >1-gram keywords (e.g. "Down's Syndrome")
+        for i in range(len(text)):
+            word = stemmer.stem(text[i])
+            if word in keywords:
+                word = KEYWORD_TOKEN
+            text[i] = word
         text = ' '.join(text)
         corpus.append(text)
 
         in_lines += 1
     f_in.close()
-    print(corpus[0])
+    # print(corpus[0])
 
     vectoriser = CountVectorizer(stop_words='english')
     matrix = vectoriser.fit_transform(corpus)
@@ -57,7 +62,7 @@ def main(fname, keywords=None):
     '''
 
     analyse = vectoriser.build_analyzer()
-    keyword_index = vectoriser.vocabulary_.get(analyse(topic)[0])  # TODO change topic to keyword_token
+    keyword_index = vectoriser.vocabulary_.get(analyse(KEYWORD_TOKEN)[0])
     # keyword_array = matrix[:, keyword_index].toarray().reshape([1, len(corpus)])[0]
     # print(sorted(keyword_array)[::-1])
     # print(sum(keyword_array) / len(keyword_array))
@@ -90,7 +95,7 @@ def main(fname, keywords=None):
 
 if __name__ == '__main__':
     if len(sys.argv) > 2:
-        keywords = sys.argv[2].split(',')
-        main(sys.argv[1], keywords)
+        keys = sys.argv[2].split(',')
+        main(sys.argv[1], keys)
     else:
         main(sys.argv[1])
