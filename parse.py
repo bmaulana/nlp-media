@@ -6,25 +6,37 @@ from spacy.matcher import Matcher
 
 start_time = time.time()
 nlp = spacy.load('en_core_web_lg')
-matcher = Matcher(nlp.vocab)
 print('Loading SpaCy model took', time.time() - start_time, 'seconds')
 
 
-# TODO output to an out file instead of console
-def main(fname):
+def main(fname, keywords=None):
     """
     Format: python parse.py filename(without .json)
     """
 
     path = './out-filtered/' + fname + '.json'
+
     topic = fname.split('-', 1)[1]
-    pattern = [[{'LOWER': topic.lower()}]]  # TODO one for each keyword in the topic, and match stem instead
+
+    if keywords is None:
+        keywords = [topic]
+
+    pattern = []
+    seen = set()
+    for keyword in keywords:
+        stem = nlp(keyword)[0].lemma_
+        if stem not in seen:
+            pattern.append([{'LEMMA': stem}])
+            seen.add(stem)
+    print(pattern)
+
+    matcher = Matcher(nlp.vocab)
     matcher.add(0, None, *pattern)
 
     f_in = open(path, 'r')
     for line in f_in:
         js = json.loads(line)
-        print(list(js.keys())[0])  # TODO replace with title
+        print(list(js.keys())[0])
         text = list(js.values())[0]['text']
         doc = nlp(text)
         matches = matcher(doc)
@@ -43,6 +55,12 @@ def main(fname):
                 # Implement some other sentiment data set and pass it the token's text instead.
             print()
 
+            # TODO print output to file, and structure it better (e.g. use a feature->value dictionary)
+
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    if len(sys.argv) > 2:
+        keys = sys.argv[2].split(',')
+        main(sys.argv[1], keys)
+    else:
+        main(sys.argv[1])

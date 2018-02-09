@@ -3,7 +3,7 @@ import sys
 import os
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
-from nltk.stem.snowball import SnowballStemmer
+from nltk.stem.snowball import SnowballStemmer  # TODO test which is better between this and cyhunspell
 # from sklearn.feature_extraction.text import TfidfTransformer
 
 KEYWORD_TOKEN = 'KEYWORDTOKEN'  # something that shouldn't naturally occur in a document
@@ -49,7 +49,7 @@ def main(fname, keywords=None):
 
         in_lines += 1
     f_in.close()
-    # print(corpus[0])
+    print(corpus[0])  # to test stemmer
 
     vectoriser = CountVectorizer(stop_words='english')
     matrix = vectoriser.fit_transform(corpus)
