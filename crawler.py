@@ -7,7 +7,7 @@ import time
 GUARDIAN_API_KEY = "7f2c7c42-2600-4292-a417-1b8efc5271a6"
 
 
-def main(query, source, num_articles, keywords=None):
+def main(query, source, num_articles=-1, keywords=None):
     """
     Format: python crawler.py query source [max. articles]
     """
@@ -38,7 +38,7 @@ def main(query, source, num_articles, keywords=None):
             saved_links.add(list(json.loads(line).keys())[0])
 
     start_time = time.time()
-    page_links = scraper.search_phrase(query, num_articles)
+    page_links = scraper.search_phrase(query, num_articles)  # TODO change 'query' to 'keywords'
     print("Number of articles found", len(page_links))
     print(time.time() - start_time, "seconds spent finding articles")
 
@@ -73,5 +73,11 @@ def main(query, source, num_articles, keywords=None):
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        sys.exit('Format: py crawler.py query source [max. articles]\n')
-    main(sys.argv[1], sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else -1)
+        sys.exit('Format: py crawler.py query source [max. articles] [keywords]\n')
+    if len(sys.argv) == 3:
+        main(sys.argv[1], sys.argv[2])
+    elif len(sys.argv) == 4:
+        main(sys.argv[1], sys.argv[2], sys.argv[3])
+    else:
+        keys = sys.argv[4].split(',')
+        main(sys.argv[1], sys.argv[2], sys.argv[3], keys)

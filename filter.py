@@ -42,7 +42,7 @@ def main(fname, keywords=None):
         for i in range(len(text)):
             word = stemmer.stem(text[i])
             if word in keywords:
-                word = KEYWORD_TOKEN
+                word = KEYWORD_TOKEN  # change all words that match any keyword to one token for CountVectoriser
             text[i] = word
         text = ' '.join(text)
         corpus.append(text)
@@ -76,7 +76,7 @@ def main(fname, keywords=None):
         vectors = np.fliplr(vectors)
 
         _, rank = np.where(vectors <= keyword_vector)
-        rank = rank[0] + 1
+        rank = rank[0] + 1  # occurrence rank of the keyword(s), relative to other non-stop words in the article
 
         if rank <= 20:  # rank threshold
             relevant.append((True, rank))
