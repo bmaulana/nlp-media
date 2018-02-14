@@ -66,6 +66,9 @@ class DailyExpressScraper(Scraper):
         url += phrase
         print(url)
         soup = self.get_soup(url)
+        if soup is None:
+            print('Server unavailable.\n')
+            return []
 
         selector = '#search_form > fieldset > p > b'
         n_results = int(soup.select(selector)[0].text)
@@ -135,6 +138,9 @@ class DailyMailScraper(Scraper):
         url += phrase
         print(url)
         soup = self.get_soup(url)
+        if soup is None:
+            print('Server unavailable.\n')
+            return []
 
         selector = '#searchCommand > div.alpha > div > div + div > div.sch-pagesummary.gr5ox'
         n_pages = soup.select(selector)[0].text
@@ -167,6 +173,7 @@ class DailyMailScraper(Scraper):
 
 
 class GuardianScraper(Scraper):
+
     def __init__(self, api_key):
         self.api_key = api_key
 

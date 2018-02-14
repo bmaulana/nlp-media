@@ -4,27 +4,13 @@ import os
 import oop_scraper as scr
 import time
 
-GUARDIAN_API_KEY = "7f2c7c42-2600-4292-a417-1b8efc5271a6"
 
-
-def main(query, source, num_articles=-1, keywords=None):
+def crawler(query, scraper, num_articles=-1, keywords=None):
     """
     Format: python crawler.py query source [max. articles]
     """
-    # TODO enable using multiple keywords per topic (e.g. 'Autism' or 'Autistic')
     if keywords is None:
         keywords = [query]
-
-    # TODO pass Scraper class constructor in parameter to main (instead of a string 'source')
-    if source == 'DE':
-        scraper = scr.DailyExpressScraper()
-    elif source == 'DM':
-        scraper = scr.DailyMailScraper()
-    elif source == 'Guardian':
-        scraper = scr.GuardianScraper(GUARDIAN_API_KEY)
-    else:
-        print('Unknown Source')
-        return
 
     if not os.path.exists('./out/'):
         os.makedirs('./out/')
@@ -73,11 +59,22 @@ def main(query, source, num_articles=-1, keywords=None):
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        sys.exit('Format: py crawler.py query source [max. articles] [keywords]\n')
+        sys.exit('Format: python crawler.py query source [max. articles] [keywords]\n')
+
+    source = sys.argv[2]
+    if source == 'DE':
+        scraper_inst = scr.DailyExpressScraper()
+    elif source == 'DM':
+        scraper_inst = scr.DailyMailScraper()
+    elif source == 'Guardian':
+        scraper_inst = scr.GuardianScraper("7f2c7c42-2600-4292-a417-1b8efc5271a6")
+    else:
+        sys.exit('Unknown Source')
+
     if len(sys.argv) == 3:
-        main(sys.argv[1], sys.argv[2])
+        crawler(sys.argv[1], scraper_inst)
     elif len(sys.argv) == 4:
-        main(sys.argv[1], sys.argv[2], sys.argv[3])
+        crawler(sys.argv[1], scraper_inst, int(sys.argv[3]))
     else:
         keys = sys.argv[4].split(',')
-        main(sys.argv[1], sys.argv[2], sys.argv[3], keys)
+        crawler(sys.argv[1], scraper_inst, int(sys.argv[3]), keys)

@@ -9,7 +9,7 @@ from nltk.stem.snowball import SnowballStemmer  # TODO test which is better betw
 KEYWORD_TOKEN = 'KEYWORDTOKEN'  # something that shouldn't naturally occur in a document
 
 
-def main(fname, keywords=None):
+def filter(fname, keywords=None):
     """
     Format: python filter.py filename(without extension) [keywords(comma-delimited)]
     """
@@ -96,6 +96,6 @@ def main(fname, keywords=None):
 if __name__ == '__main__':
     if len(sys.argv) > 2:
         keys = sys.argv[2].split(',')
-        main(sys.argv[1], keys)
+        filter(sys.argv[1], keys)
     else:
-        main(sys.argv[1])
+        filter(sys.argv[1])

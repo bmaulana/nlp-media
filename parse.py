@@ -9,7 +9,7 @@ nlp = spacy.load('en_core_web_lg')
 print('Loading SpaCy model took', time.time() - start_time, 'seconds')
 
 
-def main(fname, keywords=None):
+def parse(fname, keywords=None):
     """
     Format: python parse.py filename(without .json)
     """
@@ -55,12 +55,14 @@ def main(fname, keywords=None):
                 # Implement some other sentiment data set and pass it the token's text instead.
             print()
 
-            # TODO print output to file, and structure it better (e.g. use a feature->value dictionary)
+            # TODO get whole sentence containing token, and feed sentence to some sentiment analyser like Microsoft's
+
+        # TODO print output to file, and structure it better (e.g. use a feature->value dictionary)
 
 
 if __name__ == '__main__':
     if len(sys.argv) > 2:
         keys = sys.argv[2].split(',')
-        main(sys.argv[1], keys)
+        parse(sys.argv[1], keys)
     else:
-        main(sys.argv[1])
+        parse(sys.argv[1])
