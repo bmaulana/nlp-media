@@ -11,12 +11,11 @@ print('Loading SpaCy model took', time.time() - start_time, 'seconds')
 
 def parse(fname, keywords=None):
     """
-    Format: python parse.py filename(without .json)
+    Format: python parse.py filename [keywords(comma-delimited)]
     """
 
-    path = './out-filtered/' + fname + '.json'
-
-    topic = fname.split('-', 1)[1]
+    path = './out-filtered/' + fname
+    topic = fname.replace('-', '.').split('.')[1]
 
     if keywords is None:
         keywords = [topic]

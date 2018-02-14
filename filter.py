@@ -11,15 +11,14 @@ KEYWORD_TOKEN = 'KEYWORDTOKEN'  # something that shouldn't naturally occur in a 
 
 def filter(fname, keywords=None):
     """
-    Format: python filter.py filename(without extension) [keywords(comma-delimited)]
+    Format: python filter.py filename [keywords(comma-delimited)]
     """
 
-    # TODO add filename to parameter (easier to use with crawler in a script)
     if not os.path.exists('./out-filtered/'):
         os.makedirs('./out-filtered/')
-    in_path = './out/' + fname + '.json'
-    out_path = './out-filtered/' + fname + '.json'
-    topic = fname.split('-', 1)[1]
+    in_path = './out/' + fname
+    out_path = './out-filtered/' + fname
+    topic = fname.replace('-', '.').split('.')[1]
 
     f_in = open(in_path, 'r')
     in_lines, out_lines = 0, 0

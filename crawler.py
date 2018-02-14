@@ -54,7 +54,7 @@ def crawler(query, scraper, num_articles=-1, keywords=None):
     print(int(time_spent // 60), 'minutes', time_spent % 60, "seconds spent parsing articles")
     g.close()
 
-    # TODO return filename (to use as parameter for filter)
+    return fname.split('/')[-1]
 
 
 if __name__ == '__main__':
