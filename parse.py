@@ -43,6 +43,11 @@ def parse(fname, keywords=None):
         for match_id, start, end in matches:
             token = doc[start]
             print(token.text, start)
+
+            span = doc[start: end]  # matched span
+            sent = span.sent  # sentence containing matched span
+            print('Sentence:', sent.text)
+
             # TODO instead of just using direct parent/child, use their parent/child as well,
             # but decrease weight of sentiment depending on how 'far' the word is
             if token.dep_ != 'ROOT':
