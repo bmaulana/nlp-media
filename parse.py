@@ -2,6 +2,7 @@ import sys
 import json
 import spacy
 import time
+import os
 from spacy.matcher import Matcher
 
 start_time = time.time()
@@ -14,7 +15,10 @@ def parse(fname, keywords=None):
     Format: python parse.py filename [keywords(comma-delimited)]
     """
 
-    path = './out-filtered/' + fname
+    if not os.path.exists('./out-parse/'):
+        os.makedirs('./out-parse/')
+    in_path = './out-filtered/' + fname
+    out_path = './out-parse/' + fname
     topic = fname.replace('-', '.').split('.')[1]
 
     if keywords is None:
@@ -32,36 +36,52 @@ def parse(fname, keywords=None):
     matcher = Matcher(nlp.vocab)
     matcher.add(0, None, *pattern)
 
-    f_in = open(path, 'r')
+    f_in = open(in_path, 'r')
+    f_out = open(out_path, 'a')
     for line in f_in:
+        to_write = {}
+
         js = json.loads(line)
-        print(list(js.keys())[0])
+        to_write['url'] = list(js.keys())[0]
+
         text = list(js.values())[0]['text']
         doc = nlp(text)
         matches = matcher(doc)
 
+        # to_write['text'] = text
+        to_write['title'] = list(js.values())[0]['title']
+        to_write['keyword_count'] = js['keyword_count']
+        to_write['keyword_rank'] = js['keyword_rank']
+
+        match_vectors = []
         for match_id, start, end in matches:
             token = doc[start]
-            print(token.text, start)
+            this_match = {'text': token.text, 'start': start}
 
             span = doc[start: end]  # matched span
             sent = span.sent  # sentence containing matched span
-            print('Sentence:', sent.text)
+            this_match['Sentence'] = sent.text  # TODO do some other sentiment analysis on this
 
             # TODO instead of just using direct parent/child, use their parent/child as well,
             # but decrease weight of sentiment depending on how 'far' the word is
             if token.dep_ != 'ROOT':
-                print('Parent', token.head.text, token.head.sentiment)
+                this_match['Parent'] = {'text': token.head.text, 'sentiment': token.head.sentiment}
+
+            child_vectors = []
             for child in token.children:
-                print('Child', child.text, child.sentiment)
+                child_vectors.append({'text': child.text, 'sentiment': child.sentiment})
                 # TODO SpaCy's sentiment analyser isn't good enough.
                 # e.g. words with obvious sentiment (e.g. issues, disorder) has sentiment of 0.0
                 # Implement some other sentiment data set and pass it the token's text instead.
-            print()
+            this_match['Children'] = child_vectors
 
-            # TODO get whole sentence containing token, and feed sentence to some sentiment analyser like Microsoft's
+            match_vectors.append(this_match)
 
-        # TODO print output to file, and structure it better (e.g. use a feature->value dictionary)
+        to_write['matches'] = match_vectors
+        f_out.write(json.dumps(to_write))
+
+    f_in.close()
+    f_out.close()
 
 
 if __name__ == '__main__':
