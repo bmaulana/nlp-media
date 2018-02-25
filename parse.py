@@ -54,13 +54,18 @@ def parse(fname, keywords=None):
         to_write['keyword_rank'] = js['keyword_rank']
 
         match_vectors = []
+        sents = set()
         for match_id, start, end in matches:
             token = doc[start]
             this_match = {'text': token.text, 'start': start}
 
             span = doc[start: end]  # matched span
             sent = span.sent  # sentence containing matched span
-            this_match['Sentence'] = sent.text  # TODO do some other sentiment analysis on this
+            if sent.text not in sents:
+                this_match['Sentence'] = sent.text  # TODO do some other sentiment analysis on this sentence
+                sents.add(sent.text)
+            else:
+                this_match['Sentence'] = 'seen'
 
             # TODO instead of just using direct parent/child, use their parent/child as well,
             # but decrease weight of sentiment depending on how 'far' the word is
@@ -79,6 +84,7 @@ def parse(fname, keywords=None):
 
         to_write['matches'] = match_vectors
         f_out.write(json.dumps(to_write))
+        f_out.write('\n')
 
     f_in.close()
     f_out.close()
