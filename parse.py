@@ -37,7 +37,7 @@ def parse(fname, keywords=None):
     matcher.add(0, None, *pattern)
 
     f_in = open(in_path, 'r')
-    f_out = open(out_path, 'a')
+    f_out = open(out_path, 'w')
     for line in f_in:
         to_write = {}
 
@@ -45,13 +45,20 @@ def parse(fname, keywords=None):
         to_write['url'] = list(js.keys())[0]
 
         text = list(js.values())[0]['text']
-        doc = nlp(text)
+        title = list(js.values())[0]['title']
+        doc = nlp(title + '. ' + text)
         matches = matcher(doc)
 
         # to_write['text'] = text
-        to_write['title'] = list(js.values())[0]['title']
-        to_write['keyword_count'] = js['keyword_count']
+        to_write['title'] = title
+        to_write['datetime'] = list(js.values())[0]['datetime']
+        to_write['source'] = list(js.values())[0]['source']
+
         to_write['keyword_rank'] = js['keyword_rank']
+        to_write['keyword_count'] = js['keyword_count']  # could also use len(matches) for consistency (spacy over nltk)
+        to_write['num_tokens'] = js['num_tokens']  # total no. of tokens, excluding stop words; could also use spacy
+
+        to_write['num_sentences'] = len([0 for sent in doc.sents])  # but this looks like a better relevance metric anw
 
         match_vectors = []
         sents = set()
@@ -82,6 +89,7 @@ def parse(fname, keywords=None):
 
             match_vectors.append(this_match)
 
+        to_write['relevant_sentences'] = len(sents)
         to_write['matches'] = match_vectors
         f_out.write(json.dumps(to_write))
         f_out.write('\n')

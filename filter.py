@@ -81,6 +81,7 @@ def filter(fname, keywords=None):
             relevant.append((True, rank))
             data[i]['keyword_count'] = int(keyword_vector)
             data[i]['keyword_rank'] = int(rank)
+            data[i]['num_tokens'] = int(np.sum(vectors))
             f_out.write(json.dumps(data[i]))
             f_out.write('\n')
             out_lines += 1
