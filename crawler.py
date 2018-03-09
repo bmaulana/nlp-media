@@ -30,7 +30,6 @@ def crawler(query, scraper, num_articles=-1, keywords=None):
 
     start_time = time.time()
     g = open(fname, 'a')
-    # TODO Save keywords to the first line of JSON for use by other scripts.
     count, skip_count = 0, 0
     for link in page_links:
         print(count, "/", len(page_links), "articles parsed", end="\r")

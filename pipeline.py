@@ -19,6 +19,7 @@ def pipeline(topic, keywords, source):
     fname = crawler(topic, source, NUM_DOCS, keywords)
     filter(fname, keywords)
     parse(fname, keywords)
+    # TODO graph
 
 
 '''

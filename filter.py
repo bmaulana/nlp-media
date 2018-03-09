@@ -23,9 +23,6 @@ def filter(fname, keywords=None):
     f_in = open(in_path, 'r')
     in_lines, out_lines = 0, 0
 
-    # TODO read keywords from file: first line is list of valid keywords for the topic.
-    # TODO does not work with >1-gram keywords (e.g. "Down's Syndrome")
-
     stemmer = SnowballStemmer('english')
     if keywords is None:
         keywords = [topic]
@@ -61,6 +58,7 @@ def filter(fname, keywords=None):
     '''
 
     analyse = vectoriser.build_analyzer()
+    # TODO does not work with >1-gram keywords (e.g. "Down's Syndrome")
     keyword_index = vectoriser.vocabulary_.get(analyse(KEYWORD_TOKEN)[0])
     # keyword_array = matrix[:, keyword_index].toarray().reshape([1, len(corpus)])[0]
     # print(sorted(keyword_array)[::-1])

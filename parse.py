@@ -26,6 +26,7 @@ def parse(fname, keywords=None):
 
     pattern = []
     seen = set()
+    # TODO does not work with >1-gram keywords (e.g. "Down's Syndrome")
     for keyword in keywords:
         stem = nlp(keyword)[0].lemma_
         if stem not in seen:
@@ -61,7 +62,7 @@ def parse(fname, keywords=None):
         to_write['num_sentences'] = len([0 for sent in doc.sents])  # but this looks like a better relevance metric anw
 
         match_vectors = []
-        sents = set()
+        sents = {}
         for match_id, start, end in matches:
             token = doc[start]
             this_match = {'text': token.text, 'start': start}
@@ -69,28 +70,31 @@ def parse(fname, keywords=None):
             span = doc[start: end]  # matched span
             sent = span.sent  # sentence containing matched span
             if sent.text not in sents:
-                this_match['Sentence'] = sent.text  # TODO do some other sentiment analysis on this sentence
-                sents.add(sent.text)
+                # this_match['Sentence'] = sent.text
+                sents[sent.text] = 1
             else:
-                this_match['Sentence'] = 'seen'
+                # this_match['Sentence'] = 'seen'
+                sents[sent.text] += 1
 
-            # TODO instead of just using direct parent/child, use their parent/child as well,
-            # but decrease weight of sentiment depending on how 'far' the word is
+            # TODO instead of just using direct parent/child, get all words that refer/modify the keyword somehow?
             if token.dep_ != 'ROOT':
                 this_match['Parent'] = {'text': token.head.text, 'sentiment': token.head.sentiment}
-
             child_vectors = []
             for child in token.children:
                 child_vectors.append({'text': child.text, 'sentiment': child.sentiment})
-                # TODO SpaCy's sentiment analyser isn't good enough.
-                # e.g. words with obvious sentiment (e.g. issues, disorder) has sentiment of 0.0
-                # Implement some other sentiment data set and pass it the token's text instead.
             this_match['Children'] = child_vectors
 
             match_vectors.append(this_match)
 
-        to_write['relevant_sentences'] = len(sents)
+        to_write['num_relevant_sentences'] = len(sents)
+        to_write['relevant_sentences'] = sents
         to_write['matches'] = match_vectors
+
+        # TODO for each sentence:
+        # TODO add 'sentiment score' from ~5 different sentiment models (e.g. NLTK) to compare - pass as parameter?
+        # TODO add 'relevance score' (use my model from Data Mining CW? - ~early April)
+        # TODO calculate sentiment and relevance score of article by weighted average (sentiment) / sum (relevance)
+
         f_out.write(json.dumps(to_write))
         f_out.write('\n')
 
