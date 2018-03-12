@@ -29,7 +29,7 @@ def filter(fname, keywords=None):
     keywords = set([stemmer.stem(word) for word in keywords])
     print(keywords)
 
-    data, corpus = [], []  # TODO will this fit in memory with millions of articles?
+    data, corpus = [], []
     for line in f_in:
         js = json.loads(line)
         data.append(js)
@@ -45,11 +45,14 @@ def filter(fname, keywords=None):
 
         in_lines += 1
     f_in.close()
-    print(corpus[0])  # to test stemmer
+    # print(corpus[0])  # to test stemmer
 
     vectoriser = CountVectorizer(stop_words='english')
     matrix = vectoriser.fit_transform(corpus)
     # print(matrix[:2])
+
+    vectoriser_include_stop_words = CountVectorizer()
+    matrix_include_stop_words = vectoriser_include_stop_words.fit_transform(corpus)
 
     '''
     transformer = TfidfTransformer(smooth_idf=False)
@@ -60,6 +63,7 @@ def filter(fname, keywords=None):
     analyse = vectoriser.build_analyzer()
     # TODO does not work with >1-gram keywords (e.g. "Down's Syndrome")
     keyword_index = vectoriser.vocabulary_.get(analyse(KEYWORD_TOKEN)[0])
+    keyword_index_include_stop_words = vectoriser.vocabulary_.get(analyse(KEYWORD_TOKEN)[0])
     # keyword_array = matrix[:, keyword_index].toarray().reshape([1, len(corpus)])[0]
     # print(sorted(keyword_array)[::-1])
     # print(sum(keyword_array) / len(keyword_array))
@@ -77,12 +81,30 @@ def filter(fname, keywords=None):
 
         if rank <= 20:  # rank threshold
             relevant.append((True, rank))
+
+            # Save info on rank of keyword
             data[i]['keyword_count'] = int(keyword_vector)
             data[i]['keyword_rank'] = int(rank)
             data[i]['num_tokens'] = int(np.sum(vectors))
+
+            # Also count rank when including stop words (used later in the pipeline for relevance scoring)
+            vectors = matrix_include_stop_words[i].toarray()
+            keyword_vector = vectors[0][keyword_index_include_stop_words]
+            vectors.sort()
+            vectors = np.fliplr(vectors)
+
+            _, rank = np.where(vectors <= keyword_vector)
+            rank = rank[0] + 1  # occurrence rank of the keyword(s), relative to other non-stop words in the article
+
+            data[i]['keyword_count_include_stop_words'] = int(keyword_vector)
+            data[i]['keyword_rank_include_stop_words'] = int(rank)
+            data[i]['num_tokens_include_stop_words'] = int(np.sum(vectors))
+
+            # Output to file
             f_out.write(json.dumps(data[i]))
             f_out.write('\n')
             out_lines += 1
+
         else:
             relevant.append((False, rank))
     f_out.close()

@@ -1,7 +1,9 @@
+import time
 import oop_scraper
 from crawler import crawler
 from filter import filter
 from parse import parse
+from sentiment import sentiment
 
 # topic: [keywords]  TODO add more
 TOPICS = {'Dyslexia': ['Dyslexia, Dyslexic'],
@@ -16,10 +18,18 @@ NUM_DOCS = -1
 
 
 def pipeline(topic, keywords, source):
+    start_time = time.time()
+
     fname = crawler(topic, source, NUM_DOCS, keywords)
+    # fname = 'Guardian-Dyslexia.json'
+
     filter(fname, keywords)
     parse(fname, keywords)
+    sentiment(fname)
     # TODO graph
+
+    total_time = time.time() - start_time
+    print('\nPipeline took', int(total_time // 60), 'minutes', total_time % 60, 'seconds\n')
 
 
 '''
@@ -28,4 +38,4 @@ for src in SOURCES:
         pipeline(tpc, words, src)
 '''
 
-pipeline('Dyslexia', ['Dyslexia', 'Dyslexic'], SOURCES[2])
+pipeline('Dementia', ['Dementia', 'Alzheimer\'s'], SOURCES[2])

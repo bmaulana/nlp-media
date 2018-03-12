@@ -59,6 +59,10 @@ def parse(fname, keywords=None):
         to_write['keyword_count'] = js['keyword_count']  # could also use len(matches) for consistency (spacy over nltk)
         to_write['num_tokens'] = js['num_tokens']  # total no. of tokens, excluding stop words; could also use spacy
 
+        to_write['keyword_rank_include_stop_words'] = js['keyword_rank_include_stop_words']
+        to_write['keyword_count_include_stop_words'] = js['keyword_count_include_stop_words']
+        to_write['num_tokens_include_stop_words'] = js['num_tokens_include_stop_words']
+
         to_write['num_sentences'] = len([0 for sent in doc.sents])  # but this looks like a better relevance metric anw
 
         match_vectors = []
@@ -71,10 +75,10 @@ def parse(fname, keywords=None):
             sent = span.sent  # sentence containing matched span
             if sent.text not in sents:
                 # this_match['Sentence'] = sent.text
-                sents[sent.text] = 1
+                sents[sent.text] = {'keyword_count': 1}
             else:
                 # this_match['Sentence'] = 'seen'
-                sents[sent.text] += 1
+                sents[sent.text]['keyword_count'] += 1
 
             # TODO instead of just using direct parent/child, get all words that refer/modify the keyword somehow?
             if token.dep_ != 'ROOT':
@@ -89,11 +93,6 @@ def parse(fname, keywords=None):
         to_write['num_relevant_sentences'] = len(sents)
         to_write['relevant_sentences'] = sents
         to_write['matches'] = match_vectors
-
-        # TODO for each sentence:
-        # TODO add 'sentiment score' from ~5 different sentiment models (e.g. NLTK) to compare - pass as parameter?
-        # TODO add 'relevance score' (use my model from Data Mining CW? - ~early April)
-        # TODO calculate sentiment and relevance score of article by weighted average (sentiment) / sum (relevance)
 
         f_out.write(json.dumps(to_write))
         f_out.write('\n')

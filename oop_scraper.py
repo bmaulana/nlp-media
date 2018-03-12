@@ -17,6 +17,7 @@ class Scraper(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def search_phrase(self, phrase, num_articles):
         # Return list of page links
+        # Note: if num_articles is -1, then return all articles
         pass
 
     @abc.abstractmethod
@@ -189,11 +190,14 @@ class GuardianScraper(Scraper):
 
         page_links = []
         page = 0
-        while num_articles > 0:
+        while num_articles == -1 or num_articles > 0:
             try:
                 page += 1
-                param = '&page=' + str(page) + '&page-size=' + str(min(50, num_articles))
-                num_articles -= 50
+                if num_articles == -1:
+                    param = '&page=' + str(page) + '&page-size=50'
+                else:
+                    param = '&page=' + str(page) + '&page-size=' + str(min(50, num_articles))
+                    num_articles -= 50
 
                 r = requests.get(url + param)
                 data = json.loads(r.text)
