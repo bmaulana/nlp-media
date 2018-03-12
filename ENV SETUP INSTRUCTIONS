@@ -5,3 +5,4 @@
 5) conda install -n nlp-media2 spacy
 6) python -m spacy download en_core_web_lg
 7) pip install -U cyhunspell
+7) pip install -U vaderSentiment

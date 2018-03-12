@@ -1,6 +1,7 @@
 import sys
 import json
 import os
+from vaderSentiment import vaderSentiment
 
 
 def sentiment(fname):
@@ -25,12 +26,14 @@ def sentiment(fname):
         to_write['relevance_score_keyword_rank_stopwords'] = 1 / to_write['keyword_rank_include_stop_words']
         # test all and see which performs better (sample n high/low-relevance articles from each)
 
-        # TODO improve sentiment score
+        # TODO improve sentiment score - add more scores/libraries/models, test
         sents = to_write['relevant_sentences']
         for sent in sents:
-            sents[sent]['sentiment_score'] = 0.0  # TODO
+            # VADER - rule-based / lexical
+            vader_analyser = vaderSentiment.SentimentIntensityAnalyzer()
+            sents[sent]['sentiment_score_vader'] = vader_analyser.polarity_scores(sent)['compound']  # y = -1 to 1
 
-        del to_write['matches']  # for testing (reduce output file size so easier to read)
+        del to_write['matches']  # for testing (make output file easier to read)
 
         f_out.write(json.dumps(to_write))
         f_out.write('\n')
