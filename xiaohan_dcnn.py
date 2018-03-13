@@ -3,9 +3,9 @@ Numpy version of DCNN, used for prediction, instead of training
 """
 import numpy as np
 
-from numpy_impl import (conv2d, LogisticRegression)
+from xiaohan_numpy_impl import (conv2d, LogisticRegression)
 
-_MODEL_PATH = "models/filter_widths=10,7,,batch_size=10,,ks=20,5,,fold=1,1,,conv_layer_n=2,,ebd_dm=48,,nkerns=6,12,,dr=0.5,0.5,,l2_regs=1e-06,0.0001,1e-05,1e-06.pkl"
+_MODEL_PATH = "xiaohan_models/filter_widths=10,7,,batch_size=10,,ks=20,5,,fold=1,1,,conv_layer_n=2,,ebd_dm=48,,nkerns=6,12,,dr=0.5,0.5,,l2_regs=1e-06,0.0001,1e-05,1e-06.pkl"
 
 class WordEmbeddingLayer(object):
     """

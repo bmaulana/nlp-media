@@ -46,13 +46,13 @@ def pad_sents(sents, padding_token_index):
     return padded_sents
 
 
-WORD2INDEX = load(open("data/twitter.pkl", 'rb'), encoding='latin1')[3]
+WORD2INDEX = load(open("xiaohan_data/twitter.pkl", 'rb'), encoding='latin1')[3]
 PADDING_INDEX = WORD2INDEX[u"<PADDING>"]
 
-from param_util import load_dcnn_model_params
-from dcnn import DCNN
+from xiaohan_param_util import load_dcnn_model_params
+from xiaohan_dcnn import DCNN
 
-params = load_dcnn_model_params("models/filter_widths=8,6,,batch_size=10,,ks=20,8,,fold=1,1,,conv_layer_n=2,,ebd_dm=48,,l2_regs=1e-06,1e-06,1e-06,0.0001,,dr=0.5,0.5,,nkerns=7,12.pkl")
+params = load_dcnn_model_params("xiaohan_models/filter_widths=8,6,,batch_size=10,,ks=20,8,,fold=1,1,,conv_layer_n=2,,ebd_dm=48,,l2_regs=1e-06,1e-06,1e-06,0.0001,,dr=0.5,0.5,,nkerns=7,12.pkl")
 
 MODEL = DCNN(params)
 

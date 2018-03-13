@@ -1,5 +1,5 @@
 """
-Utility for model parameter (XiaoHan)
+Utility for model parameter
 """
 import os
 try:
@@ -13,7 +13,7 @@ class Params(object):
 def load_dcnn_model_params(path, param_str = None):
     """
 
-    >>> p = load_dcnn_model_params("models/filter_widths=8,6,,batch_size=10,,ks=20,8,,fold=1,1,,conv_layer_n=2,,ebd_dm=48,,l2_regs=1e-06,1e-06,1e-06,0.0001,,dr=0.5,0.5,,nkerns=7,12.pkl")
+    >>> p = load_dcnn_model_params("xiaohan_models/filter_widths=8,6,,batch_size=10,,ks=20,8,,fold=1,1,,conv_layer_n=2,,ebd_dm=48,,l2_regs=1e-06,1e-06,1e-06,0.0001,,dr=0.5,0.5,,nkerns=7,12.pkl")
     >>> p.ks
     (20, 8)
     >>> len(p.W)
