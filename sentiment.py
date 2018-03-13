@@ -2,6 +2,7 @@ import sys
 import json
 import os
 from vaderSentiment import vaderSentiment
+import xiaohan_sentiment
 
 
 def sentiment(fname):
@@ -32,6 +33,11 @@ def sentiment(fname):
             # VADER - rule-based / lexical
             vader_analyser = vaderSentiment.SentimentIntensityAnalyzer()
             sents[sent]['sentiment_score_vader'] = vader_analyser.polarity_scores(sent)['compound']  # y = -1 to 1
+
+            # XiaoHan - Convolutional Neural Network, trained on Twitter
+            sents[sent]['sentiment_score_xiaohan'] = xiaohan_sentiment.sentiment_score(sent)  # y = 0 to 1
+
+            # Kevin Cobain - Maximum Entropy & Naive Bayes Classifiers, trained on SentiWordNet
 
         del to_write['matches']  # for testing (make output file easier to read)
 
