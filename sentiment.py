@@ -25,12 +25,12 @@ def sentiment(fname):
         # TODO improve/test relevance score
         to_write['relevance_score_sents'] = to_write['num_relevant_sentences'] / to_write['num_sentences']
         to_write['relevance_score_keyword_rank'] = 1 / to_write['keyword_rank']  # Assume Zipf distribution with s ~= 1
-        to_write['relevance_score_keyword_rank_stopwords'] = 1 / to_write['keyword_rank_include_stop_words']
         # test all and see which performs better (sample n high/low-relevance articles from each)
 
         # TODO improve sentiment score - add more scores/libraries/models, test
         sents = to_write['relevant_sentences']
         for sent in sents:
+            # TODO normalise all y-values to 0 to 1 or -1 to 1 for easier comparison
             # VADER: rule-based / lexical (https://github.com/cjhutto/vaderSentiment)
             vader_analyser = vaderSentiment.SentimentIntensityAnalyzer()
             sents[sent]['sentiment_score_vader'] = vader_analyser.polarity_scores(sent)['compound']  # y = -1 to 1
@@ -40,10 +40,10 @@ def sentiment(fname):
 
             # Kevin Cobain: Maximum Entropy, Naive Bayes, SentiWordNet (github.com/kevincobain2000/sentiment_classifier)
             # Note: REALLY slow (few minutes per article).
-            scores = senti_classifier.polarity_scores([sent])
-            sents[sent]['sentiment_score_kcobain'] = scores[0] - scores[1]
+            pos_score, neg_score = senti_classifier.polarity_scores([sent])
+            sents[sent]['sentiment_score_kcobain'] = pos_score - neg_score
 
-            # TODO OpenAI: mLSTM-based (https://github.com/openai/generating-reviews-discovering-sentiment)
+            # OpenAI: mLSTM-based, trained on IMDB reviews (github.com/openai/generating-reviews-discovering-sentiment)
             # TODO need TensorFlow installed
 
         del to_write['matches']  # for testing (make output file easier to read)

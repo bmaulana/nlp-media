@@ -9,3 +9,4 @@
 9) pip install -U sentiment_classifier
 10) Download files from https://github.com/kevincobain2000/sentiment_classifier/tree/master/src/senti_classifier
 and copy to C:\\Users\\user\\Anaconda3\\envs\\nlp-media2\\lib\\site-packages\\senti_classifier\\
+11) pip install --ignore-installed --upgrade tensorflow

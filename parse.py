@@ -59,10 +59,6 @@ def parse(fname, keywords=None):
         to_write['keyword_count'] = js['keyword_count']  # could also use len(matches) for consistency (spacy over nltk)
         to_write['num_tokens'] = js['num_tokens']  # total no. of tokens, excluding stop words; could also use spacy
 
-        to_write['keyword_rank_include_stop_words'] = js['keyword_rank_include_stop_words']
-        to_write['keyword_count_include_stop_words'] = js['keyword_count_include_stop_words']
-        to_write['num_tokens_include_stop_words'] = js['num_tokens_include_stop_words']
-
         to_write['num_sentences'] = len([0 for sent in doc.sents])  # but this looks like a better relevance metric anw
 
         match_vectors = []

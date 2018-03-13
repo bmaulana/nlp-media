@@ -38,4 +38,4 @@ for src in SOURCES:
         pipeline(tpc, words, src)
 '''
 
-pipeline('Dementia', ['Dementia', 'Alzheimer\'s'], SOURCES[2])
+pipeline('Dyscalculia', ['Dyscalculia'], SOURCES[2])
