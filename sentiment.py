@@ -3,6 +3,7 @@ import json
 import os
 from vaderSentiment import vaderSentiment
 import xiaohan_sentiment
+from senti_classifier import senti_classifier
 
 
 def sentiment(fname):
@@ -30,14 +31,20 @@ def sentiment(fname):
         # TODO improve sentiment score - add more scores/libraries/models, test
         sents = to_write['relevant_sentences']
         for sent in sents:
-            # VADER - rule-based / lexical
+            # VADER: rule-based / lexical (https://github.com/cjhutto/vaderSentiment)
             vader_analyser = vaderSentiment.SentimentIntensityAnalyzer()
             sents[sent]['sentiment_score_vader'] = vader_analyser.polarity_scores(sent)['compound']  # y = -1 to 1
 
-            # XiaoHan - Convolutional Neural Network, trained on Twitter
+            # XiaoHan: Convolutional Neural Network, trained on Twitter (github.com/xiaohan2012/twitter-sent-dnn)
             sents[sent]['sentiment_score_xiaohan'] = xiaohan_sentiment.sentiment_score(sent)  # y = 0 to 1
 
-            # Kevin Cobain - Maximum Entropy & Naive Bayes Classifiers, trained on SentiWordNet
+            # Kevin Cobain: Maximum Entropy, Naive Bayes, SentiWordNet (github.com/kevincobain2000/sentiment_classifier)
+            # Note: REALLY slow (few minutes per article).
+            scores = senti_classifier.polarity_scores([sent])
+            sents[sent]['sentiment_score_kcobain'] = scores[0] - scores[1]
+
+            # TODO OpenAI: mLSTM-based (https://github.com/openai/generating-reviews-discovering-sentiment)
+            # TODO need TensorFlow installed
 
         del to_write['matches']  # for testing (make output file easier to read)
 

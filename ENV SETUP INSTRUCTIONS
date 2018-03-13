@@ -5,4 +5,7 @@
 5) conda install -n nlp-media2 spacy
 6) python -m spacy download en_core_web_lg
 7) pip install -U cyhunspell
-7) pip install -U vaderSentiment
+8) pip install -U vaderSentiment
+9) pip install -U sentiment_classifier
+10) Download files from https://github.com/kevincobain2000/sentiment_classifier/tree/master/src/senti_classifier
+and copy to C:\\Users\\user\\Anaconda3\\envs\\nlp-media2\\lib\\site-packages\\senti_classifier\\
