@@ -106,3 +106,4 @@ ENV/
 # output
 *.json
 *-out
+out-plot/
