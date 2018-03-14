@@ -105,6 +105,4 @@ ENV/
 
 # output
 *.json
-
-# Unused source files of 3rd-party libraries
-twitter_sent_dnn/
+*-out

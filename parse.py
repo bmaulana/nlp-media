@@ -7,7 +7,7 @@ from spacy.matcher import Matcher
 
 start_time = time.time()
 nlp = spacy.load('en_core_web_lg')
-print('Loading SpaCy model took', time.time() - start_time, 'seconds')
+print('Loading SpaCy model took', time.time() - start_time, 'seconds\n')
 
 
 def parse(fname, keywords=None):
@@ -76,7 +76,8 @@ def parse(fname, keywords=None):
                 # this_match['Sentence'] = 'seen'
                 sents[sent.text]['keyword_count'] += 1
 
-            # TODO instead of just using direct parent/child, get all words that refer/modify the keyword somehow?
+            # instead of just using direct parent/child, get all words that refer/modify the keyword somehow?
+            # Not used in current implementation of sentiment.py, thus low priority.
             if token.dep_ != 'ROOT':
                 this_match['Parent'] = {'text': token.head.text, 'sentiment': token.head.sentiment}
             child_vectors = []

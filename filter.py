@@ -92,7 +92,7 @@ def filter(fname, keywords=None):
             relevant.append((False, rank))
     f_out.close()
 
-    print(relevant[:10])  # Used to sample articles to determine rank threshold.
+    # print(relevant[:10])  # Used to sample articles to determine rank threshold.
     print('Input size =', in_lines, 'Output size =', out_lines)
 
 

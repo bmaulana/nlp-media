@@ -24,7 +24,8 @@ def crawler(query, scraper, num_articles=-1, keywords=None):
             saved_links.add(list(json.loads(line).keys())[0])
 
     start_time = time.time()
-    page_links = scraper.search_phrase(query, num_articles)  # TODO change 'query' to 'keywords'
+    # TODO change 'query' to 'keywords' to enable multiple keywords (need to update all scrapers)
+    page_links = scraper.search_phrase(query, num_articles)
     print("Number of articles found", len(page_links))
     print(time.time() - start_time, "seconds spent finding articles")
 
@@ -32,7 +33,7 @@ def crawler(query, scraper, num_articles=-1, keywords=None):
     g = open(fname, 'a')
     count, skip_count = 0, 0
     for link in page_links:
-        print(count, "/", len(page_links), "articles parsed", end="\r")
+        print(count, "/", len(page_links), "articles saved", end="\r")
         count += 1
         if link in saved_links:
             skip_count += 1
