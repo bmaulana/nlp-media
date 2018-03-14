@@ -80,6 +80,7 @@ def sentiment(fname):
             for sent in sents:
                 if sents[sent][full_label] != 'ERROR':
                     weighted_avg += sents[sent][full_label] * sents[sent]['keyword_count']
+                    keyword_max_count += 1
             try:
                 to_write[full_label] = weighted_avg / keyword_max_count
             except ZeroDivisionError:
