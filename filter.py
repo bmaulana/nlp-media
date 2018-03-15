@@ -9,7 +9,7 @@ from nltk.stem.snowball import SnowballStemmer  # TODO test which is better betw
 KEYWORD_TOKEN = 'KEYWORDTOKEN'  # something that shouldn't naturally occur in a document
 
 
-def filter(fname, keywords=None):
+def filter(fname, keywords=None, threshold=20):
     """
     Format: python filter.py filename [keywords(comma-delimited)]
     """
@@ -75,7 +75,7 @@ def filter(fname, keywords=None):
         _, rank = np.where(vectors <= keyword_vector)
         rank = rank[0] + 1  # occurrence rank of the keyword(s), relative to other non-stop words in the article
 
-        if rank <= 20:  # rank threshold
+        if rank <= threshold:  # rank threshold
             relevant.append((True, rank))
 
             # Save info on rank of keyword

@@ -5,6 +5,7 @@ import numpy as np
 from dateutil.parser import parse as date_parse
 from datetime import datetime
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import LabelEncoder
 
 
 def get_data(in_path):
@@ -32,24 +33,26 @@ def plot(fnames):
     data = np.array(data)
     data = data[np.argsort(data[:, 0])]  # sort on datetime
 
-    # scatterplot of date range (X) vs sentiment (Y), TODO coloured based on source (Z)
-    plt.scatter(data[:, 0], data[:, 1])
+    # scatterplot of date range (X) vs sentiment (Y), coloured based on source (Z)
+    le = LabelEncoder()
+    colours = le.fit_transform(data[:, 2])
+    plt.scatter(data[:, 0], data[:, 1], c=colours)
     # TODO rolling average 'line'
     plt.title(fnames)
     plt.xlabel('Date Range')
     plt.ylabel('Sentiment Score')
     plt.gcf().autofmt_xdate()
-    plt.savefig('./out-plot/' + datetime.now().strftime('%Y%m%d%H%M%S') + '.scatter.png')
+    # plt.savefig('./out-plot/' + datetime.now().strftime('%Y%m%d%H%M%S') + '.scatter.png')
+    plt.savefig('./out-plot/' + ','.join(fnames) + '.scatter.png')
     plt.close()
 
     # histogram of date range (X) vs no. of articles
     plt.hist(data[:, 0], bins=10)
-    # TODO separate 'bar' for each different source?
     plt.title(fnames)
     plt.xlabel('Date Range')
     plt.ylabel('No. of articles')
     plt.gcf().autofmt_xdate()
-    plt.savefig('./out-plot/' + datetime.now().strftime('%Y%m%d%H%M%S') + '.histogram.png')
+    plt.savefig('./out-plot/' + ','.join(fnames) + '.histogram.png')
     plt.close()
 
 
