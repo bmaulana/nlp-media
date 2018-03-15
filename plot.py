@@ -56,11 +56,15 @@ def plot(fnames):
     plt.savefig('./out-plot/' + ','.join(fnames) + '.histogram.png')
     plt.close()
 
-    # 2d histogram, with each source separate TODO fix labels
+    # 2d histogram, with each source separate
     plt.hist2d(list(map(mdates.date2num, data[:, 0])), colours, bins=(10, len(fnames)))
     plt.title(fnames)
     plt.xlabel('Date Range')
     plt.ylabel('Source')
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m/%d/%Y'))
+    plt.gca().set_yticks(np.arange(0, len(fnames)))
+    # line below will throw a warning, known bug (https://github.com/scikit-learn/scikit-learn/issues/10449)
+    plt.gca().set_yticklabels(le.inverse_transform(np.arange(len(fnames))))
     plt.gcf().autofmt_xdate()
     plt.savefig('./out-plot/' + ','.join(fnames) + '.histogram2d.png')
     plt.close()
