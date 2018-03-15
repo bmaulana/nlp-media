@@ -107,6 +107,3 @@ ENV/
 *.json
 *-out
 out-plot/
-
-# Files too big for GitHub
-openai_model/
