@@ -5,6 +5,7 @@ import numpy as np
 from dateutil.parser import parse as date_parse
 from datetime import datetime
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 from sklearn.preprocessing import LabelEncoder
 
 
@@ -54,6 +55,17 @@ def plot(fnames):
     plt.gcf().autofmt_xdate()
     plt.savefig('./out-plot/' + ','.join(fnames) + '.histogram.png')
     plt.close()
+
+    # 2d histogram, with each source separate TODO fix labels
+    plt.hist2d(list(map(mdates.date2num, data[:, 0])), colours, bins=(10, len(fnames)))
+    plt.title(fnames)
+    plt.xlabel('Date Range')
+    plt.ylabel('Source')
+    plt.gcf().autofmt_xdate()
+    plt.savefig('./out-plot/' + ','.join(fnames) + '.histogram2d.png')
+    plt.close()
+
+    # TODO plot also 2d histograms of date-sentiment and source-sentiment, present all 4 histograms in one figure
 
 
 if __name__ == '__main__':
