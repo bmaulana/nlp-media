@@ -13,6 +13,25 @@ TOPICS = {'Dyslexia': ['Dyslexia', 'Dyslexic'],
           'Dyscalculia': ['Dyscalculia']
           }
 
+TOPICS2 = {'learning disability': ['learning disability'],
+           'cerebral palsy': ['cerebral palsy', 'spastic'],
+           'deaf': ['deaf', 'hearing impaired', 'hard of hearing', 'hearing loss'],  # impairment and impaired
+           'blind': ['blind', 'visual impairments', 'partially sighted'],  # visual and visually has the same stem
+           'epilepsy': ['epilepsy', 'epileptic', 'seizure'],
+           'mute': ['mute', 'cannot speak', 'difficulty speaking', 'synthetic speech', 'non-vocal', 'non-verbal'],
+           'speech impairment': ['speech impairment', 'stutter', 'speech disability', 'speech disorder',
+                                 'communication disability'],  # some of these are also often used for 'mute'
+           'mental illness': ['mental illness', 'mental health', 'psychiatric', 'emotional disorder',
+                              'developmental disability', 'retardation', 'developmental delay', 'brain injured',
+                              'brain injury', 'brain damaged', 'learning disability', 'slow learner', 'mental issue'],
+           'paralysed': ['paraplegic', 'quadriplegic', 'spinal cord', 'paraplegia', 'paralysed', 'paralyzed',
+                         'paralysis', 'crippled', 'leg braces', 'wheelchair'],  # Not sure what should be the query
+           'Dyslexia': ['Dyslexia', 'Dyslexic'],
+           'Autism': ['Autism', 'Autistic', 'Asperger\'s', 'ASD'],
+           'Dementia': ['Dementia', 'Alzheimer\'s', 'Demented'],
+           'Dyscalculia': ['Dyscalculia']
+           }
+
 # TODO add more
 SOURCES = [oop_scraper.DailyExpressScraper(),
            oop_scraper.DailyMailScraper(),
