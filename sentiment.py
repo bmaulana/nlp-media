@@ -33,12 +33,11 @@ def sentiment(fname):
         article_time = time.time()
         to_write = json.loads(line)
 
-        # TODO test relevance score to see which performs better (sample n high/low-relevance articles from each)
+        # TODO test relevance scores to see which performs better (sample n high/low-relevance articles from each)
         to_write['relevance_score_sents'] = to_write['num_relevant_sentences'] / to_write['num_sentences']
         to_write['relevance_score_keyword_rank'] = 1 / to_write['keyword_rank']  # Assume Zipf distribution with s ~= 1
 
-        # TODO improve sentiment score - add more scores/libraries/models, test
-        # TODO normalise all y-values to 0 to 1 or -1 to 1 for easier comparison
+        # TODO test sentiment scores to see which performs better (sample n high/low-relevance articles from each)
         sents = to_write['relevant_sentences']
         sents_array = []  # OpenAI runs faster with batched sentences
         for sent in sents:
@@ -56,9 +55,13 @@ def sentiment(fname):
             sents[sent]['sentiment_score_kcobain'] = pos_score - neg_score  # y = normal distribution mean=0, unbounded
             # print(time.time() - time_kcobain, 'seconds to analyse a sentence using Kevin Cobain')
 
+            # TODO implement StanfordNLP
+
             sents_array.append(sent)  # OpenAI runs faster with batched sentences
 
-        # OpenAI: mLSTM-based, trained on IMDB reviews (github.com/openai/generating-reviews-discovering-sentiment)
+        # TODO if after evaluation, this library is chosen (likely), optimise performance via batching everything
+        # TODO (may be easier to do in a separate function)
+        # OpenAI: mLSTM-based, trained on Amazon reviews (github.com/openai/generating-reviews-discovering-sentiment)
         # Note: VERY slow (~7 seconds per sentence, faster with larger batches). May be faster with tensorflow-gpu.
         try:
             openai_sentiment = openai_model.transform(sents_array)[:, 2388]
@@ -69,10 +72,10 @@ def sentiment(fname):
             for i in range(len(sents_array)):
                 sents[sents_array[i]]['sentiment_score_openai'] = 'ERROR'
 
-        del to_write['matches']  # for testing (make output file easier to read)
+        # del to_write['matches']  # for testing (make output file easier to read)
 
         # 'summarise' sentiment score of an article via weighted average of each sentence
-        # TODO measure relevance score of each sentence & use it as weight, instead of keyword_count?
+        # TODO measure relevance score of each sentence & use it as weight for sentiment score, instead of keyword_count
         sentiment_score_labels = ['vader', 'xiaohan', 'kcobain', 'openai']
         for label in sentiment_score_labels:
             full_label = 'sentiment_score_' + label
@@ -100,5 +103,14 @@ def sentiment(fname):
     print('Sentiment analyses took', int(full_time // 60), 'minutes', full_time % 60, 'seconds')
 
 
+# TODO function to go through everything in out-sentiment and sample N articles from each file
+def eval_sentiment():
+    pass
+# TODO after evaluation, write function that only calculates one sentiment score to improve performance
+
+
 if __name__ == '__main__':
-    sentiment(sys.argv[1])
+    if sys.argv[1] == 'eval':
+        eval_sentiment()
+    else:
+        sentiment(sys.argv[1])

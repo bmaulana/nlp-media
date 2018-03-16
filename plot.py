@@ -66,10 +66,11 @@ def plot(fnames):
     # line below will throw a warning, known bug (https://github.com/scikit-learn/scikit-learn/issues/10449)
     plt.gca().set_yticklabels(le.inverse_transform(np.arange(len(fnames))))
     plt.gcf().autofmt_xdate()
+    plt.colorbar()
     plt.savefig('./out-plot/' + ','.join(fnames) + '.histogram2d.png')
     plt.close()
 
-    # TODO plot also 2d histograms of date-sentiment and source-sentiment, present all 4 histograms in one figure
+    # TODO plot also 2d histograms of source-sentiment, present all 4 histograms in one figure
 
 
 if __name__ == '__main__':

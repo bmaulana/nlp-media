@@ -28,10 +28,13 @@ def parse(fname, keywords=None):
     seen = set()
     # TODO does not work with >1-gram keywords (e.g. "Down's Syndrome")
     for keyword in keywords:
-        stem = nlp(keyword)[0].lemma_
-        if stem not in seen:
-            pattern.append([{'LEMMA': stem}])
-            seen.add(stem)
+        stem = [nlp(word)[0].lemma_ for word in keyword.split()]
+        if ' '.join(stem) not in seen:
+            p = []
+            for word in stem:
+                p.append({'LEMMA': word})
+            seen.add(' '.join(stem))
+            pattern.append(p)
     print(pattern)
 
     matcher = Matcher(nlp.vocab)
@@ -61,11 +64,11 @@ def parse(fname, keywords=None):
 
         to_write['num_sentences'] = len([0 for sent in doc.sents])  # but this looks like a better relevance metric anw
 
-        match_vectors = []
+        # match_vectors = []
         sents = {}
         for match_id, start, end in matches:
-            token = doc[start]
-            this_match = {'text': token.text, 'start': start}
+            # token = doc[start]
+            # this_match = {'text': token.text, 'start': start}
 
             span = doc[start: end]  # matched span
             sent = span.sent  # sentence containing matched span
@@ -76,6 +79,7 @@ def parse(fname, keywords=None):
                 # this_match['Sentence'] = 'seen'
                 sents[sent.text]['keyword_count'] += 1
 
+            '''
             # instead of just using direct parent/child, get all words that refer/modify the keyword somehow?
             # Not used in current implementation of sentiment.py, thus low priority.
             if token.dep_ != 'ROOT':
@@ -84,12 +88,13 @@ def parse(fname, keywords=None):
             for child in token.children:
                 child_vectors.append({'text': child.text, 'sentiment': child.sentiment})
             this_match['Children'] = child_vectors
+            '''
 
-            match_vectors.append(this_match)
+            # match_vectors.append(this_match)
 
         to_write['num_relevant_sentences'] = len(sents)
         to_write['relevant_sentences'] = sents
-        to_write['matches'] = match_vectors
+        # to_write['matches'] = match_vectors
 
         f_out.write(json.dumps(to_write))
         f_out.write('\n')

@@ -26,7 +26,7 @@ def filter(fname, keywords=None, threshold=20):
     stemmer = SnowballStemmer('english')
     if keywords is None:
         keywords = [topic]
-    keywords = set([stemmer.stem(word) for word in keywords])
+    keywords = set([' '.join(list(map(stemmer.stem, word.split()))) for word in keywords])
     print(keywords)
 
     data, corpus = [], []
@@ -34,15 +34,23 @@ def filter(fname, keywords=None, threshold=20):
         js = json.loads(line)
         data.append(js)
 
-        text = list(js.values())[0]['text'].split()
+        # Stem text & replace up to 3-gram keywords with KEYWORD_TOKEN
+        text = list(js.values())[0]['title'].split() + list(js.values())[0]['text'].split()
         for i in range(len(text)):
             word = stemmer.stem(text[i])
+            if i >= 2 and text[i-2] + ' ' + text[i-1] + ' ' + word in keywords:
+                text[i-2] = KEYWORD_TOKEN
+                text[i-1] = ''
+                word = ''
+            if i >= 1 and text[i-1] + ' ' + word in keywords:
+                text[i-1] = KEYWORD_TOKEN
+                word = ''
             if word in keywords:
                 word = KEYWORD_TOKEN  # change all words that match any keyword to one token for CountVectoriser
             text[i] = word
         text = ' '.join(text)
-        corpus.append(text)
 
+        corpus.append(text)
         in_lines += 1
     f_in.close()
     # print(corpus[0])  # to test stemmer
@@ -58,7 +66,6 @@ def filter(fname, keywords=None, threshold=20):
     '''
 
     analyse = vectoriser.build_analyzer()
-    # TODO does not work with >1-gram keywords (e.g. "Down's Syndrome")
     keyword_index = vectoriser.vocabulary_.get(analyse(KEYWORD_TOKEN)[0])
     # keyword_array = matrix[:, keyword_index].toarray().reshape([1, len(corpus)])[0]
     # print(sorted(keyword_array)[::-1])
