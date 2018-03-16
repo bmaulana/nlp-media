@@ -10,7 +10,6 @@ from plot import plot
 TOPICS = {'Dyslexia': ['Dyslexia', 'Dyslexic'],
           'Autism': ['Autism', 'Autistic', 'Asperger\'s', 'ASD'],
           'Dementia': ['Dementia', 'Alzheimer\'s'],
-          'Dyscalculia': ['Dyscalculia']
           }
 
 TOPICS2 = {'cerebral palsy': ['cerebral palsy', 'spastic'],  # impairment and impaired has the same stem

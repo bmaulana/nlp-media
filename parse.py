@@ -26,7 +26,6 @@ def parse(fname, keywords=None):
 
     pattern = []
     seen = set()
-    # TODO does not work with >1-gram keywords (e.g. "Down's Syndrome")
     for keyword in keywords:
         stem = [nlp(word)[0].lemma_ for word in keyword.split()]
         if ' '.join(stem) not in seen:
