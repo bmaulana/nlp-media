@@ -3,7 +3,6 @@ import json
 import os
 import numpy as np
 from dateutil.parser import parse as date_parse
-from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from sklearn.preprocessing import LabelEncoder
@@ -34,7 +33,7 @@ def plot(fnames):
     data = np.array(data)
     data = data[np.argsort(data[:, 0])]  # sort on datetime
 
-    # scatterplot of date range (X) vs sentiment (Y), coloured based on source (Z)
+    # scatter plot of date range (X) vs sentiment (Y), coloured based on source (Z)
     le = LabelEncoder()
     colours = le.fit_transform(data[:, 2])
     plt.scatter(data[:, 0], data[:, 1], c=colours)
@@ -47,7 +46,7 @@ def plot(fnames):
     plt.savefig('./out-plot/' + ','.join(fnames) + '.scatter.png')
     plt.close()
 
-    # histogram of date range (X) vs no. of articles
+    # histogram of date range (X) vs no. of articles (Y)
     plt.hist(data[:, 0], bins=10)
     plt.title(fnames)
     plt.xlabel('Date Range')
@@ -56,21 +55,33 @@ def plot(fnames):
     plt.savefig('./out-plot/' + ','.join(fnames) + '.histogram.png')
     plt.close()
 
-    # 2d histogram, with each source separate
+    # 2d histogram of no. of articles (Z), with each source (Y) and date range (X) separate
     plt.hist2d(list(map(mdates.date2num, data[:, 0])), colours, bins=(10, len(fnames)))
     plt.title(fnames)
     plt.xlabel('Date Range')
     plt.ylabel('Source')
     plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m/%d/%Y'))
     plt.gca().set_yticks(np.arange(0, len(fnames)))
-    # line below will throw a warning, known bug (https://github.com/scikit-learn/scikit-learn/issues/10449)
-    plt.gca().set_yticklabels(le.inverse_transform(np.arange(len(fnames))))
+    # line below will throw a warning, known bug in LabelEncoder (github.com/scikit-learn/scikit-learn/issues/10449)
+    sources = le.inverse_transform(np.arange(len(fnames)))
+    plt.gca().set_yticklabels(sources)
     plt.gcf().autofmt_xdate()
     plt.colorbar()
     plt.savefig('./out-plot/' + ','.join(fnames) + '.histogram2d.png')
     plt.close()
 
-    # TODO plot also 2d histograms of source-sentiment, present all 4 histograms in one figure
+    # 2d histogram of no. of articles (Z), with each source (Y) and sentiment range (X) separate
+    plt.hist2d(list(map(float, data[:, 1])), colours, bins=(10, len(fnames)))
+    plt.title(fnames)
+    plt.xlabel('Sentiment Score')
+    plt.ylabel('Source')
+    plt.gca().set_yticks(np.arange(0, len(fnames)))
+    plt.gca().set_yticklabels(sources)
+    plt.colorbar()
+    plt.savefig('./out-plot/' + ','.join(fnames) + '.histogram3.png')
+    plt.close()
+
+    # TODO combine all four plots in one figure
 
 
 if __name__ == '__main__':
