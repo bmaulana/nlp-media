@@ -2,6 +2,8 @@ import sys
 import json
 import os
 import time
+import random
+import numpy as np
 from vaderSentiment import vaderSentiment
 import xiaohan_sentiment
 from senti_classifier import senti_classifier
@@ -103,14 +105,59 @@ def sentiment(fname):
     print('Sentiment analyses took', int(full_time // 60), 'minutes', full_time % 60, 'seconds')
 
 
-# TODO function to go through everything in out-sentiment and sample N articles from each file
-def eval_sentiment():
-    pass
+def eval_sentiment(num_samples=5):
+    # for each label, print the mean score of sentences I manually class positive, neutral, or negative
+    # issue: bias in my classification. Mention in report, further work could involve having multiple reviewers
+    labels = ['vader', 'xiaohan', 'kcobain', 'openai']
+    mean_scores = np.array([[0.0, 0.0, 0.0]] * len(labels))
+    num_sents = 0
+
+    # From each file in ./out-sentiment/, show a sample of num_sents sentences to manually classify
+    for filename in os.listdir('./out-sentiment'):
+        f_in = open('./out-sentiment/' + filename, 'r')
+        sents = {}
+        for line in f_in:
+            raw = json.loads(line)
+            for sent, scores in raw['relevant_sentences'].items():
+                if scores['sentiment_score_openai'] != 'ERROR':  # if one score is 'ERROR', all is 'ERROR'
+                    sents[sent] = scores
+        f_in.close()
+
+        if len(sents) > num_samples:
+            sampled = random.Random(0).sample(list(sents.items()), k=num_samples)
+        else:
+            sampled = list(sents.items())
+
+        for sent, scores in sampled:
+            res = input(sent + '\n')
+            print()
+            if res == '+':
+                for i in range(len(labels)):
+                    full_label = 'sentiment_score_' + labels[i]
+                    mean_scores[i, 0] += float(scores[full_label])
+            elif res == '-':
+                for i in range(len(labels)):
+                    full_label = 'sentiment_score_' + labels[i]
+                    mean_scores[i, 2] += float(scores[full_label])
+            else:
+                for i in range(len(labels)):
+                    full_label = 'sentiment_score_' + labels[i]
+                    mean_scores[i, 1] += float(scores[full_label])
+
+            num_sents += 1
+
+    mean_scores /= num_sents
+    for i in range(len(labels)):
+        print(labels[i], '\tPositive:', mean_scores[i][0], '\tNeutral:', mean_scores[i][1],
+              '\tNegative:', mean_scores[i][2])
+
 # TODO after evaluation, write function that only calculates one sentiment score to improve performance
 
 
 if __name__ == '__main__':
     if sys.argv[1] == 'eval':
+        if len(sys.argv) > 2:
+            eval_sentiment(sys.argv[2])
         eval_sentiment()
     else:
         sentiment(sys.argv[1])
