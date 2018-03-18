@@ -93,6 +93,11 @@ def parse(fname, keywords=None):
 
         to_write['num_relevant_sentences'] = len(sents)
         to_write['relevant_sentences'] = sents
+
+        # TODO maybe skip filter and filter here instead based on num_relevant_sents / num_sents?
+        if len(sents) == 0:
+            continue
+
         # to_write['matches'] = match_vectors
 
         f_out.write(json.dumps(to_write))

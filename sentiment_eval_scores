@@ -1,0 +1,32 @@
+5 per article, {Autism, Dementia, Dyslexia}:
+vader   Positive: 0.06454444444444446   Neutral: -0.022673333333333334      Negative: 0.030268888888888887
+xiaohan         Positive: -0.08651992567032271  Neutral: -0.2223492263472873        Negative: -0.08588073515935767
+kcobain         Positive: 0.03888888888888889   Neutral: -0.027777777777777776      Negative: -0.027777777777777776
+openai  Positive: 0.1341486997074551    Neutral: 0.04361653866039382        Negative: -0.005045107669300503
+
+Notes:
+
+XiaoHan's and Kevin Cobain's is all over the place. (some neutral ones have very high + or - scores)
+
+OpenAI's misses a lot of negative ones, e.g:
+{'keyword_count': 1, 'sentiment_score_vader': 0.0, 'sentiment_score_xiaohan': -0.4151260102910689,
+'sentiment_score_kcobain': -0.75, 'sentiment_score_openai': 0.14298953115940094}
+Police Tasered autistic man, 25, with mental age of seven.
+
+Also, dementia should be removed. Model works better with classifying representations of 'born-with'/unavoidable disabilities
+e.g. Eating a healthy, balanced diet could also lower your risk of dementia, according to the NHS.
+(Positive, but if you e.g. replace 'dementia' with 'autism', would be negative)-
+Lots of sentences about increasing/redusing risk, occurrence, cases of dementia/Alzheimer's
+
+Main issues with using models trained on movie/product review, e.g:
+He reveals that until he was 21 he could not spell his name; and the outstanding moments of this solo come when his da
+ncing combines with digital imagery to portray the confusion and alienation his dyslexia caused. + (all)
+(+ for a review, neutral/- for an article)
+
+GUIDELINES:
+using __ics or 'suffers from' (or other inappropriate terms): negative
+Implying <disability> as an issue, without trying to help / raise awareness: negative
+Implying <something> causes <disability>: negative
+Helping people with <disability>: positive
+Talk about experiences of people with <disability>: positive
+Coming out with <disability>: positive

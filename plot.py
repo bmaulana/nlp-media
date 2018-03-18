@@ -43,7 +43,7 @@ def plot(fnames):
     # line below will throw a warning, known bug in LabelEncoder (github.com/scikit-learn/scikit-learn/issues/10449)
     sources = le.inverse_transform(np.arange(len(fnames)))
 
-    fig, axs = plt.subplots(2, 2, figsize=(10, 10), tight_layout=True)
+    fig, axs = plt.subplots(2, 3, figsize=(10, 15), tight_layout=True)
     # fig.suptitle(fnames)  # overlaps with plots for some reason
     # fig.autofmt_xdate()
     plt.xticks(rotation=30)
@@ -87,6 +87,18 @@ def plot(fnames):
     axs[1, 1].set_yticklabels(sources)
     # From https://stackoverflow.com/questions/32462881/add-colorbar-to-existing-axis
     divider = make_axes_locatable(axs[1, 1])
+    cax = divider.append_axes('right', size='5%', pad=0.05)
+    fig.colorbar(img, cax=cax)
+
+    # 2d histogram of no. of articles (Z), with each sentiment range (Y) and date range (X) separate
+    _, _, _, img = axs[0, 2].hist2d(list(map(mdates.date2num, data[:, 0])), list(map(float, data[:, 1])), bins=(10, 10))
+    axs[0, 2].set_xlabel('Date Range')
+    axs[0, 2].set_ylabel('Sentiment Score')
+    axs[0, 2].xaxis.set_major_formatter(mdates.DateFormatter('%m/%Y'))
+    for tick in axs[0, 2].get_xticklabels():
+        tick.set_rotation(30)
+    # From https://stackoverflow.com/questions/32462881/add-colorbar-to-existing-axis
+    divider = make_axes_locatable(axs[0, 2])
     cax = divider.append_axes('right', size='5%', pad=0.05)
     fig.colorbar(img, cax=cax)
 
