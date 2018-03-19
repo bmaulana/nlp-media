@@ -43,7 +43,7 @@ def plot(fnames):
     # line below will throw a warning, known bug in LabelEncoder (github.com/scikit-learn/scikit-learn/issues/10449)
     sources = le.inverse_transform(np.arange(len(fnames)))
 
-    fig, axs = plt.subplots(2, 3, figsize=(10, 15), tight_layout=True)
+    fig, axs = plt.subplots(2, 3, figsize=(15, 10), tight_layout=True)
     # fig.suptitle(fnames)  # overlaps with plots for some reason
     # fig.autofmt_xdate()
     plt.xticks(rotation=30)
@@ -80,7 +80,8 @@ def plot(fnames):
     fig.colorbar(img, cax=cax)
 
     # 2d histogram of no. of articles (Z), with each source (Y) and sentiment range (X) separate
-    _, _, _, img = axs[1, 1].hist2d(list(map(float, data[:, 1])), colours, bins=(10, len(fnames)))
+    _, _, _, img = axs[1, 1].hist2d(list(map(float, data[:, 1])), colours,
+                                    bins=(np.arange(-1.0, 1.1, 0.1), len(fnames)))
     axs[1, 1].set_xlabel('Sentiment Score')
     axs[1, 1].set_ylabel('Source')
     axs[1, 1].set_yticks(np.arange(0, len(fnames)))
@@ -91,7 +92,8 @@ def plot(fnames):
     fig.colorbar(img, cax=cax)
 
     # 2d histogram of no. of articles (Z), with each sentiment range (Y) and date range (X) separate
-    _, _, _, img = axs[0, 2].hist2d(list(map(mdates.date2num, data[:, 0])), list(map(float, data[:, 1])), bins=(10, 10))
+    _, _, _, img = axs[0, 2].hist2d(list(map(mdates.date2num, data[:, 0])), list(map(float, data[:, 1])),
+                                    bins=(10, np.arange(-1.0, 1.1, 0.1)))
     axs[0, 2].set_xlabel('Date Range')
     axs[0, 2].set_ylabel('Sentiment Score')
     axs[0, 2].xaxis.set_major_formatter(mdates.DateFormatter('%m/%Y'))

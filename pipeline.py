@@ -14,7 +14,7 @@ TOPICS = {'Dyslexia': ['Dyslexia', 'Dyslexic'],
 
 TOPICS2 = {'cerebral palsy': ['cerebral palsy', 'spastic'],
            'deaf': ['deaf', 'hearing impaired', 'hard of hearing', 'hearing loss'],  # impairment and impaired
-           'blind': ['blind', 'visual impairments', 'partially sighted'],  # visual and visually has the same stem
+           'blind': ['blind', 'visual impairment', 'partially sighted'],  # visual and visually has the same stem
            'epilepsy': ['epilepsy', 'epileptic', 'seizure'],
            'mute': ['mute', 'cannot speak', 'difficulty speaking', 'synthetic speech', 'non-vocal', 'non-verbal'],
            # 'speech impairment': ['speech impairment', 'stutter', 'speech disability', 'speech disorder',
@@ -49,7 +49,7 @@ def pipeline(topic, keywords, source):
     filter(fname, keywords, FILTER_THRESHOLD)
     parse(fname, keywords)
     print('\n')
-    sentiment(fname)
+    sentiment(fname, test_time=False)
 
     total_time = time.time() - start_time
     print('\nPipeline took', int(total_time // 60), 'minutes', total_time % 60, 'seconds\n')
@@ -61,5 +61,4 @@ for tpc, words in TOPICS2.items():
     for src in SOURCES:
         fnames.append(pipeline(tpc, words, src))
     plot(fnames)
-
 # pipeline('Dyslexia', ['Dyslexia', 'Dyslexic'], SOURCES[0])
