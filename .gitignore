@@ -107,3 +107,10 @@ ENV/
 *.json
 *-out
 out-plot/
+*.csv
+
+# LaTeX outputs
+*.aux
+*.pdf
+*.synctex.gz
+*.toc
