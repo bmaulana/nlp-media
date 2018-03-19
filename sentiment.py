@@ -6,6 +6,9 @@ from vaderSentiment import vaderSentiment
 import xiaohan_sentiment
 from senti_classifier import senti_classifier
 from openai_encoder import Model
+from stanfordcorenlp import StanfordCoreNLP
+from textblob import TextBlob
+from textblob.en.sentiments import NaiveBayesAnalyzer
 # TODO for eval - split into two files? (also eval won't need to load OpenAI's model)
 import random
 import numpy as np
@@ -14,6 +17,9 @@ import matplotlib.pyplot as plt
 openai_time = time.time()
 openai_model = Model()
 print('\nLoading OpenAI sentiment model took', time.time() - openai_time, 'seconds\n')
+
+stanford_nlp = StanfordCoreNLP('http://localhost', 9000)
+nba = NaiveBayesAnalyzer()
 
 
 def sentiment(fname):
@@ -37,13 +43,18 @@ def sentiment(fname):
         article_time = time.time()
         to_write = json.loads(line)
 
-        # TODO test relevance scores to see which performs better (sample n high/low-relevance articles from each)
+        if to_write['num_relevant_sentences'] == 0:
+            count += 1
+            print(count, "/", total, "articles analysed (last article skipped)")
+            continue
+
+        # TODO test relevance scores to see which performs better (sample n articles from each)
         to_write['relevance_score_sents'] = to_write['num_relevant_sentences'] / to_write['num_sentences']
         to_write['relevance_score_keyword_rank'] = 1 / to_write['keyword_rank']  # Assume Zipf distribution with s ~= 1
 
-        # TODO test sentiment scores to see which performs better (sample n high/low-relevance articles from each)
+        # TODO test sentiment scores to see which performs better (sample n articles from each)
         sents = to_write['relevant_sentences']
-        sents_array = []  # OpenAI runs faster with batched sentences
+        batched_sents = []  # OpenAI runs faster with batched sentences
         for sent in sents:
             # VADER: rule-based / lexical (https://github.com/cjhutto/vaderSentiment)
             vader_analyser = vaderSentiment.SentimentIntensityAnalyzer()
@@ -59,28 +70,40 @@ def sentiment(fname):
             sents[sent]['sentiment_score_kcobain'] = pos_score - neg_score  # y = normal distribution mean=0, unbounded
             # print(time.time() - time_kcobain, 'seconds to analyse a sentence using Kevin Cobain')
 
-            # TODO implement StanfordNLP
+            # TextBlob. Uses Naive Bayes analyzer trained on the movie review corpus (textblob.readthedocs.io/en/dev/)
+            res = nba.analyze(sent)
+            sents[sent]['sentiment_score_textblob_bayes'] = res[1] - res[2]
 
-            sents_array.append(sent)  # OpenAI runs faster with batched sentences
+            batched_sents.append(sent)  # OpenAI runs faster with batched sentences
 
         # TODO if after evaluation, this library is chosen (likely), optimise performance via batching everything
         # TODO (may be easier to do in a separate function)
         # OpenAI: mLSTM-based, trained on Amazon reviews (github.com/openai/generating-reviews-discovering-sentiment)
         # Note: VERY slow (~7 seconds per sentence, faster with larger batches). May be faster with tensorflow-gpu.
         try:
-            openai_sentiment = openai_model.transform(sents_array)[:, 2388]
-            for i in range(len(sents_array)):
-                sents[sents_array[i]]['sentiment_score_openai'] = float(openai_sentiment[i])
+            openai_sentiment = openai_model.transform(batched_sents)[:, 2388]
+            for i in range(len(batched_sents)):
+                sents[batched_sents[i]]['sentiment_score_openai'] = float(openai_sentiment[i])
                 # y = normal distribution with mean=0, unbounded
         except ValueError:  # tensorflow bugs
-            for i in range(len(sents_array)):
-                sents[sents_array[i]]['sentiment_score_openai'] = 'ERROR'
+            for i in range(len(batched_sents)):
+                sents[batched_sents[i]]['sentiment_score_openai'] = 'ERROR'
 
-        # del to_write['matches']  # for testing (make output file easier to read)
+        # StanfordNLP (https://nlp.stanford.edu/sentiment/). Classifier instead of regressor (y = [1,2,3,4,5])
+        props = {'annotators': 'sentiment', 'outputFormat': 'json', 'timeout': 15000}
+        res = json.loads(stanford_nlp.annotate(' '.join(batched_sents), properties=props))
+        for i in range(len(res['sentences'])):
+            val = (float(res['sentences'][i]['sentimentValue']) - 2.0) / 2.0  # y = [-2.0, -1.0, 0.0, 1.0, 2.0]
+            sents[batched_sents[i]]['sentiment_score_stanford'] = val
+
+        # TextBlob. Uses pattern analyser (https://textblob.readthedocs.io/en/dev/)
+        blob = TextBlob(' '.join(batched_sents))
+        for i in range(len(blob.sentences)):
+            sents[batched_sents[i]]['sentiment_score_textblob'] = blob.sentences[i].sentiment.polarity
 
         # 'summarise' sentiment score of an article via weighted average of each sentence
         # TODO measure relevance score of each sentence & use it as weight for sentiment score, instead of keyword_count
-        sentiment_score_labels = ['vader', 'xiaohan', 'kcobain', 'openai']
+        sentiment_score_labels = ['vader', 'xiaohan', 'kcobain', 'openai', 'stanford', 'textblob', 'textblob_bayes']
         for label in sentiment_score_labels:
             full_label = 'sentiment_score_' + label
             weighted_avg, keyword_max_count = 0.0, 0
@@ -91,7 +114,6 @@ def sentiment(fname):
             try:
                 to_write[full_label] = weighted_avg / keyword_max_count
             except ZeroDivisionError:
-                # TODO these articles should be filtered out by filter.py... need to test why this isn't the case
                 to_write[full_label] = 'ERROR'
 
         f_out.write(json.dumps(to_write))
@@ -115,7 +137,7 @@ def sentiment_opt(fname):
 def eval_sentiment(num_samples=5):
     # for each label, print the mean score of sentences I manually class positive, neutral, or negative
     # issue: bias in my classification. Mention in report, further work could involve having multiple reviewers
-    labels = ['vader', 'xiaohan', 'kcobain', 'openai']
+    labels = ['vader', 'xiaohan', 'kcobain', 'openai', 'stanford', 'textblob', 'textblob_bayes']
     mean_scores = np.array([[0.0, 0.0, 0.0]] * len(labels))
     all_scores = [([], [], []) for i in range(len(labels))]
     answers = []  # to save answers so results are reproducible
@@ -168,7 +190,7 @@ def eval_sentiment(num_samples=5):
               '\tNegative:', mean_scores[i][2])
 
     # Plot histogram for each classification, for each sentiment scorer
-    fig, axs = plt.subplots(2, len(labels) // 2, figsize=(10, 10), tight_layout=True)
+    fig, axs = plt.subplots(2, (len(labels) + 1) // 2, figsize=(10, 5 * ((len(labels) + 1) // 2)), tight_layout=True)
     for i in range(len(labels)):
         ax = axs[i % 2, i // 2]
         ax.hist(all_scores[i][0], bins=np.arange(-1.0, 1.1, 0.1), alpha=0.5, label='pos')

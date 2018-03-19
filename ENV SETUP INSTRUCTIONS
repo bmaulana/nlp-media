@@ -10,3 +10,10 @@
 10) Download files from https://github.com/kevincobain2000/sentiment_classifier/tree/master/src/senti_classifier
 and copy to C:\\Users\\user\\Anaconda3\\envs\\nlp-media2\\lib\\site-packages\\senti_classifier\\
 11) pip install --ignore-installed --upgrade tensorflow
+12) Download and unzip Stanford's CoreNLP: https://stanfordnlp.github.io/CoreNLP/
+13) Start the CoreNLP local server:
+    cd <dir_where_you_unzipped_coreNLP>
+    java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 15000
+14) pip install -U stanfordcorenlp
+15) pip install -U textblob
+16) python -m textblob.download_corpora
