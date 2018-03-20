@@ -7,7 +7,6 @@ import xiaohan_sentiment
 from senti_classifier import senti_classifier
 from openai_encoder import Model
 from stanfordcorenlp import StanfordCoreNLP
-from textblob import TextBlob
 from textblob.en.sentiments import NaiveBayesAnalyzer, PatternAnalyzer
 # TODO for eval - split into two files? (so no need to load the sentiment models to run eval_sentiment)
 import random
@@ -19,7 +18,7 @@ openai_model = Model()
 print('\nLoading OpenAI sentiment model took', time.time() - openai_time, 'seconds\n')
 
 vader_analyser = vaderSentiment.SentimentIntensityAnalyzer()
-stanford_nlp = StanfordCoreNLP('http://localhost', 9000)
+stanford_nlp = StanfordCoreNLP('http://localhost', 9000)  # TODO replace with github.com/Lynten/stanford-corenlp
 nba = NaiveBayesAnalyzer()
 pa = PatternAnalyzer()
 
@@ -42,8 +41,7 @@ def sentiment(fname, test_time=False):
     f_in = open(in_path, 'r')
     if not test_time:
         f_out = open(out_path, 'w')
-    else:
-        f_out = open('./out-sentiment/times.csv', 'a')
+    f_out_time = open('./out-sentiment/times.csv', 'a')
 
     for line in f_in:
         article_time = time.time()
@@ -146,9 +144,9 @@ def sentiment(fname, test_time=False):
                 to_write[full_label] = 'ERROR'
 
         # Used to only analyse one article per topic/source to test performance of each scorer, comment out otherwise
+        f_out_time.write('\n')
+        f_out_time.write(",".join([str(t) for t in scorer_times]))
         if test_time:
-            f_out.write('\n')
-            f_out.write(",".join([str(t) for t in scorer_times]))
             break
         else:
             f_out.write(json.dumps(to_write))
@@ -158,7 +156,9 @@ def sentiment(fname, test_time=False):
         print(count, "/", total, "articles analysed (last article =", time.time() - article_time, "seconds)")
 
     f_in.close()
-    f_out.close()
+    if not test_time:
+        f_out.close()
+    f_out_time.close()
 
     full_time = time.time() - start_time
     print('Sentiment analyses took', int(full_time // 60), 'minutes', full_time % 60, 'seconds')
