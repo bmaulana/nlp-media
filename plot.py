@@ -41,7 +41,6 @@ def plot(keyword):
 
     le = LabelEncoder()
     colours = le.fit_transform(data[:, 2])
-    # line below will throw a warning, known bug in LabelEncoder (github.com/scikit-learn/scikit-learn/issues/10449)
     sources = le.classes_
 
     fig, axs = plt.subplots(2, 3, figsize=(15, 10), tight_layout=True)
