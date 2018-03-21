@@ -3,6 +3,7 @@ import sys
 import os
 import oop_scraper as scr
 import time
+from tqdm import tqdm
 
 
 def crawler(query, scraper, num_articles=-1, keywords=None):
@@ -24,15 +25,16 @@ def crawler(query, scraper, num_articles=-1, keywords=None):
             saved_links.add(list(json.loads(line).keys())[0])
 
     start_time = time.time()
-    # TODO change 'query' to 'keywords' to enable multiple keywords (need to update all scrapers)
-    page_links = scraper.search_phrase(query, num_articles)
+    page_links = set()
+    for keyword in keywords:
+        page_links = page_links.union(set(scraper.search_phrase(keyword, num_articles)))
     print("Number of articles found", len(page_links))
     print(time.time() - start_time, "seconds spent finding articles")
 
     start_time = time.time()
     g = open(fname, 'a')
     count, skip_count = 0, 0
-    for link in page_links:
+    for link in tqdm(page_links):
         print(count, "/", len(page_links), "articles saved", end="\r")
         count += 1
         if link in saved_links:
