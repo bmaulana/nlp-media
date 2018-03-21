@@ -16,7 +16,7 @@ def crawler(query, scraper, num_articles=-1, keywords=None):
     if not os.path.exists('./out/'):
         os.makedirs('./out/')
     fname = './out/' + scraper.get_fname(query)
-    print(fname)
+    print('Collecting web articles to:', fname)
 
     saved_links = set()
     if os.path.isfile(fname):
@@ -34,8 +34,9 @@ def crawler(query, scraper, num_articles=-1, keywords=None):
     start_time = time.time()
     g = open(fname, 'a')
     count, skip_count = 0, 0
+    print('Scraping articles:')
     for link in tqdm(page_links):
-        print(count, "/", len(page_links), "articles saved", end="\r")
+        # print(count, "/", len(page_links), "articles saved", end="\r")
         count += 1
         if link in saved_links:
             skip_count += 1
@@ -50,7 +51,7 @@ def crawler(query, scraper, num_articles=-1, keywords=None):
         g.write('\n')
         g.flush()
 
-    print(count, "/", len(page_links), "articles parsed")
+    print(count, "/", len(page_links), "articles scraped")
     print(skip_count, "articles already saved")
     time_spent = time.time()-start_time
     print(int(time_spent // 60), 'minutes', time_spent % 60, "seconds spent parsing articles")

@@ -5,6 +5,7 @@ import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.stem.snowball import SnowballStemmer  # TODO test which is better between this and cyhunspell
 # from sklearn.feature_extraction.text import TfidfTransformer
+from tqdm import tqdm
 
 KEYWORD_TOKEN = 'KEYWORDTOKEN'  # something that shouldn't naturally occur in a document
 
@@ -29,8 +30,9 @@ def filter(fname, keywords=None, threshold=20):
     keywords = set([' '.join(list(map(stemmer.stem, word.split()))) for word in keywords])
     print(keywords)
 
+    print('Reading input from ./out/')
     data, corpus = [], []
-    for line in f_in:
+    for line in tqdm(f_in):
         js = json.loads(line)
         data.append(js)
 
@@ -71,9 +73,10 @@ def filter(fname, keywords=None, threshold=20):
     # print(sorted(keyword_array)[::-1])
     # print(sum(keyword_array) / len(keyword_array))
 
-    relevant = []
+    print('Writing output to ./out-sentiment/')
+    # relevant = []
     f_out = open(out_path, 'w')
-    for i in range(len(corpus)):
+    for i in tqdm(range(len(corpus))):
         vectors = matrix[i].toarray()
         keyword_vector = vectors[0][keyword_index]
         vectors.sort()
@@ -83,7 +86,7 @@ def filter(fname, keywords=None, threshold=20):
         rank = rank[0] + 1  # occurrence rank of the keyword(s), relative to other non-stop words in the article
 
         if rank <= threshold:  # rank threshold
-            relevant.append((True, rank))
+            # relevant.append((True, rank))
 
             # Save info on rank of keyword
             data[i]['keyword_count'] = int(keyword_vector)
@@ -95,8 +98,8 @@ def filter(fname, keywords=None, threshold=20):
             f_out.write('\n')
             out_lines += 1
 
-        else:
-            relevant.append((False, rank))
+        # else:
+            # relevant.append((False, rank))
     f_out.close()
 
     # print(relevant[:10])  # Used to sample articles to determine rank threshold.

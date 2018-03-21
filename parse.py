@@ -4,6 +4,7 @@ import spacy
 import time
 import os
 from spacy.matcher import Matcher
+from tqdm import tqdm
 
 start_time = time.time()
 nlp = spacy.load('en_core_web_lg')
@@ -41,7 +42,7 @@ def parse(fname, keywords=None):
 
     f_in = open(in_path, 'r')
     f_out = open(out_path, 'w')
-    for line in f_in:
+    for line in tqdm(f_in):
         to_write = {}
 
         js = json.loads(line)

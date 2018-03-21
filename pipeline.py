@@ -47,7 +47,7 @@ QUERIES = {'disabled': ['disabled', 'disability'],
 
 
 # TODO add more
-SOURCES = [# oop_scraper.GuardianScraper("7f2c7c42-2600-4292-a417-1b8efc5271a6"),
+SOURCES = [oop_scraper.GuardianScraper("7f2c7c42-2600-4292-a417-1b8efc5271a6"),
            oop_scraper.DailyMailScraper(),
            oop_scraper.DailyExpressScraper()]
 
@@ -61,12 +61,12 @@ def pipeline(topic, keywords, source):
 
     fname = crawler(topic, source, NUM_DOCS, QUERIES[topic])
     # fname = 'Guardian-Dyslexia.json'
-    print('\n')
-
+    print('\n Filtering:')
     filter(fname, keywords, FILTER_THRESHOLD)
+    print('\n Parsing:')
     parse(fname, keywords)
-    print('\n')
-    # sentiment(fname, test_time=False)
+    print('\n Scoring sentiment:')
+    sentiment(fname, test_time=False)
 
     total_time = time.time() - start_time
     print('\nPipeline took', int(total_time // 60), 'minutes', total_time % 60, 'seconds\n')
@@ -75,5 +75,5 @@ def pipeline(topic, keywords, source):
 for tpc, words in TOPICS2.items():
     for src in SOURCES:
         pipeline(tpc, words, src)
-    # plot(tpc)
+    plot(tpc)
 # pipeline('Dyslexia', ['Dyslexia', 'Dyslexic'], SOURCES[0])

@@ -85,7 +85,8 @@ class DailyExpressScraper(Scraper):
             print("getting URLs from page", i // 10 + 1, '/', n_results // 10, end='\r')
             page_url = '{}&o={}'.format(url, i)
             soup = self.get_soup(page_url)
-            page_links += self.__get_links(soup)
+            if soup is not None:
+                page_links += self.__get_links(soup)
         print()
         return page_links
 
@@ -152,7 +153,8 @@ class DailyMailScraper(Scraper):
             print("getting URLs from page", i, end='\r')
             page_url = '{}&offset={}&sort=recent'.format(url, 50 * i)
             soup = self.get_soup(page_url)
-            page_links += self.__get_links(soup)
+            if soup is not None:
+                page_links += self.__get_links(soup)
 
             if num_articles != -1 and len(page_links) >= num_articles:
                 page_links = page_links[:num_articles]
