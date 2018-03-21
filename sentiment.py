@@ -8,6 +8,7 @@ from senti_classifier import senti_classifier
 from openai_encoder import Model
 from stanfordcorenlp import StanfordCoreNLP
 from textblob.en.sentiments import NaiveBayesAnalyzer, PatternAnalyzer
+from tqdm import tqdm
 
 openai_time = time.time()
 openai_model = Model()
@@ -55,10 +56,8 @@ def sentiment(fname, test_time=False):
         to_write['relevance_score_sents'] = to_write['num_relevant_sentences'] / to_write['num_sentences']
         to_write['relevance_score_keyword_rank'] = 1 / to_write['keyword_rank']  # Assume Zipf distribution with s ~= 1
 
-        # TODO test sentiment scores to see which performs better (sample n articles from each)
         sents = to_write['relevant_sentences']
 
-        batched_sents = []  # OpenAI runs faster with batched sentences
         # VADER: rule-based / lexical (https://github.com/cjhutto/vaderSentiment)
         score_time = time.time()
         for sent in sents:
@@ -82,10 +81,9 @@ def sentiment(fname, test_time=False):
         # print(time.time() - score_time, 'seconds to analyse article using Kevin Cobain')
         scorer_times.append(time.time() - score_time)
 
-        # TODO if after evaluation, this library is chosen (likely), optimise performance via batching everything
-        # TODO (may be easier to do in a separate function)
         # OpenAI: mLSTM-based, trained on Amazon reviews (github.com/openai/generating-reviews-discovering-sentiment)
         # Note: VERY slow (~7 seconds per sentence, faster with larger batches). May be faster with tensorflow-gpu.
+        batched_sents = []  # OpenAI runs faster with batched sentences
         for sent in sents:
             batched_sents.append(sent)  # OpenAI runs faster with batched sentences
         score_time = time.time()
@@ -131,13 +129,13 @@ def sentiment(fname, test_time=False):
         sentiment_score_labels = ['vader', 'xiaohan', 'kcobain', 'openai', 'stanford', 'textblob', 'textblob_bayes']
         for label in sentiment_score_labels:
             full_label = 'sentiment_score_' + label
-            weighted_avg, keyword_max_count = 0.0, 0
+            weighted_avg, keyword_total_count = 0.0, 0
             for sent in sents:
                 if sents[sent][full_label] != 'ERROR':
                     weighted_avg += sents[sent][full_label] * sents[sent]['keyword_count']
-                    keyword_max_count += 1
+                    keyword_total_count += sents[sent]['keyword_count']
             try:
-                to_write[full_label] = weighted_avg / keyword_max_count
+                to_write[full_label] = weighted_avg / keyword_total_count
             except ZeroDivisionError:
                 to_write[full_label] = 'ERROR'
 
@@ -163,9 +161,108 @@ def sentiment(fname, test_time=False):
     print('Sentiment analyses took', int(full_time // 60), 'minutes', full_time % 60, 'seconds')
 
 
-# TODO after evaluation of which scorer, write function that only calculates one sentiment score to improve performance
-def sentiment2(fname):
-    pass
+# TODO batch calls for different articles together to improve performance
+def sentiment_openai(fname):
+    start_time = time.time()
+
+    if not os.path.exists('./out-sentiment-openai/'):
+        os.makedirs('./out-sentiment-openai/')
+    in_path = './out-parse/' + fname
+    out_path = './out-sentiment-openai/' + fname
+
+    f_in = open(in_path, 'r')
+    f_out = open(out_path, 'w')
+
+    for line in tqdm(f_in):
+        to_write = json.loads(line)
+        if to_write['num_relevant_sentences'] == 0:
+            continue
+
+        # TODO test relevance scores to see which performs better (sample n articles from each)
+        to_write['relevance_score_sents'] = to_write['num_relevant_sentences'] / to_write['num_sentences']
+        to_write['relevance_score_keyword_rank'] = 1 / to_write['keyword_rank']  # Assume Zipf distribution with s ~= 1
+
+        sents = to_write['relevant_sentences']
+
+        # OpenAI: mLSTM-based, trained on Amazon reviews (github.com/openai/generating-reviews-discovering-sentiment)
+        # Note: VERY slow (~7 seconds per sentence, faster with larger batches). May be faster with tensorflow-gpu.
+        batched_sents = []  # OpenAI runs faster with batched sentences
+        for sent in sents:
+            batched_sents.append(sent)  # OpenAI runs faster with batched sentences
+        try:
+            openai_sentiment = openai_model.transform(batched_sents)[:, 2388]
+            for i in range(len(batched_sents)):
+                sents[batched_sents[i]]['sentiment_score'] = float(openai_sentiment[i])
+                # y = normal distribution with mean=0, unbounded
+        except ValueError:  # tensorflow bugs
+            for i in range(len(batched_sents)):
+                sents[batched_sents[i]]['sentiment_score'] = 'ERROR'
+
+        # 'summarise' sentiment score of an article via weighted average of each sentence
+        # TODO measure relevance score of each sentence & use it as weight for sentiment score? instead of keyword_count
+        weighted_avg, keyword_total_count = 0.0, 0
+        for sent in sents:
+            if sents[sent]['sentiment_score'] != 'ERROR':
+                weighted_avg += sents[sent]['sentiment_score'] * sents[sent]['keyword_count']
+                keyword_total_count += sents[sent]['keyword_count']
+        try:
+            to_write['sentiment_score'] = weighted_avg / keyword_total_count
+        except ZeroDivisionError:
+            to_write['sentiment_score'] = 'ERROR'
+
+        # Used to only analyse one article per topic/source to test performance of each scorer, comment out otherwise
+        f_out.write(json.dumps(to_write))
+        f_out.write('\n')
+
+    f_in.close()
+    f_out.close()
+
+    full_time = time.time() - start_time
+    print('Sentiment analyses took', int(full_time // 60), 'minutes', full_time % 60, 'seconds')
+
+
+def sentiment_vader(fname):
+    if not os.path.exists('./out-sentiment-vader/'):
+        os.makedirs('./out-sentiment-vader/')
+    in_path = './out-parse/' + fname
+    out_path = './out-sentiment-vader/' + fname
+
+    f_in = open(in_path, 'r')
+    f_out = open(out_path, 'w')
+
+    for line in tqdm(f_in):
+        to_write = json.loads(line)
+        if to_write['num_relevant_sentences'] == 0:
+            continue
+
+        # TODO test relevance scores to see which performs better (sample n articles from each)
+        to_write['relevance_score_sents'] = to_write['num_relevant_sentences'] / to_write['num_sentences']
+        to_write['relevance_score_keyword_rank'] = 1 / to_write['keyword_rank']  # Assume Zipf distribution with s ~= 1
+
+        sents = to_write['relevant_sentences']
+
+        # VADER: rule-based / lexical (https://github.com/cjhutto/vaderSentiment)
+        for sent in sents:
+            sents[sent]['sentiment_score'] = vader_analyser.polarity_scores(sent)['compound']  # y = -1 to 1
+
+        # 'summarise' sentiment score of an article via weighted average of each sentence
+        # TODO measure relevance score of each sentence & use it as weight for sentiment score? instead of keyword_count
+        weighted_avg, keyword_total_count = 0.0, 0
+        for sent in sents:
+            if sents[sent]['sentiment_score'] != 'ERROR':
+                weighted_avg += sents[sent]['sentiment_score'] * sents[sent]['keyword_count']
+                keyword_total_count += sents[sent]['keyword_count']
+        try:
+            to_write['sentiment_score'] = weighted_avg / keyword_total_count
+        except ZeroDivisionError:
+            to_write['sentiment_score'] = 'ERROR'
+
+        # Used to only analyse one article per topic/source to test performance of each scorer, comment out otherwise
+        f_out.write(json.dumps(to_write))
+        f_out.write('\n')
+
+    f_in.close()
+    f_out.close()
 
 
 if __name__ == '__main__':
