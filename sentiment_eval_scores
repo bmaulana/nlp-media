@@ -23,10 +23,39 @@ He reveals that until he was 21 he could not spell his name; and the outstanding
 ncing combines with digital imagery to portray the confusion and alienation his dyslexia caused. + (all)
 (+ for a review, neutral/- for an article)
 
+____________________________________
+
 GUIDELINES:
 using __ics or 'suffers from' (or other inappropriate terms): negative
-Implying <disability> as an issue, without trying to help / raise awareness: negative
-Implying <something> causes <disability>: negative
+(Only) focus on the disability's downsides: negative
+Implying <something> causes <disability> (if said disability is a lifelong condition): negative
 Helping people with <disability>: positive
 Talk about experiences of people with <disability>: positive
 Coming out with <disability>: positive
+
+_____________________________________
+
+From analysing sentiment_eval.png:
+OpenAI seems to be the best option, score-wise.
+Clear distinction between the peaks and distributions of positive, neutral, and negative
+Only issues, results-wise, are:
+1) that the data seems to be positive-skewed
+(negative labels are more prone to false positives of actually neutral articles, or negative articles labelled positive)
+2) there's a lot of overlap between the distributions (especially neutral and negative)
+The main issue, of course, is the performance - requires 10s-1min to analyse each article.
+Not fast enough for tens-of-thousands articles. <2 sec required to
+Further optimisation
+
+If OpenAI is unavailable due to performance reasons, the second best would be VADER:
+Clear distinction between articles classified as positive (anything >0.0 are mostly manually labelled positive)
+and negative (anything <0.0 are mostly manually labelled positive)
+Issue is labels too much things as 0.0 and 'misses' the labels on a lot of actually-positive/negative articles.
+With this approach, we can use VADER but ignore 0.0 labels for our plotting/analysis
+
+Other measures are flawed, to varying degrees:
+Kevin Cobain: Not too bad actually, however there seem to be more false positives/negatives than OpenAI. Also no paper
+Also graph may be missing some values above +1.0 or below -1.0, which is possible with this regressor
+TextBlob: again not too bad, similar distribution to OpenAI but more overlapping and false negatives. Also no paper
+TextBlob-Bayes: Out of the question. Scores seem very random (and scores too much as +1.0)
+StanfordNLP: Out of the question. Scores everything as -0.5.
+XiaoHan: Out of the question. Scores most articles as -1.0.

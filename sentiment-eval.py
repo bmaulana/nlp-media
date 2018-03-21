@@ -18,21 +18,21 @@ def eval_sentiment(num_samples=5):
 
     # From each file in ./out-sentiment/, show a sample of num_sents sentences to manually classify
     for filename in os.listdir('./out-sentiment'):
-        f_in = open('./out-sentiment/' + filename, 'r')
+        f_in = open('./out-sentiment/' + filename, 'r', encoding='utf-8')
         sents = {}
         for line in f_in:
             try:
                 raw = json.loads(line)
-            except json.JSONDecodeError:
+                for sent, scores in raw['relevant_sentences'].items():
+                    if scores['sentiment_score_openai'] != 'ERROR':  # if one score is 'ERROR', all is 'ERROR'
+                        sents[sent] = scores
+            except (json.JSONDecodeError, TypeError):
                 continue
-            for sent, scores in raw['relevant_sentences'].items():
-                if scores['sentiment_score_openai'] != 'ERROR':  # if one score is 'ERROR', all is 'ERROR'
-                    sents[sent] = scores
         f_in.close()
 
         if len(sents) > num_samples:
             sampled = random.Random(0).sample(list(sents.items()), k=num_samples)
-        elif len(sents) == 0:  # decode error
+        elif len(sents) == 0:  # file read errors
             continue
         else:
             sampled = list(sents.items())
@@ -68,7 +68,7 @@ def eval_sentiment(num_samples=5):
               '\tNegative:', mean_scores[i][2])
 
     # output sentences and answers for reproducibility
-    f_out = open(out_file, 'w')
+    f_out = open(out_file, 'w', encoding='utf-8')
     for answer in answers:
         f_out.write(str(answer[1]) + ',' + str(answer[0]) + '\n')
     f_out.close()
