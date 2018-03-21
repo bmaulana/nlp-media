@@ -8,6 +8,7 @@
 \usepackage{latexsym}
 \usepackage{a4wide}
 \usepackage{amsmath}
+\usepackage[super]{nth}
 
 \newtheorem{theorem}{THEOREM}
 \newtheorem{lemma}[theorem]{LEMMA}
@@ -38,21 +39,19 @@ $\Box$ \end{quotation}}
 
 
 \title{{\vspace{-14em} \includegraphics[scale=0.4]{ucl_logo.png}}\\
-{{\Huge Project Title}}\\
-{\large Optional Subtitle}\\
+{{\Huge Using natural language processing to develop a pipeline to analyse media representation of people with disabilities in Web-based news articles}}\\
+{\large Collection and filtering of Web-based news articles, comparison of open-source sentiment models, and applications of the technology
+}\\
 }
-\date{Submission date: Day Month Year}
-\author{Your name\thanks{
+\date{Submission date: \nth{30} April 2018}
+\author{Bagus Maulana\thanks{
 {\bf Disclaimer:}
-This report is submitted as part requirement for the MY DEGREE at UCL. It is
+This report is submitted as part requirement for the MEng Degree in Computer Science at UCL. It is
 substantially the result of my own work except where explicitly indicated in the text.
-\emph{Either:} The report may be freely copied and distributed provided the source is explicitly acknowledged
-\newline  %% \\ messes it up
-\emph{Or:}\newline
-The report will be distributed to the internal and external examiners, but thereafter may not be copied or distributed except with permission from the author.}
+\emph{The report may be freely copied and distributed provided the source is explicitly acknowledged}}
 \\ \\
-Name of your degree\\ \\
-Supervisor's name}
+MEng Computer Science\\ \\
+Catherine Holloway, Nicholas Firth}
 
 
 
@@ -61,105 +60,155 @@ Supervisor's name}
 \onehalfspacing
 \maketitle
 \begin{abstract}
-Summarise your report concisely.
+
+\textbf{Report Title:}  Using natural language processing to develop a pipeline to analyse media representation of people with disabilities in Web-based news articles: Collection and filtering of Web-based news articles, comparison of open-source sentiment models, and applications of the technology
+
+\textbf{Author’s Name:} Bagus Maulana
+
+\textbf{Supervisor’s Name:} Catherine Holloway, Nicholas Firth
+
+\textbf{Date and Year of Submission:} \nth{30} April 2018\\
+
+[[[Three paragraphs:
+What your project is about.
+How you went about meeting the project goals.
+What the outcome is.]]]
+
+[[[What the project is about, the principle aims and goals, and specific challenges.
+How you carried out the project and what work it involved.
+The results and achievements of the project]]]
+
+[[[Half a page’s length.]]]
 \end{abstract}
 \tableofcontents
 \setcounter{page}{1}
 
 
-\chapter{Title of first chapter}
-This is just a bare minimum to get started.  There is unlimited guidance on using latex, e.g., {\tt https://en.wikibooks.org/wiki/LaTeX}.   You are still responsible to check the detailed requirements of a project, including formatting instructions, see \\
-{\tt https://moodle.ucl.ac.uk/pluginfile.php/3591429/mod\_resource/content/7/UGProjects2017.pdf}.
-Leave at least a line of white space when you want to start a new paragraph.
+\chapter{Introduction}
 
-\section{Section 1}
-Chapters should contain numbered sections and sub-sections.
+[[[Outline the problem you are working on, why it is interesting and what the challenges are.
 
-\subsection{Sub-Section 1}
-Remember that this is a structured technical/academic report, not an essay.
+– List your aims and goals. An aim is something you intend to achieve (e.g., learn a new programming language and apply it in solving the problem), while a goal is something specific you expect to deliver (e.g., a working application with a particular set of features).
 
-\section{Mathematical Notation}
-Mathematical expressions are placed inline between dollar signs, e.g. $\sqrt 2, \sum_{i=0}^nf(i)$, or in display mode
-\[ e^{i\pi}=-1\] and another way, this time with labels,
-\begin{align}
-\label{line1} A=B\wedge B=C&\rightarrow A=C\\
-&\rightarrow C=A\\
-\intertext{note that}
-n!&=\prod_{1\leq i\leq n}i \\
-\int_{x=1}^y \frac 1 x \mathrm{d}x&=\log y
-\end{align}
-We can refer to labels like this \eqref{line1}.   
+– Give an overview of how you carried out the project (e.g., an iterative approach).
 
-\chapter{Title of second chapter}
+– A brief overview of the rest of the chapters in the report (a guide to the reader of the overall structure of the report).
 
-The main chapters should start with a brief summary -- this chapter is about, or introduces, some aspect of the work.
+This chapter is relatively short (2-4 pages) and must leave the reader very clear on what the project is about and what your goals are]]]
 
-\section{Main Content}
-Often lots of citations here (and elsewhere), e.g. \cite{Rey:D} or \cite[Theorem 2.3]{PriorNOP70}.   Bibtex can help with this, but is not essential. If you want pictures, try
 
-\begin{center}
-\includegraphics[scale=.5]{aristotle.jpg}
-\end{center}
-You can use 
-\begin{itemize}
-\item lists
-\item like this
-\end{itemize}
-or numbered
-\begin{enumerate}
-\item like this,
-\item or this
-\end{enumerate}
-but don't overdo it.
+\chapter{Context}
 
-\section{More Content}
+[[[This chapter should cover background information, related work, research done, and tools or software selected for use in the project.
 
-\section{Summary}
-The main chapters should have a short summary, highlighting what the chapter has covered and any key points that need emphasising.
+– Provide necessary context and background information to describe how your project relates to what is already known or available.
 
-\chapter{Title of third chapter}
-If you have a formal theorem you might try this.
-\begin{definition}\label{def}
-See definition~\ref{def}.
-\end{definition}
-\begin{theorem}
-For all $n\in\nats,\; 1^n=1$.
-\end{theorem}
-\begin{proof}
-By induction over $n$.
-\end{proof}
+– A description of the research carried out to learn out about the nature of the problem(s) being investigated and potential solutions. The form of the research will vary widely depending on the kind of project. For example, it might involve searching through research publications and online resources, or might involve an exploration of design possibilities for a user interface or program structure.
 
-\chapter{etc.}
+– The sources of information you are drawing on (papers, books, websites, etc.) should all be cited or referenced clearly. In addition, state how each source relates to your work and avoid the temptation to pad out the chapter by including sources that you didn’t make use of during the project.
+
+– If relevant, a survey of similar solutions, programs or applications to yours, and how yours is differentiated.
+
+– Introduce the software, programming languages, library code, frameworks and other tools that you are using. Discuss choices and make clear which you made use of and why.
+
+You should not include well known things (e.g., HTML or Java) or try to give tutorials on how to use a tool or code library (use references to books and websites for that information). Everything you include should be directly relevant to your work and the relationship made clear. This chapter is likely to be fairly substantial, perhaps 8-10 pages.]]] 
+
+
+\chapter{Requirements and Analysis}
+
+[[[Give the detailed problem statement. This elaborates on what you may have included in the introduction chapter, and represents the starting point from which requirements were derived.
+
+- A structured list of requirements.
+
+- Use cases (a use diagram and list of use case titles, with the full use cases appearing in the appendix).
+
+- Results of analysing the requirements to extract information. For example, data modelling to find the data to be stored (ER diagram), views/web pages needed and so on.
+
+The level of detail of the requirements and use cases will depend on the nature of your project. If you are doing a Software Engineering based design and implementation project, then they will need to be done thoroughly. If there is a substantial body of requirements and use cases, then a summary should be given in the chapter, with the full set included in an appendix section.
+
+If your project is not Software Engineering oriented, then you still need to describe the requirements you are working to and relevant analysis information. Use cases may not be needed or be relevant.
+
+The analysis part of the chapter is what you did to map the requirements information into the first pass design. You can think of analysis as the first stage of design, and the purpose is to show how the requirements were used to inform the design. The length of this chapter depends on the kind of project, but you are typically looking at 5-6 pages.]]]
+
+
+\chapter{Design and Implementation}
+
+[[[Describe the design of what you have created.
+
+– Start with the application architecture, giving its overall structure and the components that make up that structure.
+
+– Give a description of the design of each of the components that make up the architecture.
+
+– Include the database or storage representation.
+
+– Provide implementation details as necessary.
+
+As with other chapters, the structure and contents of this chapter will depend on the nature of your project, so the list above is only a suggestion, not a fixed requirement.
+
+Find an ordering and form of words so that the design is clear, focusing on the interesting design decisions. For example, what were the alternatives, why select one particular solution? You have a limited number of pages so be selective about details. Also remember that someone (your examiners!) has to read this so don’t overwhelm them with intricate descriptions of everything that only you can follow – but do make sure the key details of the solution are in place. Use appropriate terminology and demonstrate that you have a good understanding of the Computer Science principles involved.
+
+You can use diagrams and screen shots to help explain the design but don’t overuse them. Diagrams and screen shots should add information, not duplicate what is written in the text, and definitely avoid page after page of diagrams as this will disrupt the flow of your text. Where relevant, UML diagrams can certainly be used but, again, don’t flood the chapter with diagrams. Additional diagrams can always be included in an appendix section. It is not the case that a full set of UML diagrams must be provided for a software development project, and they shouldn’t be added in the belief that there must be UML diagrams to do a good project. Think about what you need to communicate and use UML diagrams if and when they fit the need.
+
+It may be useful to include sections of code to highlight how a particular algorithm is implemented or how an interesting programming problem was solved. However, avoid lengthy sections of code, as this can also disrupt the flow of the text. Also make sure that your code fragments are readable, easy to follow and properly laid out. It may be better to use pseudo-code rather than actual code, especially when describing an algorithm. If you need to make use of longer sections of code, you can put the code in the appendix and reference it from the text.
+
+An alternative way to organise the content of both this chapter and the preceding one, suitable for some projects, is to have a sequence of chapters or sections for each major iteration of the project. This allows the progression of the project to be shown, with each iteration building on the last, and the opportunity for interesting discussion about the decisions that needed to be made.
+
+This is a core chapter in your report and will usually be quite substantial, 10 pages or more.]]]
+
+
+\chapter{Results Evaluation}
+
+[[[Describe your testing strategy (unit, functional, acceptance testing; and how they are carried out). How were test cases selected?
+
+– Examples of specific tests and how they were carried out (e.g., using mock objects to break dependencies). Focus on the interesting cases.
+
+– A summary of the test results and what coverage was achieved. Detailed test reports should appear in the appendix, if they add useful information or you want to demonstrate the kinds of tests and coverage achieved.
+
+If your project requires substantial evaluation of data and results, evaluation of algorithms, or other forms of testing that are not code-based, then adapt this chapter to suit.
+
+This chapter will typically be 2-4 pages in length but could be more depending on the depth of testing done. If you need to do a detailed evaluation for a more mathematical or theory-based project, then this chapter could well be more substantial.]]]
 
 
 \chapter{Conclusions}
+
+[[[A summary of what the project has achieved. Make sure that you address each goal set out in the Introduction chapter, to show that you have achieved what you claimed you would. Don’t leave any loose ends.
+
+– A critical evaluation of the results of the project (e.g., how well were the goals met, is the application fit for purpose, has good design and implementation practice been followed, was the right implementation technology chosen and so on).
+
+– Future work. How could the project be developed if you had another 6 months. Take care to differentiate between what you have done to satisfy your stated project goals, and work that could be done to meet extended goals.
+
+– Wrap-up and final thoughts on your project. 
+
+This chapter is typically 2-4 pages long but could be longer if the project work requires more extensive evaluation.]]]
+
 \section{Achievements}
 Summarise the achievements to confirm the project goals have been met.
+
 \section{Evaluation}
 Evaluation of the work (this may be in a separate chapter if there is substantial evaluation).
 
 \section{Future Work}
 How the project might be continued, but don't give the impression you ran out of time!
 
+
 \appendix
 
-
-\begin{thebibliography}{HHM99}
-
+\begin{thebibliography}{HHM99} %% TODO
 
 \bibitem[Pri70]{PriorNOP70}  %%only an example
 A.~Prior.
 \newblock The notion of the present.
 \newblock {\em Studium Generale}, 23:  245--248, 1970.
 
-
-\bibitem[Rey97]{Rey:D}
+\bibitem[Rey97]{Rey:D}  %%only an example
 M.~Reynolds.
 \newblock A decidable temporal logic of parallelism.
 \newblock {\em Notre Dame Journal of Formal Logic}, 38(3):  419--436,
   1997.
+
 \end{thebibliography}
-\chapter{Other appendices, e.g., code listing}
-Put your appendix sections here
+
+\chapter{Other appendices, e.g., code listing} %% TODO
+Put your appendix sections here %% TODO
 
 \end{document}
