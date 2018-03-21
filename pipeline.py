@@ -21,11 +21,13 @@ TOPICS2 = {'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'inv
            'speech impairment': ['speech impairment', 'stutter', 'speech disability', 'speech disorder',
                                  'communication disability', 'difficulty speaking', 'language impairment',
                                  'language disorder', 'language disability', 'speech impediment'],
-           'mental illness': ['mental illness', 'mental health', 'psychiatric', 'emotional disorder',
-                              'developmental disability', 'retardation', 'developmental delay', 'brain injured',
-                              'brain injury', 'brain damaged', 'learning disability', 'slow learner', 'mental issue',
-                              'mental disorder', 'psychological'],
-           'paralysis': ['paraplegic', 'quadriplegic', 'quadriplegia', 'spinal cord', 'paraplegia', 'paralysed',
+           'mental illness': ['mental illness', 'mental health', 'mental disability', 'mental disorder', 'mental issue',
+                              'brain injured', 'brain injury', 'brain damaged', 'psychological', 'psychiatric',
+                              'emotional disorder', 'behavioural disorder', 'retardation', 'intellectual disability',
+                              'mentally ill', 'mentally disabled', 'mentally handicapped'],
+           'developmental delay': ['developmental delay', 'developmental disability', 'developmental disorder',
+                                   'learning disability', 'slow learner', 'retardation', 'intellectual disability'],
+           'paralysis': ['paraplegic', 'quadriplegic', 'spinal cord', 'paraplegia', 'quadriplegia', 'paralysed',
                          'paralyzed', 'paralysis', 'crippled', 'leg braces', 'wheelchair'],
            'dyslexia': ['dyslexia', 'dyslexic'],
            'autism': ['autism', 'autistic', 'asperger\'s', 'ASD'],
@@ -33,14 +35,17 @@ TOPICS2 = {'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'inv
 
 # Only keywords that don't have other meanings (combinations of common words are also problematic)
 QUERIES = {'disabled': ['disabled', 'disability'],
-           'cerebral palsy': ['"cerebral palsy"', 'spastic'],
-           'deaf': ['deaf'],  # impairment and impaired
-           'blind': ['blind', '"visual impairment"', '"partially sighted"'],  # visual and visually has the same stem
+           'cerebral palsy': ['cerebral palsy', 'spastic'],
+           'deaf': ['deaf', 'hearing impairment', 'hard of hearing', 'hearing impaired'],
+           'blind': ['blind', 'visual impairment', 'partially sighted', 'visually impaired'],
            'epilepsy': ['epilepsy', 'epileptic'],
            'mute': ['mute', 'non-verbal'],
-           'speech impairment': ['"speech impairment"', 'stutter', '"speech disorder"', '"speech impediment"'],
-           'mental illness': ['"mental illness"', '"mental health"', '"mental disorder"'],
-           'paralysis': ['paraplegic', 'quadriplegic', 'paraplegia', 'paralysis'],
+           'speech impairment': ['speech impairment', 'stutter', 'speech disorder', 'speech impediment'],
+           'mental illness': ['mental illness', 'mental health', 'mental disorder', 'mental disability',
+                              'mentally ill', 'mentally disabled', 'mentally handicapped'],
+           'developmental delay': ['developmental delay', 'developmental disability', 'developmental disorder',
+                                   'learning disability'],
+           'paralysis': ['paraplegic', 'quadriplegic', 'paraplegia', 'quadriplegia', 'paralysis'],
            'dyslexia': ['dyslexia', 'dyslexic'],
            'autism': ['autism', 'autistic', 'asperger\'s', 'ASD'],
            }
@@ -76,4 +81,3 @@ for tpc, words in TOPICS2.items():
     for src in SOURCES:
         pipeline(tpc, words, src)
     plot(tpc)
-# pipeline('Dyslexia', ['Dyslexia', 'Dyslexic'], SOURCES[0])
