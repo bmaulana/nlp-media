@@ -73,7 +73,7 @@ def filter(fname, keywords=None, threshold=20):
     # print(sorted(keyword_array)[::-1])
     # print(sum(keyword_array) / len(keyword_array))
 
-    print('Writing output to ./out-sentiment/')
+    print('Writing output to ./out-filtered/')
     # relevant = []
     f_out = open(out_path, 'w')
     for i in tqdm(range(len(corpus))):

@@ -14,8 +14,9 @@ def get_data(in_path):
     f_in = open(in_path, 'r')
     for line in f_in:
         raw = json.loads(line)
-        if raw['sentiment_score_openai'] != 'ERROR':
-            data.append([date_parse(raw['datetime']), float(raw['sentiment_score_openai']), raw['source']])
+        # Change to sentiment_score_openai (or whatever scorer) when on 'regular' out_sentiment
+        if raw['sentiment_score'] != 'ERROR':
+            data.append([date_parse(raw['datetime']), float(raw['sentiment_score']), raw['source']])
             # 'cap' outliers
             if data[-1][1] < -1.0:
                 data[-1][1] = -1.0
@@ -25,7 +26,7 @@ def get_data(in_path):
     return data
 
 
-def plot(keyword):
+def plot(keyword, folder='./out-sentiment/'):
     """
     Format: python plot.py filename
     """
@@ -33,9 +34,9 @@ def plot(keyword):
         os.makedirs('./out-plot/')
 
     data = []
-    for filename in os.listdir('./out-sentiment'):
+    for filename in os.listdir(folder):
         if keyword in str(filename):
-            data += get_data('./out-sentiment/' + filename)
+            data += get_data(folder + filename)
     data = np.array(data)
     data = data[np.argsort(data[:, 0])]  # sort on datetime
 

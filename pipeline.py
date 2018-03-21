@@ -3,7 +3,7 @@ import oop_scraper
 from crawler import crawler
 from filter import filter
 from parse import parse
-from sentiment import sentiment
+from sentiment import sentiment, sentiment_vader, sentiment_openai
 from plot import plot
 
 # topic: [keywords]
@@ -12,7 +12,7 @@ TOPICS = {'Dyslexia': ['Dyslexia', 'Dyslexic'],
           'Dementia': ['Dementia', 'Alzheimer\'s'],
           }
 
-TOPICS2 = {'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible'],
+TOPICS2 = {# 'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible'],
            'cerebral palsy': ['cerebral palsy', 'spastic'],
            'deaf': ['deaf', 'hearing impaired', 'hard of hearing', 'hearing loss'],  # impairment and impaired
            'blind': ['blind', 'visual impairment', 'partially sighted'],  # visual and visually has the same stem
@@ -34,7 +34,7 @@ TOPICS2 = {'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'inv
            }
 
 # Only keywords that don't have other meanings (combinations of common words are also problematic)
-QUERIES = {'disabled': ['disabled', 'disability'],
+QUERIES = {# 'disabled': ['disabled', 'disability'],
            'cerebral palsy': ['cerebral palsy', 'spastic'],
            'deaf': ['deaf', 'hearing impairment', 'hard of hearing', 'hearing impaired'],
            'blind': ['blind', 'visual impairment', 'partially sighted', 'visually impaired'],
@@ -52,7 +52,7 @@ QUERIES = {'disabled': ['disabled', 'disability'],
 
 
 # TODO add more
-SOURCES = [oop_scraper.GuardianScraper("7f2c7c42-2600-4292-a417-1b8efc5271a6"),
+SOURCES = [  # oop_scraper.GuardianScraper("7f2c7c42-2600-4292-a417-1b8efc5271a6"),  # TODO fix based on 5000/day
            oop_scraper.DailyMailScraper(),
            oop_scraper.DailyExpressScraper()]
 
@@ -71,7 +71,9 @@ def pipeline(topic, keywords, source):
     print('\n Parsing:')
     parse(fname, keywords)
     print('\n Scoring sentiment:')
-    sentiment(fname, test_time=False)
+    # sentiment(fname, test_time=False)
+    sentiment_vader(fname)
+    # sentiment_openai(fname)
 
     total_time = time.time() - start_time
     print('\nPipeline took', int(total_time // 60), 'minutes', total_time % 60, 'seconds\n')
@@ -80,4 +82,4 @@ def pipeline(topic, keywords, source):
 for tpc, words in TOPICS2.items():
     for src in SOURCES:
         pipeline(tpc, words, src)
-    plot(tpc)
+    plot(tpc, folder='./out-sentiment-vader/')
