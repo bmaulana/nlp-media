@@ -14,7 +14,6 @@ openai_model = Model()
 print('\nLoading OpenAI sentiment model took', time.time() - openai_time, 'seconds\n')
 
 vader_analyser = vaderSentiment.SentimentIntensityAnalyzer()
-stanford_nlp = StanfordCoreNLP('http://localhost', 9000)  # TODO replace with github.com/Lynten/stanford-corenlp
 nba = NaiveBayesAnalyzer()
 pa = PatternAnalyzer()
 
@@ -29,6 +28,9 @@ def sentiment(fname, test_time=False):
         os.makedirs('./out-sentiment/')
     in_path = './out-parse/' + fname
     out_path = './out-sentiment/' + fname
+
+    # You need to download this from https://stanfordnlp.github.io/CoreNLP/. Too big to upload to GitHub.
+    stanford_nlp = StanfordCoreNLP(r'./stanford-corenlp-full-2018-02-27', memory='8g')
 
     f_in = open(in_path, 'r')
     count, total = 0, sum(1 for line in f_in)
@@ -151,6 +153,7 @@ def sentiment(fname, test_time=False):
         count += 1
         print(count, "/", total, "articles analysed (last article =", time.time() - article_time, "seconds)")
 
+    stanford_nlp.close()
     f_in.close()
     if not test_time:
         f_out.close()

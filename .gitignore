@@ -114,3 +114,6 @@ out-plot/
 *.pdf
 *.synctex.gz
 *.toc
+
+# stanford corenlp (too big for GitHub)
+stanford-corenlp-full-2018-02-27/*
