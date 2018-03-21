@@ -161,7 +161,6 @@ def sentiment(fname, test_time=False):
     print('Sentiment analyses took', int(full_time // 60), 'minutes', full_time % 60, 'seconds')
 
 
-# TODO batch calls for different articles together to improve performance
 def sentiment_openai(fname):
     start_time = time.time()
 
@@ -171,9 +170,26 @@ def sentiment_openai(fname):
     out_path = './out-sentiment-openai/' + fname
 
     f_in = open(in_path, 'r')
-    f_out = open(out_path, 'w')
+    i, num_articles = 0, 0
+    batched_sentences = []
+    sentence_index = {}
+    for line in f_in:
+        data = json.loads(line)
+        sents = data['relevant_sentences']
+        for sent in sents:
+            batched_sentences.append(sent)
+            sentence_index[sent] = i
+            i += 1
+        num_articles += 1
+    f_in.close()
 
-    for line in tqdm(f_in):
+    # OpenAI: mLSTM-based, trained on Amazon reviews (github.com/openai/generating-reviews-discovering-sentiment)
+    # Note: VERY slow (~7 seconds per sentence, faster with larger batches). May be faster with tensorflow-gpu.
+    sentiment_vector = openai_model.transform(batched_sentences)[:, 2388]
+
+    f_in = open(in_path, 'r')
+    f_out = open(out_path, 'w')
+    for line in f_in:
         to_write = json.loads(line)
         if to_write['num_relevant_sentences'] == 0:
             continue
@@ -183,20 +199,8 @@ def sentiment_openai(fname):
         to_write['relevance_score_keyword_rank'] = 1 / to_write['keyword_rank']  # Assume Zipf distribution with s ~= 1
 
         sents = to_write['relevant_sentences']
-
-        # OpenAI: mLSTM-based, trained on Amazon reviews (github.com/openai/generating-reviews-discovering-sentiment)
-        # Note: VERY slow (~7 seconds per sentence, faster with larger batches). May be faster with tensorflow-gpu.
-        batched_sents = []  # OpenAI runs faster with batched sentences
         for sent in sents:
-            batched_sents.append(sent)  # OpenAI runs faster with batched sentences
-        try:
-            openai_sentiment = openai_model.transform(batched_sents)[:, 2388]
-            for i in range(len(batched_sents)):
-                sents[batched_sents[i]]['sentiment_score'] = float(openai_sentiment[i])
-                # y = normal distribution with mean=0, unbounded
-        except ValueError:  # tensorflow bugs
-            for i in range(len(batched_sents)):
-                sents[batched_sents[i]]['sentiment_score'] = 'ERROR'
+            sents[sent]['sentiment_score'] = float(sentiment_vector[sentence_index[sent]])
 
         # 'summarise' sentiment score of an article via weighted average of each sentence
         # TODO measure relevance score of each sentence & use it as weight for sentiment score? instead of keyword_count
@@ -219,6 +223,8 @@ def sentiment_openai(fname):
 
     full_time = time.time() - start_time
     print('Sentiment analyses took', int(full_time // 60), 'minutes', full_time % 60, 'seconds')
+    print('Per article:', full_time / num_articles, 'seconds')
+    print('Per sentence:', full_time / len(batched_sentences), 'seconds')
 
 
 def sentiment_vader(fname):
