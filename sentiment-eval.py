@@ -44,20 +44,23 @@ def eval_sentiment(num_samples=5):
             if res == '+':
                 for i in range(len(labels)):
                     full_label = 'sentiment_score_' + labels[i]
+                    current_score = max(-1.0, min(1.0, float(scores[full_label])))
                     mean_scores[i, 0] += float(scores[full_label])
-                    all_scores[i][0].append(float(scores[full_label]))
+                    all_scores[i][0].append(current_score)
                 answers.append((sent, '+'))
             elif res == '-':
                 for i in range(len(labels)):
                     full_label = 'sentiment_score_' + labels[i]
+                    current_score = max(-1.0, min(1.0, float(scores[full_label])))
                     mean_scores[i, 2] += float(scores[full_label])
-                    all_scores[i][2].append(float(scores[full_label]))
+                    all_scores[i][2].append(current_score)
                 answers.append((sent, '-'))
             else:
                 for i in range(len(labels)):
                     full_label = 'sentiment_score_' + labels[i]
+                    current_score = max(-1.0, min(1.0, float(scores[full_label])))
                     mean_scores[i, 1] += float(scores[full_label])
-                    all_scores[i][1].append(float(scores[full_label]))
+                    all_scores[i][1].append(current_score)
                 answers.append((sent, 'n'))
             num_sents += 1
 
@@ -70,21 +73,21 @@ def eval_sentiment(num_samples=5):
     # output sentences and answers for reproducibility
     f_out = open(out_file, 'w', encoding='utf-8')
     for answer in answers:
-        f_out.write(str(answer[1]) + ',' + str(answer[0]) + '\n')
+        f_out.write(str(answer[1]) + ';' + str(answer[0]) + '\n')
     f_out.close()
 
     # Plot histogram for each classification, for each sentiment scorer
     fig, axs = plt.subplots(2, (len(labels) + 1) // 2, figsize=(5 * ((len(labels) + 1) // 2), 10), tight_layout=True)
     for i in range(len(labels)):
         ax = axs[i % 2, i // 2]
-        ax.hist(all_scores[i][0], bins=np.arange(-1.0, 1.1, 0.1), alpha=0.5, label='pos')
-        ax.hist(all_scores[i][2], bins=np.arange(-1.0, 1.1, 0.1), alpha=0.5, label='neg')
-        ax.hist(all_scores[i][1], bins=np.arange(-1.0, 1.1, 0.1), alpha=0.3, label='ntr')
+        ax.hist(all_scores[i][0], bins=np.arange(-1.0, 1.2, 0.1), alpha=0.5, label='pos')
+        ax.hist(all_scores[i][2], bins=np.arange(-1.0, 1.2, 0.1), alpha=0.5, label='neg')
+        ax.hist(all_scores[i][1], bins=np.arange(-1.0, 1.2, 0.1), alpha=0.3, label='ntr')
         ax.set_title(labels[i])
         ax.set_xlabel('Sentiment Score')
         ax.set_ylabel('No. of articles')
         ax.legend()
-    plt.savefig('./out-plot/sentiment_eval.png')
+    plt.savefig('./out-sentiment/eval.png')
     plt.close()
 
 
