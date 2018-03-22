@@ -193,7 +193,7 @@ class GuardianScraper(Scraper):
 
         page_links = []
         page = 0
-        while num_articles == -1 or num_articles > 0:
+        while num_articles == -1 or num_articles > 0:  # TODO refactor to be tqdm-friendly
             try:
                 page += 1
                 if num_articles == -1:
@@ -214,17 +214,12 @@ class GuardianScraper(Scraper):
 
                     # Cache body text on /search endpoint (50 articles per API call) instead of single-item endpoint
                     # Due to rate limit of 5000 API calls / day
-                    soup = BeautifulSoup(i['fields']['body'], 'html5lib')
-                    res = soup.find_all('p')
-                    res = [x.text for x in res]
-                    res = ' '.join(res)
-                    res.replace('[]\\', '')
                     self.articles[i['apiUrl']] = {
                         'source': 'Guardian',
                         'title': i['webTitle'],
                         'datetime': i['webPublicationDate'],
                         'section': i['sectionName'],
-                        'text': res
+                        'text': i['fields']['body']
                     }
 
             except:
@@ -235,7 +230,16 @@ class GuardianScraper(Scraper):
 
     def get_article_text(self, page_link):
         if page_link in self.articles:
-            return self.articles[page_link]
+            ret = self.articles[page_link]
+
+            soup = BeautifulSoup(ret['text'], 'html5lib')
+            res = soup.find_all('p')
+            res = [x.text for x in res]
+            res = ' '.join(res)
+            res.replace('[]\\', '')
+
+            ret['text'] = res
+            return ret
 
         url = page_link + '?api-key=' + self.api_key + '&show-fields=body'
         print(url)  # should never reach here, check if something is printed (be aware of rate limit 5000 calls/day)

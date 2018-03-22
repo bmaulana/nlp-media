@@ -12,10 +12,10 @@ TOPICS = {'Dyslexia': ['Dyslexia', 'Dyslexic'],
           'Dementia': ['Dementia', 'Alzheimer\'s'],
           }
 
-TOPICS2 = {# 'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible'],
-           'cerebral palsy': ['cerebral palsy', 'spastic'],
-           'deaf': ['deaf', 'hearing impaired', 'hard of hearing', 'hearing loss'],  # impairment and impaired
-           'blind': ['blind', 'visual impairment', 'partially sighted'],  # visual and visually has the same stem
+TOPICS2 = {  # 'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible'],
+           # 'cerebral palsy': ['cerebral palsy', 'spastic'],
+           # 'deaf': ['deaf', 'hearing impaired', 'hard of hearing', 'hearing loss'],  # impairment and impaired
+           'blind': ['blind', 'visual impairment', 'partially sighted', 'vision loss'],  # visual and visually has the same stem
            'epilepsy': ['epilepsy', 'epileptic', 'seizure'],
            'mute': ['mute', 'cannot speak', 'difficulty speaking', 'synthetic speech', 'non-vocal', 'non-verbal'],
            'speech impairment': ['speech impairment', 'stutter', 'speech disability', 'speech disorder',
@@ -34,8 +34,8 @@ TOPICS2 = {# 'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'i
            }
 
 # Only keywords that don't have other meanings (combinations of common words are also problematic)
-QUERIES = {# 'disabled': ['disabled', 'disability'],
-           'cerebral palsy': ['cerebral palsy', 'spastic'],
+QUERIES = {'cerebral palsy': ['cerebral palsy', 'spastic'],
+           'disabled': ['disabled', 'disability'],
            'deaf': ['deaf', 'hearing impairment', 'hard of hearing', 'hearing impaired'],
            'blind': ['blind', 'visual impairment', 'partially sighted', 'visually impaired'],
            'epilepsy': ['epilepsy', 'epileptic'],
@@ -47,14 +47,15 @@ QUERIES = {# 'disabled': ['disabled', 'disability'],
                                    'learning disability'],
            'paralysis': ['paraplegic', 'quadriplegic', 'paraplegia', 'quadriplegia', 'paralysis'],
            'dyslexia': ['dyslexia', 'dyslexic'],
-           'autism': ['autism', 'autistic', 'asperger\'s', 'ASD'],
+           'autism': ['autism', 'autistic', 'asperger\'s', 'ASD']
            }
 
 
 # TODO add more
-SOURCES = [  # oop_scraper.GuardianScraper("7f2c7c42-2600-4292-a417-1b8efc5271a6"),  # TODO fix based on 5000/day
+SOURCES = [oop_scraper.GuardianScraper("7f2c7c42-2600-4292-a417-1b8efc5271a6"),  # TODO fix based on 5000/day
            oop_scraper.DailyMailScraper(),
-           oop_scraper.DailyExpressScraper()]
+           oop_scraper.DailyExpressScraper()
+           ]
 
 NUM_DOCS = -1  # -1 to get all documents
 
