@@ -83,4 +83,5 @@ def pipeline(topic, keywords, source):
 for tpc, words in TOPICS2.items():
     for src in SOURCES:
         pipeline(tpc, words, src)
-    plot(tpc, folder='./out-sentiment-vader/')
+    plot(tpc, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/')
+    # plot(tpc, in_folder='./out-plot-openai/', out_folder='./out-plot-openai/')

@@ -29,17 +29,17 @@ def get_data(in_path):
     return data
 
 
-def plot(keyword, folder='./out-sentiment-vader/'):
+def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/'):
     """
     Format: python plot.py filename
     """
-    if not os.path.exists('./out-plot/'):
-        os.makedirs('./out-plot/')
+    if not os.path.exists(out_folder):
+        os.makedirs(out_folder)
 
     data = []
-    for filename in os.listdir(folder):
+    for filename in os.listdir(in_folder):
         if keyword in str(filename):
-            data += get_data(folder + filename)
+            data += get_data(in_folder + filename)
     data = np.array(data)
     data = data[np.argsort(data[:, 0])]  # sort on datetime
 
@@ -115,7 +115,7 @@ def plot(keyword, folder='./out-sentiment-vader/'):
     # atm, the plots don't tell us much. You can tell that it's normally distributed, but need to know means and trends
 
     # plt.savefig('./out-plot/' + datetime.now().strftime('%Y%m%d%H%M%S') + '.png')
-    plt.savefig('./out-plot/' + keyword + '.png')
+    plt.savefig(out_folder + keyword + '.png')
     plt.close()
 
 

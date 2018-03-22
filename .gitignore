@@ -106,7 +106,7 @@ ENV/
 # output
 *.json
 *-out
-out-plot/
+*.png
 *.csv
 
 # LaTeX outputs

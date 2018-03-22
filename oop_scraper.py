@@ -241,8 +241,9 @@ class GuardianScraper(Scraper):
             ret['text'] = res
             return ret
 
+        # should never reach here, check whenever something is printed (will reach 5000/day API call rate limit quickly)
         url = page_link + '?api-key=' + self.api_key + '&show-fields=body'
-        print(url)  # should never reach here, check if something is printed (be aware of rate limit 5000 calls/day)
+        print(url)
 
         try:
             r = requests.get(url)
