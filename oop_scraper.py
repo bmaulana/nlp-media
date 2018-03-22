@@ -181,15 +181,14 @@ class GuardianScraper(Scraper):
 
     def __init__(self, api_key):
         self.api_key = api_key
+        self.articles = {}
 
     def get_fname(self, phrase):
         return 'Guardian-{}.json'.format(phrase)
 
     def search_phrase(self, phrase, num_articles):
-        url = 'https://content.guardianapis.com/search?q='
-        url += '\"' + phrase + '\"'
-        url += '&api-key='
-        url += self.api_key
+        url = 'https://content.guardianapis.com/search?q=\"' + phrase + '\"&api-key=' + self.api_key + \
+              '&show-fields=body'
         print(url)
 
         page_links = []
@@ -213,6 +212,21 @@ class GuardianScraper(Scraper):
                 for i in data:
                     page_links.append(i['apiUrl'])
 
+                    # Cache body text on /search endpoint (50 articles per API call) instead of single-item endpoint
+                    # Due to rate limit of 5000 API calls / day
+                    soup = BeautifulSoup(i['fields']['body'], 'html5lib')
+                    res = soup.find_all('p')
+                    res = [x.text for x in res]
+                    res = ' '.join(res)
+                    res.replace('[]\\', '')
+                    self.articles[i['apiUrl']] = {
+                        'source': 'Guardian',
+                        'title': i['webTitle'],
+                        'datetime': i['webPublicationDate'],
+                        'section': i['sectionName'],
+                        'text': res
+                    }
+
             except:
                 print('\nServer not available. Skipped %s\n' % url)
                 break
@@ -220,7 +234,11 @@ class GuardianScraper(Scraper):
         return page_links
 
     def get_article_text(self, page_link):
+        if page_link in self.articles:
+            return self.articles[page_link]
+
         url = page_link + '?api-key=' + self.api_key + '&show-fields=body'
+        print(url)  # should never reach here, check if something is printed (be aware of rate limit 5000 calls/day)
 
         try:
             r = requests.get(url)
@@ -241,3 +259,7 @@ class GuardianScraper(Scraper):
         except:
             print('\nServer not available. Skipped %s\n' % url)
             return None
+
+    def free(self):
+        # Removes all saved articles. Useful when you're done with a query.
+        self.articles = {}

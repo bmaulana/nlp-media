@@ -51,6 +51,9 @@ def crawler(query, scraper, num_articles=-1, keywords=None):
         g.write('\n')
         g.flush()
 
+    if isinstance(scraper, scr.GuardianScraper):
+        scraper.free()
+
     print(count, "/", len(page_links), "articles scraped")
     print(skip_count, "articles already saved")
     time_spent = time.time()-start_time
