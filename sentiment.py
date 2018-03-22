@@ -272,4 +272,4 @@ def sentiment_vader(fname):
 
 
 if __name__ == '__main__':
-    sentiment(sys.argv[1])
+    sentiment_openai(sys.argv[1])
