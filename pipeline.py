@@ -12,10 +12,10 @@ TOPICS = {'Dyslexia': ['Dyslexia', 'Dyslexic'],
           'Dementia': ['Dementia', 'Alzheimer\'s'],
           }
 
-TOPICS2 = {  # 'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible'],
-           # 'cerebral palsy': ['cerebral palsy', 'spastic'],
-           # 'deaf': ['deaf', 'hearing impaired', 'hard of hearing', 'hearing loss'],  # impairment and impaired
-           'blind': ['blind', 'visual impairment', 'partially sighted', 'vision loss'],  # visual and visually has the same stem
+TOPICS2 = {'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible'],
+           'cerebral palsy': ['cerebral palsy', 'spastic'],
+           'deaf': ['deaf', 'hearing impaired', 'hard of hearing', 'hearing loss'],
+           'blind': ['blind', 'visual impairment', 'partially sighted', 'vision loss'],
            'epilepsy': ['epilepsy', 'epileptic', 'seizure'],
            'mute': ['mute', 'cannot speak', 'difficulty speaking', 'synthetic speech', 'non-vocal', 'non-verbal'],
            'speech impairment': ['speech impairment', 'stutter', 'speech disability', 'speech disorder',
@@ -52,7 +52,7 @@ QUERIES = {'cerebral palsy': ['cerebral palsy', 'spastic'],
 
 
 # TODO add more
-SOURCES = [oop_scraper.GuardianScraper("7f2c7c42-2600-4292-a417-1b8efc5271a6"),  # TODO fix based on 5000/day
+SOURCES = [oop_scraper.GuardianScraper("7f2c7c42-2600-4292-a417-1b8efc5271a6"),
            oop_scraper.DailyMailScraper(),
            oop_scraper.DailyExpressScraper()
            ]
@@ -66,7 +66,7 @@ def pipeline(topic, keywords, source):
     start_time = time.time()
 
     fname = crawler(topic, source, NUM_DOCS, QUERIES[topic])
-    # fname = 'Guardian-Dyslexia.json'
+    # fname = source.get_fname(topic)
     print('\n Filtering:')
     filter(fname, keywords, FILTER_THRESHOLD)
     print('\n Parsing:')
@@ -74,7 +74,7 @@ def pipeline(topic, keywords, source):
     print('\n Scoring sentiment:')
     # sentiment(fname, test_time=False)
     sentiment_vader(fname)
-    # sentiment_openai(fname)
+    sentiment_openai(fname)
 
     total_time = time.time() - start_time
     print('\nPipeline took', int(total_time // 60), 'minutes', total_time % 60, 'seconds\n')
@@ -84,4 +84,4 @@ for tpc, words in TOPICS2.items():
     for src in SOURCES:
         pipeline(tpc, words, src)
     plot(tpc, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/')
-    # plot(tpc, in_folder='./out-plot-openai/', out_folder='./out-plot-openai/')
+    plot(tpc, in_folder='./out-sentiment-openai/', out_folder='./out-plot-openai/')

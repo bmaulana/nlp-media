@@ -17,7 +17,10 @@ def get_data(in_path):
         raw = json.loads(line)
         # Change to sentiment_score_openai (or whatever scorer) when on 'regular' out_sentiment
         if raw['sentiment_score'] != 'ERROR' and raw['sentiment_score'] != 0.0:
-            data.append([date_parse(raw['datetime']), float(raw['sentiment_score']), raw['source']])
+            try:
+                data.append([date_parse(raw['datetime']), float(raw['sentiment_score']), raw['source']])
+            except ValueError:  # invalid date or sentiment score
+                continue
             # 'cap' outliers
             if data[-1][1] < -1.0:
                 data[-1][1] = -1.0
@@ -29,7 +32,7 @@ def get_data(in_path):
     return data
 
 
-def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/'):
+def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-openai/'):
     """
     Format: python plot.py filename
     """
@@ -111,12 +114,31 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     for tick in axs[0, 2].get_xticklabels():
         tick.set_rotation(30)
 
-    # TODO: assume normal distribution. Get mean, variance, s.d., iqr of sentiment scores for each year and each source.
-    # atm, the plots don't tell us much. You can tell that it's normally distributed, but need to know means and trends
+    # histogram of sentiment score (X) vs no. of articles (Y)
+    axs[1, 2].hist(list(map(float, data[:, 1])), bins=np.arange(-1.0, 1.1, 0.1))
+    axs[1, 2].set_xlabel('Sentiment Score')
+    axs[1, 2].set_ylabel('No. of articles')
 
     # plt.savefig('./out-plot/' + datetime.now().strftime('%Y%m%d%H%M%S') + '.png')
     plt.savefig(out_folder + keyword + '.png')
     plt.close()
+
+    # TODO: assume normal distribution. Get mean, variance, s.d., iqr of sentiment scores for each year and each source.
+    # atm, the plots don't tell us much. You can tell that it's normally distributed, but need to know means and trends
+    # also for each year, print distribution of each source
+    years = np.array([datetime.datetime(i+2000, 1, 1, tzinfo=datetime.timezone.utc) for i in range(20)])
+    f_out = open(out_folder + keyword + '.txt', 'w')
+    for i in range(len(years)-1):
+        data_in_year = np.array([a[1] for a in data if years[i] <= a[0] < years[i+1]], dtype=np.float32)
+        # print(years[i].year, ':', data_in_year.shape[0], 'articles with mean sentiment', np.average(data_in_year))
+        f_out.write(str(years[i].year) + ': ' + str(data_in_year.shape[0]) + ' articles with mean sentiment ' +
+                    str(np.average(data_in_year)) + '\n')
+    for source in sources:
+        data_in_source = np.array(data[data[:, 2] == source][:, 1], dtype=np.float32)
+        # print(source, ':', data_in_source.shape[0], 'articles with mean sentiment', np.average(data_in_source))
+        f_out.write(source + ': ' + str(data_in_source.shape[0]) + ' articles with mean sentiment ' +
+                    str(np.average(data_in_source)) + '\n')
+    f_out.close()
 
 
 if __name__ == '__main__':

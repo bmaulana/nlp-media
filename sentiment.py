@@ -124,6 +124,8 @@ def sentiment(fname, test_time=False):
         # print(time.time() - score_time, 'seconds to analyse article using TextBlob (Pattern Analyser)')
         scorer_times.append(time.time() - score_time)
 
+        # TODO nltk-sentiment (http://www.nltk.org/api/nltk.sentiment.html)
+
         # 'summarise' sentiment score of an article via weighted average of each sentence
         # TODO measure relevance score of each sentence & use it as weight for sentiment score? instead of keyword_count
         sentiment_score_labels = ['vader', 'xiaohan', 'kcobain', 'openai', 'stanford', 'textblob', 'textblob_bayes']
@@ -222,9 +224,9 @@ def sentiment_openai(fname):
     f_out.close()
 
     full_time = time.time() - start_time
-    print('Sentiment analyses took', int(full_time // 60), 'minutes', full_time % 60, 'seconds')
-    print('Per article:', full_time / num_articles, 'seconds')
-    print('Per sentence:', full_time / len(batched_sentences), 'seconds')
+    # print('Sentiment analyses took', int(full_time // 60), 'minutes', full_time % 60, 'seconds')
+    # print('Per article:', full_time / num_articles, 'seconds')
+    # print('Per sentence:', full_time / len(batched_sentences), 'seconds')
 
 
 def sentiment_vader(fname):
