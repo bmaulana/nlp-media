@@ -138,18 +138,18 @@ def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-op
     # Print some additional info to a .txt file
     f_out = open(out_folder + keyword + '.txt', 'w')
 
-    # Means and no. of articles for each year and each source
+    # Means, s.d., and no. of articles for each year and each source
     years = np.array([datetime.datetime(i+2000, 1, 1, tzinfo=datetime.timezone.utc) for i in range(20)])
     for i in range(len(years)-1):
         data_in_year = np.array([a[1] for a in data if years[i] <= a[0] < years[i+1]], dtype=np.float32)
         # print(years[i].year, ':', data_in_year.shape[0], 'articles with mean sentiment', np.average(data_in_year))
         f_out.write(str(years[i].year) + ': ' + str(data_in_year.shape[0]) + ' articles with mean sentiment ' +
-                    str(np.average(data_in_year)) + '\n')
+                    str(np.average(data_in_year)) + ' and std. dev. ' + str(np.std(data_in_year)) + '\n')
     for source in sources:
         data_in_source = np.array(data[data[:, 2] == source][:, 1], dtype=np.float32)
         # print(source, ':', data_in_source.shape[0], 'articles with mean sentiment', np.average(data_in_source))
         f_out.write(source + ': ' + str(data_in_source.shape[0]) + ' articles with mean sentiment ' +
-                    str(np.average(data_in_source)) + '\n')
+                    str(np.average(data_in_source)) + ' and std. dev. ' + str(np.std(data_in_source)) + '\n')
 
     f_out.write('\n')
 
@@ -175,8 +175,27 @@ def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-op
             f_out.write('\t' + word + ': ' + str(occurrence) + ' occurrences (' +
                         str(occurrence / len(data_in_source)) + ' per article)\n')
 
-    # TODO: assume normal distribution. Print mean, s.d. of sentiment scores for each year and each source in a table.
-    # Also print no. of articles for each year/source in the cell. If less than say 25, skip.
+    f_out.write('\n')
+
+    # Print no. of articles, mean, s.d., and keyword distribution for each year/source in the cell.
+    for source in sources:
+        for i in range(len(years) - 1):
+            subset = np.array([a for a in data if years[i] <= a[0] < years[i+1]])
+            subset = subset[subset[:, 2] == source]
+
+            sentiment_subset = np.array(subset[:, 1], dtype=np.float32)
+            f_out.write(str(source) + ' ' + str(years[i].year) + ': ' + str(sentiment_subset.shape[0]) +
+                        ' articles with mean sentiment ' + str(np.average(sentiment_subset)) +
+                        ' and std. dev. ' + str(np.std(sentiment_subset)) + '\n')
+
+            keywords_subset = subset[:, 3]
+            words_in_subset = defaultdict(int)
+            for j in keywords_subset:
+                for k, v in keywords[j].items():
+                    words_in_subset[k] += v
+            for word, occurrence in words_in_subset.items():
+                f_out.write('\t' + word + ': ' + str(occurrence) + ' occurrences (' +
+                            str(occurrence / len(keywords_subset)) + ' per article)\n')
 
     f_out.close()
 
