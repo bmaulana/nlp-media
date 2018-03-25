@@ -8,28 +8,36 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from sklearn.preprocessing import LabelEncoder
+from collections import defaultdict
 
 
-def get_data(in_path):
-    data = []
-    f_in = open(in_path, 'r')
-    for line in f_in:
-        raw = json.loads(line)
-        # Change to sentiment_score_openai (or whatever scorer) when on 'regular' out_sentiment
-        if raw['sentiment_score'] != 'ERROR' and raw['sentiment_score'] != 0.0:
-            try:
-                data.append([date_parse(raw['datetime']), float(raw['sentiment_score']), raw['source']])
-            except ValueError:  # invalid date or sentiment score
-                continue
-            # 'cap' outliers
-            if data[-1][1] < -1.0:
-                data[-1][1] = -1.0
-            elif data[-1][1] > 1.0:
-                data[-1][1] = 1.0
-            if data[-1][0] < datetime.datetime(2000, 1, 1, tzinfo=datetime.timezone.utc):
-                data[-1][0] = datetime.datetime(2000, 1, 1, tzinfo=datetime.timezone.utc)
-    f_in.close()
-    return data
+class Reader:
+
+    def __init__(self):
+        self.id = 0
+
+    def get_data(self, in_path):
+        data = []
+        keywords = {}
+        f_in = open(in_path, 'r')
+        for line in f_in:
+            raw = json.loads(line)
+            if raw['sentiment_score'] != 'ERROR' and raw['sentiment_score'] != 0.0:
+                try:
+                    data.append([date_parse(raw['datetime']), float(raw['sentiment_score']), raw['source'], self.id])
+                    keywords[self.id] = raw['keywords_used']
+                    self.id += 1
+                except ValueError:  # invalid date or sentiment score
+                    continue
+                # 'cap' outliers
+                if data[-1][1] < -1.0:
+                    data[-1][1] = -1.0
+                elif data[-1][1] > 1.0:
+                    data[-1][1] = 1.0
+                if data[-1][0] < datetime.datetime(2000, 1, 1, tzinfo=datetime.timezone.utc):
+                    data[-1][0] = datetime.datetime(2000, 1, 1, tzinfo=datetime.timezone.utc)
+        f_in.close()
+        return data, keywords
 
 
 def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-openai/'):
@@ -39,10 +47,14 @@ def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-op
     if not os.path.exists(out_folder):
         os.makedirs(out_folder)
 
-    data = []
+    reader = Reader()
+    data, keywords = [], {}
     for filename in os.listdir(in_folder):
         if keyword in str(filename):
-            data += get_data(in_folder + filename)
+            d, k = reader.get_data(in_folder + filename)
+            data += d
+            for i, v in k.items():
+                keywords[i] = v
     data = np.array(data)
     data = data[np.argsort(data[:, 0])]  # sort on datetime
 
@@ -123,11 +135,11 @@ def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-op
     plt.savefig(out_folder + keyword + '.png')
     plt.close()
 
-    # TODO: assume normal distribution. Get mean, variance, s.d., iqr of sentiment scores for each year and each source.
-    # atm, the plots don't tell us much. You can tell that it's normally distributed, but need to know means and trends
-    # also for each year, print distribution of each source
-    years = np.array([datetime.datetime(i+2000, 1, 1, tzinfo=datetime.timezone.utc) for i in range(20)])
+    # Print some additional info to a .txt file
     f_out = open(out_folder + keyword + '.txt', 'w')
+
+    # Means and no. of articles for each year and each source
+    years = np.array([datetime.datetime(i+2000, 1, 1, tzinfo=datetime.timezone.utc) for i in range(20)])
     for i in range(len(years)-1):
         data_in_year = np.array([a[1] for a in data if years[i] <= a[0] < years[i+1]], dtype=np.float32)
         # print(years[i].year, ':', data_in_year.shape[0], 'articles with mean sentiment', np.average(data_in_year))
@@ -138,6 +150,34 @@ def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-op
         # print(source, ':', data_in_source.shape[0], 'articles with mean sentiment', np.average(data_in_source))
         f_out.write(source + ': ' + str(data_in_source.shape[0]) + ' articles with mean sentiment ' +
                     str(np.average(data_in_source)) + '\n')
+
+    f_out.write('\n')
+
+    # Keyword usage for each year and each source
+    for i in range(len(years)-1):
+        data_in_year = [a[3] for a in data if years[i] <= a[0] < years[i+1]]
+        words_in_year = defaultdict(int)
+        for j in data_in_year:
+            for k, v in keywords[j].items():
+                words_in_year[k] += v
+        f_out.write('Keywords used in ' + str(years[i].year) + ':\n')
+        for word, occurrence in words_in_year.items():
+            f_out.write('\t' + word + ': ' + str(occurrence) + ' occurrences (' +
+                        str(occurrence / len(data_in_year)) + ' per article)\n')
+    for source in sources:
+        data_in_source = list(data[data[:, 2] == source][:, 3])
+        words_in_source = defaultdict(int)
+        for j in data_in_source:
+            for k, v in keywords[j].items():
+                words_in_source[k] += v
+        f_out.write('Keywords used in ' + source + ':\n')
+        for word, occurrence in words_in_source.items():
+            f_out.write('\t' + word + ': ' + str(occurrence) + ' occurrences (' +
+                        str(occurrence / len(data_in_source)) + ' per article)\n')
+
+    # TODO: assume normal distribution. Print mean, s.d. of sentiment scores for each year and each source in a table.
+    # Also print no. of articles for each year/source in the cell. If less than say 25, skip.
+
     f_out.close()
 
 

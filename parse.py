@@ -66,11 +66,17 @@ def parse(fname, keywords=None):
 
         # match_vectors = []
         sents = {}
+        keywords_used = {}
         for match_id, start, end in matches:
             # token = doc[start]
             # this_match = {'text': token.text, 'start': start}
 
             span = doc[start: end]  # matched span
+            if span.text.lower() in keywords_used:
+                keywords_used[span.text.lower()] += 1
+            else:
+                keywords_used[span.text.lower()] = 1
+
             sent = span.sent  # sentence containing matched span
             if sent.text not in sents:
                 # this_match['Sentence'] = sent.text
@@ -94,6 +100,7 @@ def parse(fname, keywords=None):
 
         to_write['num_relevant_sentences'] = len(sents)
         to_write['relevant_sentences'] = sents
+        to_write['keywords_used'] = keywords_used
 
         # TODO maybe skip filter and filter here instead based on num_relevant_sents / num_sents?
         if len(sents) == 0:
