@@ -146,7 +146,7 @@ def eval_sentiment_read(fname):
                 current_score = max(-1.0, min(1.0, float(sent[full_label])))
                 mean_scores[i, 0] += float(sent[full_label])
                 all_scores[i][0].append(current_score)
-            answers.append((sent, '+'))
+            answers.append((sent['sentence'], 'positive'))
         elif res == '-':
             # negative
             for i in range(len(labels)):
@@ -154,10 +154,10 @@ def eval_sentiment_read(fname):
                 current_score = max(-1.0, min(1.0, float(sent[full_label])))
                 mean_scores[i, 2] += float(sent[full_label])
                 all_scores[i][2].append(current_score)
-            answers.append((sent, '-'))
+            answers.append((sent['sentence'], 'negative'))
         elif res == 'o':
             # out of topic
-            continue
+            answers.append((sent['sentence'], 'irrelevant'))
         else:
             # neutral
             for i in range(len(labels)):
@@ -165,7 +165,7 @@ def eval_sentiment_read(fname):
                 current_score = max(-1.0, min(1.0, float(sent[full_label])))
                 mean_scores[i, 1] += float(sent[full_label])
                 all_scores[i][1].append(current_score)
-            answers.append((sent, 'n'))
+            answers.append((sent['sentence'], 'neutral'))
 
     # Print mean scores for each classification, for each sentiment scorer
     mean_scores /= len(data)
@@ -173,10 +173,10 @@ def eval_sentiment_read(fname):
         print(labels[i], '\tPositive:', mean_scores[i][0], '\tNeutral:', mean_scores[i][1],
               '\tNegative:', mean_scores[i][2])
 
-    # output sentences and answers in csv file with no scores, to peer-review my labels
-    f_out = open('./out-eval/eval.csv', 'w', encoding='utf-8')
+    # output sentences and answers in txt file with no scores, to peer-review my labels
+    f_out = open('./out-eval/eval.txt', 'w', encoding='utf-8')
     for answer in answers:
-        f_out.write(str(answer[1]) + ';' + str(answer[0]) + '\n')
+        f_out.write(str(answer[1]) + '; ' + str(answer[0]) + '\n')
     f_out.close()
 
     # Plot histogram for each classification, for each sentiment scorer
