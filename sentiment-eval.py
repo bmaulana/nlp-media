@@ -130,7 +130,6 @@ def eval_sentiment_read(fname):
     # for each label, print the mean score of sentences I manually class positive, neutral, or negative
     # issue: bias in my classification. Mention in report, further work could involve having multiple reviewers
     labels = ['openai', 'vader', 'xiaohan', 'kcobain', 'stanford', 'textblob', 'textblob_bayes']
-    mean_scores = np.array([[0.0, 0.0, 0.0]] * len(labels))  # [positive, neutral, negative]
     all_scores = [([], [], []) for i in range(len(labels))]  # (positive, neutral, negative)
     answers = []  # to save answers so results are reproducible
 
@@ -144,7 +143,6 @@ def eval_sentiment_read(fname):
             for i in range(len(labels)):
                 full_label = 'sentiment_score_' + labels[i]
                 current_score = max(-1.0, min(1.0, float(sent[full_label])))
-                mean_scores[i, 0] += float(sent[full_label])
                 all_scores[i][0].append(current_score)
             answers.append((sent['sentence'], 'positive'))
         elif res == '-':
@@ -152,7 +150,6 @@ def eval_sentiment_read(fname):
             for i in range(len(labels)):
                 full_label = 'sentiment_score_' + labels[i]
                 current_score = max(-1.0, min(1.0, float(sent[full_label])))
-                mean_scores[i, 2] += float(sent[full_label])
                 all_scores[i][2].append(current_score)
             answers.append((sent['sentence'], 'negative'))
         elif res == 'o':
@@ -163,15 +160,14 @@ def eval_sentiment_read(fname):
             for i in range(len(labels)):
                 full_label = 'sentiment_score_' + labels[i]
                 current_score = max(-1.0, min(1.0, float(sent[full_label])))
-                mean_scores[i, 1] += float(sent[full_label])
                 all_scores[i][1].append(current_score)
             answers.append((sent['sentence'], 'neutral'))
 
     # Print mean scores for each classification, for each sentiment scorer
-    mean_scores /= len(data)
     for i in range(len(labels)):
-        print(labels[i], '\tPositive:', mean_scores[i][0], '\tNeutral:', mean_scores[i][1],
-              '\tNegative:', mean_scores[i][2])
+        print(labels[i], '\tPositive:', np.average(all_scores[i][0]), '\tNeutral:', np.average(all_scores[i][1]),
+              '\tNegative:', np.average(all_scores[i][2]))
+    # TODO print confusion matrices for positives and negatives, save to file
 
     # output sentences and answers in txt file with no scores, to peer-review my labels
     f_out = open('./out-eval/eval.txt', 'w', encoding='utf-8')
