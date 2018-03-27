@@ -19,7 +19,7 @@ nba = NaiveBayesAnalyzer()
 pa = PatternAnalyzer()
 
 
-def sentiment(fname, test_time=False):
+def sentiment(fname, max_articles=10):
     """
     Format: python sentiment.py filename
     """
@@ -38,8 +38,7 @@ def sentiment(fname, test_time=False):
     f_in.close()
 
     f_in = open(in_path, 'r')
-    if not test_time:
-        f_out = open(out_path, 'w')
+    f_out = open(out_path, 'w')
     f_out_time = open('./out-sentiment/times.csv', 'a')
 
     for line in f_in:
@@ -101,9 +100,13 @@ def sentiment(fname, test_time=False):
         # Can be batched, but may not split sentences consistently at the same points as SpaCy (and runs quick anw)
         score_time = time.time()
         for sent in sents:
-            props = {'annotators': 'sentiment', 'outputFormat': 'json', 'timeout': 15000}
-            res = json.loads(stanford_nlp.annotate(sent, properties=props))
-            sents[sent]['sentiment_score_stanford'] = (float(res['sentences'][0]['sentimentValue']) - 2.0) / 2.0
+            try:
+                props = {'annotators': 'sentiment', 'outputFormat': 'json', 'timeout': 15000}
+                res = json.loads(stanford_nlp.annotate(sent, properties=props))
+                sents[sent]['sentiment_score_stanford'] = (float(res['sentences'][0]['sentimentValue']) - 2.0) / 2.0
+            except json.decoder.JSONDecodeError:
+                sents[sent]['sentiment_score_stanford'] = 'ERROR'
+
         # print(time.time() - score_time, 'seconds to analyse article using StanfordNLP')
         scorer_times.append(time.time() - score_time)
 
@@ -144,19 +147,18 @@ def sentiment(fname, test_time=False):
         # Used to only analyse one article per topic/source to test performance of each scorer, comment out otherwise
         f_out_time.write('\n')
         f_out_time.write(",".join([str(t) for t in scorer_times]))
-        if test_time:
-            break
-        else:
-            f_out.write(json.dumps(to_write))
-            f_out.write('\n')
+
+        f_out.write(json.dumps(to_write))
+        f_out.write('\n')
 
         count += 1
+        if count >= max_articles:
+            break
         print(count, "/", total, "articles analysed (last article =", time.time() - article_time, "seconds)")
 
     stanford_nlp.close()
     f_in.close()
-    if not test_time:
-        f_out.close()
+    f_out.close()
     f_out_time.close()
 
     full_time = time.time() - start_time

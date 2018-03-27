@@ -3,6 +3,7 @@ import json
 import spacy
 import time
 import os
+import re
 from spacy.matcher import Matcher
 from tqdm import tqdm
 
@@ -24,11 +25,12 @@ def parse(fname, keywords=None):
 
     if keywords is None:
         keywords = [topic]
+    keywords.append('suffers from')
 
     pattern = []
     seen = set()
     for keyword in keywords:
-        stem = [nlp(word)[0].lemma_ for word in keyword.split()]
+        stem = [nlp(word)[0].lemma_ for word in re.split('[ -]', keyword)]
         if ' '.join(stem) not in seen:
             p = []
             for word in stem:

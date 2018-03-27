@@ -12,15 +12,17 @@ TOPICS = {'Dyslexia': ['Dyslexia', 'Dyslexic'],
           'Dementia': ['Dementia', 'Alzheimer\'s'],
           }
 
-TOPICS2 = {'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible'],
+TOPICS2 = {'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible', 'ablism',
+                        'ableism', 'differently abled'],
            'cerebral palsy': ['cerebral palsy', 'spastic'],
-           'deaf': ['deaf', 'hearing impaired', 'hard of hearing', 'hearing loss'],
-           'blind': ['blind', 'visual impairment', 'partially sighted', 'vision loss'],
+           'deaf': ['deaf', 'deafness', 'hearing impaired', 'hard of hearing', 'hearing loss'],
+           'blind': ['blind', 'blindness', 'blindism', 'visual impairment', 'partially sighted', 'vision loss'],
            'epilepsy': ['epilepsy', 'epileptic', 'seizure'],
-           'mute': ['mute', 'cannot speak', 'difficulty speaking', 'synthetic speech', 'non-vocal', 'non-verbal'],
+           'mute': ['mute', 'muteness', 'mutism', 'cannot speak', 'difficulty speaking', 'synthetic speech',
+                    'non-vocal', 'non-verbal'],
            'speech impairment': ['speech impairment', 'stutter', 'speech disability', 'speech disorder',
                                  'communication disability', 'difficulty speaking', 'language impairment',
-                                 'language disorder', 'language disability', 'speech impediment'],
+                                 'language disorder', 'language disability', 'speech impediment', 'stammer'],
            'mental illness': ['mental illness', 'mental health', 'mental disability', 'mental disorder', 'mental issue',
                               'brain injured', 'brain injury', 'brain damaged', 'psychological', 'psychiatric',
                               'emotional disorder', 'behavioural disorder', 'retardation', 'intellectual disability',
@@ -35,11 +37,11 @@ TOPICS2 = {'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'inv
 
 # Only keywords that don't have other meanings (combinations of common words are also problematic)
 QUERIES = {'cerebral palsy': ['cerebral palsy', 'spastic'],
-           'disabled': ['disabled', 'disability'],
-           'deaf': ['deaf', 'hearing impairment', 'hard of hearing', 'hearing impaired'],
-           'blind': ['blind', 'visual impairment', 'partially sighted', 'visually impaired'],
+           'disabled': ['disabled', 'disability', 'ablism', 'ableism', 'differently abled'],
+           'deaf': ['deaf', 'deafness', 'hearing impairment', 'hard of hearing', 'hearing impaired'],
+           'blind': ['blind', 'blindness', 'visual impairment', 'partially sighted', 'visually impaired'],
            'epilepsy': ['epilepsy', 'epileptic'],
-           'mute': ['mute', 'non-verbal'],
+           'mute': ['mute', 'muteness', 'mutism', 'non-verbal'],
            'speech impairment': ['speech impairment', 'stutter', 'speech disorder', 'speech impediment'],
            'mental illness': ['mental illness', 'mental health', 'mental disorder', 'mental disability',
                               'mentally ill', 'mentally disabled', 'mentally handicapped'],
@@ -65,16 +67,16 @@ FILTER_THRESHOLD = 20  # higher = weaker filter
 def pipeline(topic, keywords, source):
     start_time = time.time()
 
-    fname = crawler(topic, source, NUM_DOCS, QUERIES[topic])
-    # fname = source.get_fname(topic)
+    # fname = crawler(topic, source, NUM_DOCS, QUERIES[topic])
+    fname = source.get_fname(topic)
     print('\n Filtering:')
-    filter(fname, keywords, FILTER_THRESHOLD)
+    # filter(fname, keywords, FILTER_THRESHOLD)
     print('\n Parsing:')
     parse(fname, keywords)
     print('\n Scoring sentiment:')
-    # sentiment(fname, test_time=False)
     sentiment_vader(fname)
     sentiment_openai(fname)
+    # sentiment(fname, max_articles=25)
 
     total_time = time.time() - start_time
     print('\nPipeline took', int(total_time // 60), 'minutes', total_time % 60, 'seconds\n')
@@ -83,5 +85,6 @@ def pipeline(topic, keywords, source):
 for tpc, words in TOPICS2.items():
     for src in SOURCES:
         pipeline(tpc, words, src)
+    # TODO sleep / wait until in_folder + fname exist (occasional crash: plot called before sent output written)
     plot(tpc, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/')
     plot(tpc, in_folder='./out-sentiment-openai/', out_folder='./out-plot-openai/')

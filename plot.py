@@ -42,7 +42,7 @@ class Reader:
 
 def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-openai/'):
     """
-    Format: python plot.py filename
+    Format: python plot.py keyword
     """
     if not os.path.exists(out_folder):
         os.makedirs(out_folder)
@@ -181,7 +181,11 @@ def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-op
     for source in sources:
         for i in range(len(years) - 1):
             subset = np.array([a for a in data if years[i] <= a[0] < years[i+1]])
+            if subset.shape[0] == 0:
+                continue
             subset = subset[subset[:, 2] == source]
+            if subset.shape[0] == 0:
+                continue
 
             sentiment_subset = np.array(subset[:, 1], dtype=np.float32)
             f_out.write(str(source) + ' ' + str(years[i].year) + ': ' + str(sentiment_subset.shape[0]) +
@@ -198,6 +202,8 @@ def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-op
                             str(occurrence / len(keywords_subset)) + ' per article)\n')
 
     f_out.close()
+
+    # TODO new plots: occurrences per article for each word (y) over time (x), all/DE/DM/Guardian (4 plots)
 
 
 if __name__ == '__main__':
