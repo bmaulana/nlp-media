@@ -163,25 +163,34 @@ def eval_sentiment_read(fname):
                 all_scores[i][1].append(current_score)
             answers.append((sent['sentence'], 'neutral'))
 
-    # Print mean scores for each classification, for each sentiment scorer
-    for i in range(len(labels)):
-        print(labels[i], '\tPositive:', np.average(all_scores[i][0]), '\tNeutral:', np.average(all_scores[i][1]),
-              '\tNegative:', np.average(all_scores[i][2]))
-    # TODO print confusion matrices for positives and negatives, save to file
-
     # output sentences and answers in txt file with no scores, to peer-review my labels
     f_out = open('./out-eval/eval.txt', 'w', encoding='utf-8')
     for answer in answers:
         f_out.write(str(answer[1]) + '; ' + str(answer[0]) + '\n')
+
+    f_out.write('\n')
+
+    for i in range(len(labels)):
+        pos, neu, neg = np.array(all_scores[i][0]), np.array(all_scores[i][1]), np.array(all_scores[i][2])
+        f_out.write(labels[i] + ':\n')
+        f_out.write('\tMean Positive: ' + str(np.average(pos)) + '\n')
+        f_out.write('\tMean Neutral: ' + str(np.average(neu)) + '\n')
+        f_out.write('\tMean Negative: ' + str(np.average(neg)) + '\n')
+        f_out.write('\tTrue Positive: ' + str(pos[pos > 0.0].shape[0]) + '\n')
+        f_out.write('\tFalse Positive: ' + str(pos[pos < 0.0].shape[0]) + '\n')
+        f_out.write('\tTrue Negative: ' + str(neg[neg < 0.0].shape[0]) + '\n')
+        f_out.write('\tFalse Negative: ' + str(neg[neg > 0.0].shape[0]) + '\n')
+        f_out.write('\tAccuracy: ' + str((pos[pos > 0.0].shape[0] + neg[neg < 0.0].shape[0]) /
+                                         (pos.shape[0] + neg.shape[0])) + '\n')
     f_out.close()
 
     # Plot histogram for each classification, for each sentiment scorer
     fig, axs = plt.subplots(2, (len(labels) + 1) // 2, figsize=(5 * ((len(labels) + 1) // 2), 10), tight_layout=True)
     for i in range(len(labels)):
         ax = axs[i % 2, i // 2]
-        ax.hist(all_scores[i][0], bins=np.arange(-1.0, 1.2, 0.1), alpha=0.5, label='pos')
-        ax.hist(all_scores[i][2], bins=np.arange(-1.0, 1.2, 0.1), alpha=0.5, label='neg')
-        ax.hist(all_scores[i][1], bins=np.arange(-1.0, 1.2, 0.1), alpha=0.3, label='ntr')
+        ax.hist(all_scores[i][0], bins=np.arange(-1.0, 1.2, 0.1), alpha=0.4, label='pos')
+        ax.hist(all_scores[i][2], bins=np.arange(-1.0, 1.2, 0.1), alpha=0.4, label='neg')
+        ax.hist(all_scores[i][1], bins=np.arange(-1.0, 1.2, 0.1), alpha=0.2, label='ntr')
         ax.set_title(labels[i])
         ax.set_xlabel('Sentiment Score')
         ax.set_ylabel('No. of articles')
