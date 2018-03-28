@@ -40,7 +40,12 @@ class Reader:
         return data, keywords
 
 
-def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-openai/'):
+def moving_average(interval, window_size):
+    window = np.ones(int(window_size))/float(window_size)
+    return np.convolve(interval, window, 'same')
+
+
+def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/'):
     """
     Format: python plot.py keyword
     """
@@ -72,8 +77,9 @@ def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-op
 
     # scatter plot of date range (X) vs sentiment (Y), coloured based on source (Z)
     axs[0, 0].scatter(data[:, 0], data[:, 1], c=colours)
-    # TODO rolling average 'line'
-    axs[0, 0].xaxis.set_major_formatter(mdates.DateFormatter('%m/%Y'))
+    rolling_avg = moving_average(data[:, 1], data.shape[0] // 20)
+    axs[0, 0].plot(data[:, 0], rolling_avg, 'r')
+    axs[0, 0].xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     axs[0, 0].set_xlabel('Date Range')
     axs[0, 0].set_ylabel('Sentiment Score')
     for tick in axs[0, 0].get_xticklabels():
@@ -120,16 +126,28 @@ def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-op
 
     # histogram of date range (X) vs no. of articles (Y)
     axs[0, 2].hist(data[:, 0], bins=years)
-    axs[0, 2].xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    axs[0, 2].xaxis.set_major_formatter(mdates.DateFormatter('%m/%Y'))
     axs[0, 2].set_xlabel('Date Range')
     axs[0, 2].set_ylabel('No. of articles')
     for tick in axs[0, 2].get_xticklabels():
         tick.set_rotation(30)
 
     # histogram of sentiment score (X) vs no. of articles (Y)
-    axs[1, 2].hist(list(map(float, data[:, 1])), bins=np.arange(-1.0, 1.1, 0.1))
-    axs[1, 2].set_xlabel('Sentiment Score')
-    axs[1, 2].set_ylabel('No. of articles')
+    # axs[1, 2].hist(list(map(float, data[:, 1])), bins=np.arange(-1.0, 1.1, 0.1))
+    # axs[1, 2].set_xlabel('Sentiment Score')
+    # axs[1, 2].set_ylabel('No. of articles')
+
+    # plot line graphs for annual mean (or rolling average mean) for each source
+    rolling_avg = moving_average(data[:, 1], data.shape[0] // 20)
+    axs[1, 2].plot(data[:, 0], rolling_avg, 'r', label='all')
+    for src in sources:
+        src_data = data[data[:, 2] == src]
+        src_avg = moving_average(src_data[:, 1], src_data.shape[0] // 10)
+        axs[1, 2].plot(src_data[:, 0], src_avg, label=src)
+    axs[1, 2].xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    axs[1, 2].set_xlabel('Date Range')
+    axs[1, 2].set_ylabel('Sentiment Score')
+    axs[1, 2].legend()
 
     # plt.savefig('./out-plot/' + datetime.now().strftime('%Y%m%d%H%M%S') + '.png')
     plt.savefig(out_folder + keyword + '.png')
@@ -137,6 +155,11 @@ def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-op
 
     # Print some additional info to a .txt file
     f_out = open(out_folder + keyword + '.txt', 'w')
+
+    # Means, s.d., no. of articles for whole data set
+    f_out.write(str(data.shape[0]) + ' total articles with mean sentiment ' +
+                str(np.average(np.array(data[:, 1], dtype=np.float32))) +
+                ' and std. dev. ' + str(np.std(data[:, 1], dtype=np.float32)) + '\n\n')
 
     # Means, s.d., and no. of articles for each year and each source
     years = np.array([datetime.datetime(i+2000, 1, 1, tzinfo=datetime.timezone.utc) for i in range(20)])
@@ -153,31 +176,7 @@ def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-op
 
     f_out.write('\n')
 
-    # Keyword usage for each year and each source
-    for i in range(len(years)-1):
-        data_in_year = [a[3] for a in data if years[i] <= a[0] < years[i+1]]
-        words_in_year = defaultdict(int)
-        for j in data_in_year:
-            for k, v in keywords[j].items():
-                words_in_year[k] += v
-        f_out.write('Keywords used in ' + str(years[i].year) + ':\n')
-        for word, occurrence in words_in_year.items():
-            f_out.write('\t' + word + ': ' + str(occurrence) + ' occurrences (' +
-                        str(occurrence / len(data_in_year)) + ' per article)\n')
-    for source in sources:
-        data_in_source = list(data[data[:, 2] == source][:, 3])
-        words_in_source = defaultdict(int)
-        for j in data_in_source:
-            for k, v in keywords[j].items():
-                words_in_source[k] += v
-        f_out.write('Keywords used in ' + source + ':\n')
-        for word, occurrence in words_in_source.items():
-            f_out.write('\t' + word + ': ' + str(occurrence) + ' occurrences (' +
-                        str(occurrence / len(data_in_source)) + ' per article)\n')
-
-    f_out.write('\n')
-
-    # Print no. of articles, mean, s.d., and keyword distribution for each year/source in the cell.
+    # Print no. of articles, mean, s.d., for each (year, source) combination.
     for source in sources:
         for i in range(len(years) - 1):
             subset = np.array([a for a in data if years[i] <= a[0] < years[i+1]])
@@ -191,6 +190,45 @@ def plot(keyword, in_folder='./out-sentiment-openai/', out_folder='./out-plot-op
             f_out.write(str(source) + ' ' + str(years[i].year) + ': ' + str(sentiment_subset.shape[0]) +
                         ' articles with mean sentiment ' + str(np.average(sentiment_subset)) +
                         ' and std. dev. ' + str(np.std(sentiment_subset)) + '\n')
+
+    f_out.write('\n')
+
+    # Print Keyword usage for each year and each source
+    for i in range(len(years)-1):
+        data_in_year = [a[3] for a in data if years[i] <= a[0] < years[i+1]]
+        words_in_year = defaultdict(int)
+        for j in data_in_year:
+            for k, v in keywords[j].items():
+                words_in_year[k] += v
+        f_out.write('Keywords used in ' + str(years[i].year) + ':\n')
+        for word, occurrence in words_in_year.items():
+            f_out.write('\t' + word + ': ' + str(occurrence) + ' occurrences (' +
+                        str(occurrence / len(data_in_year)) + ' per article)\n')
+
+    for source in sources:
+        data_in_source = list(data[data[:, 2] == source][:, 3])
+        words_in_source = defaultdict(int)
+        for j in data_in_source:
+            for k, v in keywords[j].items():
+                words_in_source[k] += v
+        f_out.write('Keywords used in ' + source + ':\n')
+        for word, occurrence in words_in_source.items():
+            f_out.write('\t' + word + ': ' + str(occurrence) + ' occurrences (' +
+                        str(occurrence / len(data_in_source)) + ' per article)\n')
+
+    f_out.write('\n')
+
+    # Print keyword usage for each (year, source) combination.
+    for source in sources:
+        for i in range(len(years) - 1):
+            subset = np.array([a for a in data if years[i] <= a[0] < years[i+1]])
+            if subset.shape[0] == 0:
+                continue
+            subset = subset[subset[:, 2] == source]
+            if subset.shape[0] == 0:
+                continue
+
+            f_out.write(str(source) + ' ' + str(years[i].year) + ':\n')
 
             keywords_subset = subset[:, 3]
             words_in_subset = defaultdict(int)
