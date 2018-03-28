@@ -176,11 +176,11 @@ def eval_sentiment_read(fname):
         f_out.write('\tMean Positive: ' + str(np.average(pos)) + '\n')
         f_out.write('\tMean Neutral: ' + str(np.average(neu)) + '\n')
         f_out.write('\tMean Negative: ' + str(np.average(neg)) + '\n')
-        f_out.write('\tTrue Positive: ' + str(pos[pos > 0.0].shape[0]) + '\n')
+        f_out.write('\tTrue Positive: ' + str(pos[pos >= 0.0].shape[0]) + '\n')
         f_out.write('\tFalse Positive: ' + str(pos[pos < 0.0].shape[0]) + '\n')
         f_out.write('\tTrue Negative: ' + str(neg[neg < 0.0].shape[0]) + '\n')
-        f_out.write('\tFalse Negative: ' + str(neg[neg > 0.0].shape[0]) + '\n')
-        f_out.write('\tAccuracy: ' + str((pos[pos > 0.0].shape[0] + neg[neg < 0.0].shape[0]) /
+        f_out.write('\tFalse Negative: ' + str(neg[neg >= 0.0].shape[0]) + '\n')
+        f_out.write('\tAccuracy: ' + str((pos[pos >= 0.0].shape[0] + neg[neg < 0.0].shape[0]) /
                                          (pos.shape[0] + neg.shape[0])) + '\n')
     f_out.close()
 
