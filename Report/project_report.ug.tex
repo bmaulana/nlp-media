@@ -88,20 +88,56 @@ Catherine Holloway, Nicholas Firth}
 %% Outline the problem you are working on, why it is interesting and what the challenges are.
 
 % Talk about NLP
+Natural language processing (NLP) encompasses a wide range of computational techniques for machine understanding of human (natural) language that are often used alongside each other.
+The review article \cite{Jumping NLP Curves} defines natural language processing as 'a theory-motivated range of computational techniques for the automatic analysis and representation of human language.'
+The techniques that fall under the umbrella natural language processing include word tokenisation, probabilistic language modelling, translation, part-of-speech parsing, sentiment analysis (or opinion mining), text classification/categorisation, and topic modelling, among other things.
+The computational models used in natural language processing range from simple rule-based models (e.g. splitting a sentence on whitespace to tokenise words) to statistical machine learning and deep learning models.
+Natural language processing is now applied for various everyday technologies, for example, information retrieval for search engines such as Google and Bing, and categorisation and topic modelling for recommendation engines used to suggest 'similar' articles.
 
-Natural language processing is a 
+The obvious advantage of natural language processing is that machines can process vast bodies of human-created literature (books, articles, posts, e-mails, messages, etc.) much faster than humans can, processing thousands or millions of documents per second. 
+This allows for high-level quantitative analyses of all documents in a vast corpora for a given domain to be feasible, which can uncover information previously inaccessible by only reading and generalising from a small sample of documents.
+For example, this level of quantitative analysis can uncover trends and patterns within a given domain (e.g. how does the popularity of the term 'mentally ill' increase or decrease year-on-year in English news media?). 
+
+Natural language processing covers three main 'curves' or areas:  syntax, semantics, and pragmatics (narratives, understanding). 
+Syntax specifies the way symbols (words, terms, tokens, or n-grams) and groups of symbols are arranged and whether they are well-formed in an expression, whereas semantics specifies what these expressions mean, and pragmatics specifies contextual information \cite{Jumping NLP Curves}.
+Contemporary (or 'traditional') approaches to natural language processing mainly focus on syntactic analysis, due to the relative ease of extracting syntactic features of text such as term frequency, word co-occurrence, and part-of-speech tags, compared to extracting logical expressions and networks necessary for semantic analysis.
+However, syntactic analysis is much more limited as it often misses information such as the (semantic) context of a word (e.g. "one" in "there's no one there" (referring to a person) vs "we have only one car" (referring to a quantity)).
+This paper will focus on mainly syntactic techniques and features, as these are more relevant to this domain of high-level topic matching and sentiment analysis that is feasible with current technology at this scale.
+% Just give a short summary, expand this later in Chapter 2
 
 % Other work in using NLP for media analysis
+Various other studies have attempted to utilise natural language processing to perform high-level analyses in the domain of news media.
+The research done in \cite{Content analysis of 150 years of British periodicals} assembled a vast corpus of regional newspapers in the United Kingdom spanning 150 years to detect long-term patterns of cultural change (e.g. increase of female representation in the news, or when trains overtook horses for transportation) by analysing n-gram trends and named entities. 
+More specifically, in the domain of how groups of people are represented in the media, studies such as \cite{Are You a Racist or Am I Seeing Things?} has attempted to use features based on natural language processing (such as n-grams and part-of-speech tags) to classify racist and sexist posts in social media, although there is still a research gap in this area (especially for news articles, and/or specific groups such as people with disabilities or mental illnesses).
+% Just give a short summary, expand this later in Chapter 2
+
+% Why is it interesting & what the challenges are
+Applying natural language processing to perform meta-analyses over large text corpora has various interesting potential applications in improving our understanding of the human world - for example, to detect macroscopic cultural shifts as in \cite{Content analysis of 150 years of British periodicals}.
+In particular, the representation of specific groups, such as people with disabilities, has been a popular research theme for psychologists, sociologists, and others.
+For example, the paper \cite{Depictions of Mental Illness in Print Media} analysed a sample of 600 print articles relating to mental illnesses in New Zealand and categorised them to positive and negative depictions, and the predominant themes thereof (e.g. criminality (negative), educational accomplishments (positive)).
+Applying natural language processing to this area of research would allow the possibility of discovering higher-level trends, by computationally analysing a much larger sample of articles and identify trends by varying dependent variables such as year of publication and publisher.
+In this research, a sample of 305,113 news articles (51,177 after filtering off-topic articles) from British online news sources are used.
+However, challenges remain as syntax-based statistical natural language processing approaches tend to be more limited in scope and is prone to false positives and negatives, and mitigating these factors is currently an open area of research.
+% Just give a short summary, expand this later and give more papers in Chapter 2
+% google 'media representation of mental illness', 'media representation of disability'
 
 %% List your aims and goals. An aim is something you intend to achieve (e.g., learn a new programming language and apply it in solving the problem), while a goal is something specific you expect to deliver (e.g., a working application with a particular set of features).
+The aim of this project is to utilise these natural language processing computational techniques in order to perform a high-level meta-analysis of literature available in the public news media available online.
+More specifically, to gather online news articles relating to people with disabilities in British media, and perform natural language processing analyses at scale to identify trends such as term popularity (e.g. 'suffer from ...' vs 'with ...') and variation in positive/negative sentiment.
 
-The aims of this project is to 
+The goal of this project is to develop a computational pipeline capable of performing this analysis of online media end-to-end.
+Given a list of topic consisting of keywords and query terms, this pipeline covers the task of web crawling and scraping, using public APIs if possible, to collect a dataset of news articles; filtering off-topic articles for the given keywords; matching relevant sentences referring to a keyword; performing sentiment analysis (using publicly available open-source libraries) on these sentences; and producing relevant plots to show applications of this technology.
+This pipeline will be available open source on GitHub (https://github.com/bmaulana/nlp-media)  % should this be a bib reference?
 
 %% Give an overview of how you carried out the project (e.g., an iterative approach).
+This project was carried out in a step-by-step approach. The pipeline was developed as four individual components: a web scraper and crawler for data collection given a list of queries, a filter to remove irrelevant articles given a list of key terms, a parser to pattern-match relevant sentences given key terms, a sentiment scorer (and results analysis/comparison of different open-source scorers on this domain), and a script to perform statistical analysis on the results and produce relevant plots. Each component's output is piped to the next component's input by saving its output to a JSON file and having the next component read the previous component's output file, which ensures computation can be 'resumed' without re-running the previous component. A main pipeline script connects these components together by calling them in order for each topic and supported Web source (Daily Mail, Daily Express, Guardian).
 
 %% A brief overview of the rest of the chapters in the report (a guide to the reader of the overall structure of the report).
+The body of this report is subdivided into four sections: context, requirements and analysis, design and implementation, and results evaluation.
+% TODO finish while finishing rest-of-report
 
 % Brief results & conclusions
+% TODO finish after finishing rest-of-report
 
 %% This chapter is relatively short (2-4 pages) and must leave the reader very clear on what the project is about and what your goals are
 
@@ -190,18 +226,27 @@ The aims of this project is to
 
 \appendix
 
-\begin{thebibliography}{HHM99} %% TODO
+\begin{thebibliography}{HHM99}
+  
+\bibitem[Cam14]{Jumping NLP Curves}
+E.~Cambria and B.~White.
+\newblock Jumping NLP Curves: A Review of Natural Language Processing Research
+\newblock {\em IEEE Computational Intelligence Magazine}, 9(2):  48--57, 2014.
 
-\bibitem[Pri70]{PriorNOP70}  %%only an example
-A.~Prior.
-\newblock The notion of the present.
-\newblock {\em Studium Generale}, 23:  245--248, 1970.
+\bibitem[Lan17]{Content analysis of 150 years of British periodicals}
+T.~Lansdall-Welfare, et al.
+\newblock Content analysis of 150 years of British periodicals
+\newblock {\em Proceedings of the National Academy of Sciences}, 114(4):  457--465, 2017.
 
-\bibitem[Rey97]{Rey:D}  %%only an example
-M.~Reynolds.
-\newblock A decidable temporal logic of parallelism.
-\newblock {\em Notre Dame Journal of Formal Logic}, 38(3):  419--436,
-  1997.
+\bibitem[Zee16]{Are You a Racist or Am I Seeing Things?}
+W.~Zeerak.
+\newblock Are You a Racist or Am I Seeing Things? Annotator Influence on Hate Speech Detection on Twitter
+\newblock {\em Proceedings of 2016 EMNLP Workshop on Natural Language Processing and Computational Social Science}:  138--142, 2016.
+
+\bibitem[Cov02]{Depictions of Mental Illness in Print Media}
+J.~Coverdale, N.~Raymond, and C.~Donna.
+\newblock Depictions of Mental Illness in Print Media: A Prospective National Sample
+\newblock {\em Australian \& New Zealand Journal of Psychiatry}, 36(5):  697--700, 2002.
 
 \end{thebibliography}
 
