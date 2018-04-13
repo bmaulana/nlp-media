@@ -9,6 +9,7 @@ import matplotlib.dates as mdates
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from sklearn.preprocessing import LabelEncoder
 from collections import defaultdict
+from scipy.stats import mannwhitneyu
 
 
 class Reader:
@@ -197,6 +198,24 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
 
     # Print some additional info to a .txt file
     f_out = open(out_folder + keyword + '.txt', 'w')
+
+    # Mann-Whitney U Test
+    #
+    # Note: A small p-value (typically ≤ 0.05) indicates strong evidence against the null hypothesis,
+    # so you reject the null hypothesis. A large p-value (> 0.05) indicates weak evidence against the null
+    # hypothesis, so you fail to reject the null hypothesis.
+    #
+    # Null hypothesis: it is equally likely that a randomly selected value from one sample will be less than or greater
+    # than a randomly selected value from a second sample. (thus if not rejected, no significant difference)
+    #
+    # (Wikipedia)
+    for i in range(len(sources)):
+        for j in range(len(sources)):
+            if i != j:
+                f_out.write(sources[i] + '>' + sources[j] + ': ' +
+                            str(mannwhitneyu(sources_data[i], sources_data[j], alternative='greater')) + '\n')
+
+    f_out.write('\n')
 
     # Means, s.d., no. of articles for whole data set
     f_out.write(str(data.shape[0]) + ' total articles with mean sentiment ' +
