@@ -42,7 +42,7 @@ class Reader:
 
 def moving_average(interval, window_size):
     window = np.ones(int(window_size))/float(window_size)
-    return np.convolve(interval, window, 'same')
+    return np.convolve(interval, window, 'valid')
 
 
 def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/'):
@@ -63,6 +63,9 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     data = np.array(data)
     data = data[np.argsort(data[:, 0])]  # sort on datetime
 
+    moving_avg_window = data.shape[0] // 10
+    moving_avg_window = min(500, max(50, moving_avg_window))
+
     le = LabelEncoder()
     colours = le.fit_transform(data[:, 2])
     sources = le.classes_
@@ -70,15 +73,15 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     years = list(map(mdates.date2num,
                      np.array([datetime.datetime(i+2000, 1, 1, tzinfo=datetime.timezone.utc) for i in range(20)])))
 
-    fig, axs = plt.subplots(2, 3, figsize=(15, 10), tight_layout=True)
+    fig, axs = plt.subplots(3, 3, figsize=(15, 15), tight_layout=True)
     # fig.suptitle(keyword)  # overlaps with plots for some reason
     # fig.autofmt_xdate()
     plt.xticks(rotation=30)
 
     # scatter plot of date range (X) vs sentiment (Y), coloured based on source (Z)
     axs[0, 0].scatter(data[:, 0], data[:, 1], c=colours)
-    rolling_avg = moving_average(data[:, 1], data.shape[0] // 20)
-    axs[0, 0].plot(data[:, 0], rolling_avg, 'r')
+    rolling_avg = moving_average(data[:, 1], moving_avg_window)
+    axs[0, 0].plot(data[:, 0][moving_avg_window - 1:], rolling_avg, 'r')
     axs[0, 0].xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     axs[0, 0].set_xlabel('Date Range')
     axs[0, 0].set_ylabel('Sentiment Score')
@@ -138,16 +141,55 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     # axs[1, 2].set_ylabel('No. of articles')
 
     # plot line graphs for annual mean (or rolling average mean) for each source
-    rolling_avg = moving_average(data[:, 1], data.shape[0] // 20)
-    axs[1, 2].plot(data[:, 0], rolling_avg, 'r', label='all')
+    rolling_avg = moving_average(data[:, 1], moving_avg_window)
+    axs[1, 2].plot(data[:, 0][moving_avg_window - 1:], rolling_avg, 'r', label='all')
     for src in sources:
         src_data = data[data[:, 2] == src]
-        src_avg = moving_average(src_data[:, 1], src_data.shape[0] // 10)
-        axs[1, 2].plot(src_data[:, 0], src_avg, label=src)
+        if src_data.shape[0] < moving_avg_window:
+            continue
+        src_avg = moving_average(src_data[:, 1], moving_avg_window)
+        axs[1, 2].plot(src_data[:, 0][moving_avg_window - 1:], src_avg, label=src)
     axs[1, 2].xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     axs[1, 2].set_xlabel('Date Range')
     axs[1, 2].set_ylabel('Sentiment Score')
     axs[1, 2].legend()
+
+    # Violin plot of source (X) and sentiment range (Y)
+    sources_data = []
+    for source in sources:
+        sources_data.append(np.array(data[data[:, 2] == source][:, 1], dtype=np.float32))
+
+    axs[2, 0].violinplot(sources_data, [i+1 for i in range(len(sources))])
+    axs[2, 0].boxplot(sources_data, [i for i in range(len(sources))], '')
+    axs[2, 0].set_ylabel('Sentiment Score')
+    axs[2, 0].set_xlabel('Source')
+    axs[2, 0].set_xticks(np.arange(1, len(sources) + 1))
+    axs[2, 0].set_xticklabels(sources)
+
+    # Violin plot of date range (X) and sentiment range (Y)
+    years = np.array([datetime.datetime(i + 2000, 1, 1, tzinfo=datetime.timezone.utc) for i in range(0, 22, 2)])
+    years_data = [[] for i in range(len(sources))]
+    for i in range(years.shape[0] - 1):
+        for j in range(len(sources)):
+            to_append = np.array([a[1] for a in data[data[:, 2] == sources[j]] if years[i] <= a[0] < years[i + 1]],
+                                 dtype=np.float32)
+            years_data[j].append(to_append if to_append.shape[0] > 0 else np.zeros(1))
+
+    for i in range(len(years_data)):
+        axs[2, 1].violinplot(years_data[i][:5], [i for i in range(2000, 2010, 2)], showmeans=True, widths=0.8)
+        axs[2, 2].violinplot(years_data[i][5:], [i for i in range(2010, 2020, 2)], showmeans=True, widths=0.8)
+
+    axs[2, 1].set_xlabel('Date Range')
+    axs[2, 1].set_ylabel('Sentiment Score')
+    for tick in axs[2, 1].get_xticklabels():
+        tick.set_rotation(30)
+
+    axs[2, 2].set_xlabel('Date Range')
+    axs[2, 2].set_ylabel('Sentiment Score')
+    for tick in axs[2, 2].get_xticklabels():
+        tick.set_rotation(30)
+
+    # TODO Violin plot of sentiment range (Y) and date range (X) + source (colour)
 
     # plt.savefig('./out-plot/' + datetime.now().strftime('%Y%m%d%H%M%S') + '.png')
     plt.savefig(out_folder + keyword + '.png')

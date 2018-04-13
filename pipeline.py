@@ -2,8 +2,8 @@ import time
 import oop_scraper
 from crawler import crawler
 from filter import filter
-from parse import parse
-from sentiment import sentiment, sentiment_vader, sentiment_openai
+# from parse import parse
+# from sentiment import sentiment, sentiment_vader, sentiment_openai
 from plot import plot
 
 # topic: [keywords]
@@ -70,7 +70,7 @@ def pipeline(topic, keywords, source):
     # fname = crawler(topic, source, NUM_DOCS, QUERIES[topic])
     fname = source.get_fname(topic)
     print('\n Filtering:')
-    # filter(fname, keywords, FILTER_THRESHOLD)
+    filter(fname, keywords, FILTER_THRESHOLD)
     print('\n Parsing:')
     parse(fname, keywords)
     print('\n Scoring sentiment:')
@@ -83,8 +83,8 @@ def pipeline(topic, keywords, source):
 
 
 for tpc, words in TOPICS2.items():
-    for src in SOURCES:
-        pipeline(tpc, words, src)
+    # for src in SOURCES:
+        # pipeline(tpc, words, src)
     # TODO sleep / wait until in_folder + fname exist (occasional crash: plot called before sent output written)
     plot(tpc, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/')
     plot(tpc, in_folder='./out-sentiment-openai/', out_folder='./out-plot-openai/')
