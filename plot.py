@@ -215,6 +215,21 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
                 f_out.write(sources[i] + '>' + sources[j] + ': ' +
                             str(mannwhitneyu(sources_data[i], sources_data[j], alternative='greater')) + '\n')
 
+    years = np.array([datetime.datetime(i + 2000, 1, 1, tzinfo=datetime.timezone.utc) for i in range(20)])
+    for i in range(len(years)-1):
+        data_in_year = np.array([a for a in data if years[i] <= a[0] < years[i+1]])
+        if len(data_in_year) == 0:
+            continue
+        f_out.write(str(years[i].year) + ':\n')
+        for src1 in sources:
+            for src2 in sources:
+                if src1 != src2 and len(data_in_year[data_in_year[:, 2] == src1]) > 20 \
+                        and len(data_in_year[data_in_year[:, 2] == src2]) > 20:
+                    f_out.write('\t' + src1 + '>' + src2 + ': ' +
+                                str(mannwhitneyu(data_in_year[data_in_year[:, 2] == src1][:, 1],
+                                                 data_in_year[data_in_year[:, 2] == src2][:, 1], alternative='greater'))
+                                + '\n')
+
     f_out.write('\n')
 
     # Means, s.d., no. of articles for whole data set
@@ -229,6 +244,7 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
         # print(years[i].year, ':', data_in_year.shape[0], 'articles with mean sentiment', np.average(data_in_year))
         f_out.write(str(years[i].year) + ': ' + str(data_in_year.shape[0]) + ' articles with mean sentiment ' +
                     str(np.average(data_in_year)) + ' and std. dev. ' + str(np.std(data_in_year)) + '\n')
+
     for source in sources:
         data_in_source = np.array(data[data[:, 2] == source][:, 1], dtype=np.float32)
         # print(source, ':', data_in_source.shape[0], 'articles with mean sentiment', np.average(data_in_source))
