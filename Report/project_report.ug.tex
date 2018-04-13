@@ -83,7 +83,7 @@ Catherine Holloway, Nicholas Firth}
 \setcounter{page}{1}
 
 
-\chapter{Introduction}
+\chapter{Introduction} % 2-4 pages
 
 %% Outline the problem you are working on, why it is interesting and what the challenges are.
 
@@ -108,7 +108,7 @@ This paper will focus on mainly syntactic techniques and features, as these are 
 % Other work in using NLP for media analysis
 Various other studies have attempted to utilise natural language processing to perform high-level analyses in the domain of news media.
 The research done in \cite{Content analysis of 150 years of British periodicals} assembled a vast corpus of regional newspapers in the United Kingdom spanning 150 years to detect long-term patterns of cultural change (e.g. increase of female representation in the news, or when trains overtook horses for transportation) by analysing n-gram trends and named entities. 
-More specifically, in the domain of how groups of people are represented in the media, studies such as \cite{Are You a Racist or Am I Seeing Things?} has attempted to use features based on natural language processing (such as n-grams and part-of-speech tags) to classify racist and sexist posts in social media, although there is still a research gap in this area (especially for news articles, and/or specific groups such as people with disabilities or mental illnesses).
+More specifically, in the domain of media representation of specified groups of people, studies such as \cite{Are You a Racist or Am I Seeing Things?} has attempted to use features based on natural language processing (such as n-grams and part-of-speech tags) to classify racist and sexist posts in social media, although there is still a research gap in this area (especially for news articles, and/or relating to specific groups, such as people with (specific) disabilities or mental illnesses).
 % Just give a short summary, expand this later in Chapter 2
 
 % Why is it interesting & what the challenges are
@@ -126,7 +126,7 @@ The aim of this project is to utilise these natural language processing computat
 More specifically, to gather online news articles relating to people with disabilities in British media, and perform natural language processing analyses at scale to identify trends such as term popularity (e.g. 'suffer from ...' vs 'with ...') and variation in positive/negative sentiment.
 
 The goal of this project is to develop a computational pipeline capable of performing this analysis of online media end-to-end.
-Given a list of topic consisting of keywords and query terms, this pipeline covers the task of web crawling and scraping, using public APIs if possible, to collect a dataset of news articles; filtering off-topic articles for the given keywords; matching relevant sentences referring to a keyword; performing sentiment analysis (using publicly available open-source libraries) on these sentences; and producing relevant plots to show applications of this technology.
+Given a list of topic consisting of keywords (or phrases) and query terms, this pipeline covers the task of web crawling and scraping, using public APIs if possible, to collect a dataset of news articles; filtering off-topic articles for the given keywords; matching relevant sentences referring to a keyword; performing sentiment analysis (using publicly available open-source libraries) on these sentences; and producing relevant plots to show applications of this technology.
 This pipeline will be available open source on GitHub (https://github.com/bmaulana/nlp-media)  % should this be a bib reference?
 
 %% Give an overview of how you carried out the project (e.g., an iterative approach).
@@ -142,7 +142,7 @@ The body of this report is subdivided into four sections: context, requirements 
 %% This chapter is relatively short (2-4 pages) and must leave the reader very clear on what the project is about and what your goals are
 
 
-\chapter{Context}
+\chapter{Context}  % 8-10 pages
 
 %% This chapter should cover background information, related work, research done, and tools or software selected for use in the project.
 
@@ -158,56 +158,204 @@ The body of this report is subdivided into four sections: context, requirements 
 
 %% You should not include well known things (e.g., HTML or Java) or try to give tutorials on how to use a tool or code library (use references to books and websites for that information). Everything you include should be directly relevant to your work and the relationship made clear. This chapter is likely to be fairly substantial, perhaps 8-10 pages.
 
+% -- How the project relates to what is already known & available, survey of similar solutions --
+\section{Background}
 
-\chapter{Requirements and Analysis}
+% Similar research being done on media representation of (disability/mental illness/etc.), and why using computational NLP will allow the discovery of more (high-level) information: trends, patterns, etc.
+
+% Similar research on applying NLP for news media, social media, etc. in other domains - techniques & features they used, solutions they came up with, etc. - what could be applicable for this domain (sentiment relative to a certain topic)
+
+% Research on relevant libraries, frameworks, etc.: maybe even statistics stuff
+
+% -- Research carried out & sources (papers, books, websites, etc.) --
+\section{Research Methodology and Sources}
+
+% How research was carried out: for each component, determine neccesary or potentially useful techniques. Look up online for papers defining it, web resources, frameworks/libraries. Iterative approach, done alongside development of code (do research as I , which in turn may change how I'm doning things)
+
+% Sources: Google Scholar, papers cited by other papers, GitHub pages, Python repositories (Pip, Conda) & documentation, etc. + 'state how each source relates to your work'.
+
+% -- Technical background, sources of information, software --% (probably the longest section in chapter 2)
+\section{Technical Context}
+
+% general NLP: define NLP again, classify & list techniques, then mention 'the techniques used in this project are ...'
+
+% Term frequency & filtering: mention 'token ranking' & pre-processing (stemming)
+% Also tried tf-idf (cite paper defining it) but didnt' work out ('pure' tf performs better when I analysed the results of the filtering and the proportion of relevant articles being filtered out, as idf on a queried subset of a corpus makes the idf of the query terms and related words be much lower than its idf over the whole corpus, as all the documents in the subset will have at least one keyword)
+% Cite NLTK, 'used NLTK to compute these features'
+
+% Rule-based matching to find sentences relevant to one or more keyword(s) or key phrase(s)
+% match similar sentences if it contains a phrase that has the same lemma (root word) as the keyword or key phrase (in the same order), for example, 'Mental illnesses' will match 'mental illness'
+% Cite SpaCy, 'used SpaCy to perform rule-based sentence matching'
+
+% Sentiment analysis: cite some survey papers, cite GitHub page, cite each library I tried (this would probably be the longest section)
+
+% Statistical analysis: matplotlib, papers (or at least a link to matplotlib's docs) for each statistical tool used (mean, standard deviation, scatterplot, moving average, 2d histogram, box and whiskers plot, violin plot, Mann-Whitney U test, etc.)
+
+% Programming language: written in Python (because of high availability of ML/NLP related tools/libraries + ideal language for experimentation due to relatively high-level and low-verbosity so that there is relative ease to make changes on the fly). 
+% Additionally the conda distribution(?) is used ...
+% Cite python's, conda's main web pages
+
+
+\chapter{Requirements and Analysis}  % 5-6 pages
 
 %% Give the detailed problem statement. This elaborates on what you may have included in the introduction chapter, and represents the starting point from which requirements were derived.
+\section{Problem Statement}
+
+% Expand aims & goals
 
 %% A structured list of requirements.
+\section{Requirements}
+
+% Short paragraph about component based design
+
+% Subsection for each component + dataset descriptions (explain first the components are: blah blah blah so readers dont mistake dataset description as a component, but only as extra requirements)
+
+\subsection{Data Collection}  % How to collect that data
+
+% scraper for each source - what needs to be scraped from each article
+
+% crawler - finding articles from each source's built in search engines, look up multiple query terms
+
+% scalability, able to save and resume progress, etc.
+
+\subsection{Dataset Filtering}
+
+\subsection{Rule-based Sentence Matching}
+
+\subsection{Sentiment Scoring}
+
+% Analysing scorers: 'slow' scorer that takes the first N articles only and scores them with ALL scorers from a list of open-source sentiment scorers, for the purpose of evaluating the performance (accuracy) of these scorers
+
+% Final product: one or two final sentiment scorers with only one sentiment score, optimised for performance (speed / runtime) - how fast?
+
+\subsection{Statistical Analysis and Plotting}
+
+% Uncover high-level trends, distribution, statistical metrics, etc.
 
 %% Use cases (a use diagram and list of use case titles, with the full use cases appearing in the appendix).
+% Not applicable
 
 %% Results of analysing the requirements to extract information. For example, data modelling to find the data to be stored (ER diagram), views/web pages needed and so on.
+\section{Analysis of Requirements}
+
+% How the requirements influence the design of my project: e.g. requirement of save/resume progress for data collection -> read and skip already-parsed articles, runtime requirements for sentiment scoring -> analyser on all scorers that only samples N (default 10) articles, final implementation that only computes one sentiment score
 
 %% The level of detail of the requirements and use cases will depend on the nature of your project. If you are doing a Software Engineering based design and implementation project, then they will need to be done thoroughly. If there is a substantial body of requirements and use cases, then a summary should be given in the chapter, with the full set included in an appendix section.
 %% If your project is not Software Engineering oriented, then you still need to describe the requirements you are working to and relevant analysis information. Use cases may not be needed or be relevant.
 %% The analysis part of the chapter is what you did to map the requirements information into the first pass design. You can think of analysis as the first stage of design, and the purpose is to show how the requirements were used to inform the design. The length of this chapter depends on the kind of project, but you are typically looking at 5-6 pages.
 
 
-\chapter{Design and Implementation}
+\chapter{Design and Implementation}  % 10+ pages (use diagrams, graphs etc. to fill it up)
 
 %% Describe the design of what you have created.
-
 %% Start with the application architecture, giving its overall structure and the components that make up that structure.
+\section{Overall Design}
 
+% Components, what each component does, how they interact with each other (show in diagram)
+
+% Input/output format (of JSON files) before/after each stage, how these files are stored (file structure and JSON structure)
+
+%% Include the database or storage representation. (Originally after component description)
+\section{Dataset Description}  % What data have I got
+
+\subsection{Sources}
+
+% sources (Guardian, DM, DE), why (list that article about top N sources, 'represent' both political leans)
+
+\subsection{Keywords, key phrases, and query terms}
+
+% topics: collection of keywords & query terms (keywords minus potentially off topic terms / combinations)
+
+% List topics, keywords/phrases, query terms here
+
+\subsection{Dataset Size}
+
+% Tables for how many articles do I have, for each source, topic, and source+topic, before and after filtering
+
+\subsection{Limitations}
+
+% Limitations (e.g. DE has less articles than DM or Guardian, some topics have way less articles), implications for statistical analysis, plotting (e.g. moving averages), etc
+
+% Also year-on-year limitations (DM only retains articles from ___, DE only retains articles from ___, Guardian only retains articles from ___), and implications (non equal proportion of articles for each year), what it means for analyses 
+
+\section{Components}
 %% Give a description of the design of each of the components that make up the architecture.
 
-%% Include the database or storage representation.
+\subsection{Data Collection}
+
+% scraper for each source - what needs to be scraper from each article; article scraper AND search engine scraper
+
+% crawler: use search engine scraper to get list of article URLs, use article scraper on each URL, store to JSON file line-by-line AND ensure ability to 'save and resume' and not repeat process for articles that already exist in the dataset (by loading a set of URLs that already exist in the dataset beforehand and not calling the scraper for them)
+
+\subsection{Dataset Filtering}
+
+% What I did
+
+% Evaluation of results - how I measured filter effectiveness & determine threshold rank
+
+% Alternatives I considered
+
+\subsection{Rule-based Sentence Matching}
+
+% What I did
+
+% Alternatives I considered
+
+\subsection{Sentiment Scoring}
+
+% short paragraph saying 'used open-source libraries' and 'several options were considered and their accuracy analysed on a random sample of sentences, before the two best-performing options were selected to be used for the full dataset, after being optimised for run-time (as running all options on the full dataset will take ~1 minute per article * 51,177 articles = ...)'
+
+\subsubsection{Comparison of open-source sentiment models} % todo make this (and other subsubsections) appear in the table of contents
+
+% a 'slow' scorer that takes the first N articles only and scores them with ALL scorers from a list of open-source sentiment scorers, for the purpose of evaluating the performance (accuracy) of these scorers
+
+% Evaluation of results - how I measured model effectiveness (for each model)
+
+% Graphs, Tables, analyses etc. expect like 2 pages
+
+\subsubsection{Final implementation}
+
+% After analysis, decided on running only two 'final' sentiment scorers for the whole dataset, using a separate function that computes only one sentiment score, optimised for performance (speed / runtime)
+
+\subsection{Statistical Analysis and Plotting}
+
+% One sub-sub-section for each plot / analysis tool / metric being used (show data for 'disabled' and a few other examples from other keywords)
 
 %% Provide implementation details as necessary.
 
 %% As with other chapters, the structure and contents of this chapter will depend on the nature of your project, so the list above is only a suggestion, not a fixed requirement.
 
 %% Find an ordering and form of words so that the design is clear, focusing on the interesting design decisions. For example, what were the alternatives, why select one particular solution? You have a limited number of pages so be selective about details. Also remember that someone (your examiners!) has to read this so don’t overwhelm them with intricate descriptions of everything that only you can follow – but do make sure the key details of the solution are in place. Use appropriate terminology and demonstrate that you have a good understanding of the Computer Science principles involved.
+
 %% You can use diagrams and screen shots to help explain the design but don’t overuse them. Diagrams and screen shots should add information, not duplicate what is written in the text, and definitely avoid page after page of diagrams as this will disrupt the flow of your text. Where relevant, UML diagrams can certainly be used but, again, don’t flood the chapter with diagrams. Additional diagrams can always be included in an appendix section. It is not the case that a full set of UML diagrams must be provided for a software development project, and they shouldn’t be added in the belief that there must be UML diagrams to do a good project. Think about what you need to communicate and use UML diagrams if and when they fit the need.
+
 %% It may be useful to include sections of code to highlight how a particular algorithm is implemented or how an interesting programming problem was solved. However, avoid lengthy sections of code, as this can also disrupt the flow of the text. Also make sure that your code fragments are readable, easy to follow and properly laid out. It may be better to use pseudo-code rather than actual code, especially when describing an algorithm. If you need to make use of longer sections of code, you can put the code in the appendix and reference it from the text.
+
 %% An alternative way to organise the content of both this chapter and the preceding one, suitable for some projects, is to have a sequence of chapters or sections for each major iteration of the project. This allows the progression of the project to be shown, with each iteration building on the last, and the opportunity for interesting discussion about the decisions that needed to be made.
+
 %% This is a core chapter in your report and will usually be quite substantial, 10 pages or more.
 
 
-\chapter{Results Evaluation}
+\chapter{Results Evaluation}  % 2-4 pages (can be more if needed, probably more with graphs and tables)
+
+% write about analysis of results, graphs etc. instead of testing
+
+% One section for each relevant analysis tool (plots, metrics, tables), with some examples for each (disabled.py and some other examples)
 
 %% Describe your testing strategy (unit, functional, acceptance testing; and how they are carried out). How were test cases selected?
+% Not Applicable
 
 %% Examples of specific tests and how they were carried out (e.g., using mock objects to break dependencies). Focus on the interesting cases.
+% Not Applicable
 
 %% A summary of the test results and what coverage was achieved. Detailed test reports should appear in the appendix, if they add useful information or you want to demonstrate the kinds of tests and coverage achieved.
+% Not Applicable
 
 %% If your project requires substantial evaluation of data and results, evaluation of algorithms, or other forms of testing that are not code-based, then adapt this chapter to suit.
 %% This chapter will typically be 2-4 pages in length but could be more depending on the depth of testing done. If you need to do a detailed evaluation for a more mathematical or theory-based project, then this chapter could well be more substantial.
 
 
-\chapter{Conclusions}
+\chapter{Conclusions}  % 2-4 pages
 %% Wrap-up and final thoughts on your project. 
 %% This chapter is typically 2-4 pages long but could be longer if the project work requires more extensive evaluation.
 
@@ -219,14 +367,24 @@ The body of this report is subdivided into four sections: context, requirements 
 %% Evaluation of the work (this may be in a separate chapter if there is substantial evaluation).
 %% A critical evaluation of the results of the project (e.g., how well were the goals met, is the application fit for purpose, has good design and implementation practice been followed, was the right implementation technology chosen and so on).
 
+% Fit for purpose, but can still be improved (e.g. sentiment model would be much better using a more complex model trained on a similar domain, also code readability can be improved to make it a public library/API that everyone can understand, use, adapt - currently not very clear and sometimes reliant on commenting code out/in or changing values
+
+% Choice of technologies (what's good e.g. Python, range of libraries, plotting, etc.; what can be improved i.e. try other methods e.g. topic models for filtering, inconsistency of models used e.g. stemming with NLTK for filtering vs lemmatising with SpaCy for rule-based sentence matching)
+
+% Implications of NLP for future media studies, call for similar analyses to be conducted in other domains (mention additional information that can be discovered by using computational NLP and processing a much larger sample of text) 
+
 \section{Future Work}
 %% How the project might be continued, but don't give the impression you ran out of time!
 %% Future work. How could the project be developed if you had another 6 months. Take care to differentiate between what you have done to satisfy your stated project goals, and work that could be done to meet extended goals.
 
+% Purpose built sentiment model trained to a a labelled sample: in this analysis vader performed best although it's a very simple model as other, more complex pre-trained models were trained on other domains and is less generalisable. However, OpenAI's model came very close despite this, and a similar approach using deep learning or statistical ML models, trained on a labelled sample of positive/negative/neutral sentences in this domain, would have much improved sentiment score reliability (and thus quality of analyses)
+
+% Expand sources - Develop API where others can use and adapt the code, change topics / keywords / key phrases / query terms, add/change sources by developing their own scrapers (with an interface for the scraper), document code and improve code readability and output file structure, output sample on-topic/off-topic articles to help them set rank threshold, maybe even an API to provide their own sentiment model(s) as parameter given an interface
+
 
 \appendix
 
-\begin{thebibliography}{HHM99}
+\begin{thebibliography}{HHM99}  % todo make this appear in the table of contents
   
 \bibitem[Cam14]{Jumping NLP Curves}
 E.~Cambria and B.~White.
@@ -250,7 +408,7 @@ J.~Coverdale, N.~Raymond, and C.~Donna.
 
 \end{thebibliography}
 
-\chapter{Other appendices, e.g., code listing} %% TODO
-\emph{Put your appendix sections here} %% TODO
+\chapter{Other appendices, e.g., code listing}
+\emph{Put your appendix sections here}
 
 \end{document}
