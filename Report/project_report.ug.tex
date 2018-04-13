@@ -35,6 +35,9 @@ $\Box$ \end{quotation}}
 \newcommand{\reals}{\mbox{\(\mathbb R\)}}
 \newcommand{\ints}{\mbox{\(\mathbb Z\)}}
 
+\setcounter{secnumdepth}{3}  % Add numbering to \subsubsection
+\setcounter{tocdepth}{3}  % Include \subsubsection in ToC
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -305,7 +308,7 @@ The body of this report is subdivided into four sections: context, requirements 
 
 % short paragraph saying 'used open-source libraries' and 'several options were considered and their accuracy analysed on a random sample of sentences, before the two best-performing options were selected to be used for the full dataset, after being optimised for run-time (as running all options on the full dataset will take ~1 minute per article * 51,177 articles = ...)'
 
-\subsubsection{Comparison of open-source sentiment models} % todo make this (and other subsubsections) appear in the table of contents
+\subsubsection{Comparison of open-source sentiment models}
 
 % a 'slow' scorer that takes the first N articles only and scores them with ALL scorers from a list of open-source sentiment scorers, for the purpose of evaluating the performance (accuracy) of these scorers
 
@@ -384,12 +387,14 @@ The body of this report is subdivided into four sections: context, requirements 
 
 \appendix
 
-\begin{thebibliography}{HHM99}  % todo make this appear in the table of contents
+\begin{thebibliography}{HHM99}
   
 \bibitem[Cam14]{Jumping NLP Curves}
 E.~Cambria and B.~White.
 \newblock Jumping NLP Curves: A Review of Natural Language Processing Research
 \newblock {\em IEEE Computational Intelligence Magazine}, 9(2):  48--57, 2014.
+
+\addcontentsline{toc}{chapter}{Bibliography}
 
 \bibitem[Lan17]{Content analysis of 150 years of British periodicals}
 T.~Lansdall-Welfare, et al.
@@ -408,7 +413,9 @@ J.~Coverdale, N.~Raymond, and C.~Donna.
 
 \end{thebibliography}
 
-\chapter{Other appendices, e.g., code listing}
+\chapter{Other appendices, e.g., code listing}  % appendix A
 \emph{Put your appendix sections here}
+
+% \chapter{Test Appendix B}
 
 \end{document}
