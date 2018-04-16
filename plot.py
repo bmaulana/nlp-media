@@ -46,6 +46,38 @@ def moving_average(interval, window_size):
     return np.convolve(interval, window, 'valid')
 
 
+# Only stems plurals and tenses. To stem keyword usage trends while not removing distinction of e.g. 'ill' vs 'illness'.
+def basic_stemmer(word):
+    word = word.split(' ')
+    if len(word) > 1:
+        ret = ''
+        for w in word:
+            ret += basic_stemmer(w) + ' '
+        return ret[:-1]
+    word = word[0]
+    if word.endswith('ings'):
+        word = word[:-4]
+    elif word.endswith('ied'):
+        word = word[:-3] + 'y'
+    elif word.endswith('ies'):
+        word = word[:-3] + 'y'
+    elif word.endswith('ing'):
+        word = word[:-3]
+    elif word.endswith('eds'):
+        word = word[:-3]
+    elif word.endswith('ed'):
+        word = word[:-2]
+    elif word.endswith('es'):
+        word = word[:-2]
+    elif word.endswith('e'):  # to match (removed) -ed and -es forms, words missing 'e' at the end would be obvious anw
+        word = word[:-1]
+    elif word.endswith('s'):
+        word = word[:-1]
+    if word[-2] == word[-1]:  # double consonants before -ing or -ed (e.g. map -> mapped/mapping)
+        word = word[:-1]
+    return word
+
+
 def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/'):
     """
     Format: python plot.py keyword
@@ -276,7 +308,7 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
         words_in_year = defaultdict(int)
         for j in data_in_year:
             for k, v in keywords[j].items():
-                words_in_year[k] += v
+                words_in_year[basic_stemmer(k)] += v
         f_out.write('Keywords used in ' + str(years[i].year) + ':\n')
         for word, occurrence in words_in_year.items():
             f_out.write('\t' + word + ': ' + str(occurrence) + ' occurrences (' +
@@ -287,7 +319,7 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
         words_in_source = defaultdict(int)
         for j in data_in_source:
             for k, v in keywords[j].items():
-                words_in_source[k] += v
+                words_in_source[basic_stemmer(k)] += v
         f_out.write('Keywords used in ' + source + ':\n')
         for word, occurrence in words_in_source.items():
             f_out.write('\t' + word + ': ' + str(occurrence) + ' occurrences (' +
@@ -296,6 +328,8 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     f_out.write('\n')
 
     # Print keyword usage for each (year, source) combination.
+    keyword_usage = {}
+    keywords_stemmed = []
     for source in sources:
         for i in range(len(years) - 1):
             subset = np.array([a for a in data if years[i] <= a[0] < years[i+1]])
@@ -311,14 +345,35 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
             words_in_subset = defaultdict(int)
             for j in keywords_subset:
                 for k, v in keywords[j].items():
-                    words_in_subset[k] += v
+                    words_in_subset[basic_stemmer(k)] += v
             for word, occurrence in words_in_subset.items():
+                per_article = occurrence / len(keywords_subset)
                 f_out.write('\t' + word + ': ' + str(occurrence) + ' occurrences (' +
-                            str(occurrence / len(keywords_subset)) + ' per article)\n')
+                            str(per_article) + ' per article)\n')
+
+                if word not in keywords_stemmed:
+                    keywords_stemmed.append(word)
+                if (word, str(source)) in keyword_usage:
+                    keyword_usage[(word, str(source))][0].append(years[i].year)
+                    keyword_usage[(word, str(source))][1].append(per_article)
+                else:
+                    keyword_usage[(word, str(source))] = ([years[i].year], [per_article])
 
     f_out.close()
 
-    # TODO new plots: occurrences per article for each word (y) over time (x), all/DE/DM/Guardian (4 plots)
+    # occurrences per article for each word (y) over time (x), all/DE/DM/Guardian (4 plots)
+    fig, axs = plt.subplots(len(keywords_stemmed), 1, figsize=(10, len(keywords_stemmed) * 5), tight_layout=True)
+    for i in range(len(keywords_stemmed)):
+        word = keywords_stemmed[i]
+        ax = axs[i]
+        for src in sources:
+            if (word, src) in keyword_usage:
+                x, y = keyword_usage[(word, src)]
+                ax.plot(x, y, label=src)
+        ax.set_title(word)
+        ax.legend()
+    plt.savefig(out_folder + keyword + '2.png')
+    plt.close()
 
 
 if __name__ == '__main__':

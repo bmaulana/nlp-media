@@ -72,10 +72,10 @@ def pipeline(topic, keywords, source):
     print('\n Filtering:')
     filter(fname, keywords, FILTER_THRESHOLD)
     print('\n Parsing:')
-    parse(fname, keywords)
+    # parse(fname, keywords)
     print('\n Scoring sentiment:')
-    sentiment_vader(fname)
-    sentiment_openai(fname)
+    # sentiment_vader(fname)
+    # sentiment_openai(fname)
     # sentiment(fname, max_articles=25)
 
     total_time = time.time() - start_time

@@ -26,6 +26,8 @@ def parse(fname, keywords=None):
     if keywords is None:
         keywords = [topic]
     keywords.append('suffers from')
+    # for keyword in [i for i in keywords]:
+    #     keywords.append('person with ' + keyword)
 
     pattern = []
     seen = set()
