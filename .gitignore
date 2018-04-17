@@ -112,7 +112,6 @@ ENV/
 
 # LaTeX outputs
 *.aux
-*.pdf
 *.synctex.gz
 *.toc
 
