@@ -106,13 +106,6 @@ The obvious advantage of natural language processing is that machines can proces
 This allows for high-level quantitative analyses of all documents in a vast corpora for a given domain to be feasible, which can uncover information previously inaccessible by only reading and generalising from a small sample of documents.
 For example, this level of quantitative analysis can uncover trends and patterns within a given domain (e.g. how does the popularity of the term 'mentally ill' increase or decrease year-on-year in English news media?). 
 
-Natural language processing covers three main 'curves' or areas:  syntax, semantics, and pragmatics (narratives, understanding). 
-Syntax specifies the way symbols (words, terms, tokens, or n-grams) and groups of symbols are arranged and whether they are well-formed in an expression, whereas semantics specifies what these expressions mean, and pragmatics specifies contextual information \cite{cambria2014jumping}.
-Contemporary (or 'traditional') approaches to natural language processing mainly focus on syntactic analysis, due to the relative ease of extracting syntactic features of text such as term frequency, word co-occurrence, and part-of-speech tags, compared to extracting logical expressions and networks necessary for semantic analysis.
-However, syntactic analysis is much more limited as it often misses information such as the (semantic) context of a word (e.g. "one" in "there's no one there" (referring to a person) vs "we have only one car" (referring to a quantity)).
-This paper will focus on mainly syntactic techniques and features, as these are more relevant to this domain of high-level topic matching and sentiment analysis that is feasible with current technology at this scale.
-% Just give a short summary, expand this later in Chapter 2
-
 % Other work in using NLP for media analysis
 Various other studies have attempted to utilise natural language processing to perform high-level analyses in the domain of news media.
 The research done in \cite{lansdall2017content} assembled a vast corpus of regional newspapers in the United Kingdom spanning 150 years to detect long-term patterns of cultural change (e.g. increase of female representation in the news, or when trains overtook horses for transportation) by analysing n-gram trends and named entities. 
@@ -185,15 +178,15 @@ Analyses of news or other media are primarily carried out by taking a small, sta
 	\item In a 2002 study \cite{coverdale2002depictions}, researchers analysed a sample of 600 print articles relating to mental health or mental illness that was collected by a commercial clipping bureau.
 		The articles were then categorised into positive and negative depictions, then further into sub-samples such as danger to others, criminality, vulnerability, etc.
 		The study found that at the time, in New Zealand, negative themes predominate about 3 to 1 (with 27\% being positive).
-		However, given the paper's scope, this cannot be generalised to learn trends, or how the conclusion varies given certain variables (e.g. time, location).
+		However, given the paper's scope, this conclusion cannot be generalised to learn trends, or how the conclusion varies given certain variables (e.g. time, location).
 	\item A study conducted in 1998 \cite{gold1999media} were replicated in 2008 \cite{devotta2013representations} to assess change in representations of disability and persons with disability in the Canadian news media.
 		This study sampled 196 news articles in 1998 and 166 news articles in 2008.
-		It found an increase in the usage of 'person-first' terminology (e.g. person with disabilities) and a decrease in 'disabling language' (e.g. disabled person).
-		This is an attempt to identify trends with regards to media representation of disability, however only provides two data points (1998 and 2008) and has relatively small sample size.
+		It found an increase in the usage of 'person-first' terminology (e.g. person with disabilities) and a decrease in 'disabling language' (e.g. disabled person). % is this relevant?
+		This is an attempt to identify trends with regards to media representation of disability, however only provides two data points (1998 and 2008) with relatively small sample size.
 	\item A study in 2005 \cite{jones2009representations} analysed 1,515 articles relating to autism in Australian news media.
 		All articles were read by two research assistants to ensure they are on-topic and then coded as either 'negative' or 'positive' in overall focus, and then coded into themes (e.g. funding, education, etc.).
-		Key findings include a relatively limited amount of helpful information, and a 'dual stereotype' of people with autism labelled as either dangerous and uncontrollable, or unloved and poorly treated.
-		Relative to other similar studies, this study appears to be focused more on qualitative discussion compared to quantitative results.
+		% Key findings include a relatively limited amount of helpful information, and a 'dual stereotype' of people with autism labelled as either dangerous and uncontrollable, or unloved and poorly treated. % is this relevant?
+		% Relative to other similar studies, this study appears to be focused more on qualitative discussion compared to quantitative results. % is this relevant?
 \end{itemize}
 
 % Why using computational NLP will allow the discovery of more (high-level) information: trends, patterns, etc
@@ -236,7 +229,7 @@ However, there is still a visible research gap in this area, for using computati
 
 % Research on relevant libraries, frameworks, etc.:
 To date, advances in natural language processing has made this approach much more feasible, efficient, and effective, even given limited time and hardware constraints.
-Various free and open-source tools for computational natural language processing and statistical analysis has been developed by the research community, such as NLTK \cite{Nltk} and StanfordNLP \cite{StanfordNLP} for natural language processing, scikit-learn \cite{Scikit-learn} for statistical analysis, and matplotlib \cite{Matplotlib} for plotting.
+Various free and open-source tools for computational natural language processing and statistical analysis has been developed by the research community, such as nltk \cite{Nltk} and StanfordNLP \cite{StanfordNLP} for natural language processing, scikit-learn \cite{Scikit-learn} for statistical analysis, and matplotlib \cite{Matplotlib} for plotting.
 Depending on the type of data analytics performed and the hardware used, these computational tools are able to analyse news articles at a rate of multiple documents per second.
 The 'Technical Context' section contains a further listing and discussion of these tools, alongside the specific libraries and natural language processing techniques used for this research project.
 
@@ -249,14 +242,22 @@ Research articles were gathered from a list of important topics and query terms 
 Highly-cited research articles are prioritised as examples, as they are deemed to be more 'important' papers or studies within its topic.
 Additionally, the author looked for highly-cited 'key' papers and review articles within each specific topic, and then looked at its list of citations (older papers), and research articles that cites the review article (newer papers), to expand the list of relevant research papers and examples.
 
-% How technical research was carried out: for each component, determine neccesary or potentially useful techniques. Look up online for papers defining it, web resources, frameworks/libraries. Iterative approach, done alongside development of code (do research as I , which in turn may change how I'm doning things)
-Technical research, on the other hand, were carried out as necessary.  % todo
+% How technical research was carried out: for each component, determine neccesary or potentially useful techniques. Look up online for papers defining it, web resources, frameworks/libraries. Research done alongside development of code (do research as I plan/develop, which in turn may change how I'm doing things)
+Technical research, on the other hand, were carried out as necessary.
+After the requirements and components for the pipeline has been decided, research were carried out to find relevant techniques, formulae, algorithms, tools, libraries/packages, and existing implementations that would be useful to implement each component (or sub-tasks within a component).
+The research were carried out in an iterative approach alongside software development, where initial planning and research would show an initial implementation plan, then implementation would uncover feasibility of these approaches and possible alternatives/refinements to be researched, then further research may reveal new options/refinements to be implemented, and so on.
+Research or work done on other components/tasks may also reveal possible improvements or alternatives for another task, which may require further research and implementation.  
+Again, more popular tools and libraries are prioritised, although several approaches and implementations were considered for most components and sub-tasks, to be compared for suitability, runtime, results, etc.
 
 % Sources: Google Scholar, papers cited by other papers, GitHub pages, Python repositories (Pip, Conda), Python and library documentation, etc. + 'state how each source relates to your work'.
 The sources used for this literature review are:
 \begin{itemize}
-	\item Google Scholar, often used to find research articles to act as 'entry points' towards a research topic, or to find additional examples similar to another article within a given topic
-	% todo
+	\item Google Scholar, often used to find research articles to act as 'entry points' towards a research topic, to find other studies similar to another research article within a specified topic, or to retrieve citation information of a given research paper, book, or popular Python package.
+	\item GitHub topics, used to find repositories that are relevant to a specific task or component, find similar GitHub repositories, gather information about a given repository, and also as a benchmark for topic popularity and range of solutions in a given programming language.
+		Several GitHub pages also curate a list of repositories within a specific topic \cite{awesome-sentiment-analysis, awesome-nlp, awesome-machine-learning}.
+	\item Python package repositories such as PyPi \cite{PyPi} and Anaconda Cloud \cite{Anaconda-Cloud}, which list all available Python packages and shows general information regarding them, and also provides a search function; useful to find relevant packages for a component/task and gather information about a given Python package.
+	\item Official web sites and documentation of Python packages, which list and define capabilities (functions and parameters) of the package, useful to explore the functionality of a given package and its capacity to solve a specific task, and to understand the technologies/approaches used by the package's implementation (e.g. how is a sentiment model implemented?). 
+		Often (especially with more popular packages), citation information regarding the package would also be available in its web site.
 \end{itemize}
 
 % -- Technical background, sources of information, software --% (probably the longest section in chapter 2)
@@ -270,12 +271,18 @@ On the other hand, collection is performed using established, general-purpose we
 Similarly, statistical analysis and plotting is performed using general-purpose statistical tools and metrics.
 This section will cover the technical tools researched and used for all listed components regardless.
 
+Natural language processing covers three main 'curves' or areas:  syntax, semantics, and pragmatics (narratives, understanding). 
+Syntax specifies the way symbols (words, terms, tokens, or n-grams) and groups of symbols are arranged and whether they are well-formed in an expression, whereas semantics specifies what these expressions mean, and pragmatics specifies contextual information \cite{cambria2014jumping}.
+Contemporary (or 'traditional') approaches to natural language processing mainly focus on syntactic analysis, due to the relative ease of extracting syntactic features of text such as term frequency, word co-occurrence, and part-of-speech tags, compared to extracting logical expressions and networks necessary for semantic analysis.
+However, syntactic analysis is much more limited as it often misses information such as the (semantic) context of a word (e.g. "one" in "there's no one there" (referring to a person) vs "we have only one car" (referring to a quantity)).
+This paper will focus on mainly syntactic techniques and features, as these are more relevant to this domain of high-level topic matching and sentiment analysis that is feasible with current technology at this scale.
+
 % Programming language: written in Python
 Python was chosen as the main programming language used for this project.
 The primary reason for this choice is the wide availability and range of existing tools for natural language processing, sentiment analysis, statistical analysis and plotting, web scraping and parsing, etc. in Python.
 A study in 2016 showed that Python is the most popular language for machine learning and data science \cite{puget2016most}, which correlates to the amount of available tools developers have created for the language.
-A GitHub search for the topic 'natural language processing' as of 18 April 2018 reported 991 Python and 338 Jupyter repositories with the tag 'natural language processing', compared to the second most popular programming language being Java with only 156 repositories tagged 'natural language processing' \cite{GitHubNLP}.
-Furthermore, Python is also an ideal language for experimentation due to relatively high-level and low verbosity of the code, such that it is relatively easier to make small changes on the fly.
+A GitHub search for the topic 'nlp' as of 18 April 2018 reported 1,397 Python and 470 Jupyter (Python interactive 'notebook') repositories with the tag 'natural language processing', compared to the second most popular programming language being Java with only 251 repositories tagged 'nlp' \cite{GitHubNLP}.
+Furthermore, Python is also an ideal language for quick experimentation due to relatively high-level and low verbosity of the code, such that it is relatively easier to make small changes on the fly.
 Additionally, the Anaconda distribution of Python \cite{Anaconda} is used for its suitability to set up and manage Python environments and packages for data science projects.
 
 % Data collection
@@ -289,15 +296,15 @@ Given that web pages from the same source/publisher tend to follow a similar str
 In this project, filtering off-topic articles is done somewhat crudely via ranking term frequency independently for each document.
 Term frequency is a simple and commonly-used metric for natural language processing, with various existing tools that can compute this metric for thousands of text documents within seconds.
 To put simply, the term frequency of a term (i.e. a word or token) in a document is the number of times that the term occurs in the document.
-The popular scikit-learn library \cite{Scikit-learn} provides a tool to measure term frequency of text documents, handling both tokenisation (converting a text document into a list of tokens (terms/words)) and counting word occurrence \cite{Scikit-learn-tf}.
+The popular scikit-learn library \cite{Scikit-learn} provides a tool to measure term frequency of text documents, handling both tokenisation (converting a text document into a list of tokens (terms/words)) and counting word occurrence.
 It also provides the option to ignore stop words (i.e. common, meaningless words in English, such as 'the' or 'a'), which can often skew the results due to its relative high frequency.
-Additionally, the NLTK library \cite{Nltk} is used for stemming -- to reduce all words in the document to its word stem (such that e.g. 'walk', 'walks', 'walked', and 'walking' are equivalent).
+Additionally, the nltk library \cite{Nltk} is used for stemming -- to reduce all words in the document to its word stem (such that e.g. 'walk', 'walks', 'walked', and 'walking' are equivalent).
 
 % Expand the following paragraph in Chapter 4
 Term-frequency ranking is implemented by sorting all terms (words) in the document based on their term frequency.
 For filtering documents, a constant threshold value is used to determine whether documents are on-topic or not, where a document is on-topic if the keyword's rank is lower than the threshold value (i.e. the keyword is one of the most frequently used terms in the document), and is off-topic if the keyword's rank is higher than the threshold value (i.e. the keyword is rarely used in the document, relative to other terms).
 % As the term frequency of the keyword is measured relative to other terms in the document, it normalises for document length.
-As multiple keywords per topic are used, all keywords in the document are first converted to a unique 'keyword token' before term frequency is measured (which will treat all instances of any keyword in the topic as a single term).
+As multiple keywords per topic are used, all keywords in the document are first converted to a unique 'keyword token' before term frequency is measured (which will treat all instances of any keyword in the topic as a single term).  % maybe more relevant in chapter 4
 
 In literature related to natural language processing, various more sophisticated approaches has been proposed and used for the task of text classification and filtering off-topic articles.
 A conventional approach is by calculating term frequency -- inverse document frequency (tf-idf) \cite{robertson2004understanding, sparck1972statistical}, a metric that builds on term frequency by taking into account the relative importance of each word.
@@ -305,7 +312,7 @@ Inverse document frequency (idf) is calculated by counting the number of documen
 However, this approach is unsuitable for this project, given the selective nature of the dataset (where only articles with certain query terms are collected), thus the idf values of these query terms would be flawed (as they would appear in every document).
 
 Another proposed approach is by using a supervised machine learning model to classify documents into pre-defined categories (the text classification problem).
-Various approaches were proposed to solve text classification, including Support Vector Matrices (SVM), Naive Bayes (NB), and k-nearest neighbour (kNN) models \cite{khan2010review}.
+Various approaches were proposed to solve text classification, including Support Vector Matrices (SVM), Na\"{i}ve Bayes (NB), and k-nearest neighbour (kNN) models \cite{khan2010review}.
 However, this approach is infeasible for this project due to a lack of labelled data of articles and categories, and in this case the categories themselves are poorly defined and non-exclusive (multiple different topics may be discussed within one article).
 Topic models, which compute the proportion of abstract 'topics' in a document, has also been proposed.
 Latent dirichlet allocation (LDA) \cite{blei2003latent} represents documents as random mixtures over latent topics, where each topic is characterized by a distribution over words.
@@ -315,10 +322,44 @@ Also, both of these approaches are significantly more computationally expensive 
 % Rule-based matching to find sentences relevant to one or more keyword(s) or key phrase(s)
 % match similar sentences if it contains a phrase that has the same lemma (root word) as the keyword or key phrase (in the same order), for example, 'Mental illnesses' will match 'mental illness'
 % Cite SpaCy, 'used SpaCy to perform rule-based sentence matching'
+Sentiment scoring of articles is sub-divided into two components: a component to find sentences relevant to a topic (given a list of key terms) in a text document (sentence matching), and another component that performs sentiment analysis on these sentences and transforms it into a real-valued score of each sentence. 
+SpaCy \cite{SpaCy} is a popular tool for general natural-language processing tasks, using pre-trained convolutional neural network models for tasks such as tagging, parsing, and entity recognition, and is benchmarked to be the fastest and among the most accurate syntactic parser, able to parse 13,965 words per second in 2015 \cite{choi2015depends}.
+Among the information SpaCy extracts from text are lemmas (root words) of terms (e.g. 'mentally' $\rightarrow$ 'mental') and features a rule-based matching engine (retrieve a list of sequences of tokens within a document that matches a given pattern, e.g. tokens with a specified lemma), both which are useful for the task of finding sentences relevant to a topic in a document.
 
 % Sentiment analysis: cite some survey papers, cite GitHub page, cite each library I tried (this would probably be the longest section)
+For sentiment scoring of sentences, a variety of open-source tools and pre-trained models dedicated to sentiment analysis were researched for the purpose of comparison.
+Sentiment analysis, or opinion mining, is defined as "the field of study that analyzes people's opinions, sentiments, evaluations, attitudes, and emotions" from natural (human) language \cite{liu2012sentiment}.
+A GitHub search for the topic 'sentiment-analysis' as of 18 April 2018 reported 450 Python and 222 Jupyter repositories with the tag 'sentiment-analysis' \cite{GitHub-sentiment-analysis}.
+Furthermore, a community-curated list of sentiment analysis methods and implementations exist \cite{awesome-sentiment-analysis}, which served as a useful starting point to explore open-source sentiment analysis implementations.
+
+The particular sentiment analysis implementations that have been explored in this paper are:
+\begin{itemize}
+	\item VADER is a parsimonious rule-based model that scores the sentiment of a given sentence, based on the presence of 'sentiment lexicons' (a list of lexical features common to sentiment expression, such as 'good' and 'bad', including slang words, emoticons, and acronyms), and rules such as negations (e.g. 'not good') and increased sentiment intensity given emphasis such as punctuation, capitalisation, and degree modifiers (e.g. 'very') \cite{VADER}.
+	\item vivekn's 'sentiment' repository implements a supervised machine learning approach to sentiment classification trained on an enhanced Na\"{i}ve Bayes classifier, trained on a publicly available dataset of 25,000 highly-polar movie reviews from the Internet Movie Database (IMDb) using bigrams and trigrams as features \cite{narayanan2013fast}. 
+	\item xiaohan2012's 'twitter-sent-dnn' repository trains a convolutional neural network model with dynamic k-max pooling (DCNN) for modelling (real-valued sentiment scores of) sentences.
+		The sentence model properties considered are the word and n-gram order, and induced feature graph (generated by the DCNN).
+		It was trained on a dataset of 1.6 million tweets with emoticon-based labels. \cite{kalchbrennerACL2014}
+	\item kevincobain2000's 'sentiment\_classifier' repository trains a supervised machine learning model based on a Na\"{i}ve Bayes and Maximum Entropy Classifier to transform a sentence to positive and negative (real-valued) sentiment scores.
+		It considers Word Sense Disambiguation using wordnet and word occurrence statistics from nltk's movie review corpus, and uses bigrams as features.
+		The training data is a mixture of nltk's movie review corpus, Twitter posts, and Amazon customer reviews data. \cite{kevincobain}
+	\item OpenAI's 'generating-reviews-discovering-sentiment' repository provides a pre-trained single-layer multiplicative LSTM recurrent neural network model with 4096 units (a relatively simple model optimised for training/convergence time) to generate (real-valued) sentiment scores of input sentences.
+		It was trained on a dataset of over 82 million Amazon product reviews from May 1996 to July 2014, substantially larger than previous work (and taking one month across four NVIDIA Pascal GPUs to train), and outperforms state-of-the-art models when tested on similar-domain corpora such as Rotten Tomatoes and IMDb reviews.
+		Sentences are represented as a sequence of UTF-8 encoded bytes where for each byte, the model updates its hidden state and predicts a probability distribution over the next possible byte. \cite{OpenAI}
+	\item Stanford CoreNLP \cite{StanfordNLP} provides a set of linguistic analysis tools, including sentiment analysis, given input text, while running in a local web server.
+		Its sentiment analysis tool uses a recursive neural network model, representing text as parse trees, and trained on a Sentiment Treebank of fully-labelled parse trees for 215,154 unique phrases and 11,855 sentences from the Rotten Tomatoes movie review corpus; and classifies sentences into five sentiment classes, from 'very negative' to 'very positive' \cite{socher2013recursive}.
+		Although Stanford CoreNLP was written in Java, several packages exist that allow a Stanford CoreNLP local server to be started and queried programmatically in Python \cite{stanfordcorenlp}.
+	\item TextBlob is a general-purpose natural language processing library similar to nltk, SpaCy, or CoreNLP.
+		It provides two sentiment analysis models: PatternAnalyzer, a rule-based classifier based on part-of-speech pattern matching, and NaiveBayesAnalyzer, a Na\"{i}ve Bayes classifier trained on a dataset of movie reviews. \cite{textblob}
+\end{itemize}
+Several other repositories has also been explored, however deemed unsuitable for this project either due to requiring to be re-trained using labelled training data (which was unavailable for the domain of news articles), or the implementations are broken or infeasible.
 
 % Statistical analysis: matplotlib, papers (or at least a link to matplotlib's docs) for each statistical tool used (mean, standard deviation, scatterplot, moving average, 2d histogram, box and whiskers plot, violin plot, Mann-Whitney U test, etc.)
+For statistical analysis and plotting, the conventionally used libraries in Python are numpy \cite{Numpy}, scipy \cite{Scipy}, scikit-learn \cite{Scikit-learn}, and matplotlib \cite{Matplotlib}. 
+Numpy provides a powerful and efficient n-dimensional array object (often used as requirement for other libraries), and functions to perform mathematical operations over real values, vectors (1-dimensional arrays), and matrices (2-dimensional arrays) such as scalar/vector/matrix addition, multiplication, extracting columns of a matrix to a vector, and boolean filtering \cite{Numpy}.
+Scipy is a library that extends numpy to provide additional domain-specific functions, providing tools such as sparse matrices and implementations of statistical equations such as estimating distributions \cite{Scipy}. 
+Scikit-learn provides implementations of algorithms for data analysis, feature extraction, and machine learning, such as the CountVectoriser used to compute term frequencies \cite{Scikit-learn}. 
+Matplotlib is a 2D plotting library that produces visual graphs from lists/arrays \cite{Matplotlib}.
+It provides the capability to generate various types of plots, such as scatterplots, line plots, histograms, and box-and-whisker plots; modify the plot parameters (such as colours, labels, and bounds), create a grid of axes and plot multiple graphs in the same axes, generate a legend or colorbar, among other features.
 
 \chapter{Requirements and Analysis}  % 5-6 pages
 
