@@ -114,6 +114,10 @@ ENV/
 *.aux
 *.synctex.gz
 *.toc
+*.bbl
+*.bcf
+*.blg
+*.run.xml
 
 # stanford corenlp (too big for GitHub)
 stanford-corenlp-full-2018-02-27/*

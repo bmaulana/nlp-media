@@ -10,7 +10,7 @@
 \usepackage{amsmath}
 \usepackage[super]{nth}  % To format ordinal numbers e.g. 1st, 2nd, 3rd, 4th, etc.
 \usepackage{enumitem}  % Remove spaces before an enumerate
-\usepackage{cite}  % BibTeX
+\usepackage{biblatex}  % BibTeX
 
 \newtheorem{theorem}{THEOREM}
 \newtheorem{lemma}[theorem]{LEMMA}
@@ -40,6 +40,7 @@ $\Box$ \end{quotation}}
 \setcounter{secnumdepth}{3}  % Add numbering to \subsubsection
 \setcounter{tocdepth}{3}  % Include \subsubsection in ToC
 \setlist{nosep}  % Remove spaces before an enumerate
+\bibliography{bibliography.bib}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -271,14 +272,14 @@ This section will cover the technical tools researched and used for all listed c
 % Programming language: written in Python
 Python was chosen as the main programming language used for this project.
 The primary reason for this choice is the wide availability and range of existing tools for natural language processing, sentiment analysis, statistical analysis and plotting, web scraping and parsing, etc. in Python.
-A study in 2016 confirmed that Python is the most popular language for machine learning and data science [[TODO cite]], which correlates to the amount of available tools developers have created for the language.
+A study in 2016 showed that Python is the most popular language for machine learning and data science [[TODO cite]], which correlates to the amount of available tools developers have created for the language.
 A GitHub search for the topic 'natural language processing' as of 18 April 2018 reported 991 Python and 338 Jupyter repositories with the tag 'natural language processing', compared to the second most popular programming language being Java with only 156 repositories tagged 'natural language processing' [[TODO cite]].
 Furthermore, Python is also an ideal language for experimentation due to relatively high-level and low verbosity of the code, such that it is relatively easier to make small changes on the fly.
 Additionally, the Anaconda distribution of Python [[TODO cite]] is used for its suitability to set up and manage Python environments and packages for data science projects.
 
 % Data collection
 For data collection, general-purpose tools for sending HTTP requests (to 'open' web addresses and store HTML web pages programmatically) and parsing HTML code (to parse article text and metadata from 'raw' HTML code) are sufficient. 
-The Requests library [[TODO cite]] is a popular Python tool (with 400,000+ daily downloads) for sending HTTP/1.1 requests simply.
+The Requests library \cite{Requests} is a popular Python tool (with 400,000+ daily downloads) for sending HTTP/1.1 requests simply.
 A HTTP GET request will retrieve the HTML code (and other information) associated with a given URL from a web server, similar to opening the page on a web browser, stored as a Python object by Requests.
 Once the HTML code of a web page (given an article's URL) has been stored, the BeautifulSoup library [[TODO cite]] provides simple methods to navigate and search a parse tree (such as HTML code).
 Given that web pages from the same source/publisher tend to follow a similar structure, BeautifulSoup can be used to parse article text and relevant metadata (e.g. headline, date of publication, outgoing links in a search page) by searching for specific tags and attributes within the HTML code.
@@ -508,8 +509,7 @@ Latent dirichlet allocation (LDA) % todo
 
 \appendix
 
-\bibliographystyle{plain}
-\bibliography{bibliography}
+\printbibliography
 % todo fix below to be first page of bibliography
 % \addcontentsline{toc}{chapter}{Bibliography} 
 
