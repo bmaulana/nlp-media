@@ -10,7 +10,8 @@
 \usepackage{amsmath}
 \usepackage[super]{nth}  % To format ordinal numbers e.g. 1st, 2nd, 3rd, 4th, etc.
 \usepackage{enumitem}  % Remove spaces before an enumerate
-\usepackage{biblatex}  % BibTeX
+\usepackage[style=ieee, sorting=none]{biblatex}  % BibTeX  
+\usepackage{url}  % urls
 
 \newtheorem{theorem}{THEOREM}
 \newtheorem{lemma}[theorem]{LEMMA}
@@ -134,7 +135,7 @@ More specifically, to gather online news articles relating to people with disabi
 
 The goal of this project is to develop a computational pipeline capable of performing this analysis of online media end-to-end.
 Given a list of topic consisting of keywords (or phrases) and query terms, this pipeline covers the task of web crawling and scraping, using public APIs if possible, to collect a dataset of news articles; filtering off-topic articles for the given keywords; matching relevant sentences referring to a keyword; performing sentiment analysis (using publicly available open-source libraries) on these sentences; and producing relevant plots to show applications of this technology.
-This pipeline will be available open source on GitHub (https://github.com/bmaulana/nlp-media)  % should this be a bib reference?
+This pipeline will be available open source on GitHub (\url{https://github.com/bmaulana/nlp-media})
 
 %% Give an overview of how you carried out the project (e.g., an iterative approach).
 This project was carried out in a step-by-step approach. The pipeline was developed as four individual components: a web scraper and crawler for data collection given a list of queries, a filter to remove irrelevant articles given a list of key terms, a parser to pattern-match relevant sentences given key terms, a sentiment scorer (and results analysis/comparison of different open-source scorers on this domain), and a script to perform statistical analysis on the results and produce relevant plots. Each component's output is piped to the next component's input by saving its output to a JSON file and having the next component read the previous component's output file, which ensures computation can be 'resumed' without re-running the previous component. A main pipeline script connects these components together by calling them in order for each topic and supported Web source (Daily Mail, Daily Express, Guardian).
@@ -172,7 +173,7 @@ The body of this report is subdivided into four sections: context, requirements 
 Analyses of news media in its various forms (print, online, etc.) has been a consistent research theme. 
 The news media provides a quantifiable depiction of the prevailing society's popular conceptions or views regarding a theme or topic.
 This is especially applicable with regards to conceptions on particular groups of people, in which the language used in the media reflect on popular views, and has been shown to differ (with statistical significance) in different societies.
-For example, it was shown that the Canadian press was more likely to name individuals with disability and use appropriate labelling than the Israeli press in 1999 \cite{gold1999media}.
+For example, it was shown that the Canadian press was more likely to name individuals with disability and use appropriate labelling than the Israeli press in 1998 \cite{gold1999media}.
 Furthermore, there is evidence to suggest that news media sources contribute to shape and reinforce beliefs among the society, such as misconceptions and stigma \cite{wahl1992mass}.
 
 Public awareness of disability is also a popular research theme.
@@ -214,7 +215,7 @@ They also considered the geographical location of the publication to see how wor
 
 \cite{lansdall2017content}'s study was based on prior discussions and studies on the potential of exploiting large text corpora to detect macroscopic, long-term cultural changes. 
 \cite{michel2011quantitative} was one of the first studies to suggest this approach.
-In this seminal study, a corpus 5 million digitised English-language books published over 200 years (or about 4\% of all books ever published), provided by Google's effort to digitise books, were analysed to extract how often a given n-gram was used over time. (This data is available on http://www.culturomics.org/)
+In this seminal study, a corpus of 5 million digitised English-language books published over 200 years (or about 4\% of all books ever published), provided by Google's effort to digitise books, were analysed to extract how often a given n-gram was used over time. (This data is available on \url{http://www.culturomics.org/})
 This information is then used to analyse trends in language: the size of the English lexicon, regularisation of English verbs (from 'irregular' suffixes to '-ed'), or how quickly years (e.g. '1950') decline in use.
 Influenced by \cite{michel2011quantitative}, several other studies has been published adopting a similar approach: 
 \begin{itemize}
@@ -272,36 +273,44 @@ This section will cover the technical tools researched and used for all listed c
 % Programming language: written in Python
 Python was chosen as the main programming language used for this project.
 The primary reason for this choice is the wide availability and range of existing tools for natural language processing, sentiment analysis, statistical analysis and plotting, web scraping and parsing, etc. in Python.
-A study in 2016 showed that Python is the most popular language for machine learning and data science [[TODO cite]], which correlates to the amount of available tools developers have created for the language.
-A GitHub search for the topic 'natural language processing' as of 18 April 2018 reported 991 Python and 338 Jupyter repositories with the tag 'natural language processing', compared to the second most popular programming language being Java with only 156 repositories tagged 'natural language processing' [[TODO cite]].
+A study in 2016 showed that Python is the most popular language for machine learning and data science \cite{puget2016most}, which correlates to the amount of available tools developers have created for the language.
+A GitHub search for the topic 'natural language processing' as of 18 April 2018 reported 991 Python and 338 Jupyter repositories with the tag 'natural language processing', compared to the second most popular programming language being Java with only 156 repositories tagged 'natural language processing' \cite{GitHubNLP}.
 Furthermore, Python is also an ideal language for experimentation due to relatively high-level and low verbosity of the code, such that it is relatively easier to make small changes on the fly.
-Additionally, the Anaconda distribution of Python [[TODO cite]] is used for its suitability to set up and manage Python environments and packages for data science projects.
+Additionally, the Anaconda distribution of Python \cite{Anaconda} is used for its suitability to set up and manage Python environments and packages for data science projects.
 
 % Data collection
 For data collection, general-purpose tools for sending HTTP requests (to 'open' web addresses and store HTML web pages programmatically) and parsing HTML code (to parse article text and metadata from 'raw' HTML code) are sufficient. 
 The Requests library \cite{Requests} is a popular Python tool (with 400,000+ daily downloads) for sending HTTP/1.1 requests simply.
 A HTTP GET request will retrieve the HTML code (and other information) associated with a given URL from a web server, similar to opening the page on a web browser, stored as a Python object by Requests.
-Once the HTML code of a web page (given an article's URL) has been stored, the BeautifulSoup library [[TODO cite]] provides simple methods to navigate and search a parse tree (such as HTML code).
+Once the HTML code of a web page (given an article's URL) has been stored, the BeautifulSoup library \cite{BeautifulSoup} provides simple methods to navigate and search a parse tree (such as HTML code).
 Given that web pages from the same source/publisher tend to follow a similar structure, BeautifulSoup can be used to parse article text and relevant metadata (e.g. headline, date of publication, outgoing links in a search page) by searching for specific tags and attributes within the HTML code.
 
-% Term frequency & filtering: mention 'term ranking' & pre-processing (stemming)
+% Term frequency & filtering: mention 'tf ranking' & pre-processing (stemming)
 In this project, filtering off-topic articles is done somewhat crudely via ranking term frequency independently for each document.
 Term frequency is a simple and commonly-used metric for natural language processing, with various existing tools that can compute this metric for thousands of text documents within seconds.
 To put simply, the term frequency of a term (i.e. a word or token) in a document is the number of times that the term occurs in the document.
-The popular scikit-learn library \cite{Scikit-learn} provides a tool to measure term frequency of text documents, handling both tokenisation (converting a text document into a list of tokens (terms/words)) and counting word occurrence [[TODO cite]].
+The popular scikit-learn library \cite{Scikit-learn} provides a tool to measure term frequency of text documents, handling both tokenisation (converting a text document into a list of tokens (terms/words)) and counting word occurrence \cite{Scikit-learn-tf}.
 It also provides the option to ignore stop words (i.e. common, meaningless words in English, such as 'the' or 'a'), which can often skew the results due to its relative high frequency.
 Additionally, the NLTK library \cite{Nltk} is used for stemming -- to reduce all words in the document to its word stem (such that e.g. 'walk', 'walks', 'walked', and 'walking' are equivalent).
-% Expand the following two sentences in Chapter 4
-Token ranking is implemented by sorting all terms (words) in the document based on their term frequency, and checking if the rank of the keyword in the document is lower (document is on-topic) or higher (document is off-topic) than a given threshold value.
-As multiple keywords per topic are used, all keywords in the document are first converted to a unique 'keyword token' before term frequency is measured (which will treat all instances of any keyword as a single term).
+
+% Expand the following paragraph in Chapter 4
+Term-frequency ranking is implemented by sorting all terms (words) in the document based on their term frequency.
+For filtering documents, a constant threshold value is used to determine whether documents are on-topic or not, where a document is on-topic if the keyword's rank is lower than the threshold value (i.e. the keyword is one of the most frequently used terms in the document), and is off-topic if the keyword's rank is higher than the threshold value (i.e. the keyword is rarely used in the document, relative to other terms).
+% As the term frequency of the keyword is measured relative to other terms in the document, it normalises for document length.
+As multiple keywords per topic are used, all keywords in the document are first converted to a unique 'keyword token' before term frequency is measured (which will treat all instances of any keyword in the topic as a single term).
 
 In literature related to natural language processing, various more sophisticated approaches has been proposed and used for the task of text classification and filtering off-topic articles.
-A conventional approach is by calculating term frequency -- inverse document frequency (tf-idf) [[TODO cite]], a metric that builds on term frequency by taking into account the relative importance of each word.
+A conventional approach is by calculating term frequency -- inverse document frequency (tf-idf) \cite{robertson2004understanding, sparck1972statistical}, a metric that builds on term frequency by taking into account the relative importance of each word.
 Inverse document frequency (idf) is calculated by counting the number of documents in a corpus where a term appears -- if a term appears more frequently (e.g. common words such as 'the'), it is deemed to be less important and assigned a lower score.
 However, this approach is unsuitable for this project, given the selective nature of the dataset (where only articles with certain query terms are collected), thus the idf values of these query terms would be flawed (as they would appear in every document).
 
-Topic models, which compute the proportion [[TODO]], has also been proposed. % todo
-Latent dirichlet allocation (LDA) % todo
+Another proposed approach is by using a supervised machine learning model to classify documents into pre-defined categories (the text classification problem).
+Various approaches were proposed to solve text classification, including Support Vector Matrices (SVM), Naive Bayes (NB), and k-nearest neighbour (kNN) models \cite{khan2010review}.
+However, this approach is infeasible for this project due to a lack of labelled data of articles and categories, and in this case the categories themselves are poorly defined and non-exclusive (multiple different topics may be discussed within one article).
+Topic models, which compute the proportion of abstract 'topics' in a document, has also been proposed.
+Latent dirichlet allocation (LDA) \cite{blei2003latent} represents documents as random mixtures over latent topics, where each topic is characterized by a distribution over words.
+However, as these topics are abstract and characterized generatively (i.e. each topic's distribution over words are generated by the model, rather than pre-defined), it is not very useful for the task of classifying whether a document matches pre-defined topics/keywords.
+Also, both of these approaches are significantly more computationally expensive than tf ranking or tf-idf.
 
 % Rule-based matching to find sentences relevant to one or more keyword(s) or key phrase(s)
 % match similar sentences if it contains a phrase that has the same lemma (root word) as the keyword or key phrase (in the same order), for example, 'Mental illnesses' will match 'mental illness'
