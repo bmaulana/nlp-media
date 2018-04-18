@@ -10,6 +10,7 @@
 \usepackage{amsmath}
 \usepackage[super]{nth}  % To format ordinal numbers e.g. 1st, 2nd, 3rd, 4th, etc.
 \usepackage{enumitem}  % Remove spaces before an enumerate
+\usepackage{cite}  % BibTeX
 
 \newtheorem{theorem}{THEOREM}
 \newtheorem{lemma}[theorem]{LEMMA}
@@ -94,7 +95,7 @@ Catherine Holloway, Nicholas Firth}
 
 % Talk about NLP
 Natural language processing (NLP) encompasses a wide range of computational techniques for machine understanding of human (natural) language that are often used alongside each other.
-The review article \cite{Jumping NLP Curves} defines natural language processing as 'a theory-motivated range of computational techniques for the automatic analysis and representation of human language.'
+The review article \cite{cambria2014jumping} defines natural language processing as 'a theory-motivated range of computational techniques for the automatic analysis and representation of human language.'
 The techniques that fall under the umbrella natural language processing include word tokenisation, probabilistic language modelling, translation, part-of-speech parsing, sentiment analysis (or opinion mining), text classification/categorisation, and topic modelling, among other things.
 The computational models used in natural language processing range from simple rule-based models (e.g. splitting a sentence on whitespace to tokenise words) to statistical machine learning and deep learning models.
 Natural language processing is now applied for various everyday technologies, for example, information retrieval for search engines such as Google and Bing, and categorisation and topic modelling for recommendation engines used to suggest 'similar' articles.
@@ -104,7 +105,7 @@ This allows for high-level quantitative analyses of all documents in a vast corp
 For example, this level of quantitative analysis can uncover trends and patterns within a given domain (e.g. how does the popularity of the term 'mentally ill' increase or decrease year-on-year in English news media?). 
 
 Natural language processing covers three main 'curves' or areas:  syntax, semantics, and pragmatics (narratives, understanding). 
-Syntax specifies the way symbols (words, terms, tokens, or n-grams) and groups of symbols are arranged and whether they are well-formed in an expression, whereas semantics specifies what these expressions mean, and pragmatics specifies contextual information \cite{Jumping NLP Curves}.
+Syntax specifies the way symbols (words, terms, tokens, or n-grams) and groups of symbols are arranged and whether they are well-formed in an expression, whereas semantics specifies what these expressions mean, and pragmatics specifies contextual information \cite{cambria2014jumping}.
 Contemporary (or 'traditional') approaches to natural language processing mainly focus on syntactic analysis, due to the relative ease of extracting syntactic features of text such as term frequency, word co-occurrence, and part-of-speech tags, compared to extracting logical expressions and networks necessary for semantic analysis.
 However, syntactic analysis is much more limited as it often misses information such as the (semantic) context of a word (e.g. "one" in "there's no one there" (referring to a person) vs "we have only one car" (referring to a quantity)).
 This paper will focus on mainly syntactic techniques and features, as these are more relevant to this domain of high-level topic matching and sentiment analysis that is feasible with current technology at this scale.
@@ -112,14 +113,14 @@ This paper will focus on mainly syntactic techniques and features, as these are 
 
 % Other work in using NLP for media analysis
 Various other studies have attempted to utilise natural language processing to perform high-level analyses in the domain of news media.
-The research done in \cite{Content analysis of 150 years of British periodicals} assembled a vast corpus of regional newspapers in the United Kingdom spanning 150 years to detect long-term patterns of cultural change (e.g. increase of female representation in the news, or when trains overtook horses for transportation) by analysing n-gram trends and named entities. 
-More specifically, in the domain of media representation of specified groups of people, studies such as \cite{Are You a Racist or Am I Seeing Things?} has attempted to use features based on natural language processing (such as n-grams and part-of-speech tags) to classify racist and sexist posts in social media, although there is still a research gap in this area (especially for news articles, and/or relating to specific groups, such as people with (specific) disabilities or mental illnesses).
+The research done in \cite{lansdall2017content} assembled a vast corpus of regional newspapers in the United Kingdom spanning 150 years to detect long-term patterns of cultural change (e.g. increase of female representation in the news, or when trains overtook horses for transportation) by analysing n-gram trends and named entities. 
+More specifically, in the domain of media representation of specified groups of people, studies such as \cite{waseem2016you} has attempted to use features based on natural language processing (such as n-grams and part-of-speech tags) to classify racist and sexist posts in social media, although there is still a research gap in this area (especially for news articles, and/or relating to specific groups, such as people with (specific) disabilities or mental illnesses).
 % Just give a short summary, expand this later in Chapter 2
 
 % Why is it interesting & what the challenges are
-Applying natural language processing to perform meta-analyses over large text corpora has various interesting potential applications in improving our understanding of the human world - for example, to detect macroscopic cultural shifts as in \cite{Content analysis of 150 years of British periodicals}.
+Applying natural language processing to perform meta-analyses over large text corpora has various interesting potential applications in improving our understanding of the human world - for example, to detect macroscopic cultural shifts as in \cite{lansdall2017content}.
 In particular, the representation of specific groups, such as people with disabilities, has been a popular research theme for psychologists, sociologists, and others.
-For example, the paper \cite{Depictions of Mental Illness in Print Media} analysed a sample of 600 print articles relating to mental illnesses in New Zealand and categorised them to positive and negative depictions, and the predominant themes thereof (e.g. criminality (negative), educational accomplishments (positive)).
+For example, the paper \cite{coverdale2002depictions} analysed a sample of 600 print articles relating to mental illnesses in New Zealand and categorised them to positive and negative depictions, and the predominant themes thereof (e.g. criminality (negative), educational accomplishments (positive)).
 Applying natural language processing to this area of research would allow the possibility of discovering higher-level trends, by computationally analysing a much larger sample of articles and identify trends by varying independent variables such as year of publication and publisher.
 In this research, a sample of 305,113 news articles (51,177 after filtering off-topic articles) from British online news sources are used.
 However, challenges remain as syntax-based statistical natural language processing approaches tend to be more limited in scope and is prone to false positives and negatives, and mitigating these factors is currently an open area of research.
@@ -170,24 +171,24 @@ The body of this report is subdivided into four sections: context, requirements 
 Analyses of news media in its various forms (print, online, etc.) has been a consistent research theme. 
 The news media provides a quantifiable depiction of the prevailing society's popular conceptions or views regarding a theme or topic.
 This is especially applicable with regards to conceptions on particular groups of people, in which the language used in the media reflect on popular views, and has been shown to differ (with statistical significance) in different societies.
-For example, it was shown that the Canadian press was more likely to name individuals with disability and use appropriate labelling than the Israeli press in 1999 \cite{Media reports on disability}.
-Furthermore, there is evidence to suggest that news media sources contribute to shape and reinforce beliefs among the society, such as misconceptions and stigma \cite{Mass media images of mental illness}.
+For example, it was shown that the Canadian press was more likely to name individuals with disability and use appropriate labelling than the Israeli press in 1999 \cite{gold1999media}.
+Furthermore, there is evidence to suggest that news media sources contribute to shape and reinforce beliefs among the society, such as misconceptions and stigma \cite{wahl1992mass}.
 
 Public awareness of disability is also a popular research theme.
-While not related to news media, a review in 2011 \cite{Public awareness attitudes and beliefs regarding intellectual disability} found 75 articles and 68 studies that passed a selective inclusion criteria with regards to intellectual disabilities, published in English between 1990 and mid-2011.
+While not related to news media, a review in 2011 \cite{scior2011public} found 75 articles and 68 studies that passed a selective inclusion criteria with regards to intellectual disabilities, published in English between 1990 and mid-2011.
 The topics brought up include the public's knowledge, attitudes, and beliefs about intellectual disability; and varying for socio-demographic characteristics, cross-cultural comparisons, and the effects of interventions.
 
 Analyses of news or other media are primarily carried out by taking a small, statistically representative sample of documents (news articles) from a text corpora (for example, all news articles published in England for a certain period) and analysing them manually. There has also been various such studies within the domain of disability awareness in the media:
 \begin{itemize}
-	\item In a 2002 study \cite{Depictions of Mental Illness in Print Media}, researchers analysed a sample of 600 print articles relating to mental health or mental illness that was collected by a commercial clipping bureau.
+	\item In a 2002 study \cite{coverdale2002depictions}, researchers analysed a sample of 600 print articles relating to mental health or mental illness that was collected by a commercial clipping bureau.
 		The articles were then categorised into positive and negative depictions, then further into sub-samples such as danger to others, criminality, vulnerability, etc.
 		The study found that at the time, in New Zealand, negative themes predominate about 3 to 1 (with 27\% being positive).
 		However, given the paper's scope, this cannot be generalised to learn trends, or how the conclusion varies given certain variables (e.g. time, location).
-	\item A study conducted in 1998 \cite{Media reports on disability} were replicated in 2008 \cite{Representations of disability in the Canadian news media} to assess change in representations of disability and persons with disability in the Canadian news media.
+	\item A study conducted in 1998 \cite{gold1999media} were replicated in 2008 \cite{devotta2013representations} to assess change in representations of disability and persons with disability in the Canadian news media.
 		This study sampled 196 news articles in 1998 and 166 news articles in 2008.
 		It found an increase in the usage of 'person-first' terminology (e.g. person with disabilities) and a decrease in 'disabling language' (e.g. disabled person).
 		This is an attempt to identify trends with regards to media representation of disability, however only provides two data points (1998 and 2008) and has relatively small sample size.
-	\item A study in 2005 \cite{Representations of autism in Australian print media} analysed 1,515 articles relating to autism in Australian news media.
+	\item A study in 2005 \cite{jones2009representations} analysed 1,515 articles relating to autism in Australian news media.
 		All articles were read by two research assistants to ensure they are on-topic and then coded as either 'negative' or 'positive' in overall focus, and then coded into themes (e.g. funding, education, etc.).
 		Key findings include a relatively limited amount of helpful information, and a 'dual stereotype' of people with autism labelled as either dangerous and uncontrollable, or unloved and poorly treated.
 		Relative to other similar studies, this study appears to be focused more on qualitative discussion compared to quantitative results.
@@ -199,41 +200,41 @@ While a sample of few hundred or thousand documents is usually enough to provide
 For example, higher-level trends (such as how the conclusion varies by year, location, publisher, etc.) can be discovered from a quantitative analysis of the larger dataset, by 'splitting' the result set into smaller subsets based on independent variables (e.g. year, location, publisher, etc.) and performing statistical comparisons of dependent variables (e.g. term frequency) between each subset.
 
 Additionally, data collection is much more feasible in scale, cost and time using computational techniques. 
-An automated script can be used to collect news articles published on the Internet at a rate of roughly one article per second, or thousands of articles per hour (varies on Web source, hardware, Internet connection, etc.), a vast improvement over contracting a commercial clipping bureau to provide 600 articles as in \cite{Depictions of Mental Illness in Print Media}.
+An automated script can be used to collect news articles published on the Internet at a rate of roughly one article per second, or thousands of articles per hour (varies on Web source, hardware, Internet connection, etc.), a vast improvement over contracting a commercial clipping bureau to provide 600 articles as in \cite{coverdale2002depictions}.
 
 % Similar research on applying NLP for news media, social media, etc. in other domains - techniques & features they used, solutions they came up with, etc. - what could be applicable for this domain (sentiment relative to a certain topic)
 Several studies has taken advantage of this approach to carry a more complete analysis of textual corpora. 
-For example, \cite{Content analysis of 150 years of British periodicals} assembled a corpus of 35.9 million news articles from 120 publishers in the United Kingdom between 1800 and 1950, representing 14\% of all news articles published in the United Kingdom over that period.
+For example, \cite{lansdall2017content} assembled a corpus of 35.9 million news articles from 120 publishers in the United Kingdom between 1800 and 1950, representing 14\% of all news articles published in the United Kingdom over that period.
 With this approach, the researchers were able to extract quantitative time-series information with regards to cultural trends as present in 35.9 million British news articles over the 150-year period.
 This amount of large time-series information (represented as n-grams and named entities) allowed them to discover macroscopic cultural trends. 
 By analysing and comparing word (n-gram) trends across various topics, the researchers were able to identify trends that reflect cultural shifts e.g. 'train' increasing in popularity and overtaking 'horse' around 1900, or 'labour party' overtaking 'conservative party' and 'liberal party' in news coverage from the 1920s onward.
 Additionally, they also used entity recognition to extract named entities from articles and considered trends based on known information about these named entities, such as the proportion of female vs male entities, categories of entities (e.g. politicians, writers, etc.), and age of these entities.
 They also considered the geographical location of the publication to see how word usage trends (e.g. 'british' vs 'english') differ based on location.
 
-\cite{Content analysis of 150 years of British periodicals}'s study was based on prior discussions and studies on the potential of exploiting large text corpora to detect macroscopic, long-term cultural changes. 
-\cite{Quantitative Analysis of Culture Using Millions of Digitized Books} was one of the first studies to suggest this approach.
+\cite{lansdall2017content}'s study was based on prior discussions and studies on the potential of exploiting large text corpora to detect macroscopic, long-term cultural changes. 
+\cite{michel2011quantitative} was one of the first studies to suggest this approach.
 In this seminal study, a corpus 5 million digitised English-language books published over 200 years (or about 4\% of all books ever published), provided by Google's effort to digitise books, were analysed to extract how often a given n-gram was used over time. (This data is available on http://www.culturomics.org/)
 This information is then used to analyse trends in language: the size of the English lexicon, regularisation of English verbs (from 'irregular' suffixes to '-ed'), or how quickly years (e.g. '1950') decline in use.
-Influenced by \cite{Quantitative Analysis of Culture Using Millions of Digitized Books}, several other studies has been published adopting a similar approach: 
+Influenced by \cite{michel2011quantitative}, several other studies has been published adopting a similar approach: 
 \begin{itemize}
-	\item an analysis of 1.7 million Victorian-era books \cite{A Conversation with Data}
-	\item an analysis of 17,094 US Billboard Hot 100 songs between 1960 and 2010 \cite{The evolution of popular music}
-	\item an analysis of a 3.9 million news article sample from the Summary of World Broadcasts (SWB) collection \cite{Culturomics 2.0: Forecasting large-scale human behavior using global news media tone in time and space}
-	\item an analysis of 2.5 million English-language million news articles from 498 online news outlets from 99 countries \cite{Research Methods in the Age of Digital Journalism}
+	\item an analysis of 1.7 million Victorian-era books \cite{gibbs2011conversation}
+	\item an analysis of 17,094 US Billboard Hot 100 songs between 1960 and 2010 \cite{mauch2015evolution}
+	\item an analysis of a 3.9 million news article sample from the Summary of World Broadcasts (SWB) collection \cite{leetaru2011culturomics}
+	\item an analysis of 2.5 million English-language million news articles from 498 online news outlets from 99 countries \cite{flaounas2013research}
 \end{itemize}
-However, there were also criticism of this approach, such that it ignored semantics and context, thus for example 'thirteen hundred words of gibberish and the Declaration of Independence are digitally equivalent' \cite{Mass digitization and the garbage dump}, issues with OCR quality and duplicate editions \cite{Mass digitization and the garbage dump}, or that the selection of digitised books are biased \cite{Culturomics: Periodicals Gauge Culture’s Pulse}.
+However, there were also criticism of this approach, such that it ignored semantics and context, thus for example 'thirteen hundred words of gibberish and the Declaration of Independence are digitally equivalent' \cite{gooding2013mass}, issues with OCR quality and duplicate editions \cite{gooding2013mass}, or that the selection of digitised books are biased \cite{schwartz2011culturomics}.
 
 There has been some progress in applying natural language processing techniques more specifically in the domain of how (specific) groups of people are represented in the media:
 \begin{itemize}
-	\item A study has attempted to extract features (such as n-grams and part-of-speech tags) using natural language processing to classify racist and sexist posts in social media, providing annotations to 6,909 tweets \cite{Are You a Racist or Am I Seeing Things?}.
+	\item A study has attempted to extract features (such as n-grams and part-of-speech tags) using natural language processing to classify racist and sexist posts in social media, providing annotations to 6,909 tweets \cite{waseem2016you}.
 	\item Another study explored potential linguistic markers of schizophrenia in social media from a dataset of 174 users with self-reported schizophrenia and up to 3,200 tweets per user, and control users in a 50:50 split.
-		They used a support vector machine (SVM) approach over features based on lexicon-based approaches (i.e. a list of mental health related keywords), latent dirichlet allocation (LDA), Brown clustering, character n-grams, and perplexity \cite{Quantifying the Language of Schizophrenia in Social Media}.
+		They used a support vector machine (SVM) approach over features based on lexicon-based approaches (i.e. a list of mental health related keywords), latent dirichlet allocation (LDA), Brown clustering, character n-grams, and perplexity \cite{mitchell2015quantifying}.
 \end{itemize}
 However, there is still a visible research gap in this area, for using computational natural language processing specifically for news articles and/or with regards to specific groups, such as people with disabilities (or a specific disability).
 
 % Research on relevant libraries, frameworks, etc.:
 To date, advances in natural language processing has made this approach much more feasible, efficient, and effective, even given limited time and hardware constraints.
-Various free and open-source tools for computational natural language processing and statistical analysis has been developed by the research community, such as NLTK \cite{nltk} and StanfordNLP \cite{The stanford corenlp natural language processing toolkit} for natural language processing, scikit-learn \cite{Scikit-learn} for statistical analysis, and matplotlib \cite{Matplotlib} for plotting.
+Various free and open-source tools for computational natural language processing and statistical analysis has been developed by the research community, such as NLTK \cite{Nltk} and StanfordNLP \cite{StanfordNLP} for natural language processing, scikit-learn \cite{Scikit-learn} for statistical analysis, and matplotlib \cite{Matplotlib} for plotting.
 Depending on the type of data analytics performed and the hardware used, these computational tools are able to analyse news articles at a rate of multiple documents per second.
 The 'Technical Context' section contains a further listing and discussion of these tools, alongside the specific libraries and natural language processing techniques used for this research project.
 
@@ -288,7 +289,7 @@ Term frequency is a simple and commonly-used metric for natural language process
 To put simply, the term frequency of a term (i.e. a word or token) in a document is the number of times that the term occurs in the document.
 The popular scikit-learn library \cite{Scikit-learn} provides a tool to measure term frequency of text documents, handling both tokenisation (converting a text document into a list of tokens (terms/words)) and counting word occurrence [[TODO cite]].
 It also provides the option to ignore stop words (i.e. common, meaningless words in English, such as 'the' or 'a'), which can often skew the results due to its relative high frequency.
-Additionally, the NLTK library \cite{nltk} is used for stemming -- to reduce all words in the document to its word stem (such that e.g. 'walk', 'walks', 'walked', and 'walking' are equivalent).
+Additionally, the NLTK library \cite{Nltk} is used for stemming -- to reduce all words in the document to its word stem (such that e.g. 'walk', 'walks', 'walked', and 'walking' are equivalent).
 % Expand the following two sentences in Chapter 4
 Token ranking is implemented by sorting all terms (words) in the document based on their term frequency, and checking if the rank of the keyword in the document is lower (document is on-topic) or higher (document is off-topic) than a given threshold value.
 As multiple keywords per topic are used, all keywords in the document are first converted to a unique 'keyword token' before term frequency is measured (which will treat all instances of any keyword as a single term).
@@ -507,116 +508,10 @@ Latent dirichlet allocation (LDA) % todo
 
 \appendix
 
-\begin{thebibliography}{HHM99}
-
-\bibitem[Bir09]{nltk}
-S.~Bird, E.~Loper, and E.~Klein.
-\newblock Natural Language Processing with Python.
-\newblock {\em O'Reilly Media Inc.}: 2009.
-
-\addcontentsline{toc}{chapter}{Bibliography}
-
-\bibitem[Cam14]{Jumping NLP Curves}
-E.~Cambria and B.~White.
-\newblock Jumping NLP Curves: A Review of Natural Language Processing Research.
-\newblock {\em IEEE Computational Intelligence Magazine}, 9(2):  48--57, 2014.
-
-\bibitem[Cov02]{Depictions of Mental Illness in Print Media}
-J.~Coverdale, N.~Raymond, and C.~Donna.
-\newblock Depictions of Mental Illness in Print Media: A Prospective National Sample.
-\newblock {\em Australian \& New Zealand Journal of Psychiatry}, 36(5):  697--700, 2002.
-
-\bibitem[Dev13]{Representations of disability in the Canadian news media}
-K.~Devotta, R.~Wilton, and N.~Yiannakoulias.
-\newblock Representations of disability in the Canadian news media: a decade of change?.
-\newblock {\em Disability and Rehabilitation}, 35(22):  1859--1868, 2013.
-
-\bibitem[Fla13]{Research Methods in the Age of Digital Journalism}
-I.~Flaounas, et al.
-\newblock Research Methods in the Age of Digital Journalism:  Massive-scale automated analysis of news-content -- topics, style and gender.
-\newblock {\em Digital Journalism}, 1(1):  102--116, 2013.
-
-\bibitem[Gib11]{A Conversation with Data}
-F.W.~Gibbs and D.J.~Cohen.
-\newblock A Conversation with Data: Prospecting Victorian Words and Ideas.
-\newblock {\em Victorian Studies}, 54(1):  69--77, 2011.
-
-\bibitem[Gol99]{Media reports on disability}
-N.~Gold and G.K.~Auslander.
-\newblock Media reports on disability: a binational comparison of types and causes of disability as reported in major newspapers.
-\newblock {\em Disability and Rehabilitation}, 21(9):  420--431, 1999.
-
-\bibitem[Goo13]{Mass digitization and the garbage dump}
-P.~Gooding.
-\newblock Mass digitization and the garbage dump: The conflicting needs of quantitative and qualitative methods.
-\newblock {\em Literary and Linguistic Computing}, 28(3):  425--431, 2013.
-
-\bibitem[Hun07]{Matplotlib}
-J.D.~Hunter.
-\newblock Matplotlib: A 2D graphics environment.
-\newblock {\em Computing In Science \& Engineering}, 9(3):  90--95, 2007.
-
-\bibitem[Jon09]{Representations of autism in Australian print media}
-Sandra C. Jones and Valerie Harwood.
-\newblock Representations of autism in Australian print media.
-\newblock {\em Disability \& Society}, 24(1):  5--18, 2009.
-
-\bibitem[Lan17]{Content analysis of 150 years of British periodicals}
-T.~Lansdall-Welfare, et al.
-\newblock Content analysis of 150 years of British periodicals.
-\newblock {\em Proceedings of the National Academy of Sciences}, 114(4):  457--465, 2017.
-
-\bibitem[Lee11]{Culturomics 2.0: Forecasting large-scale human behavior using global news media tone in time and space}
-K.~Leetaru.
-\newblock Culturomics 2.0: Forecasting large-scale human behavior using global news media tone in time and space.
-\newblock {\em First Monday}, 16(9):  2011.
-
-\bibitem[Man14]{The stanford corenlp natural language processing toolkit}
-C.D.~Manning, et al.
-\newblock The stanford corenlp natural language processing toolkit.
-\newblock {\em ACL (System Demonstrations)}:  55--60, 2014.
-
-\bibitem[Mau15]{The evolution of popular music}
-M.~Mauch, R.M.~MacCallum, M.~Levy, and A.M.~Leroi.
-\newblock The evolution of popular music: USA 1960–2010.
-\newblock {\em R. Soc. opensci}, 2(5):  150081, 2015.
-
-\bibitem[Mic11]{Quantitative Analysis of Culture Using Millions of Digitized Books}
-J.B.~Michel, et al.
-\newblock Quantitative Analysis of Culture Using Millions of Digitized Books.
-\newblock {\em Science}, 331(6014): 176--182, 2011.
-
-\bibitem[Mit15]{Quantifying the Language of Schizophrenia in Social Media}
-M.~Mitchell, K.~Hollingshead, and G.~Coppersmith.
-\newblock Quantifying the Language of Schizophrenia in Social Media.
-\newblock {\em Proceedings of the 2nd Workshop on Computational Linguistics and Clinical Psychology: From Linguistic Signal to Clinical Reality}: 11--20, 2015.
-
-\bibitem[Ped11]{Scikit-learn}
-F.~Pedregosa, et al.
-\newblock Scikit-learn: Machine Learning in Python.
-\newblock {\em Journal of Machine Learning Research}:  2825--2830, 2011.
-
-\bibitem[Sch11]{Culturomics: Periodicals Gauge Culture’s Pulse}
-T.~Schwartz.
-\newblock Culturomics: Periodicals Gauge Culture’s Pulse
-\newblock {\em Science}, 332(6025):  35--36, 2011.
-
-\bibitem[Sci11]{Public awareness attitudes and beliefs regarding intellectual disability}
-K.~Scior.
-\newblock Public awareness\, attitudes and beliefs regarding intellectual disability: A systematic review.
-\newblock {\em Research in Developmental Disabilities}, 32(6):  2164--2182, 2011.
-
-\bibitem[Wah92]{Mass media images of mental illness}
-O.F.~Wahl
-\newblock Mass media images of mental illness: A review of the literature.
-\newblock {\em Journal of Community Psychology}, 20(4):  343--352, 1992.
-
-\bibitem[Zee16]{Are You a Racist or Am I Seeing Things?}
-W.~Zeerak.
-\newblock Are You a Racist or Am I Seeing Things? Annotator Influence on Hate Speech Detection on Twitter.
-\newblock {\em Proceedings of 2016 EMNLP Workshop on Natural Language Processing and Computational Social Science}:  138--142, 2016.
-
-\end{thebibliography}
+\bibliographystyle{plain}
+\bibliography{bibliography}
+% todo fix below to be first page of bibliography
+% \addcontentsline{toc}{chapter}{Bibliography} 
 
 \chapter{Other appendices, e.g., code listing}  % appendix A
 \emph{Put your appendix sections here}
