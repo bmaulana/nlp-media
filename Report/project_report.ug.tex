@@ -170,12 +170,12 @@ The body of this report is subdivided into four sections: context, requirements 
 Analyses of news media in its various forms (print, online, etc.) has been a consistent research theme. 
 The news media provides a quantifiable depiction of the prevailing society's popular conceptions or views regarding a theme or topic.
 This is especially applicable with regards to conceptions on particular groups of people, in which the language used in the media reflect on popular views, and has been shown to differ (with statistical significance) in different societies.
-For example, in \cite{Media reports on disability} it was shown that the Canadian press was more likely to name individuals with disability and use appropriate labelling than the Israeli press.
+For example, it was shown that the Canadian press was more likely to name individuals with disability and use appropriate labelling than the Israeli press in 1999 \cite{Media reports on disability}.
 Furthermore, there is evidence to suggest that news media sources contribute to shape and reinforce beliefs among the society, such as misconceptions and stigma \cite{Mass media images of mental illness}.
 
 Public awareness of disability is also a popular research theme.
 While not related to news media, a review in 2011 \cite{Public awareness attitudes and beliefs regarding intellectual disability} found 75 articles and 68 studies that passed a selective inclusion criteria with regards to intellectual disabilities, published in English between 1990 and mid-2011.
-The topics brought up include the public's knowledge, attitudes, and beliefs about intellectual disability, as well as varying for socio-demographic characteristics, cross-cultural comparisons, and the effects of interventions.
+The topics brought up include the public's knowledge, attitudes, and beliefs about intellectual disability; and varying for socio-demographic characteristics, cross-cultural comparisons, and the effects of interventions.
 
 Analyses of news or other media are primarily carried out by taking a small, statistically representative sample of documents (news articles) from a text corpora (for example, all news articles published in England for a certain period) and analysing them manually. There has also been various such studies within the domain of disability awareness in the media:
 \begin{itemize}
@@ -223,10 +223,12 @@ Influenced by \cite{Quantitative Analysis of Culture Using Millions of Digitized
 \end{itemize}
 However, there were also criticism of this approach, such that it ignored semantics and context, thus for example 'thirteen hundred words of gibberish and the Declaration of Independence are digitally equivalent' \cite{Mass digitization and the garbage dump}, issues with OCR quality and duplicate editions \cite{Mass digitization and the garbage dump}, or that the selection of digitised books are biased \cite{Culturomics: Periodicals Gauge Culture’s Pulse}.
 
-There has been some progress in applying natural language processing techniques more specifically in the domain of how (specific) groups of people are represented in the media.
-A study has attempted to extract features (such as n-grams and part-of-speech tags) using natural language processing to classify racist and sexist posts in social media, providing annotations to 6,909 tweets \cite{Are You a Racist or Am I Seeing Things?}.
-Another study explored potential linguistic markers of schizophrenia in social media from a dataset of 174 users with self-reported schizophrenia and up to 3,200 tweets per user, and control users in a 50:50 split \cite{Quantifying the Language of Schizophrenia in Social Media}.
-They used a support vector machine (SVM) approach over features based on lexicon-based approaches (i.e. a list of mental health related keywords), latent dirichlet allocation (LDA), Brown clustering, character n-grams, and perplexity.
+There has been some progress in applying natural language processing techniques more specifically in the domain of how (specific) groups of people are represented in the media:
+\begin{itemize}
+	\item A study has attempted to extract features (such as n-grams and part-of-speech tags) using natural language processing to classify racist and sexist posts in social media, providing annotations to 6,909 tweets \cite{Are You a Racist or Am I Seeing Things?}.
+	\item Another study explored potential linguistic markers of schizophrenia in social media from a dataset of 174 users with self-reported schizophrenia and up to 3,200 tweets per user, and control users in a 50:50 split.
+		They used a support vector machine (SVM) approach over features based on lexicon-based approaches (i.e. a list of mental health related keywords), latent dirichlet allocation (LDA), Brown clustering, character n-grams, and perplexity \cite{Quantifying the Language of Schizophrenia in Social Media}.
+\end{itemize}
 However, there is still a visible research gap in this area, for using computational natural language processing specifically for news articles and/or with regards to specific groups, such as people with disabilities (or a specific disability).
 
 % Research on relevant libraries, frameworks, etc.:
@@ -248,7 +250,7 @@ Additionally, the author looked for highly-cited 'key' papers and review article
 Technical research, on the other hand, were carried out as necessary.  % todo
 
 % Sources: Google Scholar, papers cited by other papers, GitHub pages, Python repositories (Pip, Conda), Python and library documentation, etc. + 'state how each source relates to your work'.
-The sources used for this literature review are: % todo
+The sources used for this literature review are:
 \begin{itemize}
 	\item Google Scholar, often used to find research articles to act as 'entry points' towards a research topic, or to find additional examples similar to another article within a given topic
 	% todo
@@ -258,10 +260,46 @@ The sources used for this literature review are: % todo
 \section{Technical Context}  % 4-5 pages
 
 % general NLP: define NLP again, classify & list techniques, then mention 'the techniques used in this project are ...'
+As mentioned earlier, computational natural language processing techniques are utilised to extract features from collected news articles (text documents) at scale.
+For this project, the requirements for the computational pipeline can be subdivided to five main components: data collection, filtering, sentence matching, sentiment scoring, and statistical analysis and plotting.
+Among these components, natural language processing techniques are necessary for filtering, sentence matching, and sentiment scoring.
+On the other hand, collection is performed using established, general-purpose web-scraping tools.
+Similarly, statistical analysis and plotting is performed using general-purpose statistical tools and metrics.
+This section will cover the technical tools researched and used for all listed components regardless.
 
-% Term frequency & filtering: mention 'token ranking' & pre-processing (stemming)
-% Also tried tf-idf (cite paper defining it) but didnt' work out ('pure' tf performs better when I analysed the results of the filtering and the proportion of relevant articles being filtered out, as idf on a queried subset of a corpus makes the idf of the query terms and related words be much lower than its idf over the whole corpus, as all the documents in the subset will have at least one keyword)
-% Cite NLTK, 'used NLTK to compute these features'
+% Programming language: written in Python
+Python was chosen as the main programming language used for this project.
+The primary reason for this choice is the wide availability and range of existing tools for natural language processing, sentiment analysis, statistical analysis and plotting, web scraping and parsing, etc. in Python.
+A study in 2016 confirmed that Python is the most popular language for machine learning and data science [[TODO cite]], which correlates to the amount of available tools developers have created for the language.
+A GitHub search for the topic 'natural language processing' as of 18 April 2018 reported 991 Python and 338 Jupyter repositories with the tag 'natural language processing', compared to the second most popular programming language being Java with only 156 repositories tagged 'natural language processing' [[TODO cite]].
+Furthermore, Python is also an ideal language for experimentation due to relatively high-level and low verbosity of the code, such that it is relatively easier to make small changes on the fly.
+Additionally, the Anaconda distribution of Python [[TODO cite]] is used for its suitability to set up and manage Python environments and packages for data science projects.
+
+% Data collection
+For data collection, general-purpose tools for sending HTTP requests (to 'open' web addresses and store HTML web pages programmatically) and parsing HTML code (to parse article text and metadata from 'raw' HTML code) are sufficient. 
+The Requests library [[TODO cite]] is a popular Python tool (with 400,000+ daily downloads) for sending HTTP/1.1 requests simply.
+A HTTP GET request will retrieve the HTML code (and other information) associated with a given URL from a web server, similar to opening the page on a web browser, stored as a Python object by Requests.
+Once the HTML code of a web page (given an article's URL) has been stored, the BeautifulSoup library [[TODO cite]] provides simple methods to navigate and search a parse tree (such as HTML code).
+Given that web pages from the same source/publisher tend to follow a similar structure, BeautifulSoup can be used to parse article text and relevant metadata (e.g. headline, date of publication, outgoing links in a search page) by searching for specific tags and attributes within the HTML code.
+
+% Term frequency & filtering: mention 'term ranking' & pre-processing (stemming)
+In this project, filtering off-topic articles is done somewhat crudely via ranking term frequency independently for each document.
+Term frequency is a simple and commonly-used metric for natural language processing, with various existing tools that can compute this metric for thousands of text documents within seconds.
+To put simply, the term frequency of a term (i.e. a word or token) in a document is the number of times that the term occurs in the document.
+The popular scikit-learn library \cite{Scikit-learn} provides a tool to measure term frequency of text documents, handling both tokenisation (converting a text document into a list of tokens (terms/words)) and counting word occurrence [[TODO cite]].
+It also provides the option to ignore stop words (i.e. common, meaningless words in English, such as 'the' or 'a'), which can often skew the results due to its relative high frequency.
+Additionally, the NLTK library \cite{nltk} is used for stemming -- to reduce all words in the document to its word stem (such that e.g. 'walk', 'walks', 'walked', and 'walking' are equivalent).
+% Expand the following two sentences in Chapter 4
+Token ranking is implemented by sorting all terms (words) in the document based on their term frequency, and checking if the rank of the keyword in the document is lower (document is on-topic) or higher (document is off-topic) than a given threshold value.
+As multiple keywords per topic are used, all keywords in the document are first converted to a unique 'keyword token' before term frequency is measured (which will treat all instances of any keyword as a single term).
+
+In literature related to natural language processing, various more sophisticated approaches has been proposed and used for the task of text classification and filtering off-topic articles.
+A conventional approach is by calculating term frequency -- inverse document frequency (tf-idf) [[TODO cite]], a metric that builds on term frequency by taking into account the relative importance of each word.
+Inverse document frequency (idf) is calculated by counting the number of documents in a corpus where a term appears -- if a term appears more frequently (e.g. common words such as 'the'), it is deemed to be less important and assigned a lower score.
+However, this approach is unsuitable for this project, given the selective nature of the dataset (where only articles with certain query terms are collected), thus the idf values of these query terms would be flawed (as they would appear in every document).
+
+Topic models, which compute the proportion [[TODO]], has also been proposed. % todo
+Latent dirichlet allocation (LDA) % todo
 
 % Rule-based matching to find sentences relevant to one or more keyword(s) or key phrase(s)
 % match similar sentences if it contains a phrase that has the same lemma (root word) as the keyword or key phrase (in the same order), for example, 'Mental illnesses' will match 'mental illness'
@@ -270,11 +308,6 @@ The sources used for this literature review are: % todo
 % Sentiment analysis: cite some survey papers, cite GitHub page, cite each library I tried (this would probably be the longest section)
 
 % Statistical analysis: matplotlib, papers (or at least a link to matplotlib's docs) for each statistical tool used (mean, standard deviation, scatterplot, moving average, 2d histogram, box and whiskers plot, violin plot, Mann-Whitney U test, etc.)
-
-% Programming language: written in Python (because of high availability of ML/NLP related tools/libraries + ideal language for experimentation due to relatively high-level and low-verbosity so that there is relative ease to make changes on the fly). 
-% Additionally the conda distribution(?) is used ...
-% Cite python's, conda's main web pages
-
 
 \chapter{Requirements and Analysis}  % 5-6 pages
 
