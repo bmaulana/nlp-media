@@ -8,10 +8,12 @@
 \usepackage{latexsym}
 \usepackage{a4wide}
 \usepackage{amsmath}
+
 \usepackage[super]{nth}  % To format ordinal numbers e.g. 1st, 2nd, 3rd, 4th, etc.
 \usepackage{enumitem}  % Remove spaces before an enumerate
 \usepackage[style=ieee, sorting=none]{biblatex}  % BibTeX  
 \usepackage{url}  % urls
+\usepackage{listings}  % code snippets
 
 \newtheorem{theorem}{THEOREM}
 \newtheorem{lemma}[theorem]{LEMMA}
@@ -127,15 +129,17 @@ However, challenges remain as syntax-based statistical natural language processi
 % google 'media representation of mental illness', 'media representation of disability'
 
 %% List your aims and goals. An aim is something you intend to achieve (e.g., learn a new programming language and apply it in solving the problem), while a goal is something specific you expect to deliver (e.g., a working application with a particular set of features).
-The aim of this project is to utilise these natural language processing computational techniques in order to perform a high-level meta-analysis of literature available in the public news media available online.
+The aim of this project is to utilise these computational natural language processing techniques in order to perform a high-level meta-analysis of literature available in the public news media found online.
 More specifically, to gather online news articles relating to people with disabilities in British media, and perform natural language processing analyses at scale to identify trends such as term popularity (e.g. 'suffer from ...' vs 'with ...') and variation in positive/negative sentiment.
 
 The goal of this project is to develop a computational pipeline capable of performing this analysis of online media end-to-end.
-Given a list of topic consisting of keywords (or phrases) and query terms, this pipeline covers the task of web crawling and scraping, using public APIs if possible, to collect a dataset of news articles; filtering off-topic articles for the given keywords; matching relevant sentences referring to a keyword; performing sentiment analysis (using publicly available open-source libraries) on these sentences; and producing relevant plots to show applications of this technology.
+Given a list of topics consisting of keywords (or key phrases) and query terms, this pipeline covers the task of web crawling and scraping to collect a dataset of news articles; filtering relevant articles for the given keywords; matching relevant sentences referring to a keyword; performing sentiment analysis (using open-source libraries) on these sentences; and producing relevant visualisations to show trends as evidence of applications of the technology.
 This pipeline will be available open source on GitHub (\url{https://github.com/bmaulana/nlp-media})
 
 %% Give an overview of how you carried out the project (e.g., an iterative approach).
-This project was carried out in a step-by-step approach. The pipeline was developed as four individual components: a web scraper and crawler for data collection given a list of queries, a filter to remove irrelevant articles given a list of key terms, a parser to pattern-match relevant sentences given key terms, a sentiment scorer (and results analysis/comparison of different open-source scorers on this domain), and a script to perform statistical analysis on the results and produce relevant plots. Each component's output is piped to the next component's input by saving its output to a JSON file and having the next component read the previous component's output file, which ensures computation can be 'resumed' without re-running the previous component. A main pipeline script connects these components together by calling them in order for each topic and supported Web source (Daily Mail, Daily Express, Guardian).
+This project was carried out in a step-by-step approach. The pipeline was developed as individual components: a web scraper and crawler for data collection given a list of queries, a filter to remove irrelevant articles given a list of key terms, a parser to pattern-match relevant sentences given key terms, a sentiment scorer (and results analysis/comparison of different open-source scorers on this domain), and a script to perform statistical analysis on the results and produce relevant plots. 
+A main pipeline script connects these components together by calling them in order for each topic and Web news source (Daily Mail, Daily Express, Guardian).
+Each component's output is piped to the next component's input by saving its output to a JSON file and having the next component read the previous component's output file, which ensures computation can be 'resumed' without re-running the previous component. 
 
 %% A brief overview of the rest of the chapters in the report (a guide to the reader of the overall structure of the report).
 The body of this report is subdivided into four sections: context, requirements and analysis, design and implementation, and results evaluation.
@@ -269,10 +273,10 @@ The sources used for this literature review are:
 
 % general NLP: define NLP again, classify & list techniques, then mention 'the techniques used in this project are ...'
 As mentioned earlier, computational natural language processing techniques are utilised to extract features from collected news articles (text documents) at scale.
-For this project, the requirements for the computational pipeline can be subdivided to five main components: data collection, filtering, sentence matching, sentiment scoring, and statistical analysis and plotting.
+For this project, the requirements for the computational pipeline can be subdivided to five main components: data collection, filtering, sentence matching, sentiment scoring, and statistical analysis and data visualisation.
 Among these components, natural language processing techniques are necessary for filtering, sentence matching, and sentiment scoring.
 On the other hand, collection is performed using established, general-purpose web-scraping tools.
-Similarly, statistical analysis and plotting is performed using general-purpose statistical tools and metrics.
+Similarly, statistical analysis and data visualisation is performed using general-purpose statistical tools and metrics.
 This section will cover the technical tools researched and used for all listed components regardless.
 
 Natural language processing covers three main 'curves' or areas:  syntax, semantics, and pragmatics (narratives, understanding). 
@@ -283,7 +287,7 @@ This paper will focus on mainly syntactic techniques and features, as these are 
 
 % Programming language: written in Python
 Python was chosen as the main programming language used for this project.
-The primary reason for this choice is the wide availability and range of existing tools for natural language processing, sentiment analysis, statistical analysis and plotting, web scraping and parsing, etc. in Python.
+The primary reason for this choice is the wide availability and range of existing tools for natural language processing, sentiment analysis, statistical analysis, data visualisation, web scraping and parsing, etc. in Python.
 A study in 2016 showed that Python is the most popular language for machine learning and data science \cite{puget2016most}, which correlates to the amount of available tools developers have created for the language.
 A GitHub search for the topic 'nlp' as of 18 April 2018 reported 1,397 Python and 470 Jupyter (Python interactive 'notebook') repositories with the tag 'natural language processing', compared to the second most popular programming language being Java with only 251 repositories tagged 'nlp' \cite{GitHubNLP}.
 Furthermore, Python is also an ideal language for quick experimentation due to relatively high-level and low verbosity of the code, such that it is relatively easier to make small changes on the fly.
@@ -313,7 +317,7 @@ As multiple keywords per topic are used, all keywords in the document are first 
 In literature related to natural language processing, various more sophisticated approaches has been proposed and used for the task of text classification and filtering off-topic articles.
 A conventional approach is by calculating term frequency -- inverse document frequency (tf-idf) \cite{robertson2004understanding, sparck1972statistical}, a metric that builds on term frequency by taking into account the relative importance of each word.
 Inverse document frequency (idf) is calculated by counting the number of documents in a corpus where a term appears -- if a term appears more frequently (e.g. common words such as 'the'), it is deemed to be less important and assigned a lower score.
-However, this approach is unsuitable for this project, given the selective nature of the dataset (where only articles with certain query terms are collected), thus the idf values of these query terms would be flawed (as they would appear in every document).
+However, this approach is unsuitable for this project, given the selective nature of the dataset (where only articles containing certain query terms are collected), thus the idf values of these query terms would be flawed (as they would appear in every document).
 
 Another proposed approach is by using a supervised machine learning model to classify documents into pre-defined categories (the text classification problem).
 Various approaches were proposed to solve text classification, including Support Vector Matrices (SVM), Na\"{i}ve Bayes (NB), and k-nearest neighbour (kNN) models \cite{khan2010review}.
@@ -358,48 +362,155 @@ The particular sentiment analysis implementations that have been explored in thi
 Several other repositories has also been explored, however deemed unsuitable for this project either due to requiring to be re-trained using labelled training data (which was unavailable for the domain of news articles), or the implementations are broken or infeasible.
 
 % Statistical analysis: matplotlib, papers (or at least a link to matplotlib's docs) for each statistical tool used (mean, standard deviation, scatterplot, moving average, 2d histogram, box and whiskers plot, violin plot, Mann-Whitney U test, etc.)
-For statistical analysis and plotting, the conventionally used libraries in Python are numpy \cite{Numpy}, scipy \cite{Scipy}, scikit-learn \cite{Scikit-learn}, and matplotlib \cite{Matplotlib}. 
+For statistical analysis and data visualisation, the conventionally used libraries in Python are numpy \cite{Numpy}, scipy \cite{Scipy}, scikit-learn \cite{Scikit-learn}, and matplotlib \cite{Matplotlib}. 
 Numpy provides a powerful and efficient n-dimensional array object (often used as requirement for other libraries), and functions to perform mathematical operations over real values, vectors (1-dimensional arrays), and matrices (2-dimensional arrays) such as scalar/vector/matrix addition, multiplication, extracting columns of a matrix to a vector, and boolean filtering \cite{Numpy}.
 Scipy is a library that extends numpy to provide additional domain-specific functions, providing tools such as sparse matrices and implementations of statistical equations such as estimating distributions \cite{Scipy}. 
-Scikit-learn provides implementations of algorithms for data analysis, feature extraction, and machine learning, such as the CountVectoriser used to compute term frequencies \cite{Scikit-learn}. 
+Scikit-learn provides implementations of algorithms for data analysis, feature extraction, and machine learning, such as the CountVectoriser used to compute term frequencies \cite{Scikit-learn}.
 Matplotlib is a 2D plotting library that produces visual graphs from lists/arrays \cite{Matplotlib}.
 It provides the capability to generate various types of plots, such as scatterplots, line plots, histograms, and box-and-whisker plots; modify the plot parameters (such as colours, labels, and bounds), create a grid of axes and plot multiple graphs in the same axes, generate a legend or colorbar, among other features.
+
+The types of plots and statistical analysis metrics that are deemed relevant for this analysis are:
+\begin{itemize}
+	\item Scatter plot, used to show the distribution of data within two variables (e.g. year published and sentiment score), and colour could be added to show a third variable (e.g. source/publisher of article).
+		Available on Matplotlib.
+	\item Histogram (and 2D histogram), used to show the distribution of articles relative to variables such as publisher, year of publication, and sentiment score ranges. 
+		Available on Matplotlib.
+	\item Box-and-whiskers \cite{tukey1977exploratory} and violin plot \cite{hintze1998violin}, also used to show and compare the distribution of dependent variables (e.g. sentiment score) within different subsets of the data separated by independent variables (e.g. publisher).
+		Available on Matplotlib.
+	\item Line graph, used to show trends in a dependent variable (e.g. sentiment score) over an independent variable (e.g. year of publication).
+		Available on Matplotlib.
+	\item Mean and standard deviation, to quantify the distribution of articles within different subsets of the data separated by independent variables (e.g. publisher and year of publication) and provide a quantitative measure to compare different subsets.
+		Available on SciPy.
+	\item Mann-Whitney U Test \cite{mann1947test}, a statistical metric that measures whether it is true that given a randomly-selected value from a distribution, and another randomly-selected value from another distribution, the first value is equally likely to be less than or greater than the second value (i.e. there are no statistically significant difference between the two distributions), to show if the difference between two subsets are statistically significant.
+		Available on SciPy.
+\end{itemize}
 
 \chapter{Requirements and Analysis}  % 5-6 pages
 
 %% Give the detailed problem statement. This elaborates on what you may have included in the introduction chapter, and represents the starting point from which requirements were derived.
 \section{Problem Statement}
+% This project involves the development of a computational pipeline capable of performing data collection, natural language processing, statistical analysis, and data visualisation tasks
 
 % Expand aims & goals
+The primary aim of this project is to utilise available natural language processing techniques in order to perform a high-level meta-analysis of online news articles relating to people with disabilities available in the online British news media, with the goal of revealing trends by varying for independent variables such as source and year published.
+To achieve this aim, the solution would need to collect and scrape online news articles from the Internet, filter only relevant articles, use available natural language processing tools to extract information from these articles, perform statistical analyses, and show visualisations of the resulting data to show trends.
+Of particular interest (as a dependent variable) is a sentiment (or opinion, polarity) index of articles (i.e. how positively does an article view people with disabilities?), and how it varies given independent variables such as source and year published.
+Thus, the general solution defined by this aim would involve the completion of several sub-problems, primarily data collection, filtering, parsing, sentiment scoring, and statistical analysis and visualisation.
+
+The goal of this project is to develop a computational pipeline that implements the general solution.
+Before the project could be started, the topics relevant to this project has to be defined.
+Thus, a list of topics relating to the domain of people with disabilities would need to be compiled, each topic consisting of a list of keywords (or key phrases) and query terms related to a specific disability (or disabilities in general).
+Given this list of topics, this pipeline has to implement these following tasks:
+\begin{itemize}
+	\item Web crawling and scraping web pages, using public APIs where possible, to collect a dataset of news articles, given the list of query terms for each topic.
+	\item Filtering relevant articles from the dataset, given the list of keywords for each topic.
+	\item Extracting relevant sentences that refers to a keyword, from the dataset of filtered articles
+	\item Performing sentiment analysis (using open-source libraries and pre-trained models) on the dataset of relevant sentences
+	\item Producing relevant statistical analyses and data visualisation to show trends over independent variables such as source and year published.
+\end{itemize}
+
+As the primary advantage of computational natural language processing is in its speed relative to human reading, the solution must be able to perform these computations quickly and at scale.
+The total number of documents (online news articles) available (given Daily Mail, Daily Express, and Guardian as sources) is expected to number in the thousands to tens of thousands of documents per topic, or hundreds of thousands of documents in total across all topics.
+Given this scale, the solution must be able to compute the full pipeline within a feasible timeframe (i.e. not more than a few days), given available general-purpose hardware (Intel i7-6700HQ CPU @ 2.60GHz, NVIDIA GeForce GTX 1060 GPU) to show that the solution is feasible without specialised hardware.
 
 %% A structured list of requirements.
 \section{Requirements}
 
 % Short paragraph about component based design
+The solutions follows a component-based design, where each sub-problem must be implemented by a component that focuses only on the sub-problem.
+These components must be linked together via a 'pipeline' script that executes each component in order, and iterates through the list of topics and sources.
+This is ideal such that changes could be made to a component without affecting (or needing to re-write) code in other components.
+The list of required components are as follows: data collection, dataset filtering, rule-based sentence matching, sentiment scoring, statistical analysis and visualisation.
 
-% Subsection for each component + dataset descriptions (explain first the components are: blah blah blah so readers dont mistake dataset description as a component, but only as extra requirements)
+% Subsection for each component
 
 \subsection{Data Collection}  % How to collect that data
 
-% scraper for each source - what needs to be scraped from each article
-
 % crawler - finding articles from each source's built in search engines, look up multiple query terms
+The data collection component must be able to find a list of articles related to each topic (a list of query terms) for each supported source (Daily Mail, Daily Express, and Guardian).
+For each article, the only information required at this stage is a working URL pointing to an online resource containing the article text and relevant metadata.
+Thus, the information that has to be provided by the component after this stage is a list of URLs pointing to relevant articles given a list of search queries.
+
+% scraper for each source - what needs to be scraped from each article
+Then, after the list of URLs pointing to Web-based news articles has been compiled, the component must be able to scrape these articles and extract the full article text and relevant metadata from each URL.
+Aside from the full article text, the relevant metadata that needs to be extracted are the article's headline, URL, date of publication, and publication source.
+The information is returned in the form of an array of JSON objects, with each JSON object containing information (text and metadata) about a single news article.
+This information must then be saved locally to a file where it will be read by the next component. The file and directory structure must be consistent given source and topic (such that the next component can find it programmatically).
 
 % scalability, able to save and resume progress, etc.
+As data collection is expected to consume the longest time (due to the necessity to submit a web request for each article) compared to other components, additional requirements regarding scalability are enforced.
+The data collection component must run in reasonable time (i.e. less than a day for each topic), given available hardware and a scale of up to tens of thousands of articles per topic.
+Additionally, it should be possible to resume progress on data collection, such that it is possible to re-run the program at a later date to add new articles without sending web requests for articles already in the collection.
+It would also help in cases where the program is interrupted, Internet connection is lost, the machine is shut down, etc.
+Thus, the component should be able to store already-parsed articles to an external file, and read from the external file upon starting to gather a list of already-parsed URLs, and avoid re-parsing existing URLs.
 
 \subsection{Dataset Filtering}
 
+The next component handles dataset filtering.
+Initially, this component must be able to load the dataset of parsed articles from the file saved by the data collection component.
+Each file contains a subset of all parsed articles for a specified topic and a specified source.
+For each article, it must decide whether it is relevant to the topic defined by the subset, given a list of keywords and key phrases unique to each topic.
+This decision should be based by the article's full text and headline, and should take all keywords and key phrases associated to the topic into account.
+It should also be able to show/print a sample of an arbitrary number of documents, which would be used to analyse and improve the accuracy of the filter.
+
+Then, it must save all articles deemed on-topic (relevant to the topic) to a new output file, containing an array of JSON objects in the same format and information as in the data collection component's output file.
+Articles deemed off-topic (not relevant to the topic) must not be saved to the output file.
+The file and directory structure of the output file must be consistent given source and topic (such that the next component can find it programmatically).
+
 \subsection{Rule-based Sentence Matching}
+
+The next component parses the article text using open-source natural language processing tools to extract relevant information required by the sentiment scoring and statistical analysis components.
+Given an input file which is the output file of the dataset filtering component, this component should be able to load the article text and metadata of all saved articles.
+Then, information should be extracted by syntactically parsing each article's text and headline.
+The sentiment scoring component would require all sentences relating to a keyword or key phrase (containing a keyword, key phrase, or a equivalent term) to be extracted from each article.
+Additionally, the component should also extract other information as required by the sentiment scoring and statistical analysis components, including the total number of sentences and the number of relevant sentences in the document, and the term frequency of each keyword and key phrase.
+
+After these information has been extracted from the article, it must save the information to a new output file, in the form of an array of JSON objects where each JSON object contains all the information about a single news article (with a field for each 'feature' e.g. relevant sentences).
+The metadata of each article (headline, date of publication, and source) should also be saved to the new output file, as it would be required as independent variables for the statistical analysis component to analyse trends in the dataset.
+The file and directory structure of the output file must be consistent given source and topic (such that the next component can find it programmatically).
 
 \subsection{Sentiment Scoring}
 
+The sentiment scoring component computes a real-valued score for each relevant sentence extracted by the previous component, which must correspond to the perceived 'sentiment' of the sentence towards a disability, disabilities, a person with disabilit(y/ies), or people with disabilit(y/ies), referred by the keyword or key phrase, with sufficient accuracy.
+Given an input file which is the output file of the dataset filtering component, this component should be able to load the relevant sentences and other data for all saved articles.
+
 % Analysing scorers: 'slow' scorer that takes the first N articles only and scores them with ALL scorers from a list of open-source sentiment scorers, for the purpose of evaluating the performance (accuracy) of these scorers
+\subsubsection{Comparison of open-source implementations}
 
-% Final product: one or two final sentiment scorers with only one sentiment score, optimised for performance (speed / runtime) - how fast?
+Then, two versions of the sentiment scorer component must be developed.
+The first version of the sentiment scorer component is used to perform a comparison between several open-source sentiment analysis tools and models for this sentiment scoring task.
 
-\subsection{Statistical Analysis and Plotting}
+This version of the component must select a sample of sentences from the dataset, with a sample size arbitrarily defined by the user.
+Also, it must implement all open-source sentiment analysis implementations ('sentiment scorer') that were listed in the 'Technical Context' section.
+All sentences in the sample must be analysed and given a score by each sentiment scorer, and the component should also allow the user to manually label these sentences as positive, neutral, or negative.
+With this information, the component must be able to determine the accuracy of each sentiment scorer (i.e. show the proportion of true positives and true negatives, and show a confusion matrix), and store the total, per-sentence, and per-article runtime of each sentiment scorer.
 
-% Uncover high-level trends, distribution, statistical metrics, etc.
+This version of the component will not be used in the final pipeline, but only used as a tool to compare existing sentiment scorer implementations for the domain of sentences in news articles relating to disabilities or people with disabilities.
+
+% Final product: one or two final sentiment scorers with only one sentiment score, optimised for performance (speed / runtime)
+\subsubsection{Final implementation}
+
+The second version of the sentiment scorer component is used in the final pipeline.
+This component must perform sentiment analysis for all relevant sentences in the dataset (instead of only a limited sample of sentences).
+Instead of computing multiple sentiment scores of every sentence using all implemented sentiment scorers, it must only compute one sentiment score using the best-performing sentiment scorer that runs in reasonable time, as shown by the first version of this component.
+It should also compute the average sentiment score for each article, given information of the sentiment scores for all relevant sentences in the article.
+Furthermore, the component must run in reasonable time (i.e. less than a day for each topic), given available hardware and a scale of up to tens of thousands of articles per topic.
+
+After the sentiment scorer has scored all relevant sentences in the dataset, it must then save information about all articles, with score labels appended to each sentence, to a new output file.
+The JSON object format of each article in the output file should be equivalent to the input file's format (i.e. no information from previous components are lost), with the exception of an additional 'sentiment score' field within each sentence.
+The file and directory structure of the output file must be consistent given source and topic (such that the next component can find it programmatically).
+
+\subsection{Statistical Analysis and Visualisation}
+
+The last component performs statistical analysis and visualisation.
+This component must read the sentiment scoring component's output files as input files, to load the dataset of news articles and features extracted by previous components about each article.
+At this point, information extracted about each article by previous components must include: source, publication date, and sentiment score, alongside other information.
+To combine information about articles from different sources (represented by different files), this component should be capable of reading input from several different input files in a single run, and collate the information about every unique article in each file to a single dataset.
+
+This component must be able to show trends, visualisations, statistical metrics that show how dependent variables (e.g. sentiment score) differ relative to the independent variables (e.g. publication year and source).
+The plot types and statistical metrics relevant to this analysis was defined in the end of the 'Technical Context' section.
+At a minimum, this component must show how the sentiment score varies relative to publication year and source, and how subsets divided by publication year and source differ in distribution of sentiment scores, using the plots and metrics as defined in the 'Technical Context' section.
+Additionally, the component should also show visualisations based on other information extracted by previous components as relevant, such as trends in the term frequency of each keyword and key phrase (as a dependent variable) over time (publication year, as an independent variable).
 
 %% Use cases (a use diagram and list of use case titles, with the full use cases appearing in the appendix).
 % Not applicable
@@ -408,6 +519,26 @@ It provides the capability to generate various types of plots, such as scatterpl
 \section{Analysis of Requirements}
 
 % How the requirements influence the design of my project: e.g. requirement of save/resume progress for data collection -> read and skip already-parsed articles, runtime requirements for sentiment scoring -> analyser on all scorers that only samples N (default 10) articles, final implementation that only computes one sentiment score
+The implementation design (and additional requirements) of this project are highly influenced by the core requirements (i.e. data collection, filtering, parsing, sentiment scoring, and statistical analysis and visualisation).
+The overall design of the pipeline, with isolated components for each sub-problem, stemmed from having largely independent sub-problems that was required in order to perform the data analysis 'end-to-end' (i.e. from data collection to analysis and visualisation)
+Also, initial prototypes (and initial 'runs' collecting only a limited number of news articles) showed that data collection took the majority of runtime in the pipeline.
+For this reason, the requirement where it should be possible to resume progress on data collection (and not repeat the process for existing data) was added.
+
+Furthermore, the format of JSON objects of each output file were largely based on the information extracted by each component, as defined by the requirements.
+For example, the format of a JSON object in the output file for the data collection component is as follows (each JSON object represents one article in the dataset):
+\begin{lstlisting}
+{
+	"https://www.express.co.uk/comment/columnists/...": {
+		"source": "Daily Express",
+		"title": "Will she grow out of her stutter?",
+		"datetime": "2008-02-12T00:00:00+00:00",
+		"section": "comment",
+		"subsection": "columnists",
+		"text": "..."
+	}
+}
+\end{lstlisting}
+Where the URL and 'source', 'title', 'datetime', and 'text' fields correspond to the requirements of what information needs to be extracted by the data collection component.
 
 %% The level of detail of the requirements and use cases will depend on the nature of your project. If you are doing a Software Engineering based design and implementation project, then they will need to be done thoroughly. If there is a substantial body of requirements and use cases, then a summary should be given in the chapter, with the full set included in an appendix section.
 %% If your project is not Software Engineering oriented, then you still need to describe the requirements you are working to and relevant analysis information. Use cases may not be needed or be relevant.
@@ -456,6 +587,8 @@ It provides the capability to generate various types of plots, such as scatterpl
 
 % crawler: use search engine scraper to get list of article URLs, use article scraper on each URL, store to JSON file line-by-line AND ensure ability to 'save and resume' and not repeat process for articles that already exist in the dataset (by loading a set of URLs that already exist in the dataset beforehand and not calling the scraper for them)
 
+% mention how the requirement to resume on crash/interrupt led to saving a JSON object on each line (to represent each article) in the output so that articles are saved right after they are collected, not after all articles are collected - however, as a result, it violates the JSON standard (only one top-level object per file) - inconsequential but a drawback? regardless
+
 \subsection{Dataset Filtering}
 
 % What I did
@@ -474,7 +607,7 @@ It provides the capability to generate various types of plots, such as scatterpl
 
 % short paragraph saying 'used open-source libraries' and 'several options were considered and their accuracy analysed on a random sample of sentences, before the two best-performing options were selected to be used for the full dataset, after being optimised for run-time (as running all options on the full dataset will take ~1 minute per article * 51,177 articles = ...)'
 
-\subsubsection{Comparison of open-source sentiment models}
+\subsubsection{Comparison of open-source implementations}
 
 % a 'slow' scorer that takes the first N articles only and scores them with ALL scorers from a list of open-source sentiment scorers, for the purpose of evaluating the performance (accuracy) of these scorers
 
@@ -486,7 +619,7 @@ It provides the capability to generate various types of plots, such as scatterpl
 
 % After analysis, decided on running only two 'final' sentiment scorers for the whole dataset, using a separate function that computes only one sentiment score, optimised for performance (speed / runtime)
 
-\subsection{Statistical Analysis and Plotting}
+\subsection{Statistical Analysis and Visualisation}
 
 % One sub-sub-section for each plot / analysis tool / metric being used (show data for 'disabled' and a few other examples from other keywords)
 

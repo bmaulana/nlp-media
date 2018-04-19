@@ -2,8 +2,8 @@ import time
 import oop_scraper
 from crawler import crawler
 from filter import filter
-# from parse import parse
-# from sentiment import sentiment, sentiment_vader, sentiment_openai
+from parse import parse
+from sentiment import sentiment, sentiment_vader, sentiment_openai
 from plot import plot
 
 # topic: [keywords]
@@ -67,15 +67,15 @@ FILTER_THRESHOLD = 20  # higher = weaker filter
 def pipeline(topic, keywords, source):
     start_time = time.time()
 
-    # fname = crawler(topic, source, NUM_DOCS, QUERIES[topic])
-    fname = source.get_fname(topic)
+    fname = crawler(topic, source, NUM_DOCS, QUERIES[topic])
+    # fname = source.get_fname(topic)
     print('\n Filtering:')
-    filter(fname, keywords, FILTER_THRESHOLD)
+    filter(fname, keywords, FILTER_THRESHOLD, sample=0)
     print('\n Parsing:')
-    # parse(fname, keywords)
+    parse(fname, keywords)
     print('\n Scoring sentiment:')
-    # sentiment_vader(fname)
-    # sentiment_openai(fname)
+    sentiment_vader(fname)
+    sentiment_openai(fname)
     # sentiment(fname, max_articles=25)
 
     total_time = time.time() - start_time
@@ -83,8 +83,8 @@ def pipeline(topic, keywords, source):
 
 
 for tpc, words in TOPICS2.items():
-    # for src in SOURCES:
-        # pipeline(tpc, words, src)
+    for src in SOURCES:
+        pipeline(tpc, words, src)
     # TODO sleep / wait until in_folder + fname exist (occasional crash: plot called before sent output written)
     plot(tpc, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/')
     plot(tpc, in_folder='./out-sentiment-openai/', out_folder='./out-plot-openai/')

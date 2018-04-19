@@ -10,7 +10,7 @@ from tqdm import tqdm
 KEYWORD_TOKEN = 'KEYWORDTOKEN'  # something that shouldn't naturally occur in a document
 
 
-def filter(fname, keywords=None, threshold=20):
+def filter(fname, keywords=None, threshold=20, sample=0):
     """
     Format: python filter.py filename [keywords(comma-delimited)]
     """
@@ -74,7 +74,7 @@ def filter(fname, keywords=None, threshold=20):
     # print(sum(keyword_array) / len(keyword_array))
 
     print('Writing output to ./out-filtered/')
-    # relevant = []
+    relevant = []
     f_out = open(out_path, 'w')
     for i in tqdm(range(len(corpus))):
         vectors = matrix[i].toarray()
@@ -86,7 +86,8 @@ def filter(fname, keywords=None, threshold=20):
         rank = rank[0] + 1  # occurrence rank of the keyword(s), relative to other non-stop words in the article
 
         if rank <= threshold:  # rank threshold
-            # relevant.append((True, rank))
+            if sample > 0:
+                relevant.append((True, rank))
 
             # Save info on rank of keyword
             data[i]['keyword_count'] = int(keyword_vector)
@@ -102,7 +103,8 @@ def filter(fname, keywords=None, threshold=20):
             # relevant.append((False, rank))
     f_out.close()
 
-    # print(relevant[:10])  # Used to sample articles to determine rank threshold.
+    if sample > 0:
+        print(relevant[:sample])  # Used to sample articles to determine rank threshold.
     print('Input size =', in_lines, 'Output size =', out_lines)
 
 
