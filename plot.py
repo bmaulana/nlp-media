@@ -264,6 +264,9 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
 
     f_out.write('\n')
 
+    print('Topic', keyword)
+    print(data.shape[0], 'total articles')
+
     # Means, s.d., no. of articles for whole data set
     f_out.write(str(data.shape[0]) + ' total articles with mean sentiment ' +
                 str(np.average(np.array(data[:, 1], dtype=np.float32))) +
@@ -282,6 +285,7 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
         # print(source, ':', data_in_source.shape[0], 'articles with mean sentiment', np.average(data_in_source))
         f_out.write(source + ': ' + str(data_in_source.shape[0]) + ' articles with mean sentiment ' +
                     str(np.average(data_in_source)) + ' and std. dev. ' + str(np.std(data_in_source)) + '\n')
+        print(data_in_source.shape[0], 'articles from', source)
 
     f_out.write('\n')
 

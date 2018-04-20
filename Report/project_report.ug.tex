@@ -14,6 +14,9 @@
 \usepackage[style=ieee, sorting=none]{biblatex}  % BibTeX  
 \usepackage{url}  % urls
 \usepackage{listings}  % code snippets
+\usepackage{longtable}  % tables
+\usepackage{tabu}  % tables
+\usepackage{textcomp}  % symbols
 
 \newtheorem{theorem}{THEOREM}
 \newtheorem{lemma}[theorem]{LEMMA}
@@ -43,7 +46,11 @@ $\Box$ \end{quotation}}
 \setcounter{secnumdepth}{3}  % Add numbering to \subsubsection
 \setcounter{tocdepth}{3}  % Include \subsubsection in ToC
 \setlist{nosep}  % Remove spaces before an enumerate
-\bibliography{bibliography.bib}
+\setlength{\LTpre}{1em}  % remove spaces before longtable
+\setlength{\LTpost}{0em}  % remove spaces after longtable
+\newcommand{\textapprox}{\raisebox{0.5ex}{\texttildelow}}  % '~' sign
+
+\bibliography{bibliography.bib}  % Load bibliography
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -123,7 +130,7 @@ Applying natural language processing to perform meta-analyses over large text co
 In particular, the representation of specific groups, such as people with disabilities, has been a popular research theme for psychologists, sociologists, and others.
 For example, the paper \cite{coverdale2002depictions} analysed a sample of 600 print articles relating to mental illnesses in New Zealand and categorised them to positive and negative depictions, and the predominant themes thereof (e.g. criminality (negative), educational accomplishments (positive)).
 Applying natural language processing to this area of research would allow the possibility of discovering higher-level trends, by computationally analysing a much larger sample of articles and identify trends by varying independent variables such as year of publication and publisher.
-In this research, a sample of 305,113 news articles (51,177 after filtering off-topic articles) from British online news sources are used.
+In this research, a sample of 305,103 news articles (51,177 after filtering off-topic articles) from British online news sources are used.
 However, challenges remain as syntax-based statistical natural language processing approaches tend to be more limited in scope and is prone to false positives and negatives, and mitigating these factors is currently an open area of research.
 % Just give a short summary, expand this later and give more papers in Chapter 2
 % google 'media representation of mental illness', 'media representation of disability'
@@ -579,25 +586,149 @@ This design ensures that in case computation is interrupted for any reason, the 
 %% Include the database or storage representation. (Originally after component description)
 \section{Dataset Description} \label{Dataset Description}  % What data have I got
 
-\subsection{Sources}
+\subsection{Sources} \label{sources}
 
-% sources (Guardian, DM, DE), why (list that article about top N sources, 'represent' both political leans)
+% sources (Guardian, DM, DE), why
+The Internet is an increasingly common medium for news publishers to publish news articles and for consumers to read these articles.
+As of 2017, 64\% of British individuals read and/or download online news, newspapers or magazines, a sharp increase from 20\% in 2007 \cite{statista2018share}. 
 
-\subsection{Keywords, key phrases, and query terms}
+The Daily Mail (\url{dailymail.co.uk}) and the Guardian (\url{theguardian.com}) are the two most visited news publisher's web sites as of 2016, with a monthly viewership of 11.85 and 10.05 million respectively \cite{statista2018newspaper}, and are the main subjects of this experiment.
+Additonally, The Daily Express (\url{express.co.uk}), a slightly smaller newspaper with a monthly viewership of 2.67 million in 2016 \cite{statista2018newspaper}, is also added as a news source in this experiment, to control for source size and explore how the experiment performs with smaller sample sizes.
+Furthermore, the Guardian provides an API \cite{guardian} and the Daily Mail and Daily Express provide advanced search tools \cite{daily-mail, daily-express} to query news articles from their websites, which prove useful in their respective data collection component's implementation, although the pipeline would work with any online news source that provides an internal search tool.
+Thus, these three news publisher sources (Daily Mail, Guardian, Daily Express) were selected the main subjects of this experiment.
 
-% topics: collection of keywords & query terms (keywords minus potentially off topic terms / combinations)
+\subsection{Topics, keywords, key phrases, and query terms} \label{topics}
 
 % List topics, keywords/phrases, query terms here
+The final list of topics relevant to disabilities and people with disabilities, and the keywords, key phrases, and query terms deemed relevant to each topic, are: 
 
-\subsection{Dataset Size}
+\begin{longtabu} to \textwidth { | X[l] | X[l] | X[l] | } 
+	\hline
+	Topic & Keywords and Key Phrases & Query Terms \\ 
+	\hline
+	'disabled' & 'disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible', 'ablism', 'ableism', 'differently abled' & 'disabled', 'disability', 'ablism', 'ableism', 'differently abled' \\ 
+	\hline
+	'autism' & 'autism', 'autistic', 'asperger\textbackslash's', 'ASD' & 'autism', 'autistic', 'asperger\textbackslash's', 'ASD' \\ 
+	\hline
+	'blind' & 'blind', 'blindness', 'blindism', 'visual impairment', 'partially sighted', 'vision loss' & 'blind', 'blindness', 'visual impairment', 'partially sighted', 'visually impaired' \\ 
+	\hline
+	'cerebral palsy' & 'cerebral palsy', 'spastic' & 'cerebral palsy', 'spastic' \\ 
+	\hline
+	'deaf' & 'deaf', 'deafness', 'hearing impaired', 'hard of hearing', 'hearing loss' & 'deaf', 'deafness', 'hearing impairment', 'hard of hearing', 'hearing impaired' \\ 
+	\hline
+	'developmental delay' & 'developmental delay', 'developmental disability', 'developmental disorder', 'learning disability', 'slow learner', 'retardation', 'intellectual disability' & 'developmental delay', 'developmental disability', 'developmental disorder', 'learning disability' \\ 
+	\hline
+	'dyslexia' & 'dyslexia', 'dyslexic' & 'dyslexia', 'dyslexic' \\ 
+	\hline
+	'epilepsy' & ''epilepsy', 'epileptic', 'seizure' & 'epilepsy', 'epileptic' \\ 
+	\hline
+	'mental illness' & 'mental illness', 'mental health', 'mental disability', 'mental disorder', 'mental issue', 'brain injured', 'brain injury', 'brain damaged', 'psychological', 'psychiatric', 'emotional disorder', 'behavioural disorder', 'retardation', 'intellectual disability', 'mentally ill', 'mentally disabled', 'mentally handicapped' & 'mental illness', 'mental health', 'mental disorder', 'mental disability', 'mentally ill', 'mentally disabled', 'mentally handicapped' \\ 
+	\hline
+	'mute' & 'mute', 'muteness', 'mutism', 'cannot speak', 'difficulty speaking', 'synthetic speech', 'non-vocal', 'non-verbal' & 'mute', 'muteness', 'mutism', 'non-verbal' \\ 
+	\hline
+	'paralysis' & 'paraplegic', 'quadriplegic', 'spinal cord', 'paraplegia', 'quadriplegia', 'paralysed', 'paralyzed', 'paralysis', 'crippled', 'leg braces', 'wheelchair' & 'paraplegic', 'quadriplegic', 'paraplegia', 'quadriplegia', 'paralysis' \\ 
+	\hline
+	'speech impairment' & 'speech impairment', 'stutter', 'speech disability', 'speech disorder', 'communication disability', 'difficulty speaking', 'language impairment', 'language disorder', 'language disability', 'speech impediment', 'stammer' & 'speech impairment', 'stutter', 'speech disorder', 'speech impediment' \\ 
+	\hline
+\end{longtabu}
+
+% topics: collection of keywords & query terms (keywords minus potentially off topic terms / combinations)
+This list of key terms was roughly based on guidelines from the Californian \cite{ca-guideline} and UK \cite{uk-guideline} governments (ignoring whether the term is considered 'appropriate' or 'inappropriate', as terms labelled 'inappropriate' are often still commonly used in the news, and relevant to consider when deciding whether an article is on-topic), with a few additions based on other commonly-used terms found on sampled articles from Daily Express, Daily Mail, and Guardian.
+The list of query terms were based on the list of key words, with words/phrases that could have multiple meanings (or combinations of multiple common words) removed (unless the word/phrase is very commonly used to refer to the disability, such as 'blind' or 'mute', where removing these words will remove a large number of on-topic articles from the dataset).
+
+\subsection{Dataset Size} \label{dataset-size}
 
 % Tables for how many articles do I have, for each source, topic, and source+topic, before and after filtering
+The dataset is comprised of all articles found online given the query terms defined in section \ref{topics}, published between 2000 to (approximately) late-March/early-April 2018.
+The size of the initial collected dataset (i.e. all articles collected by the Data Collection component, prior to any further processing) in number of articles, for each source and topic, were:
 
-\subsection{Limitations}
+\begin{center}
+	\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | X[c] | }
+		\hline
+		Topic & Daily Express & Daily Mail & Guardian & Total \\
+		\hline
+		Disabled & 16,818 & 24,768 & 30,598 & 72,184  \\
+		\hline
+		Autism & 988 & 6,035 & 5,780 & 12,803  \\
+		\hline
+		Blind & 9,467 & 23,616 & 32,307 & 65,390  \\
+		\hline
+		Cerebral Palsy & 509 & 1,995 & 1,569 & 4,073  \\
+		\hline
+		Deaf & 6,795 & 20,686 & 8,163 & 35,644  \\
+		\hline
+		Developmental Delay & 965 & 3,529 & 1,517 & 6,011  \\
+		\hline
+		Dyslexia & 283 & 938 & 1,980 & 3,201  \\
+		\hline
+		Epilepsy & 700 & 2,924 & 2,368 & 5,992  \\
+		\hline
+		Mental Illness & 8,102 & 38,273 & 29,831 & 76,206  \\
+		\hline
+		Mute & 1,516 & 2,273 & 4,746 & 8,535  \\ % todo re-run pipeline for this topic, can't be right
+		\hline
+		Paralysis & 711 & 4,346 & 3,879 & 8,936  \\
+		\hline
+		Speech Impairment & 1,777 & 2,994 & 1,357 & 6,128  \\
+		\hline
+		Total & 48,631 & 132,377 & 124,095 & 305,103  \\ % todo re-calculate after re-running mute 
+		\hline
+	\end{tabu}
+\end{center}
+
+After filtering, the size of the dataset that was plotted, in number of articles for each source and topic,  were:
+
+% todo double check calculations
+\begin{center}
+	\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | X[c] | }
+		\hline
+		Topic & Daily Express & Daily Mail & Guardian & Total \\
+		\hline
+		Disabled & 1,852 & 6,035 & 8,524 & 16,411  \\
+		\hline
+		Autism & 128 & 1,755 & 1,278 & 3,161  \\
+		\hline
+		Blind & 775 & 3,008 & 3,894 & 7,677  \\
+		\hline
+		Cerebral Palsy & 25 & 253 & 75 & 353  \\
+		\hline
+		Deaf & 114 & 747 & 901 & 1,762  \\
+		\hline
+		Developmental Delay & 5 & 130 & 447 & 582  \\
+		\hline
+		Dyslexia & 19 & 110 & 281 & 410  \\
+		\hline
+		Epilepsy & 58 & 740 & 374 & 1,172  \\
+		\hline
+		Mental Illness & 398 & 6,794 & 8,137 & 15,329  \\
+		\hline
+		Mute & 24 & 146 & 284 & 454  \\  % todo re-run pipeline for this topic, can't be right
+		\hline
+		Paralysis & 53 & 1,003 & 405 & 1,461  \\
+		\hline
+		Speech Impairment & 57 & 73 & 85 & 215  \\
+		\hline
+		Total & 3,508 & 20,812 & 24,645 & 48,965  \\  % todo re-calculate after re-running mute 
+		\hline
+	\end{tabu}
+\end{center}
+
+For the results evaluation, the focus will be on the 'disabled' topic, as it has the highest amount of news articles within its subset, and is the most generalisable topic on disabilities (as it refers to the general theme of disabilities and people with disabilities, rather than a specific topic).
+
+\subsection{Limitations} \label{limitations}
 
 % Limitations (e.g. DE has less articles than DM or Guardian, some topics have way less articles), implications for statistical analysis, plotting (e.g. moving averages), etc
+As shown in section \ref{dataset-size}, the Daily Express has significantly less articles for any given topic than the Daily Mail or the Guardian, sometimes much less so.
+Some topics, such as cerebral palsy, developmental delay, dyslexia, and speech impairment, are also severely lacking in sample size of articles (post-filter).
+In particular, cases where there are less than \textapprox200 articles for a source within a topic were problematic to plot or form statistically-significant conclusions regarding trends (e.g. to compare with other sources), as the distribution of the data is too varied. % todo redefine threshold based on Mann-Whitney U test results in chapter 5
+In section \ref{Sentiment score: statistical comparison of different sources}, we show that it was difficult to obtain statistically significant conclusions when comparing to subsets with less than \textapprox200 articles.
+This means that it is difficult to analyse or compare the Daily Express's subset for topics other than general 'disabled', 'blind', and 'mental illness', due to its relative lack of sample size.
 
 % Also year-on-year limitations (DM only retains articles from ___, DE only retains articles from ___, Guardian only retains articles from ___), and implications (non equal proportion of articles for each year), what it means for analyses 
+Another limitation with this experiment is the (limited) length of time each news source (Daily Express, Daily Mail, and Guardian) retain articles for in their online archive.
+Our dataset indicates that by March/April 2018 (when this experiment took place), the Daily Express only retains articles from after \textapprox2007, the Daily Mail only retains articles from after \textapprox2010, and the Guardian only retains articles from after \textapprox2000. 
+This raises an issue when analysing year-on-year trends, as the proportion of articles' sources within a topic are different in each year, and year-on-year differences may be better explained due to this difference in proportion, rather than an actual trend (see also: section \ref{Sentiment score: plots and trends}).
+For this reason, we consider trends over time to be significant only when the trend is consistently repeated for each source's subset (instead of the full dataset for that topic), for all sources with statistically-significant sample size in that topic. 
 
 \section{Components} \label{Components}
 %% Give a description of the design of each of the components that make up the architecture.
@@ -661,17 +792,30 @@ This design ensures that in case computation is interrupted for any reason, the 
 
 \chapter{Results Evaluation} \label{Results Evaluation}  % 2-4 pages (can be more if needed, probably more with graphs and tables)
 
-% For this part, focus on 'disabled' topic. 
-% Before going into sections, ention that although I have researched 12 topics relating to specific disabilities, this topic is chosen as an example for the resuls evaluation chapter as it is the most generic.
-% Explain the disabled.py dataset first: provide a table with no. of articles for each source in each year.
+\section{Focused topic} \label{Focused topic}
+% This chapter will focus on the 'disabled' topic ... 
+% Before going into sections, mention that although I have researched 12 topics relating to specific disabilities, this topic is chosen as an example for the resuls evaluation chapter as it is the most generic.
 
-% One section for each relevant analysis tool (plots, metrics, tables), with some graphs/tables/examples for each
-% Can group similar plots and metrics together (e.g. moving average and violin plots are both views of annual mean)
+% Explain the 'disabled' dataset first: provide a table with no. of articles for each source in each year.
 
+\section{Comparison of sentiment scorers} \label{Comparison of sentiment scorers}
+% Short re-explanation of how these were compared, by taking a sample of 180? sentences, and manually labelling them, then plotting the sentiment-score distributions of 'positive' and 'negative' sentences for each scorer (summary of 4.3.4.1)
+
+% results for how open-source sentiment scorers compare, plots, confusion matrices, accuracy, etc.
+
+% discuss about how VADER, although much simpler than other models, is more generalisable than stat-ML/NN models trained on different domains
+
+\section{Sentiment score: plots and trends} \label{Sentiment score: plots and trends}
 % graphs, tables (mean std dev) relating to sentiment
 
-% Whitney-Mann analysis
+\section{Sentiment score: statistical comparison of different sources} \label{Sentiment score: statistical comparison of different sources}
+% Mann-Whitney U analysis (re-define it again, what it means for statistical significance etc)
 
+% Table of Mann-Whitney U scores for each topic and source comparisons, overlap with n_articles for each source
+
+% 
+
+\section{Key terms: plots and trends} \label{Key terms: plots and trends}
 % key terms analysis: most of them stay constant over the period (probably because 18 years data is quite short for cultural shifts), but mention the few where visible trends can be seen + show graphs. Also small sample sizes.
 % also mention source-by-source variations
 
