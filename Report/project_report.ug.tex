@@ -137,13 +137,20 @@ Given a list of topics consisting of keywords (or key phrases) and query terms, 
 This pipeline will be available open source on GitHub (\url{https://github.com/bmaulana/nlp-media})
 
 %% Give an overview of how you carried out the project (e.g., an iterative approach).
-This project was carried out in a step-by-step approach. The pipeline was developed as individual components: a web scraper and crawler for data collection given a list of queries, a filter to remove irrelevant articles given a list of key terms, a parser to pattern-match relevant sentences given key terms, a sentiment scorer (and results analysis/comparison of different open-source scorers on this domain), and a script to perform statistical analysis on the results and produce relevant plots. 
+This project was carried out in a step-by-step approach. The pipeline was developed as individual components: a web scraper and crawler for data collection given a list of queries; a filter to remove irrelevant articles given a list of key terms; a parser to pattern-match relevant sentences given key terms; a sentiment scorer (and results analysis/comparison of different open-source scorers on this domain); and a script to perform statistical analysis on the results and produce relevant plots. 
 A main pipeline script connects these components together by calling them in order for each topic and Web news source (Daily Mail, Daily Express, Guardian).
 Each component's output is piped to the next component's input by saving its output to a JSON file and having the next component read the previous component's output file, which ensures computation can be 'resumed' without re-running the previous component. 
 
 %% A brief overview of the rest of the chapters in the report (a guide to the reader of the overall structure of the report).
-The body of this report is subdivided into four chapters: context, requirements and analysis, design and implementation, and results evaluation.
-% TODO finish while finishing rest-of-report
+The body of this report is subdivided into four chapters:
+\begin{itemize}
+	\item Chapter \ref{Context} covers related work on the domain of news media analysis (especially in the context of people with disabilities) and natural language processing, and background information regarding the relevant tools and techniques researched for this project.
+	\item Chapter \ref{Requirements and Analysis} defines a structured list of requirements, goals, and expectations for this project.
+	\item Chapter \ref{Design and Implementation} documents the design and implementation of the computational pipeline and its components that were used to carry out the data analytics experiment and achieve the stated goals.
+	\item Chapter \ref{Results Evaluation} discusses the results of the experiment in diagrams, graphs, and tables; and their implications.
+\end{itemize}
+Finally, the conclusion (Chapter \ref{Conclusions}) evaluates the project, summarises key achievements and takeaways, provides recommendation on how this work could be expanded upon, and sets guidelines for further work in this field.
+Furthermore, the bibliography lists sources that were used as references in this project, and the Appendix section contains the raw results of the experiment (i.e graphs and other data not in Chapter \ref{Results Evaluation}).
 
 % Brief results & conclusions
 % TODO finish after finishing rest-of-report
