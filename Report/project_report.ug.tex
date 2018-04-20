@@ -570,8 +570,11 @@ To fulfil the stated requirements in chapter \ref{Requirements and Analysis}, th
 This solution was used to carry out the experiment to collect and analyse online news articles and visualise potential trends in sentiment/opinion.
 The results of this experiment is shown in chapter \ref{Results Evaluation}.
 
-The high-level design of the pipeline and its main components are shown as follows:
-% todo draw & show diagram
+The high-level design of the pipeline and its main components are defined as follows:
+
+\vspace{0.5em}
+\noindent
+\includegraphics[width=\textwidth]{overall-design.png}
 
 In this experiment, the pipeline is ran once for each source and topic, generating a dataset of all articles for the specified topic from the source with all extracted features, stored in a file.
 The 'plot' component then loads these files and combines the dataset of all articles for every source within the same topic, and produces various plots to show trends within the topic, and statistical metrics for each possible subset within the topic.
@@ -805,13 +808,13 @@ Information from other topics will be explicitly mentioned (e.g. 'for the ... to
 
 % Explain the 'disabled' dataset first: provide a table with no. of articles for each source in each year.
 Year-on-year trends are also a consistent theme throughout parts of this chapter.
-Within the 'disabled' topic, the (post-filtering) sample size that was obtained for each year between 2000 and 2018 is as follows (note that 2018 is incomplete):
+Within the 'disabled' topic, the (post-filtering) sample size that was obtained for each year between 2000 and 2018 is as follows:
 
 \begin{longtabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | X[c] | }
 	\hline
 	Year & Daily Express & Daily Mail & Guardian & Total \\
 	\hline
-	2000 & 0 & 0 & 504 & 504  \\
+	2000 & 0 & 0 & 504* & 504  \\
 	\hline
 	2001 & 0 & 0 & 294 & 294  \\
 	\hline
@@ -847,11 +850,14 @@ Within the 'disabled' topic, the (post-filtering) sample size that was obtained 
 	\hline
 	2017 & 220 & 1,094 & 506 & 1,820  \\
 	\hline
-	2018 & 49 & 336 & 108 & 493  \\
+	2018** & 49 & 336 & 108 & 493  \\
 	\hline
 	Total & 1,852 & 6,035 & 8,524 & 16,411  \\ 
 	\hline
 \end{longtabu}
+*'2000' also includes a small amount of articles published before the year 2000.
+
+**2018 is incomplete and would only include articles up to (approximately) late-March/early-April.
 
 \section{Comparison of sentiment scorers} \label{Comparison of sentiment scorers}
 % Short re-explanation of how these were compared, by taking a sample of 180? sentences, and manually labelling them, then plotting the sentiment-score distributions of 'positive' and 'negative' sentences for each scorer (summary of 4.3.4.1)
@@ -916,9 +922,7 @@ Within the 'disabled' topic, the (post-filtering) sample size that was obtained 
 
 \appendix
 
-\printbibliography
-% todo fix below to be first page of bibliography
-% \addcontentsline{toc}{chapter}{Bibliography} 
+\printbibliography[heading=bibintoc]
 
 \chapter{Other appendices, e.g., code listing}  % appendix A
 \emph{Put your appendix sections here}

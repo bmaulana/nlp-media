@@ -106,7 +106,9 @@ ENV/
 # output
 *.json
 *-out
-*.png
+out-plot*
+out-eval*
+eval*
 *.csv
 *.txt
 
