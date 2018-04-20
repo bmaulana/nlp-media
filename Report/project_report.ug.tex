@@ -97,7 +97,7 @@ Analyses of news media, and representation of groups such as people with disabil
 \setcounter{page}{1}
 
 
-\chapter{Introduction} % 2-4 pages
+\chapter{Introduction} \label{Introduction} % 2-4 pages
 
 %% Outline the problem you are working on, why it is interesting and what the challenges are.
 
@@ -142,7 +142,7 @@ A main pipeline script connects these components together by calling them in ord
 Each component's output is piped to the next component's input by saving its output to a JSON file and having the next component read the previous component's output file, which ensures computation can be 'resumed' without re-running the previous component. 
 
 %% A brief overview of the rest of the chapters in the report (a guide to the reader of the overall structure of the report).
-The body of this report is subdivided into four sections: context, requirements and analysis, design and implementation, and results evaluation.
+The body of this report is subdivided into four chapters: context, requirements and analysis, design and implementation, and results evaluation.
 % TODO finish while finishing rest-of-report
 
 % Brief results & conclusions
@@ -151,7 +151,7 @@ The body of this report is subdivided into four sections: context, requirements 
 %% This chapter is relatively short (2-4 pages) and must leave the reader very clear on what the project is about and what your goals are
 
 
-\chapter{Context}  % 8-10 pages
+\chapter{Context} \label{Context} % 8-10 pages
 
 %% This chapter should cover background information, related work, research done, and tools or software selected for use in the project.
 
@@ -168,7 +168,7 @@ The body of this report is subdivided into four sections: context, requirements 
 %% You should not include well known things (e.g., HTML or Java) or try to give tutorials on how to use a tool or code library (use references to books and websites for that information). Everything you include should be directly relevant to your work and the relationship made clear. This chapter is likely to be fairly substantial, perhaps 8-10 pages.
 
 % -- How the project relates to what is already known & available, survey of similar solutions --
-\section{Background}  % 3-4 pages
+\section{Background} \label{Background}  % 3-4 pages
 
 % Similar research being done on media representation of (disability/mental illness/etc.).
 Analyses of news media in its various forms (print, online, etc.) has been a consistent research theme. 
@@ -239,10 +239,10 @@ However, there is still a visible research gap in this area, for using computati
 To date, advances in natural language processing has made this approach much more feasible, efficient, and effective, even given limited time and hardware constraints.
 Various free and open-source tools for computational natural language processing and statistical analysis has been developed by the research community, such as nltk \cite{Nltk} and StanfordNLP \cite{StanfordNLP} for natural language processing, scikit-learn \cite{Scikit-learn} for statistical analysis, and matplotlib \cite{Matplotlib} for plotting.
 Depending on the type of data analytics performed and the hardware used, these computational tools are able to analyse news articles at a rate of multiple documents per second.
-The 'Technical Context' section contains a further listing and discussion of these tools, alongside the specific libraries and natural language processing techniques used for this research project.
+Section \ref{Technical Context} contains a further listing and discussion of these tools, alongside the specific libraries and natural language processing techniques used for this research project.
 
 % -- Research carried out & sources (papers, books, websites, etc.) --
-\section{Research Methodology and Sources}  % 1 page
+\section{Research Methodology and Sources} \label{Research Methodology and Sources}  % 1 page
 
 % How background research was carried out
 Background research were carried out by investigating papers from public sources (such as Google Scholar).
@@ -269,7 +269,7 @@ The sources used for this literature review are:
 \end{itemize}
 
 % -- Technical background, sources of information, software --% (probably the longest section in chapter 2)
-\section{Technical Context}  % 4-5 pages
+\section{Technical Context} \label{Technical Context}  % 4-5 pages
 
 % general NLP: define NLP again, classify & list techniques, then mention 'the techniques used in this project are ...'
 As mentioned earlier, computational natural language processing techniques are utilised to extract features from collected news articles (text documents) at scale.
@@ -385,10 +385,10 @@ The types of plots and statistical analysis metrics that are deemed relevant for
 		Available on SciPy.
 \end{itemize}
 
-\chapter{Requirements and Analysis}  % 5-6 pages
+\chapter{Requirements and Analysis} \label{Requirements and Analysis}  % 5-6 pages
 
 %% Give the detailed problem statement. This elaborates on what you may have included in the introduction chapter, and represents the starting point from which requirements were derived.
-\section{Problem Statement}
+\section{Problem Statement} \label{Problem Statement}
 % This project involves the development of a computational pipeline capable of performing data collection, natural language processing, statistical analysis, and data visualisation tasks
 
 % Expand aims & goals
@@ -414,7 +414,7 @@ The total number of documents (online news articles) available (given Daily Mail
 Given this scale, the solution must be able to compute the full pipeline within a feasible timeframe (i.e. not more than a few days), given available general-purpose hardware (Intel i7-6700HQ CPU @ 2.60GHz, NVIDIA GeForce GTX 1060 GPU) to show that the solution is feasible without specialised hardware.
 
 %% A structured list of requirements.
-\section{Requirements}
+\section{Requirements} \label{Requirements}
 
 % Short paragraph about component based design
 The solutions follows a component-based design, where each sub-problem must be implemented by a component that focuses only on the sub-problem.
@@ -481,7 +481,7 @@ Then, two versions of the sentiment scorer component must be developed.
 The first version of the sentiment scorer component is used to perform a comparison between several open-source sentiment analysis tools and models for this sentiment scoring task.
 
 This version of the component must select a sample of sentences from the dataset, with a sample size arbitrarily defined by the user.
-Also, it must implement all open-source sentiment analysis implementations ('sentiment scorer') that were listed in the 'Technical Context' section.
+Also, it must implement all open-source sentiment analysis implementations ('sentiment scorer') that were listed in section \ref{Technical Context}.
 All sentences in the sample must be analysed and given a score by each sentiment scorer, and the component should also allow the user to manually label these sentences as positive, neutral, or negative.
 With this information, the component must be able to determine the accuracy of each sentiment scorer (i.e. show the proportion of true positives and true negatives, and show a confusion matrix), and store the total, per-sentence, and per-article runtime of each sentiment scorer.
 
@@ -508,17 +508,17 @@ At this point, information extracted about each article by previous components m
 To combine information about articles from different sources (represented by different files), this component should be capable of reading input from several different input files in a single run, and collate the information about every unique article in each file to a single dataset.
 
 This component must be able to show trends, visualisations, statistical metrics that show how dependent variables (e.g. sentiment score) differ relative to the independent variables (e.g. publication year and source).
-The plot types and statistical metrics relevant to this analysis was defined in the end of the 'Technical Context' section.
-At a minimum, this component must show how the sentiment score varies relative to publication year and source, and how subsets divided by publication year and source differ in distribution of sentiment scores, using the plots and metrics as defined in the 'Technical Context' section.
+The plot types and statistical metrics relevant to this analysis was defined in the end of section \ref{Technical Context}.
+At a minimum, this component must show how the sentiment score varies relative to publication year and source, and how subsets divided by publication year and source differ in distribution of sentiment scores, using the plots and metrics as defined in section \ref{Technical Context}.
 Additionally, the component should also show visualisations based on other information extracted by previous components as relevant, such as trends in the term frequency of each keyword and key phrase (as a dependent variable) over time (publication year, as an independent variable).
 
 %% Use cases (a use diagram and list of use case titles, with the full use cases appearing in the appendix).
 % Not applicable
 
 %% Results of analysing the requirements to extract information. For example, data modelling to find the data to be stored (ER diagram), views/web pages needed and so on.
-\section{Analysis of Requirements}
+\section{Analysis of Requirements} \label{Analysis of Requirements}
 
-% How the requirements influence the design of my project: e.g. requirement of save/resume progress for data collection -> read and skip already-parsed articles, runtime requirements for sentiment scoring -> analyser on all scorers that only samples N (default 10) articles, final implementation that only computes one sentiment score
+% How the requirements influence the design of my project
 The implementation design (and additional requirements) of this project are highly influenced by the core requirements (i.e. data collection, filtering, parsing, sentiment scoring, and statistical analysis and visualisation).
 The overall design of the pipeline, with isolated components for each sub-problem, stemmed from having largely independent sub-problems that was required in order to perform the data analysis 'end-to-end' (i.e. from data collection to analysis and visualisation)
 Also, initial prototypes (and initial 'runs' collecting only a limited number of news articles) showed that data collection took the majority of runtime in the pipeline.
@@ -545,18 +545,18 @@ Where the URL and 'source', 'title', 'datetime', and 'text' fields correspond to
 %% The analysis part of the chapter is what you did to map the requirements information into the first pass design. You can think of analysis as the first stage of design, and the purpose is to show how the requirements were used to inform the design. The length of this chapter depends on the kind of project, but you are typically looking at 5-6 pages.
 
 
-\chapter{Design and Implementation}  % 10+ pages (use diagrams, graphs etc. to fill it up)
+\chapter{Design and Implementation} \label{Design and Implementation} % 10+ pages (use diagrams, graphs etc. to fill it up)
 
 %% Describe the design of what you have created.
 %% Start with the application architecture, giving its overall structure and the components that make up that structure.
-\section{Overall Design}
+\section{Overall Design} \label{Overall Design}
 
 % Components, what each component does, how they interact with each other (show in diagram)
 
 % Input/output format (of JSON files) before/after each stage, how these files are stored (file structure and JSON structure)
 
 %% Include the database or storage representation. (Originally after component description)
-\section{Dataset Description}  % What data have I got
+\section{Dataset Description} \label{Dataset Description}  % What data have I got
 
 \subsection{Sources}
 
@@ -578,7 +578,7 @@ Where the URL and 'source', 'title', 'datetime', and 'text' fields correspond to
 
 % Also year-on-year limitations (DM only retains articles from ___, DE only retains articles from ___, Guardian only retains articles from ___), and implications (non equal proportion of articles for each year), what it means for analyses 
 
-\section{Components}
+\section{Components} \label{Components}
 %% Give a description of the design of each of the components that make up the architecture.
 
 \subsection{Data Collection}
@@ -638,7 +638,7 @@ Where the URL and 'source', 'title', 'datetime', and 'text' fields correspond to
 %% This is a core chapter in your report and will usually be quite substantial, 10 pages or more.
 
 
-\chapter{Results Evaluation}  % 2-4 pages (can be more if needed, probably more with graphs and tables)
+\chapter{Results Evaluation} \label{Results Evaluation}  % 2-4 pages (can be more if needed, probably more with graphs and tables)
 
 % For this part, focus on 'disabled' topic. 
 % Before going into sections, ention that although I have researched 12 topics relating to specific disabilities, this topic is chosen as an example for the resuls evaluation chapter as it is the most generic.
@@ -667,15 +667,15 @@ Where the URL and 'source', 'title', 'datetime', and 'text' fields correspond to
 %% This chapter will typically be 2-4 pages in length but could be more depending on the depth of testing done. If you need to do a detailed evaluation for a more mathematical or theory-based project, then this chapter could well be more substantial.
 
 
-\chapter{Conclusions}  % 2-4 pages
+\chapter{Conclusions} \label{Conclusions}  % 2-4 pages
 %% Wrap-up and final thoughts on your project. 
 %% This chapter is typically 2-4 pages long but could be longer if the project work requires more extensive evaluation.
 
-\section{Achievements}
+\section{Achievements} \label{Achievements}
 %% Summarise the achievements to confirm the project goals have been met.
 %% A summary of what the project has achieved. Make sure that you address each goal set out in the Introduction chapter, to show that you have achieved what you claimed you would. Don’t leave any loose ends
 
-\section{Evaluation}
+\section{Evaluation} \label{Evaluation}
 %% Evaluation of the work (this may be in a separate chapter if there is substantial evaluation).
 %% A critical evaluation of the results of the project (e.g., how well were the goals met, is the application fit for purpose, has good design and implementation practice been followed, was the right implementation technology chosen and so on).
 
@@ -685,7 +685,7 @@ Where the URL and 'source', 'title', 'datetime', and 'text' fields correspond to
 
 % Implications of NLP for future media studies, call for similar analyses to be conducted in other domains (mention additional information that can be discovered by using computational NLP and processing a much larger sample of text) 
 
-\section{Future Work}
+\section{Future Work} \label{Future Work}
 %% How the project might be continued, but don't give the impression you ran out of time!
 %% Future work. How could the project be developed if you had another 6 months. Take care to differentiate between what you have done to satisfy your stated project goals, and work that could be done to meet extended goals.
 
