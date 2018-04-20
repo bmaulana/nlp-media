@@ -795,8 +795,63 @@ For this reason, we consider trends over time to be significant only when the tr
 \section{Focused topic} \label{Focused topic}
 % This chapter will focus on the 'disabled' topic ... 
 % Before going into sections, mention that although I have researched 12 topics relating to specific disabilities, this topic is chosen as an example for the resuls evaluation chapter as it is the most generic.
+Although the pipeline was run on a list of twelve disability-related topics (as defined in section \ref{topics}), this results evaluation will mainly focus on the 'disabled' topic.
+The 'disabled' topic was chosen as it has the highest amount of news articles within its subset, and it is the most generalisable topic (as it refers to the general theme of disabilities and people with disabilities, rather than a specific topic) (see also: section \ref{dataset-size}).
+This focus on one topic for the whole of Chapter \ref{Results Evaluation} helps keep the numbers and results being discussed consistent throughout Chapter \ref{Results Evaluation}.
+Furthermore, the full result plots for all topics will be available in the Appendix.
+
+However, at several points in this chapter, results from other topics will also be discussed where it would add to the discussion.
+Information from other topics will be explicitly mentioned (e.g. 'for the ... topic') such that the reader understands where the data does not refer to the 'disabled' topic.
 
 % Explain the 'disabled' dataset first: provide a table with no. of articles for each source in each year.
+Year-on-year trends are also a consistent theme throughout parts of this chapter.
+Within the 'disabled' topic, the (post-filtering) sample size that was obtained for each year between 2000 and 2018 is as follows (note that 2018 is incomplete):
+
+\begin{longtabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | X[c] | }
+	\hline
+	Year & Daily Express & Daily Mail & Guardian & Total \\
+	\hline
+	2000 & 0 & 0 & 504 & 504  \\
+	\hline
+	2001 & 0 & 0 & 294 & 294  \\
+	\hline
+	2002 & 0 & 0 & 334 & 334  \\
+	\hline
+	2003 & 0 & 2 & 330 & 332  \\
+	\hline
+	2004 & 0 & 2 & 387 & 389  \\
+	\hline
+	2005 & 0 & 0 & 381 & 381  \\
+	\hline
+	2006 & 0 & 0 & 338 & 338  \\
+	\hline
+	2007 & 51 & 0 & 424 & 475  \\
+	\hline
+	2008 & 86 & 0 & 424 & 510  \\
+	\hline
+	2009 & 175 & 0 & 352 & 527  \\
+	\hline
+	2010 & 157 & 173 & 365 & 695  \\
+	\hline
+	2011 & 166 & 370 & 607 & 1,143  \\
+	\hline
+	2012 & 238 & 516 & 822 & 1,576  \\
+	\hline
+	2013 & 133 & 473 & 638 & 1,244  \\
+	\hline
+	2014 & 140 & 846 & 544 & 1,530  \\
+	\hline
+	2015 & 177 & 1,095 & 526 & 1,798  \\
+	\hline
+	2016 & 260 & 1,128 & 640 & 2,028  \\
+	\hline
+	2017 & 220 & 1,094 & 506 & 1,820  \\
+	\hline
+	2018 & 49 & 336 & 108 & 493  \\
+	\hline
+	Total & 1,852 & 6,035 & 8,524 & 16,411  \\ 
+	\hline
+\end{longtabu}
 
 \section{Comparison of sentiment scorers} \label{Comparison of sentiment scorers}
 % Short re-explanation of how these were compared, by taking a sample of 180? sentences, and manually labelling them, then plotting the sentiment-score distributions of 'positive' and 'negative' sentences for each scorer (summary of 4.3.4.1)
