@@ -130,7 +130,7 @@ Applying natural language processing to perform meta-analyses over large text co
 In particular, the representation of specific groups, such as people with disabilities, has been a popular research theme for psychologists, sociologists, and others.
 For example, the paper \cite{coverdale2002depictions} analysed a sample of 600 print articles relating to mental illnesses in New Zealand and categorised them to positive and negative depictions, and the predominant themes thereof (e.g. criminality (negative), educational accomplishments (positive)).
 Applying natural language processing to this area of research would allow the possibility of discovering higher-level trends, by computationally analysing a much larger sample of articles and identify trends by varying independent variables such as year of publication and publisher.
-In this research, a sample of 305,103 news articles (51,177 after filtering off-topic articles) from British online news sources are used.
+In this research, a sample of 305,185 news articles (48,967 after filtering off-topic articles) from British online news sources are used.
 However, challenges remain as syntax-based statistical natural language processing approaches tend to be more limited in scope and is prone to false positives and negatives, and mitigating these factors is currently an open area of research.
 % Just give a short summary, expand this later and give more papers in Chapter 2
 % google 'media representation of mental illness', 'media representation of disability'
@@ -637,7 +637,7 @@ The final list of topics relevant to disabilities and people with disabilities, 
 
 % topics: collection of keywords & query terms (keywords minus potentially off topic terms / combinations)
 This list of key terms was roughly based on guidelines from the Californian \cite{ca-guideline} and UK \cite{uk-guideline} governments (ignoring whether the term is considered 'appropriate' or 'inappropriate', as terms labelled 'inappropriate' are often still commonly used in the news, and relevant to consider when deciding whether an article is on-topic), with a few additions based on other commonly-used terms found on sampled articles from Daily Express, Daily Mail, and Guardian.
-The list of query terms were based on the list of key words, with words/phrases that could have multiple meanings (or combinations of multiple common words) removed (unless the word/phrase is very commonly used to refer to the disability, such as 'blind' or 'mute', where removing these words will remove a large number of on-topic articles from the dataset).
+The list of query terms were based on the list of key words, with words/phrases that could have other meanings (or combinations of multiple common words) removed (unless the word/phrase is very commonly used to refer to the disability, such as 'blind' and 'mute').
 
 \subsection{Dataset Size} \label{dataset-size}
 
@@ -668,13 +668,13 @@ The size of the initial collected dataset (i.e. all articles collected by the Da
 		\hline
 		Mental Illness & 8,102 & 38,273 & 29,831 & 76,206  \\
 		\hline
-		Mute & 1,516 & 2,273 & 4,746 & 8,535  \\ % todo re-run pipeline for this topic, can't be right
+		Mute & 1,541 & 2,312 & 4,764 & 8,617  \\
 		\hline
 		Paralysis & 711 & 4,346 & 3,879 & 8,936  \\
 		\hline
 		Speech Impairment & 1,777 & 2,994 & 1,357 & 6,128  \\
 		\hline
-		Total & 48,631 & 132,377 & 124,095 & 305,103  \\ % todo re-calculate after re-running mute 
+		Total & 48,656 & 132,416 & 124,113 & 305,185  \\
 		\hline
 	\end{tabu}
 \end{center}
@@ -705,13 +705,13 @@ After filtering, the size of the dataset that was plotted, in number of articles
 		\hline
 		Mental Illness & 398 & 6,794 & 8,137 & 15,329  \\
 		\hline
-		Mute & 24 & 146 & 284 & 454  \\  % todo re-run pipeline for this topic, can't be right
+		Mute & 24 & 147 & 285 & 456  \\
 		\hline
 		Paralysis & 53 & 1,003 & 405 & 1,461  \\
 		\hline
 		Speech Impairment & 57 & 73 & 85 & 215  \\
 		\hline
-		Total & 3,508 & 20,812 & 24,645 & 48,965  \\  % todo re-calculate after re-running mute 
+		Total & 3,508 & 20,813 & 24,646 & 48,967  \\ 
 		\hline
 	\end{tabu}
 \end{center}
@@ -722,7 +722,7 @@ For the results evaluation, the focus will be on the 'disabled' topic, as it has
 
 % Limitations (e.g. DE has less articles than DM or Guardian, some topics have way less articles), implications for statistical analysis, plotting (e.g. moving averages), etc
 As shown in section \ref{dataset-size}, the Daily Express has significantly less articles for any given topic than the Daily Mail or the Guardian, sometimes much less so.
-Some topics, such as cerebral palsy, developmental delay, dyslexia, and speech impairment, are also severely lacking in sample size of articles (post-filter).
+Some topics, such as cerebral palsy, developmental delay, dyslexia, mute, and speech impairment, are also severely lacking in sample size of articles (post-filter).
 In particular, cases where there are less than \textapprox200 articles for a source within a topic were problematic to plot or form statistically-significant conclusions regarding trends (e.g. to compare with other sources), as the distribution of the data is too varied. % todo redefine threshold based on Mann-Whitney U test results in chapter 5
 In section \ref{Sentiment score: statistical comparison of different sources}, we show that it was difficult to obtain statistically significant conclusions when comparing to subsets with less than \textapprox200 articles.
 This means that it is difficult to analyse or compare the Daily Express's subset for topics other than general 'disabled', 'blind', and 'mental illness', due to its relative lack of sample size.

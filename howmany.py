@@ -3,7 +3,7 @@ from collections import defaultdict
 from tqdm import tqdm
 
 
-def howmany(in_folder='./out-sentiment-vader/', out_folder='./out-eval/'):
+def howmany(in_folder='./out/', out_folder='./out-eval/'):
     """
     Simple script to find out how many articles I have in my dataset
     """
