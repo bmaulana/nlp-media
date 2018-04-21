@@ -477,7 +477,7 @@ The file and directory structure of the output file must be consistent given sou
 The next component parses the article text using open-source natural language processing tools to extract relevant information required by the sentiment scoring and statistical analysis components.
 Given an input file which is the output file of the dataset filtering component, this component should be able to load the article text and metadata of all saved articles.
 Then, information should be extracted by syntactically parsing each article's text and headline.
-The sentiment scoring component would require all sentences relating to a keyword or key phrase (containing a keyword, key phrase, or a equivalent term) to be extracted from each article.
+The sentiment scoring component would require all sentences relating to a keyword or key phrase (containing a keyword, key phrase, or an equivalent term) to be extracted from each article.
 Additionally, the component should also extract other information as required by the sentiment scoring and statistical analysis components, including the total number of sentences and the number of relevant sentences in the document, and the term frequency of each keyword and key phrase.
 
 After these information has been extracted from the article, it must save the information to a new output file, in the form of an array of JSON objects where each JSON object contains all the information about a single news article (with a key for each 'feature' e.g. relevant sentences).
@@ -818,9 +818,27 @@ However, this approach would require labelled data (i.e. a collection of article
 
 \subsection{Rule-based Sentence Matching} \label{des-matching}
 
-% What I did
+% Tokenisation
+The next component parses the article text using SpaCy \cite{SpaCy} to extract relevant information required by the sentiment scoring and statistical analysis components.
+Initially, the headline is prepended to the article text to create the text document.
+SpaCy performs a syntactic analysis of the document, returning a list of 'enhanced' tokens (words) which contain additional information parsed by SpaCy, such as part-of-speech tags, syntactic parent/children, known entities, sentence start and end, and root word (lemma).
+The component iterates over this list of 'enhanced' tokens to extract information that would be useful for statistical analysis:
+\begin{enumerate}
+	\item Sentences containing a word relating to a keyword or key phrase (using sentence matching), and the number of keywords / key phrases in each sentence.
+	\item For each token that has the same lemma as a keyword (or a sequence of tokens that has the same sequence of lemmas as a key phrase), the frequency of the token or sequence of tokens.
+	\item Number of relevant sentences in the document (i.e. number of occurrences of point 1).
+	\item Total number of sentences in the document.
+	\item Number of keyword occurrences in the document (i.e. number of occurrences of point 2).
+	\item Total number of tokens in the document.
+\end{enumerate}
+Points 3-6 were used to measure a relevance score of each article, however that score is currently unused by the statistical analysis component. 
+Future work could expand on this concept.
 
-% Alternatives I considered
+% Sentence matching
+The sentiment scoring component requires all sentences relating to a keyword or key phrase to be extracted from each article.
+SpaCy provides a rule-based Matcher tool that returns the indices of tokens (or sequences of tokens) that fulfils a given 'rule'.
+This component uses the Matcher tool to find all indices of tokens that has the same lemma as a keyword (or sequences of tokens that has the same sequence of lemmas as a key phrase).
+Then, for each token, the component retrieves the full sentence that contains the token index and stores them into a list of relevant sentences, along with the number of keywords / key phrases in each sentence.
 
 \subsection{Sentiment Scoring} \label{des-sentiment}
 
