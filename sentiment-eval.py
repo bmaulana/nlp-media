@@ -129,7 +129,7 @@ def eval_sentiment_read(fname):
 
     # for each label, print the mean score of sentences I manually class positive, neutral, or negative
     # issue: bias in my classification. Mention in report, further work could involve having multiple reviewers
-    labels = ['openai', 'vader', 'xiaohan', 'kcobain', 'stanford', 'textblob', 'textblob_bayes']
+    labels = ['vader', 'xiaohan', 'kcobain', 'openai', 'stanford', 'textblob', 'textblob_bayes']
     all_scores = [([], [], []) for i in range(len(labels))]  # (positive, neutral, negative)
     answers = []  # to save answers so results are reproducible
 
@@ -152,16 +152,16 @@ def eval_sentiment_read(fname):
                 current_score = max(-1.0, min(1.0, float(sent[full_label])))
                 all_scores[i][2].append(current_score)
             answers.append((sent['sentence'], 'negative'))
-        elif res == 'o':
-            # out of topic
-            answers.append((sent['sentence'], 'irrelevant'))
-        else:
+        elif res == 'n':
             # neutral
             for i in range(len(labels)):
                 full_label = 'sentiment_score_' + labels[i]
                 current_score = max(-1.0, min(1.0, float(sent[full_label])))
                 all_scores[i][1].append(current_score)
             answers.append((sent['sentence'], 'neutral'))
+        elif res == 'o':
+            # out of topic
+            answers.append((sent['sentence'], 'irrelevant'))
 
     # output sentences and answers in txt file with no scores, to peer-review my labels
     f_out = open('./out-eval/eval.txt', 'w', encoding='utf-8')
@@ -177,9 +177,9 @@ def eval_sentiment_read(fname):
         f_out.write('\tMean Neutral: ' + str(np.average(neu)) + '\n')
         f_out.write('\tMean Negative: ' + str(np.average(neg)) + '\n')
         f_out.write('\tTrue Positive: ' + str(pos[pos > 0.0].shape[0]) + '\n')
-        f_out.write('\tFalse Positive: ' + str(pos[pos <= 0.0].shape[0]) + '\n')
+        f_out.write('\tFalse Positive: ' + str(neg[neg > 0.0].shape[0]) + '\n')
         f_out.write('\tTrue Negative: ' + str(neg[neg <= 0.0].shape[0]) + '\n')
-        f_out.write('\tFalse Negative: ' + str(neg[neg > 0.0].shape[0]) + '\n')
+        f_out.write('\tFalse Negative: ' + str(pos[pos <= 0.0].shape[0]) + '\n')
         f_out.write('\tAccuracy: ' + str((pos[pos > 0.0].shape[0] + neg[neg <= 0.0].shape[0]) /
                                          (pos.shape[0] + neg.shape[0])) + '\n')
     f_out.close()
