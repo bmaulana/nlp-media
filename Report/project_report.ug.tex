@@ -388,7 +388,7 @@ The types of plots and statistical analysis metrics that are deemed relevant for
 \begin{itemize}
 	\item Scatter plot, used to show the distribution of data within two variables (e.g. year published and sentiment score), and colour could be added to show a third variable (e.g. source/publisher of article).
 		Available on Matplotlib.
-	\item Histogram (and 2D histogram), used to show the distribution of articles relative to variables such as publisher, year of publication, and sentiment score ranges. 
+	\item Histogram (and two-dimensional histogram), used to show the distribution of articles relative to variables such as publisher, year of publication, and sentiment score ranges. 
 		Available on Matplotlib.
 	\item Box-and-whiskers \cite{tukey1977exploratory} and violin plot \cite{hintze1998violin}, also used to show and compare the distribution of dependent variables (e.g. sentiment score) within different subsets of the data separated by independent variables (e.g. publisher).
 		Available on Matplotlib.
@@ -518,7 +518,7 @@ The file and directory structure of the output file must be consistent given sou
 
 \subsection{Statistical Analysis and Visualisation} \label{req-visualisation}
 
-The last component performs statistical analysis and visualisation.
+The last component performs statistical analysis and data visualisation.
 This component must read the sentiment scoring component's output files as input files, to load the dataset of news articles and features extracted by previous components about each article.
 At this point, information extracted about each article by previous components must include: source, publication date, and sentiment score, alongside other information.
 To combine information about articles from different sources (represented by different files), this component should be capable of reading input from several different input files in a single run, and collate the information about every unique article in each file to a single dataset.
@@ -890,7 +890,7 @@ Every sentence in the sampled are then scored using 7 open-source sentiment anal
 	\item TextBlob's PatternAnalyzer, a rule-based model based on part-of-speech pattern matching \cite{textblob}.
 	\item TextBlob's NaiveBayesAnalyzer, a Na\"{i}ve Bayes classifier model trained on a dataset of movie reviews (no information on features or dataset size) \cite{textblob}.
 \end{itemize}
-(Section \ref{tc-sentiment} has more details on the implementation details of these repositories/libraries)
+(Refer to Section \ref{tc-sentiment} for further implementation details of these repositories/libraries)
 
 The scores of every sentence in the sample (of 180 sentences in the experiment) is stored in a JSON object similar to:
 \begin{lstlisting}
@@ -953,7 +953,61 @@ Results from running the experiment indicate that sentiment scoring took approxi
 
 \subsection{Statistical Analysis and Visualisation} \label{des-visualisation}
 
-% One sub-sub-section for each plot / analysis tool / metric being used (show data for 'disabled' and a few other examples from other keywords)
+This component is responsible for statistical analysis and data visualisation, plotting graphs and saving statistical information for each topic.
+At this point, each article's JSON representation includes information about its source, publication date, sentiment score, and other information extracted by previous components.
+However, up to this point, each source (and topic) stores its dataset (of news articles belonging to that source and topic) in separate files.
+Thus, instead of loading just one file per execution as in previous components, this component loads all files that relates to a specified topic (from every source), and combines the dataset of all articles from every source that relates to that topic.
+This is necessary to compare different sources in a plot and perform statistical comparisons.
+(Refer to the diagram in section \ref{Overall Design} for more details on the pipeline design for each topic.)
+
+Most of this component is concerned with plotting and measuring how sentiment score varies when the publication source and date/year of publication is varied.
+For easier data processing, it loads the publication date, sentiment score, and source information of each article as rows in a numpy array matrix, sorted by publication time.
+
+Then, it produces the following plots from the matrix:
+\begin{itemize}
+	\item A scatter plot of publication date (X) vs sentiment (Y), coloured based on source (Z).
+		% (A scatter plot displays data as a collection of points, where the position of points in axis X and axis Y correspond to its value over two separate variables)
+	\item A regular histogram showing the number of news articles in the dataset for each year.
+		% (A histogram is a plot showing the 'frequency' (number) of values in each interval of a variable, shown as rectangles with varying heights similar to a bar graph)
+	\item Two-dimensional histograms showing:
+		\begin{itemize}
+			\item The number of news articles for each year (X) and source (Y) in the dataset.
+			\item The number of news articles for each year (X) and 'sentiment range' (Y) in the dataset.
+			('sentiment range': news articles are grouped together based on sentiment score with intervals of 0.1; thus, for example, -0.1-0.0, 0.0-0.1, and 0.5-0.6 are sentiment ranges)
+			\item The number of news articles for each source (X) and 'sentiment range' (Y) in the dataset.
+		\end{itemize}
+		% (A two-dimensional histogram is similar to a regular histogram, except both X and Y axes are intervals of two separate variables, and frequency is shown in a colour scale instead of height)
+	\item A line graph of the moving average of sentiment score (Y) over time (X), with separate lines for each source.
+		The moving average is defined as the mean of sentiment scores for W previous articles up to the current article, where W is the moving average window size.
+		In this experiment, W = (no. of articles in the topic) / 10, with a lower cap of 50 and an upper cap of 500.
+	\item A violin plot \cite{hintze1998violin} and box-and-whiskers plot \cite{tukey1977exploratory} showing the sentiment score distributions (including mean, upper and lower quartiles, and density plots) for each data subset, separated by source.
+	\item A violin plot showing the sentiment score distributions for each data subset separated by source and publication year (with intervals of 2 years), separated to two plots (one for 2000-2009 and one for 2010-2019).
+\end{itemize}
+The plots are arranged in a 3x3 grid and saved to an output file, unique to each topic. 
+Refer to section \ref{tc-visualisation} for a further description of the usage of these plots.
+
+To quantify the distribution of each data subset, the component computes the mean, standard deviation, and total count of articles for the full dataset and each possible subset of the data (i.e. a set of all articles for every source, a set of all articles for every year, and a set of all articles for every year and every source). 
+These metrics are saved to an output text file, unique to each topic.
+
+Then, it attempts to compare whether the sentiment scores of articles published by a source is significantly higher than the sentiment scores of articles published by another source. 
+The Mann-Whitney U Test \cite{mann1947test} is a statistical metric that measures the null hypothesis that 'given a randomly-selected value from a distribution, and another randomly-selected value from another distribution, the first value is equally likely to be less than or greater than the second value'.
+If the null hypothesis holds true, then there is no statistically significant difference between the two distributions.
+The Mann-Whitney U Test returns a p-value between 0 and 1, which corresponds to how likely the null hypothesis is to be true; we reject the null hypothesis if the p-value is lower than 0.05.
+This test is performed to compare the subset of all articles published by each source to the subset of all articles published by each other source; first in general (i.e. compare the sentiment score distribution of all articles published by Source A to the distribution of all articles published by Source B), and also year-by-year (i.e. compare the sentiment score distribution of all articles published in year 20XX by Source A to the distribution of all articles published in year 20XX by Source B). These test results are saved to the same output text file.
+
+Apart from information relating to sentiment score, this component also attempts to plot trends regarding the usage of key terms (used to describe disabilities or people with disabilities) over time.
+This information is collected from the frequencies of tokens with the same lemma as a key term, as mentioned in point 2 of section \ref{des-matching}.
+The tokens are first stemmed with a custom stemmer: unlike NLTK's stemmer or SpaCy's lemmatiser as used in previous components, this stemmer only removes plurals (-s, -es) and tenses (-ed, -ing), but does not fully reduce words to its base word form (e.g. 'illness' and 'illnesses' are equivalent, but 'mental' and 'mentally' are still separate words).
+Then, the dataset is split into smaller subsets based on publication year and source.
+For each subset, the term frequencies for all articles within the subset are averaged, to compute a measure of average term occurrence (per article):
+
+\begin{center}
+	$Average \ term \ occurrence = \dfrac{\Sigma (term \ frequency \ in \ article) \ for \ each \ article}{number \ of \ articles \ in \ subset}$
+\end{center}
+
+Then, the average term occurrences are plotted in a line graph of average term occurrences (Y) over publication year (X).
+Each unique term has its own plot, with separate lines for each source. 
+These plots are then saved to an output file, separate from the sentiment score plots, also unique to each topic. 
 
 %% Provide implementation details as necessary.
 

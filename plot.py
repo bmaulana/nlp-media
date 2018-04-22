@@ -97,7 +97,7 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     data = data[np.argsort(data[:, 0])]  # sort on datetime
 
     moving_avg_window = data.shape[0] // 10
-    moving_avg_window = min(500, max(50, moving_avg_window))
+    moving_avg_window = min(500, max(50, moving_avg_window))  # 10% of dataset size, capped to 50-500
 
     le = LabelEncoder()
     colours = le.fit_transform(data[:, 2])
