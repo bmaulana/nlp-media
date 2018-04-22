@@ -357,11 +357,12 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
 
                 if word not in keywords_stemmed:
                     keywords_stemmed.append(word)
-                if (word, str(source)) in keyword_usage:
-                    keyword_usage[(word, str(source))][0].append(years[i].year)
-                    keyword_usage[(word, str(source))][1].append(per_article)
-                else:
-                    keyword_usage[(word, str(source))] = ([years[i].year], [per_article])
+                if len(keywords_subset) > 10:  # only plot keyword occurrence if sample size for that year > 10
+                    if (word, str(source)) in keyword_usage:
+                        keyword_usage[(word, str(source))][0].append(years[i].year)
+                        keyword_usage[(word, str(source))][1].append(per_article)
+                    else:
+                        keyword_usage[(word, str(source))] = ([years[i].year], [per_article])
 
     f_out.close()
 
