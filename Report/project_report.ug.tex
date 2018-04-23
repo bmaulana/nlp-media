@@ -1184,9 +1184,76 @@ For the following sections, all sentiment score results mentioned are those scor
 
 \section{Sentiment score: plots and trends} \label{Sentiment score: plots and trends}
 % graphs, tables (mean std dev) relating to sentiment
+For the 'disabled' topic, the VADER sentiment scores of all articles within the dataset (16,411 articles in total within the topic) were plotted with regards to their publication date and source of article (Daily Express, Daily Mail, Guardian) in several visual representations (as defined in section \ref{des-visualisation}).
+
+\begin{center}
+	\includegraphics[height=0.5\linewidth]{row-1-col-1.png}
+\end{center}
+
+The first plot is a scatter plot of publication date (X) vs sentiment scores (Y), coloured based on publication source (Z). 
+Due to the large dataset size, the scatter plot does not provide much information with regards to distributions and trends, although it shows how the Daily Express (blue-green) only retains articles from after \textapprox2007, the Daily Mail (dark blue) only retains articles from after \textapprox2010, and the Guardian (yellow) only retains articles from after \textapprox2000, as mentioned in section \ref{limitations}.
+A moving average line (with a window size of 500) of sentiment scores over time of all articles (regardless of source) is drawn over the scatter plot.
+
+\begin{center}
+	\includegraphics[width=0.5\linewidth]{row-1-col-3.png}
+\end{center}
+
+A histogram of the number of articles in each year was plotted to show the distribution of articles over time in the dataset. 
+This do not necessarily reflect how many articles was published regarding the topic for every year, as news publishers often do not retain all historical articles and the amount of retained articles tend to be higher in more recent years, and vice versa.
+That said, a spike in the number of articles in the dataset was visible in 2012, which correspond to increased media coverage of disabilities and people with disabilities around the 2012 London Paralympics.
+
+\begin{center}
+	\includegraphics[width=0.5\linewidth]{row-1-col-2.png}
+\end{center}
+\includegraphics[width=0.5\linewidth]{row-2-col-1.png}
+\includegraphics[width=0.5\linewidth]{row-2-col-2.png}
+
+Then, three two-dimensional histograms that show the distribution of articles for:
+\begin{itemize}
+	\item The number of news articles for each year (X) and source (Y) in the dataset.
+	\item The distribution of sentiment scores (Y) for each year (X).
+	\item The distribution of sentiment scores (Y) for each source (X).
+\end{itemize}
+were plotted. 
+The year-source plot show that the dataset consist almost entirely of Guardian articles for the years 2000-2006. In 2007 Daily Express articles and in 2010 Daily Mail articles starts to appear, although Guardian articles still predominate between 2007-2013, until in 2014 where Daily Mail articles start to outnumber Guardian articles by roughly 2:1.
+
+The year-sentiment plot show that the sentiment distribution of most news articles lie somewhere between 0.0 and 0.3 from 2000-2009, and between -0.3 and 0.3 (but with more variance/outliers) from 2010-2018. 
+We also show a slight 'drop' in the sentiment distribution (or an increase of news articles with negative sentiment scores) around 2016.
+
+The source-sentiment plot show (roughly) that the Guardian has a higher mean and less variance than the Daily Mail, and the Daily Express is barely visible due to the lower sample size of Daily Express articles in the dataset.
+However, the uneven sample size (i.e. more Guardian articles vs Daily Mail or Daily Express articles over the full dataset) makes this visual representation hard to compare. The violin and box-and-whiskers plot show a better representation of this source-sentiment data:
+
+\begin{center}
+	\includegraphics[width=0.5\linewidth]{row-3-col-1.png}
+\end{center}
+
+The violin and box-and-whiskers plot show that the Guardian's mean sentiment score (0.074) is higher than the Daily Mail's (-0.104) or the Daily Express's (-0.060).
+Furthermore, the violin plot component show that the Guardian's distribution is more 'compact' around the mean, the Mail has a slightly higher variance of sentiment scores, and the Express has the highest variance of sentiment scores. A version that shows violin plots for each 2-year period was also plotted:
+
+\begin{center}
+	\includegraphics[width=0.4\linewidth]{row-3-col-2.png}
+	\includegraphics[width=0.4\linewidth]{row-3-col-3.png}
+
+	\includegraphics[width=0.5\linewidth]{row-2-col-3.png}
+\end{center}
+
+From the year-sentiment plot showed that there is an apparent trend of declining sentiment scores over time. 
+However, the moving average line plot (where each data point shows the mean sentiment score of 500 consecutive articles, and the last article's date) show that this is not necessarily the case. 
+When only taking into account articles from the same source, the moving average sentiment score stays roughly consistent.
+However, the decreasing trend in 'all' is likely better attributed to the (gradually) decreasing proportion of Guardian articles and the (gradually) increasing proportion of Daily Mail articles in the dataset.
+
+The majority of other topics show a similar constant trend for articles within the same source, however this is not always the case. The topic 'autism', for instance, show a positive trend in sentiment scores year-on-year:
+
+\begin{center}
+	\includegraphics[width=0.5\linewidth]{autism.png}
+\end{center}
+
+Note also that the Daily Express is not plotted for this topic, due to the sample size being too small (128 articles), lower than the moving average window (316 articles on this topic).
 
 \section{Sentiment score: statistical comparison of different sources} \label{Sentiment score: statistical comparison of different sources}
+
 % Mann-Whitney U analysis (re-define it again, what it means for statistical significance etc)
+
 
 % Table of Mann-Whitney U scores for each topic and source comparisons, overlap with n_articles for each source
 
