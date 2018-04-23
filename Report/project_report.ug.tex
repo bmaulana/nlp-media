@@ -989,7 +989,7 @@ These metrics are saved to an output text file, unique to each topic.
 
 Then, it attempts to compare whether the sentiment scores of articles published by a source is significantly higher than the sentiment scores of articles published by another source. 
 The Mann-Whitney U Test \cite{mann1947test} is a statistical metric that measures the null hypothesis that 'given a randomly-selected value from a distribution, and another randomly-selected value from another distribution, the first value is equally likely to be less than or greater than the second value'.
-If the null hypothesis holds true, then there is no statistically significant difference between the two distributions.
+If the null hypothesis holds true, then there are no statistically significant difference between the two distributions.
 The Mann-Whitney U Test returns a p-value between 0 and 1, which corresponds to how likely the null hypothesis is to be true; we reject the null hypothesis if the p-value is lower than 0.05.
 This test is performed to compare the subset of all articles published by each source to the subset of all articles published by each other source; first in general (i.e. compare the sentiment score distribution of all articles published by Source A to the distribution of all articles published by Source B), and also year-by-year (i.e. compare the sentiment score distribution of all articles published in year 20XX by Source A to the distribution of all articles published in year 20XX by Source B). These test results are saved to the same output text file.
 
@@ -1083,9 +1083,9 @@ Within the 'disabled' topic, the (post-filtering) sample size that was obtained 
 	Total & 1,852 & 6,035 & 8,524 & 16,411  \\ 
 	\hline
 \end{longtabu}
-*'2000' also includes a small amount of articles published before the year 2000.
+* 2000 data also includes a small amount of articles published before the year 2000.
 
-**2018 is incomplete and would only include articles up to (approximately) late-March/early-April.
+** 2018 data is incomplete and would only include articles up to (approximately) late-March/early-April.
 
 \section{Comparison of sentiment scorers} \label{Comparison of sentiment scorers}
 % Short re-explanation of how these were compared, by taking a sample of 180? sentences, and manually labelling them, then plotting the sentiment-score distributions of 'positive' and 'negative' sentences for each scorer (summary of 4.3.4.1) \ref{des-sentiment-comparison}
@@ -1228,7 +1228,7 @@ However, the uneven sample size (i.e. more Guardian articles vs Daily Mail or Da
 \end{center}
 
 The violin and box-and-whiskers plot show that the Guardian's mean sentiment score (0.074) is higher than the Daily Mail's (-0.104) or the Daily Express's (-0.060).
-Furthermore, the violin plot component show that the Guardian's distribution is more 'compact' around the mean, the Mail has a slightly higher variance of sentiment scores, and the Express has the highest variance of sentiment scores. A version that shows violin plots for each 2-year period was also plotted:
+Furthermore, the violin plot component show that the Guardian's distribution is more 'compact' around the mean (std. dev. = 0.363), the Mail has a slightly higher variance of sentiment scores (std. dev. = 0.386), and the Express has the highest variance of sentiment scores (std. dev. = 0.447). A version that shows violin plots for each 2-year period was also plotted:
 
 \begin{center}
 	\includegraphics[width=0.4\linewidth]{row-3-col-2.png}
@@ -1248,14 +1248,95 @@ The majority of other topics show a similar constant trend for articles within t
 	\includegraphics[width=0.5\linewidth]{autism.png}
 \end{center}
 
-Note also that the Daily Express is not plotted for this topic, due to the sample size being too small (128 articles), lower than the moving average window (316 articles on this topic).
+Note also that the Daily Express is not plotted for this topic, due to the sample size being too small (128 articles), lower than the moving average window (316 articles on this topic); a common occurrence for most other topics (as defined in \ref{topics}).
 
 \section{Sentiment score: statistical comparison of different sources} \label{Sentiment score: statistical comparison of different sources}
 
 % Mann-Whitney U analysis (re-define it again, what it means for statistical significance etc)
-
+To test whether the differences between the distributions of each source are statistically significant, the Mann-Whitney U Test \cite{mann1947test} was invoked.
+The Mann-Whitney U Test is a mathematical function that tests the null hypothesis that given a randomly-selected value from a distribution, and a second randomly-selected value from a second distribution, the first value is equally likely to be less than or greater than the second value.
+If the null hypothesis holds true, then there is no statistically significant difference between the two distributions.
+The Mann-Whitney U Test function returns a p-value score, which is a measure of the probability that the null hypothesis is correct.
+In this experiment, two distributions are considered significantly different if the p-value returned by the Mann-Whitney U Test is lower than 0.05.
 
 % Table of Mann-Whitney U scores for each topic and source comparisons, overlap with n_articles for each source
+Below is a table of p-values from Mann-Whitney U Test results for every source combination in the dataset, for every topic:
+
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+		\hline
+	Disabled & \textbf{2.66 * 10\textsuperscript{-167}} & \textbf{2.29 * 10\textsuperscript{-35}} & \textbf{0.000108}  \\
+	\hline
+	Autism & \textbf{3.00 * 10\textsuperscript{-12}} & 0.137 & 0.184  \\
+	\hline
+	Blind & 0.335 ** & \textbf{1.62 * 10\textsuperscript{-9}} & \textbf{6.57 * 10\textsuperscript{-9} **} \\
+	\hline
+	Cerebral Palsy & 0.469 & 0.156 ** & 0.169  \\
+	\hline
+	Deaf & \textbf{6.30 * 10\textsuperscript{-10}} & 0.141 & 0.0833  \\
+	\hline
+	Developmental Delay & 0.383 & \textbf{0.00179} & \textbf{0.00325 **}  \\
+	\hline
+	Dyslexia & 0.0740 & 0.362 & 0.464 **  \\
+	\hline
+	Epilepsy & \textbf{3.39 * 10\textsuperscript{-5}} & 0.0579 & 0.322 **  \\
+	\hline
+	Mental Illness & \textbf{3.54 * 10\textsuperscript{-76}} & \textbf{1.52 * 10\textsuperscript{-9}} & 0.102 **  \\
+	\hline
+	Mute & \textbf{6.78 * 10\textsuperscript{-5}} & \textbf{0.0311} & 0.346 ** \\
+	\hline
+	Paralysis & \textbf{2.73 * 10\textsuperscript{-5}} & \textbf{0.00909} & 0.0827 **  \\
+	\hline
+	Speech Impairment & 0.235 & \textbf{0.0200} & 0.0546 **  \\
+	\hline
+\end{tabu}
+** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+This data shows that a statistically-significant distinction can be proven between the sentiment score distributions of two sources for 17 / 36 of cases.
+(Cases where there exists a distinction between the two distributions are highlighted in bold)
+In particular, Guardian \textgreater\space Daily Mail is true for 7 / 12 cases, Guardian \textgreater\space Daily Express is true for 7 / 12 cases, Daily Express \textgreater\space Daily Mail is true for 1 / 12 cases, and Daily Mail \textgreater\space Daily Express is true for 2 / 12 cases.
+Comparing these values to the size of each dataset (section \ref{dataset-size}), Lower p-values tends to correlate well with larger sample sizes (i.e. the higher the sample size of both distributions, the higher the chance that there exist a statistically-significant difference).
+
+% todo do year on year analysis on disabled topic
+Additionally, for the 'disabled' topic, the Mann-Whitney U Test was performed to compare between Daily Mail, Daily Express, and The Guardian for each year's subset between 2007 and 2018 (Before 2007, there were not enough non-Guardian articles in the dataset to make a comparison).
+The p-values of these comparisons are shown below:
+
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	2007 & N/A & \textbf{5.24 * 10\textsuperscript{-6}} & N/A  \\
+	\hline
+	2008 & N/A & 0.0739 & N/A  \\
+	\hline
+	2009 & N/A & \textbf{2.24 * 10\textsuperscript{-5}} & N/A  \\
+	\hline
+	2010 & \textbf{6.00 * 10\textsuperscript{-7}} & \textbf{6.89 * 10\textsuperscript{-6}} & 0.360 **  \\
+	\hline
+	2011 & \textbf{5.73 * 10\textsuperscript{-16}} & \textbf{9.73 * 10\textsuperscript{-5}} & \textbf{0.0355}  \\
+	\hline
+	2012 & \textbf{4.44 * 10\textsuperscript{-17}} & \textbf{0.00371} & \textbf{0.000739}  \\
+	\hline
+	2013 & \textbf{5.03 * 10\textsuperscript{-16}} & \textbf{0.00351} & 0.0827  \\
+	\hline
+	2014 & \textbf{1.27 * 10\textsuperscript{-9}} & \textbf{0.00208} & 0.321  \\
+	\hline
+	2015 & \textbf{6.87 * 10\textsuperscript{-17}} & \textbf{0.00855} & \textbf{0.00718}  \\
+	\hline
+	2016 & \textbf{4.63 * 10\textsuperscript{-26}} & \textbf{4.74 * 10\textsuperscript{-6}} & 0.0576  \\
+	\hline
+	2017 & \textbf{3.39 * 10\textsuperscript{-13}} & \textbf{0.00244} & 0.0867  \\
+	\hline
+	2018* & 0.122 & 0.120 & 0.328  \\
+	\hline
+\end{tabu}
+
+* 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
 
 \section{Key terms: plots and trends} \label{Key terms: plots and trends}
 % key terms analysis: most of them stay constant over the period (probably because 18 years data is quite short for cultural shifts), but mention the few where visible trends can be seen + show graphs. Also small sample sizes.
