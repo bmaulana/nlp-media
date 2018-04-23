@@ -78,7 +78,7 @@ def basic_stemmer(word):
     return word
 
 
-def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/'):
+def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/', separate_files=False):
     """
     Format: python plot.py keyword
     """
@@ -222,10 +222,16 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     for tick in axs[2, 2].get_xticklabels():
         tick.set_rotation(30)
 
-    # TODO Violin plot of sentiment range (Y) and date range (X) + source (colour)
-
     # plt.savefig('./out-plot/' + datetime.now().strftime('%Y%m%d%H%M%S') + '.png')
-    plt.savefig(out_folder + keyword + '.png')
+    if separate_files:
+        i = 1
+        for row in axs:
+            for ax in row:
+                extent = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
+                fig.savefig(out_folder + keyword + str(i) + '.png', bbox_inches=extent)
+                i += 1
+    else:
+        plt.savefig(out_folder + keyword + '.png')
     plt.close()
 
     # Print some additional info to a .txt file
@@ -367,7 +373,7 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     f_out.close()
 
     # occurrences per article for each word (y) over time (x), all/DE/DM/Guardian (4 plots)
-    fig, axs = plt.subplots(len(keywords_stemmed), 1, figsize=(10, len(keywords_stemmed) * 5), tight_layout=True)
+    fig, axs = plt.subplots(len(keywords_stemmed), 1, figsize=(5, len(keywords_stemmed) * 5), tight_layout=True)
     for i in range(len(keywords_stemmed)):
         word = keywords_stemmed[i]
         ax = axs[i]
@@ -376,10 +382,13 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
                 x, y = keyword_usage[(word, src)]
                 ax.plot(x, y, label=src)
         ax.set_title(word)
+        ax.set_xticks([i for i in range(2000, 2021, 3)])
+        ax.set_xlabel('Year')
+        ax.set_ylabel('Average Term Occurrence')
         ax.legend()
-    plt.savefig(out_folder + keyword + '2.png')
+    plt.savefig(out_folder + keyword + '-terms.png')
     plt.close()
 
 
 if __name__ == '__main__':
-    plot(sys.argv[1])
+    plot(sys.argv[1], separate_files=False)
