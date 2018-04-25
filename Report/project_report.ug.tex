@@ -112,14 +112,14 @@ While the approach showed promise in performing quantitative analysis upon large
 
 % Talk about NLP
 Natural language processing (NLP) encompasses a wide range of computational techniques for machine understanding of human (natural) language that are often used alongside each other.
-The review article \cite{cambria2014jumping} defines natural language processing as 'a theory-motivated range of computational techniques for the automatic analysis and representation of human language.'
+The review article \cite{cambria2014jumping} defines natural language processing as `a theory-motivated range of computational techniques for the automatic analysis and representation of human language.'
 The techniques that fall under the umbrella natural language processing include word tokenisation, probabilistic language modelling, translation, part-of-speech parsing, sentiment analysis (or opinion mining), text classification/categorisation, and topic modelling, among other things.
 The computational models used in natural language processing range from simple rule-based models (e.g. splitting a sentence on whitespace to tokenise words) to statistical machine learning and deep learning models.
-Natural language processing is now applied for various everyday technologies, for example, information retrieval for search engines such as Google and Bing, and categorisation and topic modelling for recommendation engines used to suggest 'similar' articles.
+Natural language processing is now applied for various everyday technologies, for example, information retrieval for search engines such as Google and Bing, and categorisation and topic modelling for recommendation engines used to suggest `similar' articles.
 
 The obvious advantage of natural language processing is that machines can process vast bodies of human-created literature (books, articles, posts, e-mails, messages, etc.) much faster than humans can, processing thousands or millions of documents per second. 
 This allows for high-level quantitative analyses of all documents in a vast corpora for a given domain to be feasible, which can uncover information previously inaccessible by only reading and generalising from a small sample of documents.
-For example, this level of quantitative analysis can uncover trends and patterns within a given domain (e.g. how does the popularity of the term 'mentally ill' increase or decrease year-on-year in English news media?). 
+For example, this level of quantitative analysis can uncover trends and patterns within a given domain (e.g. how does the popularity of the term `mentally ill' increase or decrease year-on-year in British news media?). 
 
 % Other work in using NLP for media analysis
 Various other studies have attempted to utilise natural language processing to perform high-level analyses in the domain of news media.
@@ -135,11 +135,10 @@ Applying natural language processing to this area of research would allow the po
 In this research, a sample of 305,185 news articles (48,967 after filtering off-topic articles) from British online news sources are used.
 However, challenges remain as syntax-based statistical natural language processing approaches tend to be more limited in scope and is prone to false positives and negatives, and mitigating these factors is currently an open area of research.
 % Just give a short summary, expand this later and give more papers in Chapter 2
-% google 'media representation of mental illness', 'media representation of disability'
 
 %% List your aims and goals. An aim is something you intend to achieve (e.g., learn a new programming language and apply it in solving the problem), while a goal is something specific you expect to deliver (e.g., a working application with a particular set of features).
 The aim of this project is to utilise these computational natural language processing techniques in order to perform a high-level meta-analysis of literature available in the public news media found online.
-More specifically, to gather online news articles relating to people with disabilities in British media, and perform natural language processing analyses at scale to identify trends such as term popularity (e.g. 'suffer from ...' vs 'with ...') and variation in positive/negative sentiment.
+More specifically, to gather online news articles relating to people with disabilities in British media, and perform natural language processing analyses at scale to identify trends such as term popularity (e.g. `suffer from ...' vs `with ...') and variation in positive/negative sentiment.
 
 The goal of this project is to develop a computational pipeline capable of performing this analysis of online media end-to-end.
 Given a list of topics consisting of keywords (or key phrases) and query terms, this pipeline covers the task of web crawling and scraping to collect a dataset of news articles; filtering relevant articles for the given keywords; matching relevant sentences referring to a keyword; performing sentiment analysis (using open-source libraries) on these sentences; and producing relevant visualisations to show trends as evidence of applications of the technology.
@@ -148,7 +147,7 @@ This pipeline will be available open source on GitHub (\url{https://github.com/b
 %% Give an overview of how you carried out the project (e.g., an iterative approach).
 This project was carried out in a step-by-step approach. The pipeline was developed as individual components: a web scraper and crawler for data collection given a list of queries; a filter to remove irrelevant articles given a list of key terms; a parser to pattern-match relevant sentences given key terms; a sentiment scorer (and results analysis/comparison of different open-source scorers on this domain); and a script to perform statistical analysis on the results and produce relevant plots. 
 A main pipeline script connects these components together by calling them in order for each topic and Web news source (Daily Mail, Daily Express, Guardian).
-Each component's output is piped to the next component's input by saving its output to a JSON file and having the next component read the previous component's output file, which ensures computation can be 'resumed' without re-running the previous component. 
+Each component's output is piped to the next component's input by saving its output to a JSON file and having the next component read the previous component's output file, which ensures computation can be `resumed' without re-running the previous component. 
 
 %% A brief overview of the rest of the chapters in the report (a guide to the reader of the overall structure of the report).
 The body of this report is subdivided into four chapters:
@@ -166,8 +165,8 @@ The results of comparing open-source sentiment scoring tools indicate that a rel
 However, a domain-specific supervised model would likely outperform the model.
 
 The results of the experiment showed that it is feasible to derive trends from a large corpora of news articles using a computational pipeline implementing natural language processing technologies, despite the limitations of our sentiment scorer.
-In particular, it showed that the perceived sentiment of Guardian articles are, on average, significantly higher than Daily Express and Daily Mail articles for the topic 'disabled'; and that an increasing trend over time can be seen for the topic 'autism'.
-It also showed an decreasing trend of the usage of the terms 'invalid' and 'handicap(ped)', and an increasing trend for 'accessibl(e)', in the Guardian.
+In particular, it showed that the perceived sentiment of Guardian articles are, on average, significantly higher than Daily Express and Daily Mail articles for the topic `disabled'; and that an increasing trend over time can be seen for the topic `autism'.
+It also showed an decreasing trend of the usage of the terms `invalid' and `handicap(ped)', and an increasing trend for `accessibl(e)', in the Guardian.
 
 This experiment showed that it is feasible to apply computational techniques using natural language processing to discover trends and form statistically-significant conclusions from a large dataset of news articles in this domain.
 This could have a substantial impact on how research should be conducted for similar studies on the media's representation of specific groups of people.
@@ -214,10 +213,10 @@ Analyses of news or other media are primarily carried out by taking a small, sta
 		However, given the paper's scope, this conclusion cannot be generalised to learn trends, or how the conclusion varies given certain variables (e.g. time, location).
 	\item A study conducted in 1998 \cite{gold1999media} were replicated in 2008 \cite{devotta2013representations} to assess change in representations of disability and persons with disability in the Canadian news media.
 		This study sampled 196 news articles in 1998 and 166 news articles in 2008.
-		It found an increase in the usage of 'person-first' terminology (e.g. person with disabilities) and a decrease in 'disabling language' (e.g. disabled person). % is this relevant?
+		It found an increase in the usage of `person-first' terminology (e.g. person with disabilities) and a decrease in `disabling language' (e.g. disabled person). % is this relevant?
 		This is an attempt to identify trends with regards to media representation of disability, however only provides two data points (1998 and 2008) with relatively small sample size.
 	\item A study in 2005 \cite{jones2009representations} analysed 1,515 articles relating to autism in Australian news media.
-		All articles were read by two research assistants to ensure they are on-topic and then coded as either 'negative' or 'positive' in overall focus, and then coded into themes (e.g. funding, education, etc.).
+		All articles were read by two research assistants to ensure they are on-topic and then coded as either `negative' or `positive' in overall focus, and then coded into themes (e.g. funding, education, etc.).
 		% Key findings include a relatively limited amount of helpful information, and a 'dual stereotype' of people with autism labelled as either dangerous and uncontrollable, or unloved and poorly treated. % is this relevant?
 		% Relative to other similar studies, this study appears to be focused more on qualitative discussion compared to quantitative results. % is this relevant?
 \end{itemize}
@@ -225,7 +224,7 @@ Analyses of news or other media are primarily carried out by taking a small, sta
 % Why using computational NLP will allow the discovery of more (high-level) information: trends, patterns, etc
 By applying natural language processing and computational techniques in analysing text articles, it is possible to develop a computational pipeline that could analyse and extract quantitative information from these articles at a much faster rate, enabling the analyses of a much larger scale of documents within a realistic time frame.
 While a sample of few hundred or thousand documents is usually enough to provide statistically significant conclusions, by providing an analysis of the full corpora (or a much larger sample), it is possible to uncover additional information from the data set.
-For example, higher-level trends (such as how the conclusion varies by year, location, publisher, etc.) can be discovered from a quantitative analysis of the larger dataset, by 'splitting' the result set into smaller subsets based on independent variables (e.g. year, location, publisher, etc.) and performing statistical comparisons of dependent variables (e.g. term frequency) between each subset.
+For example, higher-level trends (such as how the conclusion varies by year, location, publisher, etc.) can be discovered from a quantitative analysis of the larger dataset, by `splitting' the result set into smaller subsets based on independent variables (e.g. year, location, publisher, etc.) and performing statistical comparisons of dependent variables (e.g. term frequency) between each subset.
 
 Additionally, data collection is much more feasible in scale, cost and time using computational techniques. 
 An automated script can be used to collect news articles published on the Internet at a rate of roughly one article per second, or thousands of articles per hour (varies on Web source, hardware, Internet connection, etc.), a vast improvement over contracting a commercial clipping bureau to provide 600 articles as in \cite{coverdale2002depictions}.
@@ -235,14 +234,14 @@ Several studies has taken advantage of this approach to carry a more complete an
 For example, \cite{lansdall2017content} assembled a corpus of 35.9 million news articles from 120 publishers in the United Kingdom between 1800 and 1950, representing 14\% of all news articles published in the United Kingdom over that period.
 With this approach, the researchers were able to extract quantitative time-series information with regards to cultural trends as present in 35.9 million British news articles over the 150-year period.
 This amount of large time-series information (represented as n-grams and named entities) allowed them to discover macroscopic cultural trends. 
-By analysing and comparing word (n-gram) trends across various topics, the researchers were able to identify trends that reflect cultural shifts e.g. 'train' increasing in popularity and overtaking 'horse' around 1900, or 'labour party' overtaking 'conservative party' and 'liberal party' in news coverage from the 1920s onward.
+By analysing and comparing word (n-gram) trends across various topics, the researchers were able to identify trends that reflect cultural shifts e.g. `train' increasing in popularity and overtaking `horse' around 1900, or `labour party' overtaking `conservative party' and `liberal party' in news coverage from the 1920s onward.
 Additionally, they also used entity recognition to extract named entities from articles and considered trends based on known information about these named entities, such as the proportion of female vs male entities, categories of entities (e.g. politicians, writers, etc.), and age of these entities.
-They also considered the geographical location of the publication to see how word usage trends (e.g. 'british' vs 'english') differ based on location.
+They also considered the geographical location of the publication to see how word usage trends (e.g. `british' vs `english') differ based on location.
 
 \cite{lansdall2017content}'s study was based on prior discussions and studies on the potential of exploiting large text corpora to detect macroscopic, long-term cultural changes. 
 \cite{michel2011quantitative} was one of the first studies to suggest this approach.
 In this seminal study, a corpus of 5 million digitised English-language books published over 200 years (or about 4\% of all books ever published), provided by Google's effort to digitise books, were analysed to extract how often a given n-gram was used over time. (This data is available on \url{http://www.culturomics.org/})
-This information is then used to analyse trends in language: the size of the English lexicon, regularisation of English verbs (from 'irregular' suffixes to '-ed'), or how quickly years (e.g. '1950') decline in use.
+This information is then used to analyse trends in language: the size of the English lexicon, regularisation of English verbs (from `irregular' suffixes to `-ed'), or how quickly years (e.g. `1950') decline in use.
 Influenced by \cite{michel2011quantitative}, several other studies has been published adopting a similar approach: 
 \begin{itemize}
 	\item an analysis of 1.7 million Victorian-era books \cite{gibbs2011conversation}
@@ -250,7 +249,7 @@ Influenced by \cite{michel2011quantitative}, several other studies has been publ
 	\item an analysis of a 3.9 million news article sample from the Summary of World Broadcasts (SWB) collection \cite{leetaru2011culturomics}
 	\item an analysis of 2.5 million English-language million news articles from 498 online news outlets from 99 countries \cite{flaounas2013research}
 \end{itemize}
-However, there were also criticism of this approach, such that it ignored semantics and context, thus for example 'thirteen hundred words of gibberish and the Declaration of Independence are digitally equivalent' \cite{gooding2013mass}, issues with OCR quality and duplicate editions \cite{gooding2013mass}, or that the selection of digitised books are biased \cite{schwartz2011culturomics}.
+However, there were also criticism of this approach, such that it ignored semantics and context, thus for example `thirteen hundred words of gibberish and the Declaration of Independence are digitally equivalent' \cite{gooding2013mass}, issues with OCR quality and duplicate editions \cite{gooding2013mass}, or that the selection of digitised books are biased \cite{schwartz2011culturomics}.
 
 There has been some progress in applying natural language processing techniques more specifically in the domain of how (specific) groups of people are represented in the media:
 \begin{itemize}
@@ -271,9 +270,9 @@ Section \ref{Technical Context} contains a further listing and discussion of the
 
 % How background research was carried out
 Background research were carried out by investigating papers from public sources (such as Google Scholar).
-Research articles were gathered from a list of important topics and query terms related to the technique (natural language processing) and/or the domain (disability and news media): for example, 'natural language processing review', 'news media' AND 'disability', 'natural language processing' AND ('news media' OR 'cultural trends'), and 'natural language processing' AND 'disability'.
-Highly-cited research articles are prioritised as examples, as they are deemed to be more 'important' papers or studies within its topic.
-Additionally, the author looked for highly-cited 'key' papers and review articles within each specific topic, and then looked at its list of citations (older papers), and research articles that cites the review article (newer papers), to expand the list of relevant research papers and examples.
+Research articles were gathered from a list of important topics and query terms related to the technique (natural language processing) and/or the domain (disability and news media): for example, `natural language processing review', `news media' AND `disability', `natural language processing' AND (`news media' OR `cultural trends'), and `natural language processing' AND `disability'.
+Highly-cited research articles are prioritised as examples, as they are deemed to be more `important' papers or studies within its topic.
+Additionally, the author looked for highly-cited `key' papers and review articles within each specific topic, and then looked at its list of citations (older papers), and research articles that cites the review article (newer papers), to expand the list of relevant research papers and examples.
 
 % How technical research was carried out: for each component, determine neccesary or potentially useful techniques. Look up online for papers defining it, web resources, frameworks/libraries. Research done alongside development of code (do research as I plan/develop, which in turn may change how I'm doing things)
 Technical research, on the other hand, were carried out as necessary.
@@ -285,7 +284,7 @@ Again, more popular tools and libraries are prioritised, although several approa
 % Sources: Google Scholar, papers cited by other papers, GitHub pages, Python repositories (Pip, Conda), Python and library documentation, etc. + 'state how each source relates to your work'.
 The sources used for this literature review are:
 \begin{itemize}
-	\item Google Scholar, often used to find research articles to act as 'entry points' towards a research topic, to find other studies similar to another research article within a specified topic, or to retrieve citation information of a given research paper, book, or popular Python package.
+	\item Google Scholar, often used to find research articles to act as `entry points' towards a research topic, to find other studies similar to another research article within a specified topic, or to retrieve citation information of a given research paper, book, or popular Python package.
 	\item GitHub topics, used to find repositories that are relevant to a specific task or component, find similar GitHub repositories, gather information about a given repository, and also as a benchmark for topic popularity and range of solutions in a given programming language.
 		Several GitHub pages also curate a list of repositories within a specific topic \cite{awesome-sentiment-analysis, awesome-nlp, awesome-machine-learning}.
 	\item Python package repositories such as PyPi \cite{PyPi} and Anaconda Cloud \cite{Anaconda-Cloud}, which list all available Python packages and shows general information regarding them, and also provides a search function; useful to find relevant packages for a component/task and gather information about a given Python package.
@@ -304,23 +303,23 @@ On the other hand, collection is performed using established, general-purpose we
 Similarly, statistical analysis and data visualisation is performed using general-purpose statistical tools and metrics.
 This section will cover the technical tools researched and used for all listed components regardless.
 
-Natural language processing covers three main 'curves' or areas:  syntax, semantics, and pragmatics (narratives, understanding). 
+Natural language processing covers three main `curves' or areas:  syntax, semantics, and pragmatics (narratives, understanding). 
 Syntax specifies the way symbols (words, terms, tokens, or n-grams) and groups of symbols are arranged and whether they are well-formed in an expression, whereas semantics specifies what these expressions mean, and pragmatics specifies contextual information \cite{cambria2014jumping}.
-Contemporary (or 'traditional') approaches to natural language processing mainly focus on syntactic analysis, due to the relative ease of extracting syntactic features of text such as term frequency, word co-occurrence, and part-of-speech tags, compared to extracting logical expressions and networks necessary for semantic analysis.
-However, syntactic analysis is much more limited as it often misses information such as the (semantic) context of a word (e.g. "one" in "there's no one there" (referring to a person) vs "we have only one car" (referring to a quantity)).
+Contemporary (or `traditional') approaches to natural language processing mainly focus on syntactic analysis, due to the relative ease of extracting syntactic features of text such as term frequency, word co-occurrence, and part-of-speech tags, compared to extracting logical expressions and networks necessary for semantic analysis.
+However, syntactic analysis is much more limited as it often misses information such as the (semantic) context of a word (e.g. ``one'' in ``there's no one there'' (referring to a person) vs ``we have only one car'' (referring to a quantity)).
 This paper will focus on mainly syntactic techniques and features, as these are more relevant to this domain of high-level topic matching and sentiment analysis that is feasible with current technology at this scale.
 
 % Programming language: written in Python
 Python was chosen as the main programming language used for this project.
 The primary reason for this choice is the wide availability and range of existing tools for natural language processing, sentiment analysis, statistical analysis, data visualisation, web scraping and parsing, etc. in Python.
 A study in 2016 showed that Python is the most popular language for machine learning and data science \cite{puget2016most}, which correlates to the amount of available tools developers have created for the language.
-A GitHub search for the topic 'nlp' as of 18 April 2018 reported 1,397 Python and 470 Jupyter (Python interactive 'notebook') repositories with the tag 'natural language processing', compared to the second most popular programming language being Java with only 251 repositories tagged 'nlp' \cite{GitHubNLP}.
+A GitHub search for the topic `nlp' as of 18 April 2018 reported 1,397 Python and 470 Jupyter (Python interactive `notebook') repositories with the tag `natural language processing', compared to the second most popular programming language being Java with only 251 repositories tagged `nlp' \cite{GitHubNLP}.
 Furthermore, Python is also an ideal language for quick experimentation due to relatively high-level and low verbosity of the code, such that it is relatively easier to make small changes on the fly.
 Additionally, the Anaconda distribution of Python \cite{Anaconda} is used for its suitability to set up and manage Python environments and packages for data science projects.
 
 \subsection{Data Collection} \label{tc-data-collection}
 % Data collection
-For data collection, general-purpose tools for sending HTTP requests (to 'open' web addresses and store HTML web pages programmatically) and parsing HTML code (to parse article text and metadata from 'raw' HTML code) are sufficient. 
+For data collection, general-purpose tools for sending HTTP requests (to `open' web addresses and store HTML web pages programmatically) and parsing HTML code (to parse article text and metadata from `raw' HTML code) are sufficient. 
 The Requests library \cite{Requests} is a popular Python tool (with 400,000+ daily downloads) for sending HTTP/1.1 requests simply.
 A HTTP GET request will retrieve the HTML code (and other information) associated with a given URL from a web server, similar to opening the page on a web browser, stored as a Python object by Requests.
 Once the HTML code of a web page (given an article's URL) has been stored, the BeautifulSoup library \cite{BeautifulSoup} provides simple methods to navigate and search a parse tree (such as HTML code).
@@ -332,19 +331,19 @@ In this project, filtering off-topic articles is done somewhat crudely via ranki
 Term frequency is a simple and commonly-used metric for natural language processing, with various existing tools that can compute this metric for thousands of text documents within seconds.
 To put simply, the term frequency of a term (i.e. a word or token) in a document is the number of times that the term occurs in the document.
 The popular scikit-learn library \cite{Scikit-learn} provides a tool to measure term frequency of text documents, handling both tokenisation (converting a text document into a list of tokens (terms/words)) and counting word occurrence.
-It also provides the option to ignore stop words (i.e. common, meaningless words in English, such as 'the' or 'a'), which can often skew the results due to its relative high frequency.
-Additionally, the nltk library \cite{Nltk} is used for stemming -- to reduce all words in the document to its word stem (such that e.g. 'walk', 'walks', 'walked', and 'walking' are equivalent).
+It also provides the option to ignore stop words (i.e. common, meaningless words in English, such as `the' or `a'), which can often skew the results due to its relative high frequency.
+Additionally, the nltk library \cite{Nltk} is used for stemming -- to reduce all words in the document to its word stem (such that e.g. `walk', `walks', `walked', and `walking' are equivalent).
 
 In literature related to natural language processing, several more complex approaches has been proposed and used for the task of text classification and filtering off-topic articles.
 A conventional approach is by calculating term frequency -- inverse document frequency (tf-idf) \cite{robertson2004understanding, sparck1972statistical}, a metric that builds on term frequency by taking into account the relative importance of each word.
-Inverse document frequency (idf) is calculated by counting the number of documents in a corpus where a term appears -- if a term appears more frequently (e.g. common words such as 'the'), it is deemed to be less important and assigned a lower score.
+Inverse document frequency (idf) is calculated by counting the number of documents in a corpus where a term appears -- if a term appears more frequently (e.g. common words such as `the'), it is deemed to be less important and assigned a lower score.
 However, this approach is unsuitable for this project, given the selective nature of the dataset (where only articles containing certain query terms are collected), thus the idf values of these query terms would be flawed (as they would appear in every document).
 
 Another proposed approach is by using a supervised machine learning model to classify documents into pre-defined categories (the text classification problem).
 Various approaches were proposed to solve text classification, including Support Vector Matrices (SVM), Na\"{i}ve Bayes (NB), and k-nearest neighbour (kNN) models \cite{khan2010review}.
-However, this approach is infeasible for this project due to a lack of labelled data (i.e. a dataset of articles and category labels, or in this case 'is this article relevant?' boolean labels).
+However, this approach is infeasible for this project due to a lack of labelled data (i.e. a dataset of articles and category labels, or in this case `is this article relevant?' boolean labels).
 
-Topic models, which compute the proportion of abstract 'topics' in a document, has also been proposed.
+Topic models, which compute the proportion of abstract `topics' in a document, has also been proposed.
 Latent dirichlet allocation (LDA) \cite{blei2003latent} represents documents as random mixtures over latent topics, where each topic is characterized by a distribution over words.
 However, as these topics are abstract and characterized generatively (i.e. each topic's distribution over words are generated by the model, rather than pre-defined), it is not very useful for the task of classifying whether a document matches pre-defined topics/keywords.
 Additionally, LDA is significantly more computationally expensive than tf or tf-idf.
@@ -355,28 +354,28 @@ Additionally, LDA is significantly more computationally expensive than tf or tf-
 % Cite SpaCy, 'used SpaCy to perform rule-based sentence matching'
 Sentiment scoring of articles is sub-divided into two components: a component to find sentences relevant to a topic (given a list of key terms) in a text document (sentence matching), and another component that performs sentiment analysis on these sentences and transforms it into a real-valued score of each sentence. 
 SpaCy \cite{SpaCy} is a popular tool for general natural-language processing tasks, using pre-trained convolutional neural network models for tasks such as tagging, parsing, and entity recognition, and is benchmarked to be the fastest and among the most accurate syntactic parser, able to parse 13,965 words per second in 2015 \cite{choi2015depends}.
-Among the information SpaCy extracts from text are lemmas (root words) of terms (e.g. 'mentally' $\rightarrow$ 'mental') and features a rule-based matching engine (retrieve a list of sequences of tokens within a document that matches a given pattern, e.g. tokens with a specified lemma), both which are useful for the task of finding sentences relevant to a topic in a document.
+Among the information SpaCy extracts from text are lemmas (root words) of terms (e.g. `mentally' $\rightarrow$ `mental') and features a rule-based matching engine (retrieve a list of sequences of tokens within a document that matches a given pattern, e.g. tokens with a specified lemma), both which are useful for the task of finding sentences relevant to a topic in a document.
 
 % Sentiment analysis: cite some survey papers, cite GitHub page, cite each library I tried (this would probably be the longest section)
 For sentiment scoring of sentences, a variety of open-source tools and pre-trained models dedicated to sentiment analysis were researched for the purpose of comparison.
 Sentiment analysis, or opinion mining, is defined as "the field of study that analyzes people's opinions, sentiments, evaluations, attitudes, and emotions" from natural (human) language \cite{liu2012sentiment}.
-A GitHub search for the topic 'sentiment-analysis' as of 18 April 2018 reported 450 Python and 222 Jupyter repositories with the tag 'sentiment-analysis' \cite{GitHub-sentiment-analysis}.
+A GitHub search for the topic `sentiment-analysis' as of 18 April 2018 reported 450 Python and 222 Jupyter repositories with the tag `sentiment-analysis' \cite{GitHub-sentiment-analysis}.
 Furthermore, a community-curated list of sentiment analysis methods and implementations exist \cite{awesome-sentiment-analysis}, which served as a useful starting point to explore open-source sentiment analysis implementations.
 
 The particular sentiment analysis implementations that have been explored in this paper are:
 \begin{itemize}
-	\item VADER is a parsimonious rule-based model that scores the sentiment of a given sentence, based on the presence of 'sentiment lexicons' (a list of lexical features common to sentiment expression, such as 'good' and 'bad', including slang words, emoticons, and acronyms), and rules such as negations (e.g. 'not good') and increased sentiment intensity given emphasis such as punctuation, capitalisation, and degree modifiers (e.g. 'very') \cite{VADER}.
-	\item xiaohan2012's 'twitter-sent-dnn' repository trains a convolutional neural network model with dynamic k-max pooling (DCNN) for modelling (real-valued sentiment scores of) sentences.
+	\item VADER is a parsimonious rule-based model that scores the sentiment of a given sentence, based on the presence of `sentiment lexicons' (a list of lexical features common to sentiment expression, such as `good' and `bad', including slang words, emoticons, and acronyms), and rules such as negations (e.g. `not good') and increased sentiment intensity given emphasis such as punctuation, capitalisation, and degree modifiers (e.g. `very') \cite{VADER}.
+	\item xiaohan2012's `twitter-sent-dnn' repository trains a convolutional neural network model with dynamic k-max pooling (DCNN) for modelling (real-valued sentiment scores of) sentences.
 		The sentence model properties considered are the word and n-gram order, and induced feature graph (generated by the DCNN).
 		It was trained on a dataset of 1.6 million tweets with emoticon-based labels. \cite{kalchbrennerACL2014}
-	\item kevincobain2000's 'sentiment\_classifier' repository trains a supervised machine learning model based on a Na\"{i}ve Bayes and Maximum Entropy Classifier to transform a sentence to positive and negative (real-valued) sentiment scores.
-		It uses bigrams as features, implements Word Sense Disambiguation using wordnet \cite{banerjee2002adapted} to tranform bigrams to 'senses', and considers word occurrence statistics from nltk's movie review corpus.
+	\item kevincobain2000's `sentiment\_classifier' repository trains a supervised machine learning model based on a Na\"{i}ve Bayes and Maximum Entropy Classifier to transform a sentence to positive and negative (real-valued) sentiment scores.
+		It uses bigrams as features, implements Word Sense Disambiguation using wordnet \cite{banerjee2002adapted} to tranform bigrams to `senses', and considers word occurrence statistics from nltk's movie review corpus.
 		The training data is a mixture of nltk's movie review corpus, Twitter posts, and Amazon customer reviews data. \cite{kevincobain}
-	\item OpenAI's 'generating-reviews-discovering-sentiment' repository provides a pre-trained single-layer multiplicative LSTM recurrent neural network model with 4096 units (a relatively simple model optimised for training/convergence time) to generate (real-valued) sentiment scores of input sentences.
+	\item OpenAI's `generating-reviews-discovering-sentiment' repository provides a pre-trained single-layer multiplicative LSTM recurrent neural network model with 4096 units (a relatively simple model optimised for training/convergence time) to generate (real-valued) sentiment scores of input sentences.
 		It was trained on a dataset of over 82 million Amazon product reviews from May 1996 to July 2014, substantially larger than previous work (and taking one month across four NVIDIA Pascal GPUs to train), and outperforms state-of-the-art models when tested on similar-domain corpora such as Rotten Tomatoes and IMDb reviews.
 		Sentences are represented as a sequence of UTF-8 encoded bytes where for each byte, the model updates its hidden state and predicts a probability distribution over the next possible byte. \cite{OpenAI}
 	\item Stanford CoreNLP \cite{StanfordNLP} provides a set of linguistic analysis tools, including sentiment analysis, given input text, while running in a local web server.
-		Its sentiment analysis tool uses a recursive neural network model, representing text as parse trees, and trained on a Sentiment Treebank of fully-labelled parse trees for 215,154 unique phrases and 11,855 sentences from the Rotten Tomatoes movie review corpus; and classifies sentences into five sentiment classes, from 'very negative' to 'very positive' \cite{socher2013recursive}.
+		Its sentiment analysis tool uses a recursive neural network model, representing text as parse trees, and trained on a Sentiment Treebank of fully-labelled parse trees for 215,154 unique phrases and 11,855 sentences from the Rotten Tomatoes movie review corpus; and classifies sentences into five sentiment classes, from `very negative' to `very positive' \cite{socher2013recursive}.
 		Although Stanford CoreNLP was written in Java, several packages exist that allow a Stanford CoreNLP local server to be started and queried programmatically in Python \cite{stanfordcorenlp}.
 	\item TextBlob is a general-purpose natural language processing library similar to nltk, SpaCy, or CoreNLP.
 		It provides two sentiment analysis models: PatternAnalyzer, a rule-based classifier based on part-of-speech pattern matching, and NaiveBayesAnalyzer, a Na\"{i}ve Bayes classifier trained on a dataset of movie reviews. \cite{textblob}
@@ -441,7 +440,7 @@ Given this scale, the solution must be able to compute the full pipeline within 
 
 % Short paragraph about component based design
 The solutions follows a component-based design, where each sub-problem must be implemented by a component that focuses only on the sub-problem.
-These components must be linked together via a 'pipeline' script that executes each component in order, and iterates through the list of topics and sources.
+These components must be linked together via a `pipeline' script that executes each component in order, and iterates through the list of topics and sources.
 This is ideal such that changes could be made to a component without affecting (or needing to re-write) code in other components.
 The list of required components are as follows: data collection, dataset filtering, rule-based sentence matching, sentiment scoring, statistical analysis and visualisation.
 
@@ -488,13 +487,13 @@ Then, information should be extracted by syntactically parsing each article's te
 The sentiment scoring component would require all sentences relating to a keyword or key phrase (containing a keyword, key phrase, or an equivalent term) to be extracted from each article.
 Additionally, the component should also extract other information as required by the sentiment scoring and statistical analysis components, including the total number of sentences and the number of relevant sentences in the document, and the term frequency of each keyword and key phrase.
 
-After these information has been extracted from the article, it must save the information to a new output file, in the form of an array of JSON objects where each JSON object contains all the information about a single news article (with a key for each 'feature' e.g. relevant sentences).
+After these information has been extracted from the article, it must save the information to a new output file, in the form of an array of JSON objects where each JSON object contains all the information about a single news article (with a key for each `feature' e.g. relevant sentences).
 The metadata of each article (headline, date of publication, and source) should also be saved to the new output file, as it would be required as independent variables for the statistical analysis component to analyse trends in the dataset.
 The file and directory structure of the output file must be consistent given source and topic (such that the next component can find it programmatically).
 
 \subsection{Sentiment Scoring} \label{req-sentiment}
 
-The sentiment scoring component computes a real-valued score for each relevant sentence extracted by the previous component, which must correspond to the perceived 'sentiment' of the sentence towards a disability, disabilities, a person with disabilit(y/ies), or people with disabilit(y/ies), referred by the keyword or key phrase, with sufficient accuracy.
+The sentiment scoring component computes a real-valued score for each relevant sentence extracted by the previous component, which must correspond to the perceived `sentiment' of the sentence towards a disability, disabilities, a person with disabilit(y/ies), or people with disabilit(y/ies), referred by the keyword or key phrase, with sufficient accuracy.
 Given an input file which is the output file of the dataset filtering component, this component should be able to load the relevant sentences and other data for all saved articles.
 
 % Analysing scorers: 'slow' scorer that takes the first N articles only and scores them with ALL scorers from a list of open-source sentiment scorers, for the purpose of evaluating the performance (accuracy) of these scorers
@@ -505,7 +504,7 @@ The first iteration of the sentiment scorer component is used to perform a compa
 It is not used in the final pipeline
 
 This iteration of the component must select a sample of sentences from the dataset, with a sample size arbitrarily defined by the user.
-Also, it must implement all open-source sentiment analysis implementations ('sentiment scorer') that were listed in section \ref{tc-sentiment}.
+Also, it must implement all open-source sentiment analysis implementations (`sentiment scorer') that were listed in section \ref{tc-sentiment}.
 All sentences in the sample must be analysed and given a score by each sentiment scorer, and the component should also allow the user to manually label these sentences as positive, neutral, or negative.
 With this information, the component must be able to determine the accuracy of each sentiment scorer (i.e. show the proportion of true positives and true negatives, and show a confusion matrix), and store the total, per-sentence, and per-article runtime of each sentiment scorer.
 
@@ -521,7 +520,7 @@ It should also compute the average sentiment score for each article, given infor
 Furthermore, the component must run in reasonable time (i.e. less than a day for each topic), given available hardware and a scale of up to tens of thousands of articles per topic.
 
 After the sentiment scorer has scored all relevant sentences in the dataset, it must then save information about all articles, with score labels appended to each sentence, to a new output file.
-The JSON object format of each article in the output file should be equivalent to the input file's format (i.e. no information from previous components are lost), with the exception of an additional 'sentiment score' key-value pair within each sentence's JSON object.
+The JSON object format of each article in the output file should be equivalent to the input file's format (i.e. no information from previous components are lost), with the exception of an additional `sentiment score' key-value pair within each sentence's JSON object.
 The file and directory structure of the output file must be consistent given source and topic (such that the next component can find it programmatically).
 
 \subsection{Statistical Analysis and Visualisation} \label{req-visualisation}
@@ -544,8 +543,8 @@ Additionally, the component should also show visualisations based on other infor
 
 % How the requirements influence the design of my project
 The implementation design (and additional requirements) of this project are highly influenced by the core requirements (i.e. data collection, filtering, parsing, sentiment scoring, and statistical analysis and visualisation).
-The overall design of the pipeline, with isolated components for each sub-problem, stemmed from having largely independent sub-problems that was required in order to perform the data analysis 'end-to-end' (i.e. from data collection to analysis and visualisation)
-Also, initial prototypes (and initial 'runs' collecting only a limited number of news articles) showed that data collection took the majority of runtime in the pipeline.
+The overall design of the pipeline, with isolated components for each sub-problem, stemmed from having largely independent sub-problems that was required in order to perform the data analysis in full, from data collection to analysis and visualisation.
+Also, initial prototypes (initial `runs' collecting only a limited number of news articles) showed that data collection took the majority of runtime in the pipeline.
 For this reason, the requirement where it should be possible to resume progress on data collection (and not repeat the process for existing data) was added.
 
 Furthermore, the format of JSON objects of each output file were largely based on the information extracted by each component, as defined by the requirements.
@@ -562,7 +561,7 @@ For example, the format of a JSON object in the output file for the data collect
 	}
 }
 \end{lstlisting}
-Where the URL and 'source', 'title', 'datetime', and 'text' fields correspond to the requirements of what information needs to be extracted by the data collection component.
+Where the URL and `source', `title', `datetime', and `text' fields correspond to the requirements of what information needs to be extracted by the data collection component.
 
 %% The level of detail of the requirements and use cases will depend on the nature of your project. If you are doing a Software Engineering based design and implementation project, then they will need to be done thoroughly. If there is a substantial body of requirements and use cases, then a summary should be given in the chapter, with the full set included in an appendix section.
 %% If your project is not Software Engineering oriented, then you still need to describe the requirements you are working to and relevant analysis information. Use cases may not be needed or be relevant.
@@ -587,7 +586,7 @@ The high-level design of the pipeline and its main components are defined as fol
 \includegraphics[width=\textwidth]{overall-design.png}
 
 In this experiment, the pipeline is ran once for each source and topic, generating a dataset of all articles for the specified topic from the source with all extracted features, stored in a file.
-The 'plot' component then loads these files and combines the dataset of all articles for every source within the same topic, and produces various plots to show trends within the topic, and statistical metrics for each possible subset within the topic.
+The `plot' component then loads these files and combines the dataset of all articles for every source within the same topic, and produces various plots to show trends within the topic, and statistical metrics for each possible subset within the topic.
 
 % Input/output format (of JSON files) before/after each stage, how these files are stored (file structure and JSON structure)
 Components pass datasets to each other by storing all information it extracts in a JSON format.
@@ -619,35 +618,35 @@ The final list of topics relevant to disabilities and people with disabilities, 
 	\hline
 	Topic & Keywords and Key Phrases & Query Terms \\ 
 	\hline
-	'disabled' & 'disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible', 'ablism', 'ableism', 'differently abled' & 'disabled', 'disability', 'ablism', 'ableism', 'differently abled' \\ 
+	`disabled' & `disabled', `disability', `handicapped', `cripple', `invalid', `accessible', `ablism', `ableism', `differently abled' & `disabled', `disability', `ablism', `ableism', `differently abled' \\ 
 	\hline
-	'autism' & 'autism', 'autistic', 'asperger\textbackslash's', 'ASD' & 'autism', 'autistic', 'asperger\textbackslash's', 'ASD' \\ 
+	`autism' & `autism', `autistic', `asperger\textbackslash's', `ASD' & `autism', `autistic', `asperger\textbackslash's', `ASD' \\ 
 	\hline
-	'blind' & 'blind', 'blindness', 'blindism', 'visual impairment', 'partially sighted', 'vision loss' & 'blind', 'blindness', 'visual impairment', 'partially sighted', 'visually impaired' \\ 
+	`blind' & `blind', `blindness', `blindism', `visual impairment', `partially sighted', `vision loss' & `blind', `blindness', `visual impairment', `partially sighted', `visually impaired' \\ 
 	\hline
-	'cerebral palsy' & 'cerebral palsy', 'spastic' & 'cerebral palsy', 'spastic' \\ 
+	`cerebral palsy' & `cerebral palsy', `spastic' & `cerebral palsy', `spastic' \\ 
 	\hline
-	'deaf' & 'deaf', 'deafness', 'hearing impaired', 'hard of hearing', 'hearing loss' & 'deaf', 'deafness', 'hearing impairment', 'hard of hearing', 'hearing impaired' \\ 
+	`deaf' & `deaf', `deafness', `hearing impaired', `hard of hearing', `hearing loss' & `deaf', `deafness', `hearing impairment', `hard of hearing', `hearing impaired' \\ 
 	\hline
-	'developmental delay' & 'developmental delay', 'developmental disability', 'developmental disorder', 'learning disability', 'slow learner', 'retardation', 'intellectual disability' & 'developmental delay', 'developmental disability', 'developmental disorder', 'learning disability' \\ 
+	`developmental delay' & `developmental delay', `developmental disability', `developmental disorder', `learning disability', `slow learner', `retardation', `intellectual disability' & `developmental delay', `developmental disability', `developmental disorder', `learning disability' \\ 
 	\hline
-	'dyslexia' & 'dyslexia', 'dyslexic' & 'dyslexia', 'dyslexic' \\ 
+	`dyslexia' & `dyslexia', `dyslexic' & `dyslexia', `dyslexic' \\ 
 	\hline
-	'epilepsy' & ''epilepsy', 'epileptic', 'seizure' & 'epilepsy', 'epileptic' \\ 
+	`epilepsy' & `epilepsy', `epileptic', `seizure' & `epilepsy', `epileptic' \\ 
 	\hline
-	'mental illness' & 'mental illness', 'mental health', 'mental disability', 'mental disorder', 'mental issue', 'brain injured', 'brain injury', 'brain damaged', 'psychological', 'psychiatric', 'emotional disorder', 'behavioural disorder', 'retardation', 'intellectual disability', 'mentally ill', 'mentally disabled', 'mentally handicapped' & 'mental illness', 'mental health', 'mental disorder', 'mental disability', 'mentally ill', 'mentally disabled', 'mentally handicapped' \\ 
+	`mental illness' & `mental illness', `mental health', `mental disability', `mental disorder', `mental issue', `brain injured', `brain injury', `brain damaged', `psychological', `psychiatric', `emotional disorder', `behavioural disorder', `retardation', `intellectual disability', `mentally ill', `mentally disabled', `mentally handicapped' & `mental illness', `mental health', `mental disorder', `mental disability', `mentally ill', `mentally disabled', `mentally handicapped' \\ 
 	\hline
-	'mute' & 'mute', 'muteness', 'mutism', 'cannot speak', 'difficulty speaking', 'synthetic speech', 'non-vocal', 'non-verbal' & 'mute', 'muteness', 'mutism', 'non-verbal' \\ 
+	`mute' & `mute', `muteness', `mutism', `cannot speak', `difficulty speaking', `synthetic speech', `non-vocal', `non-verbal' & `mute', `muteness', `mutism', `non-verbal' \\ 
 	\hline
-	'paralysis' & 'paraplegic', 'quadriplegic', 'spinal cord', 'paraplegia', 'quadriplegia', 'paralysed', 'paralyzed', 'paralysis', 'crippled', 'leg braces', 'wheelchair' & 'paraplegic', 'quadriplegic', 'paraplegia', 'quadriplegia', 'paralysis' \\ 
+	`paralysis' & `paraplegic', `quadriplegic', `spinal cord', `paraplegia', `quadriplegia', `paralysed', `paralyzed', `paralysis', `crippled', `leg braces', `wheelchair' & `paraplegic', `quadriplegic', `paraplegia', `quadriplegia', `paralysis' \\ 
 	\hline
-	'speech impairment' & 'speech impairment', 'stutter', 'speech disability', 'speech disorder', 'communication disability', 'difficulty speaking', 'language impairment', 'language disorder', 'language disability', 'speech impediment', 'stammer' & 'speech impairment', 'stutter', 'speech disorder', 'speech impediment' \\ 
+	`speech impairment' & `speech impairment', `stutter', `speech disability', `speech disorder', `communication disability', `difficulty speaking', `language impairment', `language disorder', `language disability', `speech impediment', `stammer' & `speech impairment', `stutter', `speech disorder', `speech impediment' \\ 
 	\hline
 \end{longtabu}
 
 % topics: collection of keywords & query terms (keywords minus potentially off topic terms / combinations)
-This list of key terms was roughly based on guidelines from the Californian \cite{ca-guideline} and UK \cite{uk-guideline} governments (ignoring whether the term is considered 'appropriate' or 'inappropriate', as terms labelled 'inappropriate' are often still commonly used in the news, and relevant to consider when deciding whether an article is on-topic), with a few additions based on other commonly-used terms found on sampled articles from Daily Express, Daily Mail, and Guardian.
-The list of query terms were based on the list of key words, with words/phrases that could have other meanings (or combinations of multiple common words) removed (unless the word/phrase is very commonly used to refer to the disability, such as 'blind' and 'mute').
+This list of key terms was roughly based on guidelines from the Californian \cite{ca-guideline} and UK \cite{uk-guideline} governments (ignoring whether the term is considered `appropriate' or `inappropriate', as terms labelled `inappropriate' are often still commonly used in the news, and relevant to consider when deciding whether an article is on-topic), with a few additions based on other commonly-used terms found on sampled articles from Daily Express, Daily Mail, and Guardian.
+The list of query terms were based on the list of key words, with words/phrases that could have other meanings (or combinations of multiple common words) removed (unless the word/phrase is very commonly used to refer to the disability, such as `blind' and `mute').
 
 \subsection{Dataset Size} \label{dataset-size}
 
@@ -726,7 +725,7 @@ After filtering, the size of the dataset that was plotted, in number of articles
 	\end{tabu}
 \end{center}
 
-For the results evaluation, the focus will be on the 'disabled' topic, as it has the highest amount of news articles within its subset, and is the most generalisable topic on disabilities (as it refers to the general theme of disabilities and people with disabilities, rather than a specific topic).
+For the results evaluation, the focus will be on the `disabled' topic, as it has the highest amount of news articles within its subset, and is the most generalisable topic on disabilities (as it refers to the general theme of disabilities and people with disabilities, rather than a specific topic).
 
 \subsection{Limitations} \label{limitations}
 
@@ -735,7 +734,7 @@ As shown in section \ref{dataset-size}, the Daily Express has significantly less
 Some topics, such as cerebral palsy, developmental delay, dyslexia, mute, and speech impairment, are also severely lacking in sample size of articles (post-filter).
 In particular, cases where there are less than \textapprox200 articles from a source within a topic were problematic to plot or form statistically-significant conclusions regarding trends (e.g. to compare with other sources), as the distribution of the data is too varied.
 Cross-referencing the results in section \ref{Sentiment score: statistical comparison of different sources} with the size of each subset showed that it was difficult to obtain statistically significant conclusions when comparing to subsets with less than \textapprox200 articles.
-This means that it is difficult to analyse or compare the Daily Express's subset for topics other than general 'disabled', 'blind', and 'mental illness', due to its relative lack of sample size.
+This means that it is difficult to analyse or compare the Daily Express's subset for topics other than general `disabled', `blind', and `mental illness', due to its relative lack of sample size.
 
 % Also year-on-year limitations (DM only retains articles from ___, DE only retains articles from ___, Guardian only retains articles from ___), and implications (non equal proportion of articles for each year), what it means for analyses 
 Another limitation with this experiment is the (limited) length of time each news source (Daily Express, Daily Mail, and Guardian) retain articles for in their online archive.
@@ -763,7 +762,7 @@ The scraper object creates a wrapper for the implementations of these two functi
 % crawler: use search engine scraper to get list of article URLs, use article scraper on each URL, store to JSON file line-by-line AND ensure ability to 'save and resume' and not repeat process for articles that already exist in the dataset (by loading a set of URLs that already exist in the dataset beforehand and not calling the scraper for them)
 % mention how the requirement to resume on crash/interrupt led to saving a JSON object on each line (to represent each article) in the output so that articles are saved right after they are collected, not after all articles are collected - however, as a result, it violates the JSON standard (only one top-level object per file) - inconsequential but a drawback? regardless
 This design allows the use of a single data collection script (the second part of this component) for multiple sources, by having the methods that require separate implementations for each source (finding articles, scraping text and metadata) injected as a dependency to the script.
-Furthermore, as defined in the requirements (section \ref{req-data-collection}), it should be possible to re-run the program at a later date to add new articles without sending web requests for articles already in the collection, such that it is possible to 'update' the collection and recover collected information in case computation is interrupted.
+Furthermore, as defined in the requirements (section \ref{req-data-collection}), it should be possible to re-run the program at a later date to add new articles without sending web requests for articles already in the collection, such that it is possible to `update' the collection and recover collected information in case computation is interrupted.
 
 The data collection script first loads the existing output file for the source and category (if it exists) and loads a list of already-saved URLs.
 Then, for each query term in the category, it queries the search page(s) to gather a list of URLs.
@@ -778,7 +777,7 @@ The full dataset of 305,185 articles took roughly a week to collect using a sing
 \subsection{Dataset Filtering} \label{des-filtering}
 
 % What I did
-Dataset filtering was implemented by measuring 'term frequency ranking', which measures how often does a key term (i.e. keyword or key phrase) appears in a text document relative to other terms.
+Dataset filtering was implemented by measuring `term frequency ranking', which measures how often does a key term (i.e. keyword or key phrase) appears in a text document relative to other terms.
 To compute this metric, the term frequency of every token (word) in the document has to be measured first.
 This is implemented using scikit-learn's \cite{Scikit-learn} CountVectoriser, which tokenises a document and converts it into an array of term-frequency values for each token in the document.
 This array is then sorted in descending order, and then the position of the keyword in the sorted array (plus one) is recorded as the keyword rank of the document.
@@ -789,9 +788,9 @@ A document is on-topic if the keyword's rank is lower than the threshold value (
 As the term frequency of the keyword is measured relative to other terms in the document, this metric also normalises for document length.
 
 As in this experiment, each category can contain multiple key terms, slight modifications has to be made during pre-processing (before tokenisation).
-All mentions of any keyword or key term in the article are replaced by 'KEYWORD\_TOKEN', and the filter measures the rank of 'KEYWORD\_TOKEN' instead of any specific term, such that it doesn't matter which term the article uses.
-Additionally, stemming is also performed for every word in the document to reduce all words to its root forms, regardless of its word form or tense (e.g. 'disability' and 'disabilities' are both treated as the same word) using the nltk \cite{Nltk} library.
-Furthermore, CountVectoriser also ignores 'stop words', or meaningless common words in the English language (such as 'the' and 'a').
+All mentions of any keyword or key term in the article are replaced by `KEYWORD\_TOKEN', and the filter measures the rank of `KEYWORD\_TOKEN' instead of any specific term, such that it doesn't matter which term the article uses.
+Additionally, stemming is also performed for every word in the document to reduce all words to its root forms, regardless of its word form or tense (e.g. `disability' and `disabilities' are both treated as the same word) using the nltk \cite{Nltk} library.
+Furthermore, CountVectoriser also ignores `stop words', or meaningless common words in the English language (such as `the' and `a').
 
 % Evaluation of results - how I measured filter effectiveness & determine threshold rank
 To evaluate the results of this filtering, the filtering component can be set to print an arbitrarily-sized sample of N articles alongside its predicted label (on-topic / off-topic) and keyword rank.
@@ -799,12 +798,12 @@ Trivial evaluation (with a sample size of 10 articles per topic) indicated that 
 Manual reading of sampled articles indicated that:
 \begin{itemize}
 	\item There exists a good of correlation between keyword rank and on-topic/off-topic articles (although the sample size is too low to make statistically-significant conclusions, as increasing the sample size would mean manually reading more articles which was time-consuming)
-	\item Articles predicted to be 'on-topic' are on-topic, and articles predicted to be 'off-topic' are off-topic.
+	\item Articles predicted to be `on-topic' are on-topic, and articles predicted to be `off-topic' are off-topic.
 \end{itemize}
 
 % Limitations: categories where there are still a lot of off topic sentences
 However, there are several topics where this filtering mechanism does not perform well, and as a result many off-topic articles remain in the filtered dataset.
-These topics are 'blind', 'mute', 'paralysis' ('paralysed'), and 'speech impairment' ('stutter'), where the keywords can have other meanings irrelevant to the context of people with disabilities.
+These topics are `blind', `mute', `paralysis' (`paralysed'), and `speech impairment' (`stutter'), where the keywords can have other meanings irrelevant to the context of people with disabilities.
 For example, consider these sampled sentences from articles that were mislabelled on-topic:
 \begin{itemize}
 	\item When Harry met Meghan: How Prince Charles's family friend set up blind date.
@@ -815,23 +814,23 @@ As term frequency does not distinguish between multiple meanings of words, it is
 
 % Alternatives I considered
 Several other alternatives were considered to term-frequency ranking.
-The conventional approach is by calculating term frequency -- inverse document frequency (tf-idf) \cite{robertson2004understanding, sparck1972statistical}, which builds on term frequency by weighing more 'common' words with lower scores and vice versa.
-Using tf-idf, terms that appear more frequently in the corpus of all documents are deemed to be 'less important' and assigned a lower weight, and vice versa.
+The conventional approach is by calculating term frequency -- inverse document frequency (tf-idf) \cite{robertson2004understanding, sparck1972statistical}, which builds on term frequency by weighing more `common' words with lower scores and vice versa.
+Using tf-idf, terms that appear more frequently in the corpus of all documents are deemed to be `less important' and assigned a lower weight, and vice versa.
 However, this approach is unsuitable for this project, due to the selective nature of the dataset (where only articles containing certain query terms are collected). 
 This will cause the idf weights of these query terms to be much lower than it should be, because at least one of the query terms would appear on every document in the corpus, highly increasing the document frequency of query terms.
 For this reason, limited evaluation showed that tf-idf ranking performed worse than term-frequency ranking.
 
-A possible improvement to the term-frequency ranking model is by using a supervised machine learning model to classify documents to 'relevant' and 'irrelevant' (a boolean classification problem).
+A possible improvement to the term-frequency ranking model is by using a supervised machine learning model to classify documents to `relevant' and `irrelevant' (a boolean classification problem).
 There are many supervised approaches that are popular for text classification, including Support Vector Matrices (SVM), Na\"{i}ve Bayes (NB), and k-nearest neighbour (kNN) models \cite{khan2010review}.
-However, this approach would require labelled data (i.e. a collection of articles with 'relevant' and 'irrelevant' labels for each topic).
+However, this approach would require labelled data (i.e. a collection of articles with `relevant' and `irrelevant' labels for each topic).
 
 \subsection{Rule-based Sentence Matching} \label{des-matching}
 
 % Tokenisation
 The next component parses the article text using SpaCy \cite{SpaCy} to extract relevant information required by the sentiment scoring and statistical analysis components.
 Initially, the headline is prepended to the article text to create the text document.
-SpaCy performs a syntactic analysis of the document, returning a list of 'enhanced' tokens (words) which contain additional information parsed by SpaCy, such as part-of-speech tags, syntactic parent/children, known entities, sentence start and end, and root word (lemma).
-The component iterates over this list of 'enhanced' tokens to extract information that would be useful for statistical analysis:
+SpaCy performs a syntactic analysis of the document, returning a list of `enhanced' tokens (words) which contain additional information parsed by SpaCy, such as part-of-speech tags, syntactic parent/children, known entities, sentence start and end, and root word (lemma).
+The component iterates over this list of `enhanced' tokens to extract information that would be useful for statistical analysis:
 \begin{enumerate}
 	\item Sentences containing a word relating to a keyword or key phrase (using sentence matching), and the number of keywords / key phrases in each sentence.
 	\item For each token that has the same lemma as a keyword (or a sequence of tokens that has the same sequence of lemmas as a key phrase), the frequency of the token or sequence of tokens.
@@ -845,7 +844,7 @@ Future work could expand on this concept.
 
 % Sentence matching
 The sentiment scoring component requires all sentences relating to a keyword or key phrase to be extracted from each article.
-SpaCy provides a rule-based Matcher tool that returns the indices of tokens (or sequences of tokens) that fulfils a given 'rule'.
+SpaCy provides a rule-based Matcher tool that returns the indices of tokens (or sequences of tokens) that fulfils a specfic definition (`rule').
 This component uses the Matcher tool to find all indices of tokens that has the same lemma as a keyword (or sequences of tokens that has the same sequence of lemmas as a key phrase).
 Then, for each token, the component retrieves the full sentence that contains the token index and stores them into a list of relevant sentences, along with the number of keywords / key phrases in each sentence.
 These relevant sentences are stored in an array of JSON objects, with each JSON object representing one sentence, such as:
@@ -861,7 +860,7 @@ Results from running the experiment indicate that this component took approximat
 \subsection{Sentiment Scoring} \label{des-sentiment}
 
 % short paragraph saying 'used open-source libraries' and 'several options were considered and their accuracy analysed on a random sample of sentences, before the two best-performing options were selected to be used for the full dataset, after being optimised for run-time (as running all options on the full dataset will take ~1 minute per article * 51,177 articles = ...)'
-The sentiment scoring component implements open-source libraries to measure the 'sentiment' (ideally, perceived view of the sentence towards a disability, disabilities, a person with disabilit(y/ies), or people with disabilit(y/ies) as referred by the keyword or key phrase) of news articles.
+The sentiment scoring component implements open-source libraries to measure the `sentiment' (ideally, perceived view of the sentence towards a disability, disabilities, a person with disabilit(y/ies), or people with disabilit(y/ies) as referred by the keyword or key phrase) of news articles.
 Sentiment scores are real-valued scores (i.e. a score of 0.0 indicates that a sentence is neutral, a highly positive or highly negative score indicates the sentence has strong positive or negative opinions), capped between -1.0 and 1.0.
 
 Two implementations of the component were developed: 
@@ -885,16 +884,16 @@ Then, it loads an arbitrarily-sized sample of relevant sentences for each source
 
 Every sentence in the sampled are then scored using 7 open-source sentiment analysis implementations that were explored in section \ref{tc-sentiment}:
 \begin{itemize}
-	\item VADER \cite{VADER}, a simple rule-based model that scores sentences based on the presence of 'sentiment lexicons' (a list of sentiment-related words, emoticons, and acronyms), and rules such as negations and emphasis (e.g. punctuation, capitalisation, 'very').
-	\item xiaohan2012's 'twitter-sent-dnn' repository, which provides a convolutional neural 	network model with dynamic k-max pooling (DCNN) using word and n-gram order as 'features', trained on a dataset of 1.6 million tweets with emoticon-based labels. 
+	\item VADER \cite{VADER}, a simple rule-based model that scores sentences based on the presence of `sentiment lexicons' (a list of sentiment-related words, emoticons, and acronyms), and rules such as negations and emphasis (e.g. punctuation, capitalisation, `very').
+	\item xiaohan2012's `twitter-sent-dnn' repository, which provides a convolutional neural 	network model with dynamic k-max pooling (DCNN) using word and n-gram order as `features', trained on a dataset of 1.6 million tweets with emoticon-based labels. 
 		It is an implementation of \cite{kalchbrennerACL2014}.
-	\item kevincobain2000's 'sentiment\_classifier' repository \cite{kevincobain}, which provides a supervised machine learning model based on a Na\"{i}ve Bayes and Maximum Entropy Classifier, performs Word Sense Disambiguation \cite{banerjee2002adapted}, and uses bigrams as features (weighted by word occurrence statistics).
+	\item kevincobain2000's `sentiment\_classifier' repository \cite{kevincobain}, which provides a supervised machine learning model based on a Na\"{i}ve Bayes and Maximum Entropy Classifier, performs Word Sense Disambiguation \cite{banerjee2002adapted}, and uses bigrams as features (weighted by word occurrence statistics).
 		Its training data is a mixture of nltk's movie review corpus, Twitter posts, and Amazon customer reviews data.
-	\item OpenAI's 'generating-reviews-discovering-sentiment' repository provides a pre-trained single-layer multiplicative LSTM recurrent neural network model trained on a dataset of over 82 million Amazon product reviews, using bytes of a UTF-8 encoded sentence as 'features', an implementation of \cite{OpenAI}.
+	\item OpenAI's `generating-reviews-discovering-sentiment' repository provides a pre-trained single-layer multiplicative LSTM recurrent neural network model trained on a dataset of over 82 million Amazon product reviews, using bytes of a UTF-8 encoded sentence as `features', an implementation of \cite{OpenAI}.
 	\item Stanford CoreNLP \cite{StanfordNLP} provides a recursive neural network model that converts text to parse trees, used as features. 
 	It was trained on a dataset of fully-labelled parse trees for 11,855 sentences from the Rotten Tomatoes movie review corpus.
 	It is an implementation of \cite{socher2013recursive}.
-	Unlike other scorers in this list, it classifies sentences into five sentiment classes, from 'very negative' to 'very positive', instead of assigning a real-valued score.
+	Unlike other scorers in this list, it classifies sentences into five sentiment classes, from `very negative' to `very positive', instead of assigning a real-valued score.
 	The stanfordcorenlp package \cite{stanfordcorenlp} was used to start and query a Stanford CoreNLP local server in Python.
 	\item TextBlob's PatternAnalyzer, a rule-based model based on part-of-speech pattern matching \cite{textblob}.
 	\item TextBlob's NaiveBayesAnalyzer, a Na\"{i}ve Bayes classifier model trained on a dataset of movie reviews (no information on features or dataset size) \cite{textblob}.
@@ -915,7 +914,7 @@ The scores of every sentence in the sample (of 180 sentences in the experiment) 
 	"sentiment_score_textblob_bayes": -0.9139802175212899
 }
 \end{lstlisting}
-The JSON objects of the sample is then output to a text file, where a user can manually change the 'label' fields to either '+' (positive), '-' (negative), 'n' (neutral), or 'o' (irrelevant/off-topic) to be read by the second script.
+The JSON objects of the sample is then output to a text file, where a user can manually change the `label' fields to either `+' (positive), `-' (negative), `n' (neutral), or `o' (irrelevant/off-topic) to be read by the second script.
 To ensure there is no bias in manual labelling, a second output file which contains only sentences and labels (without sentiment scores) were used.
 
 The second script is the analyser.
@@ -936,7 +935,7 @@ The results of this sentiment scorer comparison is documented in section \ref{Co
 \subsubsection{Final implementation} \label{des-sentiment-final}
 
 % After analysis, decided on running only two 'final' sentiment scorers for the whole dataset, using a separate function that computes only one sentiment score, optimised for performance (speed / runtime)
-The results of the sentiment scorer comparison, shown in section \ref{Comparison of sentiment scorers}, show VADER \cite{VADER} and OpenAI's \cite{OpenAI} as the two best sentiment scoring tools for this domain (measuring perceived 'sentiment' of a sentence towards a disability, disabilities, a person with disabilit(y/ies), or people with disabilit(y/ies)).
+The results of the sentiment scorer comparison, shown in section \ref{Comparison of sentiment scorers}, show VADER \cite{VADER} and OpenAI's \cite{OpenAI} as the two best sentiment scoring tools for this domain (measuring perceived `sentiment' of a sentence towards a disability, disabilities, a person with disabilit(y/ies), or people with disabilit(y/ies)).
 
 Unlike the iteration used for sentiment scorer comparison, this iteration only computes one sentiment score per each article, and is highly optimised.
 Two versions of this iteration were developed: one implementing OpenAI's sentiment scores, and another implementing VADER sentiment scores.
@@ -957,7 +956,7 @@ Additionally, this component also computes the sentiment score of each article, 
 
 % OpenAI: 0.16 seconds, VADER: 0.0031 seconds. Expand more in the subsubsection.
 This iteration is highly optimised for runtime: it only computes one sentiment score for each sentence, using one sentiment model, instead of loading and analysing every sentence with all seven sentiment models as in section \ref{Comparison of sentiment scorers}.
-For the version that implement OpenAI's sentiment model, it is further optimised by 'batching' the call to the sentiment model: instead of calling 'openai\_model.transform()' for every sentence, it builds a corpus (list) of all sentences in all articles (from the loaded file -- each file represents all articles from a source for a topic), and calls 'openai\_model.transform()' once, passing the corpus as parameter.
+For the version that implement OpenAI's sentiment model, it is further optimised by `batching' the call to the sentiment model: instead of calling `openai\_model.transform()' for every sentence, it builds a corpus (list) of all sentences in all articles (from the loaded file -- each file represents all articles from a source for a topic), and calls `openai\_model.transform()' once, passing the corpus as parameter.
 Results from running the experiment indicate that sentiment scoring took approximately 0.16 seconds per article using the OpenAI model, and 0.0031 seconds using VADER's implementation, using a single general-purpose computer (Intel i7-6700HQ CPU @ 2.60GHz, NVIDIA GeForce GTX 1060 GPU).
 
 \subsection{Statistical Analysis and Visualisation} \label{des-visualisation}
@@ -981,9 +980,9 @@ Then, it produces the following plots from the matrix:
 	\item Two-dimensional histograms showing:
 		\begin{itemize}
 			\item The number of news articles for each year (X) and source (Y) in the dataset.
-			\item The number of news articles for each year (X) and 'sentiment range' (Y) in the dataset.
-			('sentiment range': news articles are grouped together based on sentiment score with intervals of 0.1; thus, for example, -0.1-0.0, 0.0-0.1, and 0.5-0.6 are sentiment ranges)
-			\item The number of news articles for each source (X) and 'sentiment range' (Y) in the dataset.
+			\item The number of news articles for each year (X) and `sentiment range' (Y) in the dataset.
+			(`sentiment range': news articles are grouped together based on sentiment score with intervals of 0.1; thus, for example, -0.1-0.0, 0.0-0.1, and 0.5-0.6 are sentiment ranges)
+			\item The number of news articles for each source (X) and `sentiment range' (Y) in the dataset.
 		\end{itemize}
 		% (A two-dimensional histogram is similar to a regular histogram, except both X and Y axes are intervals of two separate variables, and frequency is shown in a colour scale instead of height)
 	\item A line graph of the moving average of sentiment score (Y) over time (X), with separate lines for each source.
@@ -999,14 +998,14 @@ To quantify the distribution of each data subset, the component computes the mea
 These metrics are saved to an output text file, unique to each topic.
 
 Then, it attempts to compare whether the sentiment scores of articles published by a source is significantly higher than the sentiment scores of articles published by another source. 
-The Mann-Whitney U Test \cite{mann1947test} is a statistical metric that measures the null hypothesis that 'given a randomly-selected value from a distribution, and another randomly-selected value from another distribution, the first value is equally likely to be less than or greater than the second value'.
+The Mann-Whitney U Test \cite{mann1947test} is a statistical metric that measures the null hypothesis that `given a randomly-selected value from a distribution, and another randomly-selected value from another distribution, the first value is equally likely to be less than or greater than the second value'.
 If the null hypothesis holds true, then there are no statistically significant difference between the two distributions.
 The Mann-Whitney U Test returns a p-value between 0 and 1, which corresponds to how likely the null hypothesis is to be true; the null hypothesis is rejected if the p-value is lower than 0.05.
 This test is performed to compare the subset of all articles published by each source to the subset of all articles published by each other source; first in general (i.e. compare the sentiment score distribution of all articles published by Source A to the distribution of all articles published by Source B), and also year-by-year (i.e. compare the sentiment score distribution of all articles published in year 20XX by Source A to the distribution of all articles published in year 20XX by Source B). These test results are saved to the same output text file.
 
 Apart from information relating to sentiment score, this component also attempts to plot trends regarding the usage of key terms (used to describe disabilities or people with disabilities) over time.
 This information is collected from the frequencies of tokens with the same lemma as a key term, as mentioned in point 2 of section \ref{des-matching}.
-The tokens are first stemmed with a custom stemmer: unlike NLTK's stemmer or SpaCy's lemmatiser as used in previous components, this stemmer only removes plurals (-s, -es) and tenses (-ed, -ing), but does not fully reduce words to its base word form (e.g. 'illness' and 'illnesses' are equivalent, but 'mental' and 'mentally' are still separate words).
+The tokens are first stemmed with a custom stemmer: unlike NLTK's stemmer or SpaCy's lemmatiser as used in previous components, this stemmer only removes plurals (-s, -es) and tenses (-ed, -ing), but does not fully reduce words to its base word form (e.g. `illness' and `illnesses' are equivalent, but `mental' and `mentally' are still separate words).
 Then, the dataset is split into smaller subsets based on publication year and source.
 For each subset, the term frequencies for all articles within the subset are averaged, to compute a measure of average term occurrence (per article):
 
@@ -1038,17 +1037,17 @@ These plots are then saved to an output file, separate from the sentiment score 
 \section{Focused topic} \label{Focused topic}
 % This chapter will focus on the 'disabled' topic ... 
 % Before going into sections, mention that although I have researched 12 topics relating to specific disabilities, this topic is chosen as an example for the resuls evaluation chapter as it is the most generic.
-Although the pipeline was run on a list of twelve disability-related topics (as defined in section \ref{topics}), this results evaluation will mainly focus on the 'disabled' topic.
-The 'disabled' topic consist of articles that relates to the key terms: 'disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible', 'ablism', 'ableism'.
+Although the pipeline was run on a list of twelve disability-related topics (as defined in section \ref{topics}), this results evaluation will mainly focus on the `disabled' topic.
+The `disabled' topic consist of articles that relates to the key terms: `disabled', `disability', `handicapped', `cripple', `invalid', `accessible', `ablism', `ableism'.
 This topic was chosen as it had the largest sample of news articles within the dataset (see also: section \ref{dataset-size}), and it is the most generalisable topic (as it refers to the general theme of disabilities and people with disabilities, rather than a specific topic).
 This focus on one topic for the whole of Chapter \ref{Results Evaluation} helps keep the numbers and results being discussed consistent throughout Chapter \ref{Results Evaluation}.
 Furthermore, the full result plots for all topics will be available in the Appendix.
 
 However, at several points in this chapter, results from other topics will also be discussed where it would add to the discussion.
-Information from other topics will be explicitly mentioned (e.g. 'for the ... topic') such that the reader understands where the data does not refer to the 'disabled' topic.
+Information from other topics will be explicitly mentioned (e.g. `for the ... topic') such that the reader understands where the data does not refer to the `disabled' topic.
 
 % Explain the 'disabled' dataset first: provide a table with no. of articles for each source in each year.
-Within the 'disabled' topic, the (post-filtering) sample size that was obtained for each year between 2000 and 2018 is as follows:
+Within the `disabled' topic, the (post-filtering) sample size that was obtained for each year between 2000 and 2018 is as follows:
 
 \begin{longtabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | X[c] | }
 	\hline
@@ -1106,7 +1105,7 @@ The sample contains 5 sentences from each source (Daily Express, Daily Mail, Gua
 The sample contains 180 sentences in total. % 180 = 5*3*12
 
 Each sentence in the sample are then manually labelled to: positive, negative, neutral, or irrelevant.
-These labels are measured by the perceived 'sentiment' of a sentence towards a disability, disabilities, a person with disabilit(y/ies), or people with disabilit(y/ies) (or 'irrelevant' if it did not refer to any disability-related topic).
+These labels are measured by the perceived `sentiment' of a sentence towards a disability, disabilities, a person with disabilit(y/ies), or people with disabilit(y/ies) (or `irrelevant' if it did not refer to any disability-related topic).
 
 Then, the sentiment-score distributions of positive (blue), negative (red), and neutral (green) sentences for each topic were plotted as follows:
 % results for how open-source sentiment scorers compare: plots
@@ -1114,9 +1113,9 @@ Then, the sentiment-score distributions of positive (blue), negative (red), and 
 \noindent
 \includegraphics[width=\textwidth]{eval.png}
 
-From these plots, it is clear that 'vader' and 'openai' are the two most encouraging sentiment scorers on this domain, as they show a clear distinction between the distributions of the 'positive' and 'negative' labels (although with some overlap near the centre), while other scorers produce plots where the values are all over the place.
+From these plots, it is clear that `vader' \cite{VADER} and `openai' \cite{OpenAI} are the two most encouraging sentiment scorers on this domain, as they show a clear distinction between the distributions of `positive' and `negative' labels (although with some overlap near the centre), while other scorers produce plots where the values are all over the place.
 
-Additionally, the means of these distributions, the count of 'positive'-labelled sentences with a positive ($>$0, true positive) and negative ($\le$0, false negative) sentiment scores, the count of 'negative'-labelled sentences with a positive ($>$0, false positive) and negative ($\le$0, true negative) sentiment scores, and accuracy (defined in section \ref{des-sentiment-comparison} as (true positive + true negative) / (all positive + all negative)) are measured.
+Additionally, the means of these distributions, the count of `positive'-labelled sentences with a positive ($>$0, true positive) and negative ($\le$0, false negative) sentiment scores, the count of `negative'-labelled sentences with a positive ($>$0, false positive) and negative ($\le$0, true negative) sentiment scores, and accuracy (defined in section \ref{des-sentiment-comparison} as (true positive + true negative) / (all positive + all negative)) are measured.
 Refer to section \ref{des-sentiment-comparison} for a formal definition of these metrics.
 
 The values of these metrics for each sentiment scorer are shown below: 
@@ -1172,7 +1171,7 @@ Although these results are not conclusive (given the small sample size of senten
 (Additionally, it shows that OpenAI's distribution is slightly skewed positive, while VADER's distribution is slightly skewed negative, based on the mean values and ratio between false positives and false negatives).
 
 To prove whether these accuracy metrics are relevant for the experiment, both VADER and OpenAI's sentiment scorer implementations were implemented in the final pipeline.
-Then, the moving average sentiment score of both scorers were plotted for the topic 'disabled':
+Then, the moving average sentiment score of both scorers were plotted for the topic `disabled':
 
 % show comparison of 'disabled' moving average plot (VADER vs OpenAI)
 \noindent
@@ -1196,7 +1195,7 @@ For the following sections, all sentiment score results mentioned are those scor
 
 \section{Sentiment score: plots and trends} \label{Sentiment score: plots and trends}
 % graphs, tables (mean std dev) relating to sentiment
-For the 'disabled' topic, the VADER sentiment scores of all articles within the dataset (16,411 articles in total within the topic) were plotted with regards to their publication date and source of article (Daily Express, Daily Mail, Guardian) in several visual representations (as defined in section \ref{des-visualisation}).
+For the `disabled' topic, the VADER sentiment scores of all articles within the dataset (16,411 articles in total within the topic) were plotted with regards to their publication date and source of article (Daily Express, Daily Mail, Guardian) in several visual representations (as defined in section \ref{des-visualisation}).
 
 \begin{center}
 	\includegraphics[height=0.5\linewidth]{row-1-col-1.png}
@@ -1230,7 +1229,7 @@ were plotted.
 The year-source plot show that the dataset consist almost entirely of Guardian articles for the years 2000-2006. In 2007 Daily Express articles and in 2010 Daily Mail articles starts to appear, although Guardian articles still predominate between 2007-2013, until in 2014 where Daily Mail articles start to outnumber Guardian articles by roughly 2:1.
 
 The year-sentiment plot show that the sentiment distribution of most news articles lie somewhere between 0.0 and 0.3 from 2000-2009, and between -0.3 and 0.3 (but with more variance/outliers) from 2010-2018. 
-It also showed a slight 'drop' in the sentiment distribution (or an increase of news articles with negative sentiment scores) around 2016.
+It also showed a slight `drop' in the sentiment distribution (or an increase of news articles with negative sentiment scores) around 2016.
 
 The source-sentiment plot show (roughly) that the Guardian has a higher mean and less variance than the Daily Mail, and the Daily Express is barely visible due to the lower sample size of Daily Express articles in the dataset.
 However, the uneven sample size (i.e. more Guardian articles vs Daily Mail or Daily Express articles over the full dataset) makes this visual representation hard to compare. The violin \cite{hintze1998violin} and box-and-whiskers plot \cite{tukey1977exploratory} show a better representation of this source-sentiment data:
@@ -1240,7 +1239,7 @@ However, the uneven sample size (i.e. more Guardian articles vs Daily Mail or Da
 \end{center}
 
 The violin and box-and-whiskers plot show that the Guardian's mean sentiment score (0.074) is higher than the Daily Mail's (-0.104) or the Daily Express's (-0.060).
-Furthermore, the violin plot component show that the Guardian's distribution is more 'compact' around the mean (std. dev. = 0.363), the Mail has a slightly higher variance (std. dev. = 0.386), and the Express has the highest variance (std. dev. = 0.447). A version that shows violin plots for each 2-year period were also plotted (green = Guardian, blue = Daily Express, orange = Daily Mail):
+Furthermore, the violin plot component show that the Guardian's distribution is more `compact' around the mean (std. dev. = 0.363), the Mail has a slightly higher variance (std. dev. = 0.386), and the Express has the highest variance (std. dev. = 0.447). A version that shows violin plots for each 2-year period were also plotted (green = Guardian, blue = Daily Express, orange = Daily Mail):
 
 \begin{center}
 	\includegraphics[width=0.4\linewidth]{row-3-col-2.png}
@@ -1252,9 +1251,9 @@ Furthermore, the violin plot component show that the Guardian's distribution is 
 From the year-sentiment plot showed that there is an apparent trend of declining sentiment scores over time. 
 However, the moving average line plot (where each data point shows the mean sentiment score of 500 consecutive articles, and the last article's date) show that this is not necessarily the case. 
 When only taking into account articles from the same source, the moving average sentiment score stays roughly consistent.
-However, the decreasing trend in 'all' is likely better attributed to the (gradually) decreasing proportion of Guardian articles and the (gradually) increasing proportion of Daily Mail articles in the dataset.
+However, the decreasing trend in `all' is likely better attributed to the (gradually) decreasing proportion of Guardian articles and the (gradually) increasing proportion of Daily Mail articles in the dataset.
 
-The majority of other topics show a similar constant trend for articles within the same source, however this is not always the case. The topic 'autism', for instance, show a positive trend in sentiment scores year-on-year:
+The majority of other topics show a similar constant trend for articles within the same source, however this is not always the case. The topic `autism', for instance, show a positive trend in sentiment scores year-on-year:
 
 \begin{center}
 	\includegraphics[width=0.5\linewidth]{autism.png}
@@ -1312,7 +1311,7 @@ In particular, Guardian \textgreater\space Daily Mail is true for 7 / 12 cases, 
 Comparing these values to the size of each dataset (section \ref{dataset-size}), Lower p-values tends to correlate well with larger sample sizes (i.e. the higher the sample size of both distributions, the higher the chance that there exist a statistically-significant difference).
 
 % do year on year analysis on disabled topic
-Additionally, for the 'disabled' topic, the Mann-Whitney U Test was performed to compare between Daily Mail, Daily Express, and The Guardian for each year's subset between 2007 and 2018 (Before 2007, there were not enough non-Guardian articles in the dataset to make a comparison).
+Additionally, for the `disabled' topic, the Mann-Whitney U Test was performed to compare between Daily Mail, Daily Express, and The Guardian for each year's subset between 2007 and 2018 (Before 2007, there were not enough non-Guardian articles in the dataset to make a comparison).
 The p-values of these comparisons are shown below:
 
 \noindent
@@ -1358,12 +1357,12 @@ Apart from sentiment scores, the pipeline also extracts the term frequency of al
 This information is used to plot trends on keyword usage over time.
 
 A weak custom stemmer that only stems plural and past/future tense forms (but not other suffixes) allows the grouping of equivalent terms together regardless of context, but without losing additional meaning from affixes.
-For example, 'illness' and 'illnesses' are equivalent, but 'ill' and 'illness' are still separate words.
+For example, `illness' and `illnesses' are equivalent, but `ill' and `illness' are still separate words.
 
 Then, for each term, a measure of average term occurrence, which measures the expected number of occurrences of a term in an article for a given year, is computed for each year between 2000 and 2018.
 Refer to section \ref{des-visualisation} for a formal definition of this metric.
 
-With this approach, we measured the year-on-year average term occurrence trends of each key term in the 'disabled' topic, and plotted the results in line graphs (one for each key term):
+With this approach, we measured the year-on-year average term occurrence trends of each key term in the `disabled' topic, and plotted the results in line graphs (one for each key term):
 
 \noindent
 \includegraphics[width=0.5\linewidth]{terms1.png}
@@ -1390,13 +1389,13 @@ These line plots show that, for most key terms, the average term occurrence tren
 While this exact approach has been successfully used to detect cultural changes in British media \cite{lansdall2017content}, in this case the sampled time period is much shorter for significant linguistic changes to have occurred (18 vs 150 years).
 
 In this case, increasing/decreasing year-on-year trends are only visible for a select few terms.
-The usage of the terms 'invalid' and 'handicap(ped)', for example, show a rapidly decreasing trend between 2000 and 2018 on the Guardian.
-'accessible', on the other hand, show an increasing trend on the Guardian.
+The usage of the terms `invalid' and `handicap(ped)', for example, show a rapidly decreasing trend between 2000 and 2018 on the Guardian.
+`accessible', on the other hand, show an increasing trend on the Guardian.
 While the data is less consistent for the Daily Express and Daily Mail, this was likely caused by a lack of data for these sources before 2007 and 2010 respectively, and a smaller overall sample size (especially for the Daily Express).
 
 % also mention source-by-source variations
 Furthermore, these plots also show variations in term usage between different publishers.
-For example, the Guardian refers to 'disability' or 'disabl(ed)' by name consistently more often than the Daily Mail or Daily Express, and uses the terms 'suffers(s) from' consistently less often.
+For example, the Guardian refers to `disability' or `disabl(ed)' by name consistently more often than the Daily Mail or Daily Express, and uses the terms `suffers(s) from' consistently less often.
 
 %% Describe your testing strategy (unit, functional, acceptance testing; and how they are carried out). How were test cases selected?
 % Not Applicable
@@ -1423,12 +1422,12 @@ For example, the Guardian refers to 'disability' or 'disabl(ed)' by name consist
 
 The aim of this project was to explore the feasibility of exploiting existing natural language processing techniques to discover trends with regards to specific topics, with regards to the representation of disabilities and people with disabilities in British online news media.
 The results to this experiment showed that this is feasible.
-By analysing a dataset of 16,411 news articles related to the key terms 'disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible', 'ablism', and 'ableism'; the results in section \ref{Sentiment score: plots and trends} plotted trends in the variation of modelled sentiment scores across three different news publishers (Daily Express, Daily Mail, Guardian), and over time.
-The results of Mann-Whitney U statistical test in section \ref{Sentiment score: statistical comparison of different sources} showed that the difference in sentiment score distributions between the three publishers (Daily Express, Daily Mail, Guardian) are statistically significant for the 'disabled' topic, and showed that 'Guardian \textgreater\space Daily Mail' and 'Guardian \textgreater\space Daily Express' is true for every year between 2010 and 2017.
-Furthermore, the results of analysing average term occurrences of key terms, as shown in section \ref{Key terms: plots and trends}, identified increasing or decreasing trends for the terms 'invalid', 'handicap(ped)', and 'accessibl(e)' for the Guardian; and showed variations in term usage/popularity between different publishers.
+By analysing a dataset of 16,411 news articles related to the key terms `disabled', `disability', `handicapped', `cripple', `invalid', `accessible', `ablism', and `ableism'; the results in section \ref{Sentiment score: plots and trends} plotted trends in the variation of modelled sentiment scores across three different news publishers (Daily Express, Daily Mail, Guardian), and over time.
+The results of Mann-Whitney U statistical test in section \ref{Sentiment score: statistical comparison of different sources} showed that the difference in sentiment score distributions between the three publishers (Daily Express, Daily Mail, Guardian) are statistically significant for the `disabled' topic, and showed that `Guardian \textgreater\space Daily Mail' and `Guardian \textgreater\space Daily Express' is true for every year between 2010 and 2017.
+Furthermore, the results of analysing average term occurrences of key terms, as shown in section \ref{Key terms: plots and trends}, identified increasing or decreasing trends for the terms `invalid', `handicap(ped)', and `accessibl(e)' for the Guardian; and showed variations in term usage/popularity between different publishers.
 
 This experiment was repeated across 11 other topics (as defined in section \ref{topics}), with varying degrees of success. 
-The lower sample size of news articles related to other topics in the dataset, and decreased effectiveness of the filter with regards to the selection of topics with more ambiguous keywords (e.g. 'blind', 'mute', 'paralysed', and 'stutter'), were major factors in the variability of results.
+The lower sample size of news articles related to other topics in the dataset, and decreased effectiveness of the filter with regards to the selection of topics with more ambiguous keywords (e.g. `blind', `mute', `paralysed', and `stutter'), were major factors in the variability of results.
 The full results of the experiment for all 12 topics are available in the Appendix.
  
 Furthermore, the experiment showed that it was feasible to collect and analyse a large dataset of 305,185 news articles, reduced to 48,967 articles after filtering, within a reasonable time frame (approximately one week) and consumer-grade hardware (Intel i7-6700HQ CPU @ 2.60GHz, NVIDIA GeForce GTX 1060 GPU, 200 Mbit/s download speed).
@@ -1447,10 +1446,10 @@ This solution achieved the project's goals sufficiently as a proof of concept, a
 % Choice of technologies (what's good e.g. Python, range of libraries, plotting, etc.; what can be improved i.e. try other methods e.g. topic models for filtering, inconsistency of models used e.g. stemming with NLTK for filtering vs lemmatising with SpaCy for rule-based sentence matching)
 The choice of natural language processing technologies and techniques, extracted features, statistical metrics, and visualisation tools are sufficient, and achieved results, but leaves room for further improvement.
 The main limitation in this research was a lack of labelled data for both filtering on-topic/off-topic articles and sentiment scoring, which led to inconsistencies in both aspects.
-In particular, the filter had issues with ambiguous terms such as 'blind', 'mute', 'paralysed', and 'stutter'; a supervised filter may be able to overcome this issue by taking the word's context in the sentence into account (for example, by also evaluating other words in the sentence), and also provide better evaluation of filter accuracy. 
+In particular, the filter had issues with ambiguous terms such as `blind', `mute', `paralysed', and `stutter'; a supervised filter may be able to overcome this issue by taking the word's context in the sentence into account (for example, by also evaluating other words in the sentence), and also provide better evaluation of filter accuracy. 
 Given this constraint, the filter worked adequately well to prepare the dataset for the experiment, and limited sampling of on-topic/off-topic articles showed that the approach was sufficiently accurate for the majority of topics.
 
-Without labelled data for sentiment scoring, the only possible options were to use generalised sueprvised models trained on other domains, or to use a less complex model based on rule matching.
+Without labelled data for sentiment scoring, the only possible options were to use generalised supervised models trained on other domains, or to use a less complex model based on rule matching.
 It was found that a less complex model based on rule matching (VADER \cite{VADER}) outperformed advanced supervised models based on statistical classifiers or neural networks trained on different domains.
 However, VADER is still highly inconsistent in this domain (with an accuracy of 0.789), and although it was sufficient to discover trends in this experiment, it is likely that domain-specific supervised model would outperform it.
 With a more consistent sentiment scorer, it is likely that the variance of sentiment scores within subsets would be lower, and the trend lines generated in data visualisation would be more consistent.
@@ -1473,7 +1472,7 @@ However, one of the neural network based models (OpenAI \cite{OpenAI}) came clos
 Thus, if an adequately large dataset of labelled sentences (likely \textgreater10,000 sentences would be required) could be compiled for this domain, future work could use this dataset to train a supervised model to improve the accuracy of the sentiment scorer used in this experiment.
 
 With a more accurate and consistent sentiment scorer, it is likely that the variance of sentiment scorers within subsets would be lower, and it would be possible to derive clearer trends and obtain statistically-significant comparisons on subsets with lower sample sizes (e.g. smaller time intervals).
-Similarly, a domain-specific supervised filter could be used to improve filtering accuracy and reduce off-topic articles for trickier topics with more ambiguous terms, such as 'blind' or 'mute'.
+Similarly, a domain-specific supervised filter could be used to improve filtering accuracy and reduce off-topic articles for trickier topics with more ambiguous terms, such as `blind' or `mute'.
 
 % Expand sources - Develop API where others can use and adapt the code, change topics / keywords / key phrases / query terms, add/change sources by developing their own scrapers (with an interface for the scraper), document code and improve code readability and output file structure, output sample on-topic/off-topic articles to help them set rank threshold, maybe even an API to provide their own sentiment model(s) as parameter given an interface
 Another potential application is to develop a public interface that allow users to retrieve the results of analyses performed in this experiment for other domains, given a list of topics (key terms and query terms) and/or an existing text corpora provided by the user.
