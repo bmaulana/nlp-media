@@ -113,9 +113,9 @@ While the approach showed promise in performing quantitative analysis upon large
 % Talk about NLP
 Natural language processing (NLP) encompasses a wide range of computational techniques for machine understanding of human (natural) language that are often used alongside each other.
 The review article \cite{cambria2014jumping} defines natural language processing as `a theory-motivated range of computational techniques for the automatic analysis and representation of human language.'
-The techniques that fall under the NLP umbrella include word tokenisation, probabilistic language modelling, translation, part-of-speech parsing, sentiment analysis (or opinion mining), text classification/categorisation, and topic modelling, among other things. % todo cite
-The computational models used in NLP range from simple rule-based models (e.g. splitting a sentence on whitespace to tokenise words) to statistical machine learning and deep learning models. 
-Applications of NLP are used in everyday technologies, for example, information retrieval for search engines such as Google and Bing, and categorisation and topic modelling for recommendation engines used to suggest `similar' articles. % todo cite
+The techniques that fall under the NLP umbrella include text processing (tokenisation), text classification, information extraction (e.g. entity recognition), sentence structure analysis (e.g. part-of-speech parsing), and sentiment analysis (or opinion mining) \cite{Nltk, liu2012sentiment}.
+The computational models used in NLP range from simple rule-based models (e.g. splitting a sentence on whitespace to tokenise words) to statistical machine learning and deep learning models \cite{awesome-sentiment-analysis}. 
+% Applications of NLP are used in everyday technologies, for example, information retrieval for search engines such as Google and Bing, and categorisation and topic modelling for recommendation engines used to suggest `similar' articles. % todo cite or remove
 
 An obvious advantage of NLP is that machines can process vast bodies of human-created literature (books, articles, posts, e-mails, messages, etc.) much faster than humans can, processing thousands or millions of documents per second. 
 This allows for high-level quantitative analyses of all documents in a vast corpora for a given domain to be feasible, which can uncover information previously inaccessible by only reading and generalising from a small sample of documents.
@@ -123,8 +123,9 @@ For example, this level of quantitative analysis can uncover trends and patterns
 
 % Other work in using NLP for media analysis
 Various other studies have attempted to utilise NLP to perform high-level analyses in the domain of news media.
-The research done in \cite{lansdall2017content} assembled a vast corpus of regional newspapers in the United Kingdom spanning 150 years to detect long-term patterns of cultural change (e.g. increase of female representation in the news, or when trains overtook horses for transportation) by analysing n-gram trends and named entities. 
-More specifically, in the domain of media representation of specified groups of people, studies such as \cite{waseem2016you} has attempted to use features extracted using NLP (such as n-grams and part-of-speech tags) to classify racist and sexist posts in social media, although there is still a research gap in this area (especially for news articles, and/or relating to specific groups, such as people with (specific) disabilities or mental illnesses).
+A past study assembled a vast corpus of regional newspapers in the United Kingdom spanning 150 years to detect long-term patterns of cultural change (e.g. increase of female representation in the news, or when trains overtook horses for transportation) by analysing $n$-gram trends and named entities \cite{lansdall2017content}. 
+More specifically, in the domain of media representation of particular groups of people, studies such as \cite{waseem2016you} has attempted to use features extracted using NLP (such as $n$-grams and part-of-speech tags) to classify racist and sexist posts in social media.
+However, there are still a research gap in this area (especially for news articles, and/or relating to specific groups, such as people with disabilities).
 % Just give a short summary, expand this later in Chapter 2
 
 % Why is it interesting & what the challenges are
@@ -233,14 +234,14 @@ An automated script can be used to collect news articles published on the Intern
 Several studies has taken advantage of this approach to carry a more complete analysis of textual corpora. 
 For example, \cite{lansdall2017content} assembled a corpus of 35.9 million news articles from 120 publishers in the United Kingdom between 1800 and 1950, representing 14\% of all news articles published in the United Kingdom over that period.
 With this approach, the researchers were able to extract quantitative time-series information with regards to cultural trends as present in 35.9 million British news articles over the 150-year period.
-This amount of large time-series information (represented as n-grams and named entities) allowed them to discover macroscopic cultural trends. 
-By analysing and comparing word (n-gram) trends across various topics, the researchers were able to identify trends that reflect cultural shifts e.g. `train' increasing in popularity and overtaking `horse' around 1900, or `labour party' overtaking `conservative party' and `liberal party' in news coverage from the 1920s onward.
+This amount of large time-series information (represented as $n$-grams and named entities) allowed them to discover macroscopic cultural trends. 
+By analysing and comparing word ($n$-gram) trends across various topics, the researchers were able to identify trends that reflect cultural shifts e.g. `train' increasing in popularity and overtaking `horse' around 1900, or `labour party' overtaking `conservative party' and `liberal party' in news coverage from the 1920s onward.
 Additionally, they also used entity recognition to extract named entities from articles and considered trends based on known information about these named entities, such as the proportion of female vs male entities, categories of entities (e.g. politicians, writers, etc.), and age of these entities.
 They also considered the geographical location of the publication to see how word usage trends (e.g. `british' vs `english') differ based on location.
 
 \cite{lansdall2017content}'s study was based on prior discussions and studies on the potential of exploiting large text corpora to detect macroscopic, long-term cultural changes. 
 \cite{michel2011quantitative} was one of the first studies to suggest this approach.
-In this seminal study, a corpus of 5 million digitised English-language books published over 200 years (or about 4\% of all books ever published), provided by Google's effort to digitise books, were analysed to extract how often a given n-gram was used over time. (This data is available on \url{http://www.culturomics.org/})
+In this seminal study, a corpus of 5 million digitised English-language books published over 200 years (or about 4\% of all books ever published), provided by Google's effort to digitise books, were analysed to extract how often a given $n$-gram was used over time. (This data is available on \url{http://www.culturomics.org/})
 This information is then used to analyse trends in language: the size of the English lexicon, regularisation of English verbs (from `irregular' suffixes to `-ed'), or how quickly years (e.g. `1950') decline in use.
 Influenced by \cite{michel2011quantitative}, several other studies has been published adopting a similar approach: 
 \begin{itemize}
@@ -253,9 +254,9 @@ However, there were also criticism of this approach, such that it ignored semant
 
 There has been some progress in applying NLP more specifically in the domain of how (specific) groups of people are represented in the media:
 \begin{itemize}
-	\item A study has attempted to extract features (such as n-grams and part-of-speech tags) using NLP to classify racist and sexist posts in social media, providing annotations to 6,909 tweets \cite{waseem2016you}.
+	\item A study has attempted to extract features (such as $n$-grams and part-of-speech tags) using NLP to classify racist and sexist posts in social media, providing annotations to 6,909 tweets \cite{waseem2016you}.
 	\item Another study explored potential linguistic markers of schizophrenia in social media from a dataset of 174 users with self-reported schizophrenia and up to 3,200 tweets per user, and control users in a 50:50 split.
-		They used a support vector machine (SVM) approach over features based on lexicon-based approaches (i.e. a list of mental health related keywords), latent dirichlet allocation (LDA), Brown clustering, character n-grams, and perplexity \cite{mitchell2015quantifying}.
+		They used a support vector machine (SVM) approach over features based on lexicon-based approaches (i.e. a list of mental health related keywords), latent dirichlet allocation (LDA), Brown clustering, character $n$-grams, and perplexity \cite{mitchell2015quantifying}.
 \end{itemize}
 However, there is still a visible research gap in this area, for using computational NLP approaches specifically for news articles and/or with regards to specific groups, such as people with disabilities (or a specific disability).
 
@@ -304,7 +305,7 @@ Similarly, statistical analysis and data visualisation is performed using genera
 This section will cover the technical tools researched and used for all listed components regardless.
 
 NLP covers three main `curves' or areas:  syntax, semantics, and pragmatics (narratives, understanding). 
-Syntax specifies the way symbols (words, terms, tokens, or n-grams) and groups of symbols are arranged and whether they are well-formed in an expression, whereas semantics specifies what these expressions mean, and pragmatics specifies contextual information \cite{cambria2014jumping}.
+Syntax specifies the way symbols (words, terms, tokens, or $n$-grams) and groups of symbols are arranged and whether they are well-formed in an expression, whereas semantics specifies what these expressions mean, and pragmatics specifies contextual information \cite{cambria2014jumping}.
 Contemporary (or `traditional') approaches to NLP mainly focus on syntactic analysis, due to the relative ease of extracting syntactic features of text such as term frequency, word co-occurrence, and part-of-speech tags, compared to extracting logical expressions and networks necessary for semantic analysis.
 However, syntactic analysis is much more limited as it often misses information such as the (semantic) context of a word (e.g. ``one'' in ``there's no one there'' (referring to a person) vs ``we have only one car'' (referring to a quantity)).
 This paper will focus on mainly syntactic techniques and features, as these are more relevant to this domain of high-level topic matching and sentiment analysis that is feasible with current technology at this scale.
@@ -366,7 +367,7 @@ The particular sentiment analysis implementations that have been explored in thi
 \begin{itemize}
 	\item VADER is a parsimonious rule-based model that scores the sentiment of a given sentence, based on the presence of `sentiment lexicons' (a list of lexical features common to sentiment expression, such as `good' and `bad', including slang words, emoticons, and acronyms), and rules such as negations (e.g. `not good') and increased sentiment intensity given emphasis such as punctuation, capitalisation, and degree modifiers (e.g. `very') \cite{VADER}.
 	\item xiaohan2012's `twitter-sent-dnn' repository trains a convolutional neural network model with dynamic k-max pooling (DCNN) for modelling (real-valued sentiment scores of) sentences.
-		The sentence model properties considered are the word and n-gram order, and induced feature graph (generated by the DCNN).
+		The sentence model properties considered are the word and $n$-gram order, and induced feature graph (generated by the DCNN).
 		It was trained on a dataset of 1.6 million tweets with emoticon-based labels. \cite{kalchbrennerACL2014}
 	\item kevincobain2000's `sentiment\_classifier' repository trains a supervised machine learning model based on a Na\"{i}ve Bayes and Maximum Entropy Classifier to transform a sentence to positive and negative (real-valued) sentiment scores.
 		It uses bigrams as features, implements Word Sense Disambiguation using wordnet \cite{banerjee2002adapted} to tranform bigrams to `senses', and considers word occurrence statistics from nltk's movie review corpus.
@@ -885,7 +886,7 @@ Then, it loads an arbitrarily-sized sample of relevant sentences for each source
 Every sentence in the sampled are then scored using 7 open-source sentiment analysis implementations that were explored in section \ref{tc-sentiment}:
 \begin{itemize}
 	\item VADER \cite{VADER}, a simple rule-based model that scores sentences based on the presence of `sentiment lexicons' (a list of sentiment-related words, emoticons, and acronyms), and rules such as negations and emphasis (e.g. punctuation, capitalisation, `very').
-	\item xiaohan2012's `twitter-sent-dnn' repository, which provides a convolutional neural 	network model with dynamic k-max pooling (DCNN) using word and n-gram order as `features', trained on a dataset of 1.6 million tweets with emoticon-based labels. 
+	\item xiaohan2012's `twitter-sent-dnn' repository, which provides a convolutional neural 	network model with dynamic k-max pooling (DCNN) using word and $n$-gram order as `features', trained on a dataset of 1.6 million tweets with emoticon-based labels. 
 		It is an implementation of \cite{kalchbrennerACL2014}.
 	\item kevincobain2000's `sentiment\_classifier' repository \cite{kevincobain}, which provides a supervised machine learning model based on a Na\"{i}ve Bayes and Maximum Entropy Classifier, performs Word Sense Disambiguation \cite{banerjee2002adapted}, and uses bigrams as features (weighted by word occurrence statistics).
 		Its training data is a mixture of nltk's movie review corpus, Twitter posts, and Amazon customer reviews data.
