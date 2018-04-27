@@ -592,8 +592,7 @@ The high-level design of the pipeline and its main components are defined as fol
 
 \vspace{0.5em}
 \noindent
-\includegraphics[width=\textwidth]{overall-design.png}
-% todo This diagram makes in look like the filtering/extraction/sentiment was different for each data source. Fix this
+\includegraphics[width=\textwidth]{overall-design2.png}
 
 In this experiment, the pipeline is ran once for each source and topic, generating a dataset of all articles for the specified topic from the source with all extracted features, stored in a file.
 The `plot' component then loads these files and combines the dataset of all articles for every source within the same topic, and produces various plots to show trends within the topic, and statistical metrics for each possible subset within the topic.
@@ -642,7 +641,7 @@ The final list of topics relevant to disabilities and people with disabilities, 
 	\hline
 	`deaf' & `deaf', `deafness', `hearing impaired', `hard of hearing', `hearing loss' & `deaf', `deafness', `hearing impairment', `hard of hearing', `hearing impaired' \\ 
 	\hline
-	`developmental delay' & `developmental delay', `developmental disability', `developmental disorder', `learning disability', `slow learner', `retardation', `intellectual disability' & `developmental delay', `developmental disability', `developmental disorder', `learning disability' \\ 
+	`developmental delay' & `developmental delay', `developmental disability', `developmental disorder', `learning disability', `slow learner', `intellectual disability' & `developmental delay', `developmental disability', `developmental disorder', `learning disability' \\ 
 	\hline
 	`dyslexia' & `dyslexia', `dyslexic' & `dyslexia', `dyslexic' \\ 
 	\hline
@@ -1006,7 +1005,7 @@ These metrics are saved to an output text file, unique to each topic.
 It also attempts to compare whether the sentiment scores of articles published by a source is significantly higher than the sentiment scores of articles published by another source. 
 The Mann-Whitney U Test \cite{mann1947test} is a non-parametric statistical test that measures the null hypothesis that `given a randomly-selected value from a distribution, and another randomly-selected value from another distribution, the first value is equally likely to be less or greater than the second value'.
 If the null hypothesis holds true, then there are no statistically significant difference between the two distributions.
-The Mann-Whitney U Test returns the U statistic and a p-value between 0 and 1, which corresponds to how likely the null hypothesis is to be true; the null hypothesis is rejected if the p-value is lower than 0.05.
+The Mann-Whitney U Test returns the U statistic and a $p$-value between 0 and 1, which corresponds to how likely the null hypothesis is to be true; the null hypothesis is rejected if the $p$-value is lower than 0.05.
 This test is performed to compare the subset of all articles published by each source to the subset of all articles published by each other source; first in general (i.e. compare the sentiment score distribution of all articles published by Source A to the distribution of all articles published by Source B), and also year-by-year (i.e. compare the sentiment score distribution of all articles published in year 20XX by Source A to the distribution of all articles published in year 20XX by Source B). These test results are saved to the same output text file.
 
 Apart from information relating to sentiment score, this component also attempts to plot trends regarding the usage of key terms (used to describe disabilities or people with disabilities) over time.
@@ -1050,7 +1049,7 @@ This focus on one topic for the whole of Chapter \ref{Results Evaluation} helps 
 Furthermore, the full result plots for all topics will be available in the Appendix.
 
 At several points in this chapter, results from other topics will also be discussed where it would add to the discussion.
-Information from other topics will be explicitly mentioned (e.g. `for the ... topic') such that the reader understands where the data does not refer to the `disabled' topic.
+Information from other topics will be explicitly mentioned (e.g. ``For topics other than `disabled','') such that the reader understands where the data does not refer to the `disabled' topic.
 
 % Explain the 'disabled' dataset first: provide a table with no. of articles for each source in each year.
 Within the `disabled' topic, the (post-filtering) sample size that was obtained for each year between 2000 and 2018 is as follows:
@@ -1266,7 +1265,7 @@ However, the moving average line plot (where each data point shows the mean sent
 When only taking into account articles from the same source, the moving average sentiment score stays roughly consistent.
 However, the decreasing trend in `all' is likely better attributed to the (gradually) decreasing proportion of Guardian articles and the (gradually) increasing proportion of Daily Mail articles in the dataset.
 
-The majority of other topics show a similar constant trend for articles within the same source, however this is not always the case. The topic `autism', for instance, show a positive trend in sentiment scores year-on-year:
+For topics other than `disabled', the majority show a similar constant trend for articles within the same source, although this is not always the case. The topic `autism', for instance, show a positive trend in sentiment scores year-on-year:
 
 \begin{center}
 	\includegraphics[width=0.5\linewidth]{autism.png}
@@ -1280,11 +1279,11 @@ Note also that the Daily Express is not plotted for this topic, due to the sampl
 To test whether the differences between the distributions of each source are statistically significant, the Mann-Whitney U Test \cite{mann1947test} was invoked.
 The Mann-Whitney U Test is a mathematical function that tests the null hypothesis that given a randomly-selected value from a distribution, and a second randomly-selected value from a second distribution, the first value is equally likely to be less than or greater than the second value.
 If the null hypothesis holds true, then there is no statistically significant difference between the two distributions.
-The Mann-Whitney U Test function returns a p-value score, which is a measure of the probability that the null hypothesis is correct.
-In this experiment, two distributions are considered significantly different if the p-value returned by the Mann-Whitney U Test is lower than 0.05.
+The Mann-Whitney U Test function returns a $p$-value score, which is a measure of the probability that the null hypothesis is correct.
+In this experiment, two distributions are considered significantly different if the $p$-value returned by the Mann-Whitney U Test is lower than 0.05.
 
 % Table of Mann-Whitney U scores for each topic and source comparisons, overlap with n_articles for each source
-Below is a table of p-values from Mann-Whitney U Test results for every source combination in the dataset, for every topic:
+Below is a table of $p$-values from Mann-Whitney U Test results for every source combination in the dataset, for every topic (including topics other than `disabled'):
 
 \noindent
 \begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }
@@ -1321,11 +1320,11 @@ Below is a table of p-values from Mann-Whitney U Test results for every source c
 This data shows that a statistically-significant distinction can be proven between the sentiment score distributions of two sources for 17 / 36 of cases.
 (Cases where there exists a distinction between the two distributions are highlighted in bold)
 In particular, Guardian \textgreater\space Daily Mail is true for 7 / 12 cases, Guardian \textgreater\space Daily Express is true for 7 / 12 cases, Daily Express \textgreater\space Daily Mail is true for 1 / 12 cases, and Daily Mail \textgreater\space Daily Express is true for 2 / 12 cases.
-Comparing these values to the size of each dataset (section \ref{dataset-size}), Lower p-values tends to correlate well with larger sample sizes (i.e. the higher the sample size of both distributions, the higher the chance that there exist a statistically-significant difference).
+Comparing these values to the size of each dataset (section \ref{dataset-size}), Lower $p$-values tends to correlate well with larger sample sizes (i.e. the higher the sample size of both distributions, the higher the chance that there exist a statistically-significant difference).
 
 % do year on year analysis on disabled topic
 For the `disabled' topic, the Mann-Whitney U Test was also performed to compare between Daily Mail, Daily Express, and The Guardian for each year's subset between 2007 and 2018 (Before 2007, there were not enough non-Guardian articles in the dataset to make a comparison).
-The p-values of these comparisons are shown below:
+The $p$-values of these comparisons are shown below:
 
 \noindent
 \begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }
@@ -1497,8 +1496,609 @@ Such a solution would provide researchers with the tools to perform similar rese
 
 \printbibliography[heading=bibintoc]
 
-\chapter{Other appendices, e.g., code listing}  % appendix A
-\emph{Put your appendix sections here}
+\chapter{Appendix: All results}  % appendix A
+
+\section{Topic: `disabled'}
+Key Terms: `disabled', `disability', `handicapped', `cripple', `invalid', `accessible', `ablism', `ableism', `differently abled'
+
+\noindent Query Terms: `disabled', `disability', `ablism', `ableism', `differently abled'
+
+\subsection{Sentiment Score Plots}
+\includegraphics[width=\textwidth]{raw/disabled.png}
+
+\subsection{Mann-Whitney U Test Results}
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	All & 2.66 * 10\textsuperscript{-167} & 2.29 * 10\textsuperscript{-35} & 0.000108  \\
+	\hline
+	2007 & N/A & 5.24 * 10\textsuperscript{-6} & N/A  \\
+	\hline
+	2008 & N/A & 0.0739 & N/A  \\
+	\hline
+	2009 & N/A & 2.24 * 10\textsuperscript{-5} & N/A  \\
+	\hline
+	2010 & 6.00 * 10\textsuperscript{-7} & 6.89 * 10\textsuperscript{-6} & 0.360 **  \\
+	\hline
+	2011 & 5.73 * 10\textsuperscript{-16} & 9.73 * 10\textsuperscript{-5} & 0.0355  \\
+	\hline
+	2012 & 4.44 * 10\textsuperscript{-17} & 0.00371 & 0.000739  \\
+	\hline
+	2013 & 5.03 * 10\textsuperscript{-16} & 0.00351 & 0.0827  \\
+	\hline
+	2014 & 1.27 * 10\textsuperscript{-9} & 0.00208 & 0.321  \\
+	\hline
+	2015 & 6.87 * 10\textsuperscript{-17} & 0.00855 & 0.00718  \\
+	\hline
+	2016 & 4.63 * 10\textsuperscript{-26} & 4.74 * 10\textsuperscript{-6} & 0.0576  \\
+	\hline
+	2017 & 3.39 * 10\textsuperscript{-13} & 0.00244 & 0.0867  \\
+	\hline
+	2018* & 0.122 & 0.120 & 0.328  \\
+	\hline
+\end{tabu}
+($p$-values)
+
+\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+\noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+\subsection{Keyword Trend Plots}
+\includegraphics[width=\textwidth]{raw/disabled-terms.png}
+
+\section{Topic: `autism'}
+Key Terms: `autism', `autistic', `asperger\textbackslash's', `ASD'
+
+\noindent Query Terms: `autism', `autistic', `asperger\textbackslash's', `ASD'
+
+\subsection{Sentiment Score Plots}
+\includegraphics[width=\textwidth]{raw/autism.png}
+
+\subsection{Mann-Whitney U Test Results}
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	\hline
+	2007 & TODO & TODO & TODO  \\
+	\hline
+	2008 & TODO & TODO & TODO  \\
+	\hline
+	2009 & TODO & TODO & TODO  \\
+	\hline
+	2010 & TODO & TODO & TODO  \\
+	\hline
+	2011 & TODO & TODO & TODO  \\
+	\hline
+	2012 & TODO & TODO & TODO  \\
+	\hline
+	2013 & TODO & TODO & TODO  \\
+	\hline
+	2014 & TODO & TODO & TODO  \\
+	\hline
+	2015 & TODO & TODO & TODO  \\
+	\hline
+	2016 & TODO & TODO & TODO  \\
+	\hline
+	2017 & TODO & TODO & TODO  \\
+	\hline
+	2018* & TODO & TODO & TODO  \\
+	\hline
+\end{tabu}
+($p$-values)
+
+\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+\noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+\subsection{Keyword Trend Plots}
+\includegraphics[width=\textwidth]{raw/autism-terms.png}
+
+\section{Topic: `blind'}
+Key Terms: `blind', `blindness', `blindism', `visual impairment', `partially sighted', `vision loss'
+
+\noindent Query Terms: `blind', `blindness', `visual impairment', `partially sighted', `visually impaired'
+
+\subsection{Sentiment Score Plots}
+\includegraphics[width=\textwidth]{raw/blind.png}
+
+\subsection{Mann-Whitney U Test Results}
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	\hline
+	2007 & TODO & TODO & TODO  \\
+	\hline
+	2008 & TODO & TODO & TODO  \\
+	\hline
+	2009 & TODO & TODO & TODO  \\
+	\hline
+	2010 & TODO & TODO & TODO  \\
+	\hline
+	2011 & TODO & TODO & TODO  \\
+	\hline
+	2012 & TODO & TODO & TODO  \\
+	\hline
+	2013 & TODO & TODO & TODO  \\
+	\hline
+	2014 & TODO & TODO & TODO  \\
+	\hline
+	2015 & TODO & TODO & TODO  \\
+	\hline
+	2016 & TODO & TODO & TODO  \\
+	\hline
+	2017 & TODO & TODO & TODO  \\
+	\hline
+	2018* & TODO & TODO & TODO  \\
+	\hline
+\end{tabu}
+($p$-values)
+
+\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+\noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+\subsection{Keyword Trend Plots}
+\includegraphics[width=\textwidth]{raw/blind-terms.png}
+
+\section{Topic: `cerebral palsy'}
+Key Terms: `cerebral palsy', `spastic'
+
+\noindent Query Terms: `cerebral palsy', `spastic'
+
+\subsection{Sentiment Score Plots}
+\includegraphics[width=\textwidth]{raw/cerebral-palsy.png}
+
+\subsection{Mann-Whitney U Test Results}
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	\hline
+	2007 & TODO & TODO & TODO  \\
+	\hline
+	2008 & TODO & TODO & TODO  \\
+	\hline
+	2009 & TODO & TODO & TODO  \\
+	\hline
+	2010 & TODO & TODO & TODO  \\
+	\hline
+	2011 & TODO & TODO & TODO  \\
+	\hline
+	2012 & TODO & TODO & TODO  \\
+	\hline
+	2013 & TODO & TODO & TODO  \\
+	\hline
+	2014 & TODO & TODO & TODO  \\
+	\hline
+	2015 & TODO & TODO & TODO  \\
+	\hline
+	2016 & TODO & TODO & TODO  \\
+	\hline
+	2017 & TODO & TODO & TODO  \\
+	\hline
+	2018* & TODO & TODO & TODO  \\
+	\hline
+\end{tabu}
+($p$-values)
+
+\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+\noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+\subsection{Keyword Trend Plots}
+\includegraphics[width=\textwidth]{raw/cerebral-palsy-terms.png}
+
+\section{Topic: `deaf'}
+Key Terms: `deaf', `deafness', `hearing impaired', `hard of hearing', `hearing loss'
+
+\noindent Query Terms: `deaf', `deafness', `hearing impairment', `hard of hearing', `hearing impaired'
+
+\subsection{Sentiment Score Plots}
+\includegraphics[width=\textwidth]{raw/deaf.png}
+
+\subsection{Mann-Whitney U Test Results}
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	\hline
+	2007 & TODO & TODO & TODO  \\
+	\hline
+	2008 & TODO & TODO & TODO  \\
+	\hline
+	2009 & TODO & TODO & TODO  \\
+	\hline
+	2010 & TODO & TODO & TODO  \\
+	\hline
+	2011 & TODO & TODO & TODO  \\
+	\hline
+	2012 & TODO & TODO & TODO  \\
+	\hline
+	2013 & TODO & TODO & TODO  \\
+	\hline
+	2014 & TODO & TODO & TODO  \\
+	\hline
+	2015 & TODO & TODO & TODO  \\
+	\hline
+	2016 & TODO & TODO & TODO  \\
+	\hline
+	2017 & TODO & TODO & TODO  \\
+	\hline
+	2018* & TODO & TODO & TODO  \\
+	\hline
+\end{tabu}
+($p$-values)
+
+\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+\noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+\subsection{Keyword Trend Plots}
+\includegraphics[width=\textwidth]{raw/deaf-terms.png}
+
+\section{Topic: `developmental delay'}
+Key Terms: `developmental delay', `developmental disability', `developmental disorder', `learning disability', `slow learner', `intellectual disability'
+
+\noindent Query Terms: `developmental delay', `developmental disability', `developmental disorder', `learning disability'
+
+\subsection{Sentiment Score Plots}
+\includegraphics[width=\textwidth]{raw/developmental-delay.png}
+
+\subsection{Mann-Whitney U Test Results}
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	\hline
+	2007 & TODO & TODO & TODO  \\
+	\hline
+	2008 & TODO & TODO & TODO  \\
+	\hline
+	2009 & TODO & TODO & TODO  \\
+	\hline
+	2010 & TODO & TODO & TODO  \\
+	\hline
+	2011 & TODO & TODO & TODO  \\
+	\hline
+	2012 & TODO & TODO & TODO  \\
+	\hline
+	2013 & TODO & TODO & TODO  \\
+	\hline
+	2014 & TODO & TODO & TODO  \\
+	\hline
+	2015 & TODO & TODO & TODO  \\
+	\hline
+	2016 & TODO & TODO & TODO  \\
+	\hline
+	2017 & TODO & TODO & TODO  \\
+	\hline
+	2018* & TODO & TODO & TODO  \\
+	\hline
+\end{tabu}
+($p$-values)
+
+\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+\noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+\subsection{Keyword Trend Plots}
+\includegraphics[width=\textwidth]{raw/developmental-delay-terms.png}
+
+\section{Topic: `dyslexia'}
+Key Terms: `dyslexia', `dyslexic'
+
+\noindent Query Terms: `dyslexia', `dyslexic'
+
+\subsection{Sentiment Score Plots}
+\includegraphics[width=\textwidth]{raw/dyslexia.png}
+
+\subsection{Mann-Whitney U Test Results}
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	\hline
+	2007 & TODO & TODO & TODO  \\
+	\hline
+	2008 & TODO & TODO & TODO  \\
+	\hline
+	2009 & TODO & TODO & TODO  \\
+	\hline
+	2010 & TODO & TODO & TODO  \\
+	\hline
+	2011 & TODO & TODO & TODO  \\
+	\hline
+	2012 & TODO & TODO & TODO  \\
+	\hline
+	2013 & TODO & TODO & TODO  \\
+	\hline
+	2014 & TODO & TODO & TODO  \\
+	\hline
+	2015 & TODO & TODO & TODO  \\
+	\hline
+	2016 & TODO & TODO & TODO  \\
+	\hline
+	2017 & TODO & TODO & TODO  \\
+	\hline
+	2018* & TODO & TODO & TODO  \\
+	\hline
+\end{tabu}
+($p$-values)
+
+\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+\noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+\subsection{Keyword Trend Plots}
+\includegraphics[width=\textwidth]{raw/dyslexia-terms.png}
+
+\section{Topic: `epilepsy'}
+Key Terms: `epilepsy', `epileptic', `seizure'
+
+\noindent Query Terms: `epilepsy', `epileptic'
+
+\subsection{Sentiment Score Plots}
+\includegraphics[width=\textwidth]{raw/epilepsy.png}
+
+\subsection{Mann-Whitney U Test Results}
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	\hline
+	2007 & TODO & TODO & TODO  \\
+	\hline
+	2008 & TODO & TODO & TODO  \\
+	\hline
+	2009 & TODO & TODO & TODO  \\
+	\hline
+	2010 & TODO & TODO & TODO  \\
+	\hline
+	2011 & TODO & TODO & TODO  \\
+	\hline
+	2012 & TODO & TODO & TODO  \\
+	\hline
+	2013 & TODO & TODO & TODO  \\
+	\hline
+	2014 & TODO & TODO & TODO  \\
+	\hline
+	2015 & TODO & TODO & TODO  \\
+	\hline
+	2016 & TODO & TODO & TODO  \\
+	\hline
+	2017 & TODO & TODO & TODO  \\
+	\hline
+	2018* & TODO & TODO & TODO  \\
+	\hline
+\end{tabu}
+($p$-values)
+
+\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+\noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+\subsection{Keyword Trend Plots}
+\includegraphics[width=\textwidth]{raw/epilepsy-terms.png}
+
+\section{Topic: `mental illness'}
+Key Terms: `mental illness', `mental health', `mental disability', `mental disorder', `mental issue', `brain injured', `brain injury', `brain damaged', `psychological', `psychiatric', `emotional disorder', `behavioural disorder', `retardation', `intellectual disability', `mentally ill', `mentally disabled', `mentally handicapped'
+
+\noindent Query Terms: `mental illness', `mental health', `mental disorder', `mental disability', `mentally ill', `mentally disabled', `mentally handicapped'
+
+\subsection{Sentiment Score Plots}
+\includegraphics[width=\textwidth]{raw/mental-illness.png}
+
+\subsection{Mann-Whitney U Test Results}
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	\hline
+	2007 & TODO & TODO & TODO  \\
+	\hline
+	2008 & TODO & TODO & TODO  \\
+	\hline
+	2009 & TODO & TODO & TODO  \\
+	\hline
+	2010 & TODO & TODO & TODO  \\
+	\hline
+	2011 & TODO & TODO & TODO  \\
+	\hline
+	2012 & TODO & TODO & TODO  \\
+	\hline
+	2013 & TODO & TODO & TODO  \\
+	\hline
+	2014 & TODO & TODO & TODO  \\
+	\hline
+	2015 & TODO & TODO & TODO  \\
+	\hline
+	2016 & TODO & TODO & TODO  \\
+	\hline
+	2017 & TODO & TODO & TODO  \\
+	\hline
+	2018* & TODO & TODO & TODO  \\
+	\hline
+\end{tabu}
+($p$-values)
+
+\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+\noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+\subsection{Keyword Trend Plots}
+\includegraphics[width=\textwidth]{raw/mental-illness-terms.png}
+
+\includegraphics[width=\textwidth]{raw/mental-illness-terms2.png}
+
+\section{Topic: `mute'}
+Key Terms: `mute', `muteness', `mutism', `cannot speak', `difficulty speaking', `synthetic speech', `non-vocal', `non-verbal'
+
+\noindent Query Terms: `mute', `muteness', `mutism', `non-verbal'
+
+\subsection{Sentiment Score Plots}
+\includegraphics[width=\textwidth]{raw/mute.png}
+
+\subsection{Mann-Whitney U Test Results}
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	\hline
+	2007 & TODO & TODO & TODO  \\
+	\hline
+	2008 & TODO & TODO & TODO  \\
+	\hline
+	2009 & TODO & TODO & TODO  \\
+	\hline
+	2010 & TODO & TODO & TODO  \\
+	\hline
+	2011 & TODO & TODO & TODO  \\
+	\hline
+	2012 & TODO & TODO & TODO  \\
+	\hline
+	2013 & TODO & TODO & TODO  \\
+	\hline
+	2014 & TODO & TODO & TODO  \\
+	\hline
+	2015 & TODO & TODO & TODO  \\
+	\hline
+	2016 & TODO & TODO & TODO  \\
+	\hline
+	2017 & TODO & TODO & TODO  \\
+	\hline
+	2018* & TODO & TODO & TODO  \\
+	\hline
+\end{tabu}
+($p$-values)
+
+\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+\noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+\subsection{Keyword Trend Plots}
+\includegraphics[width=\textwidth]{raw/mute-terms.png}
+
+\section{Topic: `paralysis'}
+Key Terms: `paraplegic', `quadriplegic', `spinal cord', `paraplegia', `quadriplegia', `paralysed', `paralyzed', `paralysis', `crippled', `leg braces', `wheelchair'
+
+\noindent Query Terms: `paraplegic', `quadriplegic', `paraplegia', `quadriplegia', `paralysis'
+
+\subsection{Sentiment Score Plots}
+\includegraphics[width=\textwidth]{raw/paralysis.png}
+
+\subsection{Mann-Whitney U Test Results}
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	\hline
+	2007 & TODO & TODO & TODO  \\
+	\hline
+	2008 & TODO & TODO & TODO  \\
+	\hline
+	2009 & TODO & TODO & TODO  \\
+	\hline
+	2010 & TODO & TODO & TODO  \\
+	\hline
+	2011 & TODO & TODO & TODO  \\
+	\hline
+	2012 & TODO & TODO & TODO  \\
+	\hline
+	2013 & TODO & TODO & TODO  \\
+	\hline
+	2014 & TODO & TODO & TODO  \\
+	\hline
+	2015 & TODO & TODO & TODO  \\
+	\hline
+	2016 & TODO & TODO & TODO  \\
+	\hline
+	2017 & TODO & TODO & TODO  \\
+	\hline
+	2018* & TODO & TODO & TODO  \\
+	\hline
+\end{tabu}
+($p$-values)
+
+\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+\noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+\subsection{Keyword Trend Plots}
+\includegraphics[width=\textwidth]{raw/paralysis-terms.png}
+
+\section{Topic: `speech impairment'}
+Key Terms: `speech impairment', `stutter', `speech disability', `speech disorder', `communication disability', `difficulty speaking', `language impairment', `language disorder', `language disability', `speech impediment', `stammer'
+
+\noindent Query Terms: `speech impairment', `stutter', `speech disorder', `speech impediment'
+
+\subsection{Sentiment Score Plots}
+\includegraphics[width=\textwidth]{raw/speech-impairment.png}
+
+\subsection{Mann-Whitney U Test Results}
+\noindent
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+	\hline
+	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
+	\hline
+	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	\hline
+	2007 & TODO & TODO & TODO  \\
+	\hline
+	2008 & TODO & TODO & TODO  \\
+	\hline
+	2009 & TODO & TODO & TODO  \\
+	\hline
+	2010 & TODO & TODO & TODO  \\
+	\hline
+	2011 & TODO & TODO & TODO  \\
+	\hline
+	2012 & TODO & TODO & TODO  \\
+	\hline
+	2013 & TODO & TODO & TODO  \\
+	\hline
+	2014 & TODO & TODO & TODO  \\
+	\hline
+	2015 & TODO & TODO & TODO  \\
+	\hline
+	2016 & TODO & TODO & TODO  \\
+	\hline
+	2017 & TODO & TODO & TODO  \\
+	\hline
+	2018* & TODO & TODO & TODO  \\
+	\hline
+\end{tabu}
+($p$-values)
+
+\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+
+\noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
+
+\subsection{Keyword Trend Plots}
+\includegraphics[width=\textwidth]{raw/speech-impairment-terms.png}
 
 % \chapter{Test Appendix B}
 

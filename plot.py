@@ -251,7 +251,7 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
         for j in range(len(sources)):
             if i != j:
                 f_out.write(sources[i] + '>' + sources[j] + ': ' +
-                            str(mannwhitneyu(sources_data[i], sources_data[j], alternative='greater')) + '\n')
+                            str(mannwhitneyu(sources_data[i], sources_data[j], alternative='greater')[1]) + '\n')
 
     years = np.array([datetime.datetime(i + 2000, 1, 1, tzinfo=datetime.timezone.utc) for i in range(20)])
     for i in range(len(years)-1):
@@ -265,7 +265,8 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
                         and len(data_in_year[data_in_year[:, 2] == src2]) > 20:
                     f_out.write('\t' + src1 + '>' + src2 + ': ' +
                                 str(mannwhitneyu(data_in_year[data_in_year[:, 2] == src1][:, 1],
-                                                 data_in_year[data_in_year[:, 2] == src2][:, 1], alternative='greater'))
+                                                 data_in_year[data_in_year[:, 2] == src2][:, 1],
+                                                 alternative='greater')[1])
                                 + '\n')
 
     f_out.write('\n')
@@ -361,7 +362,7 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
                 f_out.write('\t' + word + ': ' + str(occurrence) + ' occurrences (' +
                             str(per_article) + ' per article)\n')
 
-                if word not in keywords_stemmed:
+                if word not in keywords_stemmed and word != 'retardation':
                     keywords_stemmed.append(word)
                 if len(keywords_subset) > 10:  # only plot keyword occurrence if sample size for that year > 10
                     if (word, str(source)) in keyword_usage:
@@ -373,10 +374,11 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     f_out.close()
 
     # occurrences per article for each word (y) over time (x), all/DE/DM/Guardian (4 plots)
-    fig, axs = plt.subplots(len(keywords_stemmed), 1, figsize=(5, len(keywords_stemmed) * 5), tight_layout=True)
+    ln = len(keywords_stemmed) // 3 + 1
+    fig, axs = plt.subplots(ln, 3, figsize=(15, ln * 5), tight_layout=True)
     for i in range(len(keywords_stemmed)):
         word = keywords_stemmed[i]
-        ax = axs[i]
+        ax = axs[i // 3, i % 3]
         for src in sources:
             if (word, src) in keyword_usage:
                 x, y = keyword_usage[(word, src)]
