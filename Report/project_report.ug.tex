@@ -1304,13 +1304,13 @@ Below is a table of $p$-values from Mann-Whitney $U$ Test results for every sour
 	\hline
 	Deaf & \textbf{6.30 * 10\textsuperscript{-10}} & 0.141 & 0.0833  \\
 	\hline
-	Developmental Delay & 0.383 & \textbf{0.00179} & \textbf{0.00325 **}  \\
+	Developmental Delay & 0.383 & \textbf{0.00179} & \textbf{0.00326 **}  \\
 	\hline
 	Dyslexia & 0.0740 & 0.362 & 0.464 **  \\
 	\hline
 	Epilepsy & \textbf{3.39 * 10\textsuperscript{-5}} & 0.0579 & 0.322 **  \\
 	\hline
-	Mental Illness & \textbf{3.54 * 10\textsuperscript{-76}} & \textbf{1.52 * 10\textsuperscript{-9}} & 0.102 **  \\
+	Mental Illness & \textbf{3.54 * 10\textsuperscript{-76}} & \textbf{1.51 * 10\textsuperscript{-9}} & 0.102 **  \\
 	\hline
 	Mute & \textbf{6.78 * 10\textsuperscript{-5}} & \textbf{0.0311} & 0.346 ** \\
 	\hline
@@ -1482,13 +1482,13 @@ This could have a substantial impact on how research will be conducted for simil
 Past studies (such as \cite{gold1999media, coverdale2002depictions, jones2009representations, devotta2013representations}) could be revisited using computational approaches to analyse a much larger sample size of articles, to improve the certainty and representativeness of the conclusion and possibly identify trends by varying for independent variables such as the publisher and date published.
 
 % Purpose built sentiment model trained to a a labelled sample: in this analysis vader performed best although it's a very simple model as other, more complex pre-trained models were trained on other domains and is less generalisable. However, OpenAI's model came very close despite this, and a similar approach using deep learning or statistical ML models, trained on a labelled sample of positive/negative/neutral sentences in this domain, would have much improved sentiment score reliability (and thus quality of analyses)
-As mentioned in the previous section, the lack of labelled domain-specific data for filtering (on-topic/off-topic articles) and sentiment scoring (positive/negative sentences).
-One of the goals of this project was to explore general-purpose open-source sentiment scorer implementations, however, it was found that even the more sophisticated statistical classification or neural network models trained on other domains performed worse than a simple rule-based model for the sentiment scoring task.
+As mentioned above, the lack of labelled domain-specific dataset (of sentences from news articles relating to disabilities, labelled with `positive' or `negative') for sentiment scoring limited the sentiment scores' accuracy in this experiment.
+While exploring general-purpose open-source sentiment scorer implementations, it was found that a simple rule-based model outperformed the more sophisticated statistical classification or neural network models for the sentiment scoring task, as they were trained with labelled dataset from other domains.
 However, one of the neural network based models (OpenAI \cite{OpenAI}) came close to the selected model (VADER \cite{VADER}), despite being trained on a completely separate domain (Amazon reviews), which suggest that a domain-specific supervised model would strongly out-perform VADER given sufficient, high-quality training data.
-Thus, if an adequately large dataset of labelled sentences (likely \textgreater10,000 sentences would be required) could be compiled for this domain, future work could use this dataset to train a supervised model to improve the accuracy of the sentiment scorer used in this experiment.
+Thus, if an adequately large dataset of labelled sentences (likely \textgreater10,000 sentences would be required) for this domain could be compiled, future work could use this dataset to train a supervised model to improve the accuracy of the sentiment scorer.
+With a more accurate and more consistent sentiment scorer, it is likely that the variance of sentiment scorers within subsets would be lower, and it would be possible to derive clearer trends and obtain statistically-significant comparisons on subsets with lower sample sizes (e.g. smaller time intervals).
 
-With a more accurate and consistent sentiment scorer, it is likely that the variance of sentiment scorers within subsets would be lower, and it would be possible to derive clearer trends and obtain statistically-significant comparisons on subsets with lower sample sizes (e.g. smaller time intervals).
-Similarly, a domain-specific supervised filter could be used to improve filtering accuracy and reduce off-topic articles for trickier topics with more ambiguous terms, such as `blind' or `mute'.
+Similarly, a supervised filter, trained on a labelled dataset of on-topic/off-topic news articles, would improve filtering accuracy and reduce off-topic articles in the filtered dataset, especially for trickier topics with ambiguous terms such as `blind' or `mute'.
 
 % Expand sources - Develop API where others can use and adapt the code, change topics / keywords / key phrases / query terms, add/change sources by developing their own scrapers (with an interface for the scraper), document code and improve code readability and output file structure, output sample on-topic/off-topic articles to help them set rank threshold, maybe even an API to provide their own sentiment model(s) as parameter given an interface
 Another potential application is to develop a public interface that allow users to retrieve the results of analyses performed in this experiment for other domains, given a list of topics (key terms and query terms) and/or an existing text corpora provided by the user.
@@ -1503,15 +1503,18 @@ Such a solution would provide researchers with the tools to perform similar rese
 
 \chapter{Appendix: All results}  % appendix A
 
+\newpage
 \section{Topic: `disabled'}
 Key Terms: `disabled', `disability', `handicapped', `cripple', `invalid', `accessible', `ablism', `ableism', `differently abled'
 
 \noindent Query Terms: `disabled', `disability', `ablism', `ableism', `differently abled'
 
+\noindent Sample size, n = 16,411
+
 \subsection{Sentiment Score Plots}
 \includegraphics[width=\textwidth]{raw/disabled.png}
 
-\subsection{Mann-Whitney $U$ Test Results}
+\subsection{Mann-Whitney $U$ Test Results ($p$-values)}
 \noindent
 \begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }
 	\hline
@@ -1544,7 +1547,6 @@ Key Terms: `disabled', `disability', `handicapped', `cripple', `invalid', `acces
 	2018* & 0.122 & 0.120 & 0.328  \\
 	\hline
 \end{tabu}
-($p$-values)
 
 \noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
 
@@ -1553,98 +1555,88 @@ Key Terms: `disabled', `disability', `handicapped', `cripple', `invalid', `acces
 \subsection{Keyword Trend Plots}
 \includegraphics[width=\textwidth]{raw/disabled-terms.png}
 
+\newpage
 \section{Topic: `autism'}
 Key Terms: `autism', `autistic', `asperger\textbackslash's', `ASD'
 
 \noindent Query Terms: `autism', `autistic', `asperger\textbackslash's', `ASD'
 
+\noindent Sample size, n = 3,161
+
 \subsection{Sentiment Score Plots}
 \includegraphics[width=\textwidth]{raw/autism.png}
 
-\subsection{Mann-Whitney $U$ Test Results}
+\subsection{Mann-Whitney $U$ Test Results ($p$-values)}
 \noindent
-\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  
 	\hline
 	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
 	\hline
-	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	All & 3.00 * 10\textsuperscript{-12} & 0.137 & 0.184  \\
 	\hline
-	2007 & TODO & TODO & TODO  \\
+	2010 & 0.100 & N/A & N/A  \\
 	\hline
-	2008 & TODO & TODO & TODO  \\
+	2011 & 0.0649 & N/A & N/A  \\
 	\hline
-	2009 & TODO & TODO & TODO  \\
+	2012 & 0.000150 & N/A & N/A  \\
 	\hline
-	2010 & TODO & TODO & TODO  \\
+	2013 & 1.52 * 10\textsuperscript{-5} & N/A & N/A  \\
 	\hline
-	2011 & TODO & TODO & TODO  \\
+	2014 & 0.00162 & N/A & N/A  \\
 	\hline
-	2012 & TODO & TODO & TODO  \\
+	2015 & 0.000508 & N/A & N/A  \\
 	\hline
-	2013 & TODO & TODO & TODO  \\
+	2016 & 0.00760 & 0.0121 & 0.0432 **  \\
 	\hline
-	2014 & TODO & TODO & TODO  \\
-	\hline
-	2015 & TODO & TODO & TODO  \\
-	\hline
-	2016 & TODO & TODO & TODO  \\
-	\hline
-	2017 & TODO & TODO & TODO  \\
-	\hline
-	2018* & TODO & TODO & TODO  \\
+	2017 & 0.000114 & 0.0667 & 0.352  \\
 	\hline
 \end{tabu}
-($p$-values)
-
-\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
 
 \noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
 
 \subsection{Keyword Trend Plots}
 \includegraphics[width=\textwidth]{raw/autism-terms.png}
 
+\newpage
 \section{Topic: `blind'}
 Key Terms: `blind', `blindness', `blindism', `visual impairment', `partially sighted', `vision loss'
 
 \noindent Query Terms: `blind', `blindness', `visual impairment', `partially sighted', `visually impaired'
 
+\noindent Sample size, n = 7,677
+
 \subsection{Sentiment Score Plots}
 \includegraphics[width=\textwidth]{raw/blind.png}
 
-\subsection{Mann-Whitney $U$ Test Results}
+\subsection{Mann-Whitney $U$ Test Results ($p$-values)}
 \noindent
-\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  
 	\hline
 	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
 	\hline
-	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	All & 0.335 ** & 1.62 * 10\textsuperscript{-9} & 6.57 * 10\textsuperscript{-9} **  \\
 	\hline
-	2007 & TODO & TODO & TODO  \\
+	2009 & N/A & 0.339 & N/A  \\
 	\hline
-	2008 & TODO & TODO & TODO  \\
+	2010 & 0.388 & 0.0331 & 0.0720 **  \\
 	\hline
-	2009 & TODO & TODO & TODO  \\
+	2011 & 0.493 & 0.0101 & 0.0149 **  \\
 	\hline
-	2010 & TODO & TODO & TODO  \\
+	2012 & 0.00585 & 0.00586 & 0.220 **  \\
 	\hline
-	2011 & TODO & TODO & TODO  \\
+	2013 & 0.330 ** & 0.163 & 0.158 **  \\
 	\hline
-	2012 & TODO & TODO & TODO  \\
+	2014 & 0.0670 ** & 0.263 & 0.0857 **  \\
 	\hline
-	2013 & TODO & TODO & TODO  \\
+	2015 & 0.181 ** & 0.214 & 0.125 **  \\
 	\hline
-	2014 & TODO & TODO & TODO  \\
+	2016 & 0.455 & 0.00119 & 0.000966 **  \\
 	\hline
-	2015 & TODO & TODO & TODO  \\
+	2017 & 0.421 & 3.16 * 10\textsuperscript{-5} & 1.46 * 10\textsuperscript{-5} **  \\
 	\hline
-	2016 & TODO & TODO & TODO  \\
-	\hline
-	2017 & TODO & TODO & TODO  \\
-	\hline
-	2018* & TODO & TODO & TODO  \\
+	2018* & 0.0118 & 0.0919 & 0.246  \\
 	\hline
 \end{tabu}
-($p$-values)
 
 \noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
 
@@ -1653,106 +1645,77 @@ Key Terms: `blind', `blindness', `blindism', `visual impairment', `partially sig
 \subsection{Keyword Trend Plots}
 \includegraphics[width=\textwidth]{raw/blind-terms.png}
 
+\newpage
 \section{Topic: `cerebral palsy'}
 Key Terms: `cerebral palsy', `spastic'
 
 \noindent Query Terms: `cerebral palsy', `spastic'
 
+\noindent Sample size, n = 353
+
 \subsection{Sentiment Score Plots}
 \includegraphics[width=\textwidth]{raw/cerebral-palsy.png}
 
-\subsection{Mann-Whitney $U$ Test Results}
+\subsection{Mann-Whitney $U$ Test Results ($p$-values)}
 \noindent
-\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  
 	\hline
 	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
 	\hline
-	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
-	\hline
-	2007 & TODO & TODO & TODO  \\
-	\hline
-	2008 & TODO & TODO & TODO  \\
-	\hline
-	2009 & TODO & TODO & TODO  \\
-	\hline
-	2010 & TODO & TODO & TODO  \\
-	\hline
-	2011 & TODO & TODO & TODO  \\
-	\hline
-	2012 & TODO & TODO & TODO  \\
-	\hline
-	2013 & TODO & TODO & TODO  \\
-	\hline
-	2014 & TODO & TODO & TODO  \\
-	\hline
-	2015 & TODO & TODO & TODO  \\
-	\hline
-	2016 & TODO & TODO & TODO  \\
-	\hline
-	2017 & TODO & TODO & TODO  \\
-	\hline
-	2018* & TODO & TODO & TODO  \\
+	All & 0.469 & 0.156 ** & 0.169  \\
 	\hline
 \end{tabu}
-($p$-values)
 
-\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+\noindent Insufficient sample size for year-by-year comparisons. (n=353)
 
 \noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
 
 \subsection{Keyword Trend Plots}
 \includegraphics[width=\textwidth]{raw/cerebral-palsy-terms.png}
 
+\newpage
 \section{Topic: `deaf'}
 Key Terms: `deaf', `deafness', `hearing impaired', `hard of hearing', `hearing loss'
 
 \noindent Query Terms: `deaf', `deafness', `hearing impairment', `hard of hearing', `hearing impaired'
 
+\noindent Sample size, n = 1,762
+
 \subsection{Sentiment Score Plots}
 \includegraphics[width=\textwidth]{raw/deaf.png}
 
-\subsection{Mann-Whitney $U$ Test Results}
+\subsection{Mann-Whitney $U$ Test Results ($p$-values)}
 \noindent
-\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  
 	\hline
 	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
 	\hline
-	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	All & 6.30 * 10\textsuperscript{-10} & 0.141 & 0.0833  \\
 	\hline
-	2007 & TODO & TODO & TODO  \\
+	2010 & 0.263 & N/A & N/A  \\
 	\hline
-	2008 & TODO & TODO & TODO  \\
+	2011 & 0.00262 & N/A & N/A  \\
 	\hline
-	2009 & TODO & TODO & TODO  \\
+	2012 & 0.00349 & N/A & N/A  \\
 	\hline
-	2010 & TODO & TODO & TODO  \\
+	2013 & 0.0403 & N/A & N/A  \\
 	\hline
-	2011 & TODO & TODO & TODO  \\
+	2014 & 0.000131 & N/A & N/A  \\
 	\hline
-	2012 & TODO & TODO & TODO  \\
+	2015 & 0.00260 & N/A & N/A  \\
 	\hline
-	2013 & TODO & TODO & TODO  \\
+	2016 & 0.0437 & N/A & N/A  \\
 	\hline
-	2014 & TODO & TODO & TODO  \\
-	\hline
-	2015 & TODO & TODO & TODO  \\
-	\hline
-	2016 & TODO & TODO & TODO  \\
-	\hline
-	2017 & TODO & TODO & TODO  \\
-	\hline
-	2018* & TODO & TODO & TODO  \\
+	2017 & 0.0307 & 0.0480 & 0.233 **  \\
 	\hline
 \end{tabu}
-($p$-values)
-
-\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
 
 \noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
 
 \subsection{Keyword Trend Plots}
 \includegraphics[width=\textwidth]{raw/deaf-terms.png}
 
+\newpage
 \section{Topic: `developmental delay'}
 Key Terms: `developmental delay', `developmental disability', `developmental disorder', `learning disability', `slow learner', `intellectual disability'
 
@@ -1761,98 +1724,60 @@ Key Terms: `developmental delay', `developmental disability', `developmental dis
 \subsection{Sentiment Score Plots}
 \includegraphics[width=\textwidth]{raw/developmental-delay.png}
 
-\subsection{Mann-Whitney $U$ Test Results}
+\noindent Sample size, n = 582
+
+\subsection{Mann-Whitney $U$ Test Results ($p$-values)}
 \noindent
-\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  
 	\hline
 	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
 	\hline
-	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	All & 0.383 & 0.00179 & 0.00326 **  \\
 	\hline
-	2007 & TODO & TODO & TODO  \\
+	2014 & 0.0695 ** & N/A & N/A  \\
 	\hline
-	2008 & TODO & TODO & TODO  \\
+	2015 & 0.106 ** & N/A & N/A  \\
 	\hline
-	2009 & TODO & TODO & TODO  \\
+	2016 & 0.000845 & N/A & N/A  \\
 	\hline
-	2010 & TODO & TODO & TODO  \\
-	\hline
-	2011 & TODO & TODO & TODO  \\
-	\hline
-	2012 & TODO & TODO & TODO  \\
-	\hline
-	2013 & TODO & TODO & TODO  \\
-	\hline
-	2014 & TODO & TODO & TODO  \\
-	\hline
-	2015 & TODO & TODO & TODO  \\
-	\hline
-	2016 & TODO & TODO & TODO  \\
-	\hline
-	2017 & TODO & TODO & TODO  \\
-	\hline
-	2018* & TODO & TODO & TODO  \\
+	2017 & 0.251 & N/A & N/A  \\
 	\hline
 \end{tabu}
-($p$-values)
-
-\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
 
 \noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
 
 \subsection{Keyword Trend Plots}
 \includegraphics[width=\textwidth]{raw/developmental-delay-terms.png}
 
+\newpage
 \section{Topic: `dyslexia'}
 Key Terms: `dyslexia', `dyslexic'
 
 \noindent Query Terms: `dyslexia', `dyslexic'
 
+\noindent Sample size, n = 410
+
 \subsection{Sentiment Score Plots}
 \includegraphics[width=\textwidth]{raw/dyslexia.png}
 
-\subsection{Mann-Whitney $U$ Test Results}
+\subsection{Mann-Whitney $U$ Test Results ($p$-values)}
 \noindent
-\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  
 	\hline
 	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
 	\hline
-	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
-	\hline
-	2007 & TODO & TODO & TODO  \\
-	\hline
-	2008 & TODO & TODO & TODO  \\
-	\hline
-	2009 & TODO & TODO & TODO  \\
-	\hline
-	2010 & TODO & TODO & TODO  \\
-	\hline
-	2011 & TODO & TODO & TODO  \\
-	\hline
-	2012 & TODO & TODO & TODO  \\
-	\hline
-	2013 & TODO & TODO & TODO  \\
-	\hline
-	2014 & TODO & TODO & TODO  \\
-	\hline
-	2015 & TODO & TODO & TODO  \\
-	\hline
-	2016 & TODO & TODO & TODO  \\
-	\hline
-	2017 & TODO & TODO & TODO  \\
-	\hline
-	2018* & TODO & TODO & TODO  \\
+	All & 0.0740 & 0.362 & 0.464 **  \\
 	\hline
 \end{tabu}
-($p$-values)
 
-\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+\noindent Insufficient sample size for year-by-year comparisons. (n=410).
 
 \noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
 
 \subsection{Keyword Trend Plots}
 \includegraphics[width=\textwidth]{raw/dyslexia-terms.png}
 
+\newpage
 \section{Topic: `epilepsy'}
 Key Terms: `epilepsy', `epileptic', `seizure'
 
@@ -1861,90 +1786,67 @@ Key Terms: `epilepsy', `epileptic', `seizure'
 \subsection{Sentiment Score Plots}
 \includegraphics[width=\textwidth]{raw/epilepsy.png}
 
-\subsection{Mann-Whitney $U$ Test Results}
+\noindent Sample size, n = 1,172
+
+\subsection{Mann-Whitney $U$ Test Results ($p$-values)}
 \noindent
-\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  
 	\hline
 	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
 	\hline
-	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	All & 3.39 * 10\textsuperscript{-5} & 0.0579 & 0.322 **  \\
 	\hline
-	2007 & TODO & TODO & TODO  \\
+	2014 & 0.0130 & N/A & N/A  \\
 	\hline
-	2008 & TODO & TODO & TODO  \\
+	2015 & 0.193 & N/A & N/A  \\
 	\hline
-	2009 & TODO & TODO & TODO  \\
-	\hline
-	2010 & TODO & TODO & TODO  \\
-	\hline
-	2011 & TODO & TODO & TODO  \\
-	\hline
-	2012 & TODO & TODO & TODO  \\
-	\hline
-	2013 & TODO & TODO & TODO  \\
-	\hline
-	2014 & TODO & TODO & TODO  \\
-	\hline
-	2015 & TODO & TODO & TODO  \\
-	\hline
-	2016 & TODO & TODO & TODO  \\
-	\hline
-	2017 & TODO & TODO & TODO  \\
-	\hline
-	2018* & TODO & TODO & TODO  \\
+	2016 & 0.398 ** & N/A & N/A  \\
 	\hline
 \end{tabu}
-($p$-values)
-
-\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
 
 \noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
 
 \subsection{Keyword Trend Plots}
 \includegraphics[width=\textwidth]{raw/epilepsy-terms.png}
 
+\newpage
 \section{Topic: `mental illness'}
 Key Terms: `mental illness', `mental health', `mental disability', `mental disorder', `mental issue', `brain injured', `brain injury', `brain damaged', `psychological', `psychiatric', `emotional disorder', `behavioural disorder', `retardation', `intellectual disability', `mentally ill', `mentally disabled', `mentally handicapped'
 
 \noindent Query Terms: `mental illness', `mental health', `mental disorder', `mental disability', `mentally ill', `mentally disabled', `mentally handicapped'
 
+\noindent Sample size, n = 15,329
+
 \subsection{Sentiment Score Plots}
 \includegraphics[width=\textwidth]{raw/mental-illness.png}
 
-\subsection{Mann-Whitney $U$ Test Results}
+\subsection{Mann-Whitney $U$ Test Results ($p$-values)}
 \noindent
-\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  
 	\hline
 	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
 	\hline
-	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	All & 3.54 * 10\textsuperscript{-76} & 1.51 * 10\textsuperscript{-9} & 0.102 **  \\
 	\hline
-	2007 & TODO & TODO & TODO  \\
+	2010 & 0.000255 & N/A & N/A  \\
 	\hline
-	2008 & TODO & TODO & TODO  \\
+	2011 & 8.79 * 10\textsuperscript{-11} & N/A & N/A  \\
 	\hline
-	2009 & TODO & TODO & TODO  \\
+	2012 & 5.70 * 10\textsuperscript{-8} & 0.377 & 0.112  \\
 	\hline
-	2010 & TODO & TODO & TODO  \\
+	2013 & 1.13 * 10\textsuperscript{-7} & 1.43 * 10\textsuperscript{-7} & 0.000132 **  \\
 	\hline
-	2011 & TODO & TODO & TODO  \\
+	2014 & 1.19 * 10\textsuperscript{-22} & 0.108 & 0.178  \\
 	\hline
-	2012 & TODO & TODO & TODO  \\
+	2015 & 2.77 * 10\textsuperscript{-10} & 0.0588 & 0.401 **  \\
 	\hline
-	2013 & TODO & TODO & TODO  \\
+	2016 & 1.83 * 10\textsuperscript{-19} & 2.56 * 10\textsuperscript{-11} & 2.03 * 10\textsuperscript{-5} **  \\
 	\hline
-	2014 & TODO & TODO & TODO  \\
+	2017 & 5.55 * 10\textsuperscript{-10} & 0.389 ** & 0.00826  \\
 	\hline
-	2015 & TODO & TODO & TODO  \\
-	\hline
-	2016 & TODO & TODO & TODO  \\
-	\hline
-	2017 & TODO & TODO & TODO  \\
-	\hline
-	2018* & TODO & TODO & TODO  \\
+	2018* & 0.0531 & 0.0413 ** & 0.00878  \\
 	\hline
 \end{tabu}
-($p$-values)
 
 \noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
 
@@ -1955,150 +1857,96 @@ Key Terms: `mental illness', `mental health', `mental disability', `mental disor
 
 \includegraphics[width=\textwidth]{raw/mental-illness-terms2.png}
 
+\newpage
 \section{Topic: `mute'}
 Key Terms: `mute', `muteness', `mutism', `cannot speak', `difficulty speaking', `synthetic speech', `non-vocal', `non-verbal'
 
 \noindent Query Terms: `mute', `muteness', `mutism', `non-verbal'
 
+\noindent Sample size, n = 456
+
 \subsection{Sentiment Score Plots}
 \includegraphics[width=\textwidth]{raw/mute.png}
 
-\subsection{Mann-Whitney $U$ Test Results}
+\subsection{Mann-Whitney $U$ Test Results ($p$-values)}
 \noindent
-\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  
 	\hline
 	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
 	\hline
-	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
-	\hline
-	2007 & TODO & TODO & TODO  \\
-	\hline
-	2008 & TODO & TODO & TODO  \\
-	\hline
-	2009 & TODO & TODO & TODO  \\
-	\hline
-	2010 & TODO & TODO & TODO  \\
-	\hline
-	2011 & TODO & TODO & TODO  \\
-	\hline
-	2012 & TODO & TODO & TODO  \\
-	\hline
-	2013 & TODO & TODO & TODO  \\
-	\hline
-	2014 & TODO & TODO & TODO  \\
-	\hline
-	2015 & TODO & TODO & TODO  \\
-	\hline
-	2016 & TODO & TODO & TODO  \\
-	\hline
-	2017 & TODO & TODO & TODO  \\
-	\hline
-	2018* & TODO & TODO & TODO  \\
+	All & 6.78 * 10\textsuperscript{-5} & 0.0311 & 0.346 **  \\
 	\hline
 \end{tabu}
-($p$-values)
 
-\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+\noindent Insufficient sample size for year-by-year comparisons. (n=456).
 
 \noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
 
 \subsection{Keyword Trend Plots}
 \includegraphics[width=\textwidth]{raw/mute-terms.png}
 
+\newpage
 \section{Topic: `paralysis'}
 Key Terms: `paraplegic', `quadriplegic', `spinal cord', `paraplegia', `quadriplegia', `paralysed', `paralyzed', `paralysis', `crippled', `leg braces', `wheelchair'
 
 \noindent Query Terms: `paraplegic', `quadriplegic', `paraplegia', `quadriplegia', `paralysis'
 
+\noindent Sample size, n = 1,461
+
 \subsection{Sentiment Score Plots}
 \includegraphics[width=\textwidth]{raw/paralysis.png}
 
-\subsection{Mann-Whitney $U$ Test Results}
+\subsection{Mann-Whitney $U$ Test Results ($p$-values)}
 \noindent
-\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }
 	\hline
 	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
 	\hline
-	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
+	All & 2.73 * 10\textsuperscript{-5} & 0.00909 & 0.0827 **  \\
 	\hline
-	2007 & TODO & TODO & TODO  \\
+	2011 & 0.352 ** & N/A & N/A  \\
 	\hline
-	2008 & TODO & TODO & TODO  \\
+	2012 & 0.00184 & N/A & N/A  \\
 	\hline
-	2009 & TODO & TODO & TODO  \\
+	2013 & 0.374 & N/A & N/A  \\
 	\hline
-	2010 & TODO & TODO & TODO  \\
+	2014 & N/A & N/A & N/A  \\
 	\hline
-	2011 & TODO & TODO & TODO  \\
+	2015 & 0.331 & N/A & N/A  \\
 	\hline
-	2012 & TODO & TODO & TODO  \\
+	2016 & 0.149 & N/A & N/A  \\
 	\hline
-	2013 & TODO & TODO & TODO  \\
-	\hline
-	2014 & TODO & TODO & TODO  \\
-	\hline
-	2015 & TODO & TODO & TODO  \\
-	\hline
-	2016 & TODO & TODO & TODO  \\
-	\hline
-	2017 & TODO & TODO & TODO  \\
-	\hline
-	2018* & TODO & TODO & TODO  \\
+	2017 & 0.00431 & N/A & N/A  \\
 	\hline
 \end{tabu}
-($p$-values)
-
-\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
 
 \noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
 
 \subsection{Keyword Trend Plots}
 \includegraphics[width=\textwidth]{raw/paralysis-terms.png}
 
+\newpage
 \section{Topic: `speech impairment'}
 Key Terms: `speech impairment', `stutter', `speech disability', `speech disorder', `communication disability', `difficulty speaking', `language impairment', `language disorder', `language disability', `speech impediment', `stammer'
 
 \noindent Query Terms: `speech impairment', `stutter', `speech disorder', `speech impediment'
 
+\noindent Sample size, n = 215
+
 \subsection{Sentiment Score Plots}
 \includegraphics[width=\textwidth]{raw/speech-impairment.png}
 
-\subsection{Mann-Whitney $U$ Test Results}
+\subsection{Mann-Whitney $U$ Test Results ($p$-values)}
 \noindent
-\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }  % todo fill in
+\begin{tabu} to 1.0\textwidth { | X[c] | X[c] | X[c] | X[c] | }
 	\hline
 	Topic & Guardian \textgreater\space Daily Mail & Guardian \textgreater\space Daily Express & Daily Express \textgreater\space Daily Mail  \\
 	\hline
-	All & 1.00 * 10\textsuperscript{-0} & 1.00 * 10\textsuperscript{-0} & 0.100  \\
-	\hline
-	2007 & TODO & TODO & TODO  \\
-	\hline
-	2008 & TODO & TODO & TODO  \\
-	\hline
-	2009 & TODO & TODO & TODO  \\
-	\hline
-	2010 & TODO & TODO & TODO  \\
-	\hline
-	2011 & TODO & TODO & TODO  \\
-	\hline
-	2012 & TODO & TODO & TODO  \\
-	\hline
-	2013 & TODO & TODO & TODO  \\
-	\hline
-	2014 & TODO & TODO & TODO  \\
-	\hline
-	2015 & TODO & TODO & TODO  \\
-	\hline
-	2016 & TODO & TODO & TODO  \\
-	\hline
-	2017 & TODO & TODO & TODO  \\
-	\hline
-	2018* & TODO & TODO & TODO  \\
+	All & 0.235 & 0.0200 & 0.0546 **  \\
 	\hline
 \end{tabu}
-($p$-values)
 
-\noindent * 2018 data is incomplete and would only include articles up to (approximately) end of March.
+\noindent Insufficient sample size for year-by-year comparisons. (n=215).
 
 \noindent ** Indicates where the reverse assumption is true (e.g. Daily Mail \textgreater\space Daily Express instead of Daily Express \textgreater\space Daily Mail)
 
