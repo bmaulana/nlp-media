@@ -95,7 +95,7 @@ Computational Natural Language Processing (NLP) could be used to process article
 
 %% How you carried out the project and what work it involved. How you went about meeting the project goals.
 This project explores the feasibility of developing a computational pipeline that performs data collection from online news sources, filtering, parsing (feature extraction), sentiment scoring, statistical analysis, and data visualisation.
-This pipeline is then used in an experiment to collect articles from three major British online news publishers and show trends regarding how the terms used and sentiment in news articles varies over time and between different publishers when reporting news related to disability.
+This pipeline is then used in an experiment to collect articles from three major British online news publishers and show trends regarding how the terms used and sentiment in news articles varies over time and between different publishers when reporting news related to disability or people with disabilities.
 
 %% The results and achievements of the project. What the outcome is.
 Results indicated that for some metrics, such as moving average of sentiment score, and on certain keyword categories, minor trends over time and between different publishers are apparent, although inconsistent. 
@@ -125,17 +125,17 @@ This level of quantitative analysis could uncover trends and patterns from a tex
 % Other work in using NLP for media analysis
 Applying computational NLP to perform meta-analyses over large text corpora has interesting potential applications in improving our understanding of the human world, such as analysing cultural trends quantitatively \cite{lansdall2017content}.
 One study assembled a vast corpus of regional newspapers in the United Kingdom spanning 150 years to detect long-term patterns of cultural change, such as the increase of female representation in the news, or the popularity of trains and horses for transportation \cite{lansdall2017content}. 
-This was achieved by analysing trends for $n$-gram frequency (a count of words or phrases in a text document) and named entities (known persons, organisations, locations, etc.) in text.
+This was achieved by analysing trends for $n$-gram frequency (a count of words or phrases in a text document) and named entities (known people, organisations, locations, etc.) in text.
 
-More specifically in the domain of media representation of particular groups of people, several researchers have attempted to use features extracted using NLP to perform computational analytics of text, mainly from social media.
+More specifically in the domain of media representation of particular groups of people (e.g. women, youth), several researchers have attempted to use features extracted using NLP to perform computational analytics of text, mainly from social media.
 For example, a tool to classify racist and sexist posts in social media was developed by using NLP to extract $n$-grams and part-of-speech tags (labels of words corresponding to its definition and context, such as `noun' or `verb') from text posts \cite{waseem2016you}.
 However, there is still a research gap in this area, especially for applying NLP for news articles, in the context of specific groups such as people with disabilities.
 % Just give a short summary, expand this later in Chapter 2
 
 % Why is it interesting & what the challenges are
-The representation of specific groups, such as people with disabilities, in media has been a popular research theme in social science.
+The representation of groups such as people with disabilities in media has been a popular research theme in social science.
 For example, a 2002 study analysed a sample of 600 print articles relating to mental illnesses in New Zealand to measure the proportions of positive and negative depictions and predominant themes (e.g. criminality, educational accomplishments) \cite{coverdale2002depictions}.
-There were attempts to discover trends, such as a study conducted in 1998 \cite{gold1999media} and replicated in 2008 \cite{devotta2013representations} which assessed change in representations of disability and persons with disability in Canadian news media.
+There were attempts to discover trends, such as a study conducted in 1998 \cite{gold1999media} and replicated in 2008 \cite{devotta2013representations} which assessed change in representations of disability and people with disability in Canadian news media.
 However, the study provided only two data points (1998 and 2008) with relatively small sample sizes of 196 news articles in 1998 and 166 news articles in 2008.
 
 Applying computational NLP to this field would allow the possibility of discovering higher-level trends, by computationally analysing a much larger sample of articles, then identifying trends by creating subsets based on independent variables such as year of publication and publisher.
@@ -216,107 +216,107 @@ The accuracy and consistency of results could be further improved in future work
 \section{Background} \label{Background}  % 3-4 pages
 
 % Similar research being done on media representation of (disability/mental illness/etc.).
-Analyses of news media in its various forms (print, online, etc.) is a popular research method.
+Analyses of news media has been a popular research method.
 News media provides an overview of the prevailing society's conceptions or views regarding a theme or topic, which can be analysed to deduce quantitative information.
-This approach had been commonly used to study representations of particular groups of people, as the language used in the media reflects and shapes prevailing views, and has been shown to differ (with statistical significance) in different societies.
+This approach has been commonly used to study representations of particular groups of people, such as women, youth, or people with disabilities, as the language used in the media reflected and shaped prevailing views, and had been shown to differ (with statistical significance) in different societies.
 For example, it was shown that the Canadian press was more likely to name individuals with disability and use appropriate labelling than the Israeli press in 1998 \cite{gold1999media}.
 Furthermore, there is evidence to suggest that news media sources contribute to shape and reinforce beliefs among the society, such as misconceptions and stigma \cite{wahl1992mass}.
 
-There has been various studies related to the public awareness of disabilities.
+There had been various studies related to the public awareness of disabilities.
 % While not necessarily related to news media,
 A review in 2011 \cite{scior2011public} found 75 articles and 68 studies that passed a selective inclusion criteria with regards to intellectual disabilities, published in English between 1990 and mid-2011. 
-Their inclusion criteria omits studies which were found to be irrelevant, duplicate, or not written in English; and only accepts articles which were published in full in peer-reviewed journals, and the study's subject had to be the general public of working age (instead of particular subgroups).
-This showed that there is interest within the research community to find new ways to understand and quantify the public's perception towards disabilities.
+Their inclusion criteria omitted studies which were found to be irrelevant, duplicate, or not written in English; and only accepted articles which were published in full in peer-reviewed journals, and the study's subject had to be the general public of working age (instead of particular subgroups).
+This showed interest within the research community to find new ways to understand and quantify the public's perception towards disabilities.
 % The topics brought up include the public's knowledge, attitudes, and beliefs about intellectual disability; and varying for socio-demographic characteristics, cross-cultural comparisons, and the effects of interventions.
 
-Analyses of news media are primarily carried out by taking a small sample of documents (news articles) from a text corpora (for example, all news articles published in England for a certain period) and analysing them manually. There has also been various such studies within the domain of disability awareness in the media:
+Analyses of news media were primarily carried out by obtaining a small sample of documents (news articles) from a text corpora, such as all news articles published in England for a certain period, and analysed them manually. There had been various such studies on news media within the domain of disability representations:
 \begin{itemize}
-	\item In a 2002 study \cite{coverdale2002depictions}, researchers analysed a sample of 600 print articles relating to mental health or mental illness that were collected by a commercial clipping bureau.
-		The articles were then categorised into positive and negative depictions, then further into sub-samples such as danger to others, criminality, vulnerability, etc.
-		The study found that at the time, in New Zealand, negative themes predominate about 3 to 1 (with 27\% being positive).
-		However, given the paper's scope, this conclusion cannot be generalised to learn trends, or how the conclusion varies given certain variables (e.g. time, location).
-	\item A study conducted in 1998 \cite{gold1999media} and replicated in 2008 \cite{devotta2013representations} assessed change in representations of disability and persons with disability in the Canadian news media.
-		This study sampled 196 news articles in 1998 and 166 news articles in 2008.
-		It found an increase in the usage of `person-first' terminology (e.g. person with disabilities) and a decrease in `disabling language' (e.g. disabled person). % is this relevant?
-		This is an attempt to identify trends with regards to media representation of disability, however only provides two data points (1998 and 2008) with relatively small sample size.
-	\item A study in 2005 \cite{jones2009representations} analysed 1,515 articles relating to autism in Australian news media.
+	\item In a 2002 study \cite{coverdale2002depictions}, researchers analysed a sample of 600 print articles published in New Zealand relating to mental health or mental illness that were collected by a commercial clipping bureau.
+		The articles were categorised into positive or negative depictions; and further into themes such as danger to others, criminality, vulnerability, etc.
+		The study found that negative themes predominate about 3 to 1, with 27\% being positive.
+		Given the study's scope, this conclusion cannot be generalised to learn trends of how the conclusion varies given certain variables such as time or location.
+	\item A similar study in 2005 \cite{jones2009representations} analysed 1,515 articles relating to autism in Australian news media.
 		All articles were read by two research assistants to ensure they are on-topic and then coded as either `negative' or `positive' in overall focus, and then coded into themes (e.g. funding, education, etc.).
 		% Key findings include a relatively limited amount of helpful information, and a 'dual stereotype' of people with autism labelled as either dangerous and uncontrollable, or unloved and poorly treated. % is this relevant?
 		% Relative to other similar studies, this study appears to be focused more on qualitative discussion compared to quantitative results. % is this relevant?
+	\item A study conducted in 1998 \cite{gold1999media} and replicated in 2008 \cite{devotta2013representations} assessed change in representations of disability and people with disabilities in the Canadian news media.
+		This study sampled 196 news articles in 1998 and 166 news articles in 2008.
+		It found an increase in the usage of `person-first' terminology (e.g. person with disabilities) and a decrease in `disabling language' (e.g. disabled person). % is this relevant?
+		This was an attempt to identify trends with regards to media representation of disability, however it only provided two data points (1998 and 2008) with relatively small sample size.
 \end{itemize}
 
 % Why using computational NLP will allow the discovery of more (high-level) information: trends, patterns, etc
-Data collection and processing of text using computational techniques is much more feasible in scale, cost and time relative to manual collection and reading of text. 
-An automated script could be used to collect thousands of news articles published on the Internet per hour (varies on Web source, hardware, Internet connection, etc.), a vast improvement over contracting a commercial clipping bureau to provide 600 articles as done in past studies \cite{coverdale2002depictions}.
-By applying NLP-based computational techniques in analysing text, it should be possible to develop a pipeline that could analyse and extract quantitative information from these articles at a much faster rate than manual reading, enabling the analyses of a much larger scale of documents.
+Data collection and processing of text using computational techniques based on NLP are much more feasible in scale, cost, and time, relative to manual collection and reading of text. 
+An automated script could be used to collect thousands of news articles published on the Internet per hour, a vast improvement over contracting a commercial clipping bureau to provide 600 articles as done in past studies \cite{coverdale2002depictions}.
+By applying NLP-based computational techniques in analysing text, it would be possible to develop a pipeline that could analyse and extract quantitative information from news articles' text at a much faster pace than manual reading, enabling the analyses of a much larger scale of documents.
 
-While a sample of few hundred or thousand documents is usually enough to provide statistically significant conclusions, by providing an analysis of the full corpora (or a much larger sample), it should be possible to uncover additional information from the data set.
-For example, higher-level trends, such as how a conclusion varies by year, location, and publisher, may be discovered from a quantitative analysis of the larger dataset, by `splitting' the result set into smaller subsets based on independent variables such as year, location, and publisher, and comparing these subsets based on dependent variables such as term frequency.
+While a sample of few hundred documents was usually enough to provide statistically significant conclusions, by providing an analysis of the full corpora or a much larger sample, it would be possible to uncover additional information from the dataset.
+Higher-level trends, such as how a conclusion varies by year, location, and publisher, could be discovered from a quantitative analysis of the larger dataset; by `splitting' the result set into smaller subsets based on independent variables such as year, location, and publisher, then comparing these subsets based on dependent variables such as term frequency.
 Furthermore, computational pipelines for data collection and scoring news articles are more objective and reproducible than manual methods, which may vary due to each researcher's individual biases.
 
 % Similar research on applying NLP for news media, social media, etc. in other domains - techniques & features they used, solutions they came up with, etc. - what could be applicable for this domain (sentiment relative to a certain topic)
-Several attempts have been made to take advantage of this approach to carry a more complete analysis of textual corpora. 
-A team of researchers assembled a corpus of 35.9 million news articles from 120 publishers in the United Kingdom between 1800 and 1950, representing 14\% of all news articles published in the United Kingdom over that period \cite{lansdall2017content} .
-With this approach, the researchers were able to extract quantitative time-series information from 35.9 million British news articles over the 150-year period.
-This amount of large time-series information (represented as $n$-grams and named entities) allowed the researchers to discover macroscopic cultural trends. 
-By analysing and comparing word ($n$-gram) trends across various topics, the researchers were able to identify trends that reflect cultural shifts, such as `train' overtaking `horse' in popularity around 1900, or `labour party' overtaking `conservative party' and `liberal party' in news coverage from the 1920s.
-Additionally, they used entity recognition to extract named entities from articles and considered trends based on known information about these named entities, such as the proportion of female and male entities, and entity categories such as their age and occupation.
-They also considered the geographical location of the publication, to see how usage trends of words such as `british' and `english' differ based on location.
+There had been numerous attempts to take advantage of the NLP-based computational approach to conduct a more complete analysis of textual corpora. 
+A team of researchers assembled a corpus of 35.9 million news articles from 120 publishers in the United Kingdom between 1800 and 1950, which represented 14\% of all news articles published in the United Kingdom over that period \cite{lansdall2017content}.
+With a NLP-based computational approach, the researchers were able to extract quantitative time-series information, represented as $n$-grams and named entities, from the vast dataset, which allowed the researchers to discover macroscopic cultural trends. 
+They analysed and compared $n$-gram trends across various topics and identified trends that reflect cultural shifts, such as `train' overtaking `horse' in popularity around 1900, or `labour party' overtaking `conservative party' and `liberal party' in news coverage from the 1920s.
+Additionally, they used entity recognition to extract named entities, and identified trends based on known information about these entities, such as the proportion of female and male entities over time.
+They also considered the geographical location of the publication, to identify how usage trends of $n$-grams such as `british' and `english' differ based on location.
 
-The British news-media study were inspired by prior discussions and studies on the potential of exploiting large text corpora to detect macroscopic, long-term cultural changes. 
-A seminal study in 2011 \cite{michel2011quantitative} started the field of `culturomics', or performing large-scale quantitative analysis of text corpora.
-In this seminal study, a corpus of 5 million digitised English-language books published over 200 years (or about 4\% of all books ever published) were analysed to extract how often a given $n$-gram was used over time (this data is available on \url{http://www.culturomics.org/}).
-This information is then used to analyse trends in language: the size of the English lexicon, regularisation of English verbs (from `irregular' suffixes to `-ed'), or how quickly years (e.g. `1950') decline in use.
-Influenced by them, several other studies have been published adopting a similar approach: 
+The British news media study were inspired by prior discussions and studies on the potential of exploiting large text corpora to detect macroscopic, long-term cultural changes. 
+A seminal study in 2011 \cite{michel2011quantitative} started the field of `culturomics', to perform large-scale quantitative analyses on text corpora.
+In the seminal study, a corpus of 5 million digitised English language books published over 200 years, or about 4\% of all books ever published, were analysed to extract how often $n$-grams were used over time.
+This data is available on \url{http://www.culturomics.org/}.
+This information was then used to analyse trends in the English language: the size of the English lexicon, regularisation of English verbs from irregular to regular (`-ed') suffixes, or how quickly mentions of years (e.g. `1950') decline in use.
+Influenced by the seminal study, numerous other studies adopted similar approaches to analyse large datasets: 
 \begin{itemize}
 	\item an analysis of 1.7 million Victorian-era books \cite{gibbs2011conversation}
 	\item an analysis of 17,094 US Billboard Hot 100 songs between 1960 and 2010 \cite{mauch2015evolution}
-	\item an analysis of a 3.9 million news article sample from the Summary of World Broadcasts (SWB) collection \cite{leetaru2011culturomics}
-	\item an analysis of 2.5 million English-language million news articles from 498 online news outlets from 99 countries \cite{flaounas2013research}
+	\item an analysis of a 3.9 million news articles sampled from the Summary of World Broadcasts (SWB) collection \cite{leetaru2011culturomics}
+	\item an analysis of 2.5 million English-language news articles from 498 online news outlets from 99 countries \cite{flaounas2013research}
 \end{itemize}
-This approach has also been criticised as it ignored semantics and context.
-For example, critics has noted that ``thirteen hundred words of gibberish and the Declaration of Independence are digitally equivalent'' \cite{gooding2013mass}, issues with OCR quality and duplicate editions \cite{gooding2013mass}, or that the selection of digitised books are biased \cite{schwartz2011culturomics}.
+This approach had also been criticised for ignoring semantics and context.
+For example, critics noted that ``thirteen hundred words of gibberish and the Declaration of Independence are digitally equivalent'' \cite{gooding2013mass}, issues with OCR quality and duplicate editions \cite{gooding2013mass}, or that the selection of digitised books were biased \cite{schwartz2011culturomics}.
 
-There has been some progress in applying NLP specifically in the domain of how (specific) groups of people are represented in the media:
+There had been some progress in applying similar NLP-based approaches specifically in the domain of how specific groups of people are represented in the media:
 \begin{itemize}
-	\item An attempt to extract features (such as $n$-grams and part-of-speech tags) using NLP to classify racist and sexist posts in social media, providing annotations to 6,909 tweets \cite{waseem2016you}.
-	\item A study that explored potential linguistic markers of schizophrenia in social media; using a dataset of 174 users with self-reported schizophrenia and up to 3,200 tweets per user, and a similarly-sized dataset of `control' (non-schizophrenic) users.
-		The researchers used a support vector machine (SVM) model, using NLP to extract features based on lexicon-based approaches (i.e. a list of mental health related keywords), latent dirichlet allocation (LDA), Brown clustering, character $n$-grams, and perplexity from tweets \cite{mitchell2015quantifying}.
+	\item An attempt to classify racist and sexist posts in social media, which used NLP to extract features (such as $n$-grams and part-of-speech tags) from social media posts, then used to annotate 6,909 tweets \cite{waseem2016you}.
+	\item A study explored potential linguistic markers of schizophrenia in social media; using a dataset of 174 users with self-reported schizophrenia and up to 3,200 tweets per user, and a similarly-sized dataset of `control' (non-schizophrenic) users.
+		The researchers used NLP to extract features based on lexicon-based approaches (i.e. a list of mental health related keywords), latent dirichlet allocation (LDA), Brown clustering, character $n$-grams, and perplexity from tweets, which were fed to a support vector machine (SVM) classifier \cite{mitchell2015quantifying}.
 \end{itemize}
-There is still a visible research gap in this area, especially for using computational NLP approaches specifically for news articles, and/or with regards to the representations of specific groups, such as people with disabilities (or a specific disability).
+Despite these studies, there is still a visible research gap on applying computational NLP approaches with regards to the representations of specific groups, such as people with disabilities (or a specific disability).
+This project focused on studying the representations of people with disabilities from online news articles.
 
 % Research on relevant libraries, frameworks, etc.:
-To date, advances in NLP research have made this approach much more feasible, efficient, and effective, even given limited time and hardware constraints.
-A growing number of free and open-source tools for computational NLP and statistical analysis has been developed by the research community, such as nltk \cite{Nltk}, SpaCy \cite{SpaCy}, and StanfordNLP \cite{StanfordNLP} as general NLP tools, scikit-learn \cite{Scikit-learn} for statistical analysis, and matplotlib \cite{Matplotlib} for plotting.
-Depending on the type of data analytics performed and the hardware used, these computational tools are able to analyse news articles at a rate of multiple documents per second.
+To date, advances in NLP research had made the `culturomics' approach much more feasible, efficient, and effective, even under limited time and hardware constraints.
+A growing number of free and open-source tools for computational NLP and statistical analysis had been developed by the research community; including general NLP tools such as nltk \cite{Nltk}, SpaCy \cite{SpaCy}, and StanfordNLP \cite{StanfordNLP}, statistical analysis tools such as numpy \cite{Numpy}, scipy \cite{Scipy}, and scikit-learn \cite{Scikit-learn}, and data visualisation tools such as matplotlib \cite{Matplotlib}.
 Section \ref{Technical Context} contains a further listing and discussion of these tools, alongside the specific libraries and NLP techniques used for this research project.
 
 % -- Research carried out & sources (papers, books, websites, etc.) --
 \section{Research Methodology and Sources} \label{Research Methodology and Sources}  % 1 page
 
 % How background research was carried out
-Background research were carried out by investigating papers from public sources, such as Google Scholar.
+Background research was carried out by investigating papers from public sources such as Google Scholar.
 Research articles were gathered from a list of important topics and query terms related to NLP, specific NLP techniques, disability, and news media: for example, `natural language processing review', `news media' AND `disability', `natural language processing' AND (`news media' OR `cultural trends'), `natural language processing' AND `disability', and `sentiment analysis'.
-Highly-cited research articles are prioritised as examples, as they are deemed to be more `important' papers or studies within its topic.
-Additionally, the author looked for highly-cited `key' papers and review articles within each specific topic, and then looked at its list of citations (older papers), and research articles that cites the review article (newer papers), to expand the list of relevant research papers and examples.
+Highly-cited research articles were prioritised as examples, as they were deemed to be more `important' papers or studies within its topic.
+Additionally, the author looked for highly-cited `key' papers and review articles within each specific topic, and consulted its list of citations (older papers) and research articles that cites the review article (newer papers) to expand the list of relevant research papers further.
 
 % How technical research was carried out: for each component, determine neccesary or potentially useful techniques. Look up online for papers defining it, web resources, frameworks/libraries. Research done alongside development of code (do research as I plan/develop, which in turn may change how I'm doing things)
-Technical research, on the other hand, were carried out as necessary.
-After the requirements and components for the pipeline has been decided, research was carried out to find relevant techniques, formulae, algorithms, tools, libraries/packages, and existing implementations that would be useful to implement each component (or sub-tasks within a component).
-The research was carried out in an iterative approach alongside software development. 
-Initial planning and research would provide an initial implementation plan, which the implementation of would uncover feasibility of these approaches and possible alternatives/refinements to be researched, and further research may reveal new options/refinements to be implemented, and so on.
-Research or work done on other components/tasks may also reveal possible improvements and/or alternatives for another task, which may require further research and implementation.  
-Again, more popular tools and libraries are prioritised; although several approaches and implementations were considered for most components and sub-tasks, to be compared for suitability, runtime, results, etc.
+Technical research, on the other hand, was carried out as necessary.
+After the requirements and components for the pipeline had been decided, research was carried out to find relevant techniques, formulae, algorithms, tools, libraries/packages, and existing implementations that would be useful to implement each necessary component.
+This research was carried out in an iterative approach alongside software development. 
+Initial planning and research would provide an initial implementation plan, the plan's implementation would uncover the feasibility of these approaches and possible alternatives/refinements to be researched, further research may reveal new options/refinements to be implemented, and so on.
+Research or work done for a component may also reveal possible improvements and/or alternatives for another component, which may require further research and implementation.  
+Again, more popular tools and libraries were prioritised; although several approaches and implementations were considered for most components and sub-tasks, to be compared for suitability, runtime, results, etc.
 
 % Sources: Google Scholar, papers cited by other papers, GitHub pages, Python repositories (Pip, Conda), Python and library documentation, etc. + 'state how each source relates to your work'.
-The sources used for this literature review are:
+The sources that were used for this literature review are:
 \begin{itemize}
-	\item Google Scholar, often used to find research articles to act as `entry points' towards a research topic, to find other studies similar to another research article within a specified topic, or to retrieve citation information of a given research paper, book, or popular Python package.
-	\item GitHub topics, used to find repositories that are relevant to a specific task or component, find similar GitHub repositories, gather information about a given repository, and also as a benchmark for topic popularity and range of solutions in a given programming language.
-		Several GitHub pages also curate a list of repositories within a specific topic \cite{awesome-sentiment-analysis, awesome-nlp, awesome-machine-learning}.
-	\item Python package repositories such as PyPi \cite{PyPi} and Anaconda Cloud \cite{Anaconda-Cloud}, which list all available Python packages and shows general information regarding them, and also provides a search function; useful to find relevant packages for a component/task and gather information about a given Python package.
-	\item Official web sites and documentation of Python packages, which list and define capabilities (functions and parameters) of the package, useful to explore the functionality of a given package and its capacity to solve a specific task, and to understand the technologies/approaches used by the package's implementation (e.g. how is a sentiment model implemented?). 
-		Often (especially with more popular packages), citation information regarding the package would also be available in its web site.
+	\item Google Scholar, often used to find research articles to act as `entry points' towards a research topic, to find other studies similar to a research article, or to retrieve citation information with regards to research paper, book, or popular Python package.
+	\item GitHub topics, used to find repositories that are relevant to help implement a specific NLP technique or component, find similar/alternative implementations, and was also used as a benchmark for the popularity and range of solutions for a topic in a given programming language.
+	\item Several GitHub pages also curate a list of repositories for a specific topic \cite{awesome-sentiment-analysis, awesome-nlp, awesome-machine-learning}.
+	\item Python package repositories such as PyPi \cite{PyPi} and Anaconda Cloud \cite{Anaconda-Cloud}, which listed all available Python packages, provided general information regarding them, and a search function; useful to find relevant packages for a component/task and gather information about a Python package.
+	\item Official web sites and documentation of Python packages, which listed and defined the capabilities of the package, used to explore a package's functionality and capacity to solve a specific task, and to understand the technologies and approaches used by the package's implementation. 
+		On more popular packages, citation information regarding the package would often be available from its web site.
 \end{itemize}
 
 % -- Technical background, sources of information, software --% (probably the longest section in chapter 2)
@@ -349,7 +349,7 @@ The Anaconda distribution of Python \cite{Anaconda} is used for its suitability 
 For data collection, general-purpose tools for sending HTTP requests (to `open' web addresses and store HTML web pages programmatically) and parsing HTML code (to parse article text and metadata from `raw' HTML code) are sufficient. 
 The Requests library \cite{Requests} is a popular Python tool (with 400,000+ daily downloads) for sending HTTP/1.1 requests simply.
 A HTTP GET request will retrieve the HTML code (and other information) associated with a given URL from a web server, similar to opening the page on a web browser, stored as a Python object by Requests.
-Once the HTML code of a web page (given an article's URL) has been stored, the BeautifulSoup library \cite{BeautifulSoup} provides simple methods to navigate and search a parse tree (such as HTML code).
+Once the HTML code of a web page (given an article's URL) had been stored, the BeautifulSoup library \cite{BeautifulSoup} provides simple methods to navigate and search a parse tree (such as HTML code).
 Given that web pages from the same source/publisher tend to follow a similar structure, BeautifulSoup can be used to parse article text and relevant metadata (e.g. headline, date of publication, outgoing links in a search page) by searching for specific tags and attributes within the HTML code.
 
 \subsection{Filtering Methods} \label{tc-filtering}
@@ -485,7 +485,7 @@ For each article, the only information required at this stage is a working URL p
 Thus, the information that has to be provided by the component after this stage is a list of URLs pointing to relevant articles given a list of search queries.
 
 % scraper for each source - what needs to be scraped from each article
-After the list of URLs pointing to online news articles has been compiled, the component must be able to scrape these articles and extract the full article text and relevant metadata from each URL.
+After the list of URLs pointing to online news articles had been compiled, the component must be able to scrape these articles and extract the full article text and relevant metadata from each URL.
 Aside from the full article text, the relevant metadata that needs to be extracted are the article's headline, URL, date of publication, and publication source.
 The information is returned in the form of an array of JSON objects, with each JSON object containing the text and metadata of a single news article.
 This information must then be saved locally to a file where it will be read by the next component. 
@@ -906,7 +906,7 @@ Two implementations of the component were developed:
 		This iteration computes sentiment scores of all implemented scorers for every article, and is ran only on an arbitrarily-sized sample of the full dataset, as running all sentiment scorers without optimisation takes roughly \textapprox1 minute per article which is infeasible for the full dataset.
 	\item The second iteration of the sentiment scorer component is used in the final pipeline.
 		This iteration only computes one sentiment score per each article, and is highly optimised.
-		Two iterations of this component has been tried: one implementing OpenAI's \cite{OpenAI} model, and another implementing VADER \cite{VADER}.
+		Two iterations of this component were developed: one implementing OpenAI's \cite{OpenAI} model, and another implementing VADER \cite{VADER}.
 		In both cases, the runtime of is lower than 0.2 seconds per article.
 \end{itemize}
 
@@ -977,7 +977,7 @@ Within the pipeline, this component's task is to compute sentiment score informa
 	"sentiment_score": 0.4215
 }
 \end{lstlisting}
-Once the scores of all sentences has been measured, this component also computes the sentiment score of each article, which is defined as the weighted average of sentiment scores for all relevant sentences contained within the article:
+Once the scores of all sentences had been measured, this component also computes the sentiment score of each article, which is defined as the weighted average of sentiment scores for all relevant sentences contained within the article:
 
 \begin{center}
 	$Article's \ sentiment \ score = \dfrac{\Sigma (sentiment \ score * number \ of \ key \ terms) for \ each \ sentence}{Total \ number \ of \ keyword \ occurrences \ in \ the \ article}$
