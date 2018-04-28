@@ -112,43 +112,59 @@ While the approach showed promise in performing quantitative analysis upon large
 
 % Talk about NLP
 Natural Language Processing (NLP) encompasses a wide range of computational techniques for machine understanding of human (natural) language that are often used alongside each other.
-The review article \cite{cambria2014jumping} defines Natural Language Processing as `a theory-motivated range of computational techniques for the automatic analysis and representation of human language.'
-The techniques that fall under the NLP umbrella include text processing (tokenisation), text classification, information extraction (e.g. entity recognition), sentence structure analysis (e.g. part-of-speech parsing), and sentiment analysis (or opinion mining) \cite{Nltk, liu2012sentiment}.
-The computational models used in NLP range from simple rule-based models (e.g. splitting a sentence on whitespace to tokenise words) to statistical machine learning and neural network models \cite{awesome-sentiment-analysis}. 
+The review article \cite{cambria2014jumping} defines Natural Language Processing as ``a theory-motivated range of computational techniques for the automatic analysis and representation of human language.''
+The techniques that fall under the NLP umbrella include extracting term frequency distributions, text processing (e.g. tokenisation, stemming), part-of-speech tagging, text classification, information extraction (e.g. entity recognition), sentence structure parsing (parse tree), and sentiment analysis (or opinion mining) \cite{Nltk, liu2012sentiment}.
+The computational models used in NLP range from simple rule-based models (e.g. counting words, or term frequency) to statistical machine learning and neural network models \cite{awesome-sentiment-analysis}. 
 % Applications of NLP are used in everyday technologies, for example, information retrieval for search engines such as Google and Bing, and categorisation and topic modelling for recommendation engines used to suggest `similar' articles. % todo cite or remove
 
-An obvious advantage of NLP is that machines can process vast bodies of human-created literature (books, articles, posts, e-mails, messages, etc.) much faster than humans can, processing thousands or millions of documents per second. 
-This allows for high-level quantitative analyses of all documents in a vast corpora for a given domain to be feasible, which can uncover information previously inaccessible by only reading and generalising from a small sample of documents.
-For example, this level of quantitative analysis can uncover trends and patterns within a given domain, such as ``how does the popularity of the term `mentally ill' increase or decrease year-on-year in British news media?'' 
+An advantage of NLP is that machines can process vast bodies of human-created literature (books, articles, posts, e-mails, messages, etc.) much faster than humans can, processing thousands of text documents per second. 
+This allows for high-level quantitative analyses of thousands or millions of text documents from a vast corpora to be feasible, which can uncover information previously inaccessible by manually reading only a small sample of documents and generalising from there.
+This level of quantitative analysis can uncover trends and patterns from a text corpus, such as ``how does the popularity of the term `mentally ill' increase or decrease year-on-year in British news media?'' 
 
 % Other work in using NLP for media analysis
-Various studies have attempted to utilise NLP to perform high-level analyses in the domain of news media.
+Applying computational NLP to perform meta-analyses over large text corpora has interesting potential applications in improving our understanding of the human world, such as analysing cultural trends quantitatively \cite{lansdall2017content}.
 One study assembled a vast corpus of regional newspapers in the United Kingdom spanning 150 years to detect long-term patterns of cultural change, such as increase of female representation in the news or the popularity of trains and horses for transportation \cite{lansdall2017content}. 
-This was achieved by analysing $n$-gram (word/phrase frequency) trends and named entities in text. 
-More specifically in the domain of media representation of particular groups of people, several studies have attempted to use features extracted using NLP to perform computational analytics.
-For example, a tool was developed using NLP to extract $n$-grams and part-of-speech tags to classify racist and sexist posts in social media \cite{waseem2016you}.
-However, there are still a research gap in this area, especially for online news articles relating to specific groups, such as people with disabilities.
+This was achieved by analysing trends for $n$-gram (terms, or words/phrases) frequency and named entities in text.
+
+More specifically in the domain of media representation of particular groups of people, several researchers have attempted to use features extracted using NLP to perform computational analytics of text, mainly from social media.
+For example, a tool to classify racist and sexist posts in social media was developed by using NLP to extract $n$-grams and part-of-speech tags from text posts \cite{waseem2016you}.
+However, there are still a research gap in this area, especially for applying NLP for news articles, in the context of specific groups such as people with disabilities.
 % Just give a short summary, expand this later in Chapter 2
 
 % Why is it interesting & what the challenges are
-Applying computational NLP to perform meta-analyses over large text corpora has various interesting potential applications in improving our understanding of the human world, such as analysing cultural trends quantitatively \cite{lansdall2017content}.
-In particular, the representation of specific groups, such as people with disabilities, has been a popular research theme for psychologists, sociologists, and others.
+The representation of specific groups, such as people with disabilities, has been a popular research theme for psychologists, sociologists, and others.
 For example, a 2002 study analysed a sample of 600 print articles relating to mental illnesses in New Zealand to categorise them to positive and negative depictions and predominant themes (e.g. criminality, educational accomplishments) \cite{coverdale2002depictions}.
-Computational NLP would allow the possibility of discovering higher-level trends, by computationally analysing a much larger sample of articles and identify trends by varying independent variables such as year of publication and publisher.
-In this research, a sample of 305,185 news articles (48,967 after filtering off-topic articles) from British online news sources are used.
-However, challenges remain as contemporary syntax-based NLP approaches tend to be more limited in scope and is prone to inconsistencies (false positives and negatives), where mitigating these inconsistencies is currently an open area of research. % inconsistencies due to type-I and type-II errors? (false positives and negatives)
+Applying computational NLP to this field would allow the possibility of discovering higher-level trends, by computationally analysing a much larger sample of articles and identify trends by varying independent variables such as year of publication and publisher.
+In this research, a sample of 305,185 news articles (48,967 after filtering off-topic articles) from British online news sources were used.
+However, challenges remain as contemporary syntax-based NLP approaches tend to be more limited in scope and are prone to inconsistencies (false positives and negatives), where mitigating these inconsistencies is currently an open area of research. % inconsistencies due to type-I and type-II errors? (false positives and negatives)
 % Just give a short summary, expand this later and give more papers in Chapter 2
 
 %% List your aims and goals. An aim is something you intend to achieve (e.g., learn a new programming language and apply it in solving the problem), while a goal is something specific you expect to deliver (e.g., a working application with a particular set of features).
-The aim of this project is to show the feasibility of utilising computational NLP approaches to perform a high-level meta-analysis of literature available in the public news media found online.
-More specifically, to gather online news articles relating to people with disabilities in British media, and perform analyses using NLP at scale to identify trends such as term popularity and variations in positive/negative sentiment.
+The aim of this project was to show the feasibility of utilising computational NLP approaches to perform a meta-analysis of literature available in the public online news media.
+More specifically, to collect news articles relating to people with disabilities in British online media, and perform analyses using NLP at scale to identify trends such as term popularity and variations in positive/negative sentiment.
 
-This project's goals is to achieve the stated aim by developing a computational pipeline capable of performing  analysis on online news media in full, from data collection to analysis and visualisation.
-Given a list of topics consisting of key terms and query terms related to disabilities, this pipeline covers the task of web crawling and scraping to collect a dataset of news articles; filtering relevant articles for the given keywords; matching relevant sentences referring to a keyword; performing sentiment analysis (using open-source libraries) on these sentences; and producing relevant visualisations to show trends as evidence of applications of the technology.
+This project's goals was to achieve the stated aim by developing a computational pipeline capable of performing analysis on online news media in full, from data collection to analysis and visualisation.
+Given a list of topics related to disabilities, each topic consisting of key terms and query terms;
+this pipeline accomplishes the task of web crawling and scraping web sites to collect a dataset of news articles;
+filtering relevant articles given key terms; 
+extracting `relevant' sentences that referred to a key term from these articles;
+performing sentiment analysis on these sentences;
+and producing relevant visualisations and statistical analyses to show trends as evidence of this application of NLP.
 This pipeline will be available open source on GitHub (\url{https://github.com/bmaulana/nlp-media})
 
+The main NLP techniques that was relevant for this project were:
+Text processing, to parse text and other relevant information from web news articles, and `prepare' text for further analyses using tokenisation (splitting text into a list of tokens, or words) and stemming (reducing words to their word stem, e.g. talked \textrightarrow\space talk);
+term ($n$-gram) frequency, to quantitatively count the occurrence of words and phrases (sequences of words) in an article, which acted as a measure to compare articles;
+sentiment analysis, to produce a `sentiment score' of news articles that correspond to its perceived positive/negative view, which also acted as a measure to compare articles.
+These techniques were implemented by utilising open-source NLP implementations, developed by the research community.
+
 %% Give an overview of how you carried out the project (e.g., an iterative approach).
-This project was carried out in a modular approach. The pipeline was developed as individual components: a web scraper and crawler for data collection given a list of queries; a filter to remove irrelevant articles given a list of key terms; a parser to pattern-match relevant sentences given key terms; a sentiment scorer (and results analysis/comparison of different open-source scorers on this domain); and a script to perform statistical analysis on the results and produce relevant plots. 
+This project was carried out in a modular approach. The pipeline was developed as individual components: 
+a web scraper and crawler for data collection given a list of queries; 
+a filter to remove irrelevant articles given a list of key terms; 
+a parser to extract term occurrences and relevant sentences from articles, given a list key terms; 
+a sentiment scorer for sentences and articles; 
+and a script to perform statistical analysis on the results and produce relevant plots. 
 A main pipeline script connects these components together by calling them in sequential order, performing analyses for each topic and Web news source (Daily Mail, Daily Express, Guardian).
 Each component's output is piped to the next component's input by saving its output to a JSON \cite{rfc8259} file and having the next component read the previous component's output file, which ensures computation can be `resumed' without recomputing the previous component. 
 
@@ -159,18 +175,19 @@ Chapter \ref{Requirements and Analysis} defines a structured list of requirement
 Chapter \ref{Design and Implementation} documents the design and implementation of the computational pipeline and its components that were used to carry out the data analytics experiment and achieve the stated goals.
 Chapter \ref{Results Evaluation} discusses the experiment's results in diagrams, graphs, and tables.
 Finally, the conclusion (Chapter \ref{Conclusions}) evaluates the project, summarises key achievements and takeaways, provides recommendation on how this work could be expanded upon, and sets guidelines for further work in this field.
-Furthermore, the bibliography lists sources that were used as references in this project, and the Appendix section contains the raw results of the experiment (i.e graphs and other data not in Chapter \ref{Results Evaluation}).
+Furthermore, the bibliography lists sources that were used as references in this project, and the Appendix section contains the raw results of the experiment (including graphs and data not in Chapter \ref{Results Evaluation}).
 
 % Brief results & conclusions
-The performance of several open-source sentiment analysis implementations were compared to judge their suitability for the sentiment scoring task, over the domain of sentences from news articles related to disabilities and people with disabilities.
-Results indicated that a relatively simpler rule-based model (VADER \cite{VADER}) outperformed more complex supervised machine learning or neural network models trained on other domains, which proved to be less generalisable for this domain.
+The performance of several open-source sentiment analysis implementations were compared to judge their suitability for the sentiment scoring task, given the domain of sentences from news articles related to disabilities or people with disabilities.
+Results indicated that a relatively simpler rule-based model (VADER \cite{VADER}) outperformed more complex supervised machine learning or neural network models trained on other domains (such as tweets and IMDb/Amazon reviews), which proved to be less generalisable for this domain.
 
-This project proved the feasibility of using NLP-based technologies to derive trends from a large corpora of news articles.
-Experiment results showed that, for instance, the perceived sentiment of Guardian articles are, on average, significantly higher than Daily Express and Daily Mail articles for the topic `disabled'.
+This project proved the feasibility of using NLP-based technologies to derive trends from a large corpora of online news articles relating to disabilities or people with disabilities.
+The results showed that, for example, the perceived sentiment of Guardian articles are, on average, significantly higher than Daily Express and Daily Mail articles for the topic `disabled'.
 It also showed an decreasing trend over time on the use of `invalid' and `handicap(ped)', and an increasing trend for `accessibl(e)', within Guardian articles.
 
 These results could have a substantial impact on how research should be conducted for similar studies on the media's representation of groups of people.
-Additionally, the accuracy and consistency of results could be further improved in future work, by developing a domain-specific supervised model for filtering and sentiment scoring, trained on an adequately-sized labelled dataset of news articles within the domain.   
+However, challenges remained due to the sentiment scorer's inaccuracy.
+The accuracy and consistency of results could be further improved in future work, by developing a domain-specific supervised model for filtering and sentiment scoring, trained on an adequately-sized labelled dataset of news articles within the domain.   
 
 %% This chapter is relatively short (2-4 pages) and must leave the reader very clear on what the project is about and what your goals are
 
@@ -254,7 +271,7 @@ Influenced by them, several other studies have been published adopting a similar
 	\item an analysis of 2.5 million English-language million news articles from 498 online news outlets from 99 countries \cite{flaounas2013research}
 \end{itemize}
 This approach has also been criticised as it ignored semantics and context.
-For example, critics has noted that `thirteen hundred words of gibberish and the Declaration of Independence are digitally equivalent' \cite{gooding2013mass}, issues with OCR quality and duplicate editions \cite{gooding2013mass}, or that the selection of digitised books are biased \cite{schwartz2011culturomics}.
+For example, critics has noted that ``thirteen hundred words of gibberish and the Declaration of Independence are digitally equivalent'' \cite{gooding2013mass}, issues with OCR quality and duplicate editions \cite{gooding2013mass}, or that the selection of digitised books are biased \cite{schwartz2011culturomics}.
 
 There has been some progress in applying NLP specifically in the domain of how (specific) groups of people are represented in the media:
 \begin{itemize}
@@ -312,7 +329,7 @@ This section will cover the technical tools researched and used for all listed c
 NLP covers three main `curves' or areas:  syntax, semantics, and pragmatics (narratives, understanding). 
 Syntax specifies the way symbols (words, terms, tokens, or $n$-grams) and groups of symbols are arranged and whether they are well-formed in an expression, whereas semantics specifies what these expressions mean, and pragmatics specifies contextual information \cite{cambria2014jumping}.
 Contemporary approaches to NLP mainly focus on syntactic analysis, due to the relative ease of extracting syntactic features of text such as term frequency, word co-occurrence, and part-of-speech tags, compared to extracting logical expressions and networks necessary for semantic analysis.
-However, syntactic analysis is much more limited as it often misses information such as the (semantic) context of a word, for example, ``one'' in ``there's no one there'' (referring to a person) vs ``we have only one car'' (referring to a quantity).
+However, syntactic analysis is much more limited as it often misses information such as the (semantic) context of a word, for example, the word `one' in ``there's no one there'' (referring to a person) vs ``we have only one car'' (referring to a quantity).
 This paper will focus on mainly syntactic techniques and features, as these are more relevant to this domain of high-level topic matching and sentiment analysis that is feasible with current technology at this scale.
 
 % Programming language: written in Python
@@ -361,7 +378,7 @@ Additionally, LDA is significantly more computationally expensive than tf or tf-
 % Cite SpaCy, 'used SpaCy to perform rule-based sentence matching'
 Sentiment scoring of articles is sub-divided into two components: a component to find sentences relevant to a topic, or a list of key terms, in a text document (sentence matching); and another component that performs sentiment analysis on these sentences, and transforms sentences to a real-valued sentiment score. 
 SpaCy \cite{SpaCy} is a popular tool for general natural-language processing tasks, using pre-trained convolutional neural network models for tasks such as tagging, parsing, and entity recognition, and is benchmarked to be the fastest and among the most accurate syntactic parser, able to parse 13,965 words per second in 2015 \cite{choi2015depends}.
-Among the information SpaCy extracts from text are lemmas (root words) of terms (e.g. `mentally' $\rightarrow$ `mental') and features a rule-based matching engine (retrieve a list of sequences of tokens within a document that matches a given pattern, e.g. tokens with a specified lemma), both which are useful for the task of finding sentences relevant to a topic in a document.
+Among the information SpaCy extracts from text are lemmas (root words) of terms (e.g. `mentally' \textrightarrow\space `mental') and features a rule-based matching engine (retrieve a list of sequences of tokens within a document that matches a given pattern, e.g. tokens with a specified lemma), both which are useful for the task of finding sentences relevant to a topic in a document.
 
 % Sentiment analysis: cite some survey papers, cite GitHub page, cite each library I tried (this would probably be the longest section)
 For sentiment scoring of sentences, a variety of open-source tools and pre-trained models dedicated to sentiment analysis were researched for the purpose of comparison.
@@ -371,7 +388,7 @@ Furthermore, a community-curated list of sentiment analysis methods and implemen
 
 The particular sentiment analysis implementations that have been explored in this paper are:
 \begin{itemize}
-	\item VADER \cite{VADER} is a relatively simple parsimonious rule-based model that scores the sentiment of a given sentence, based on the presence of `sentiment lexicons' (a list of lexical features common to sentiment expression, such as `good' and `bad', including slang words, emoticons, and acronyms), and rules such as negations (e.g. `not good') and increased sentiment intensity given emphasis such as punctuation, capitalisation, and degree modifiers (e.g. `very').
+	\item VADER \cite{VADER} is a relatively simple parsimonious rule-based model that scores the sentiment of a given sentence, based on rules such as: the presence of `sentiment lexicons', a list of lexical features common to sentiment expression, such as `good' and `bad', including slang words, emoticons, and acronyms; negations (e.g. `not good'); and `emphasis', or increased sentiment intensity due to punctuation, capitalisation, and degree modifiers (e.g. `very').
 	\item xiaohan2012's `twitter-sent-dnn' repository provides a trained a convolutional neural network model with dynamic k-max pooling (DCNN) for modelling (real-valued sentiment scores of) sentences.
 		The sentence model properties considered are the word and $n$-gram order, and induced feature graph (generated by the DCNN).
 		It was trained on a dataset of 1.6 million tweets with inferred labels based on emoticons.
@@ -426,7 +443,7 @@ The types of plots and statistical analysis metrics that are deemed relevant for
 % Expand aims & goals
 The primary aim of this project is to utilise available NLP-based technologies in order to perform a high-level meta-analysis of online news articles relating to people with disabilities available in the online British news media, with the goal of revealing trends by varying for independent variables such as source and year published.
 To achieve this aim, the solution would need to collect and scrape online news articles from the Internet, filter only relevant articles, use available NLP-based tools to extract information from these articles, perform statistical analyses, and show visualisations of the resulting data to show trends.
-Of particular interest, as a dependent variable, is a sentiment (or opinion/polarity) index of articles (`how positively does an article view people with disabilities?'), and how it varies given independent variables such as source and year published.
+Of particular interest, as a dependent variable, is a sentiment (or opinion/polarity) index of articles (``how positively does an article view disabilities or people with disabilities?''), and how it varies given independent variables such as source and year published.
 Thus, the general solution defined by this aim would involve the completion of several sub-problems, primarily data collection, filtering, parsing, sentiment scoring, and statistical analysis and visualisation.
 
 To achieve this aim, the project's goals are to develop a computational pipeline that implements all components required for the general solution.
@@ -1006,7 +1023,7 @@ To quantify the distribution of each data subset, the component computes the mea
 These metrics are saved to an output text file, unique to each topic.
 
 It also attempts to compare whether the sentiment scores of articles published by a source is significantly higher than the sentiment scores of articles published by another source. 
-The Mann-Whitney $U$ Test \cite{mann1947test} is a non-parametric statistical test that measures the null hypothesis that `given a randomly-selected value from a distribution, and another randomly-selected value from another distribution, the first value is equally likely to be less or greater than the second value'.
+The Mann-Whitney $U$ Test \cite{mann1947test} is a non-parametric statistical test that measures the null hypothesis that ``given a randomly-selected value from a distribution, and another randomly-selected value from another distribution, the first value is equally likely to be less or greater than the second value.''
 If the null hypothesis holds true, then there are no statistically significant difference between the two distributions.
 The Mann-Whitney $U$ Test returns the $U$ statistic and a $p$-value between 0 and 1, which corresponds to how likely the null hypothesis is to be true; the null hypothesis is rejected if the $p$-value is lower than 0.05.
 This test is performed to compare the subset of all articles published by each source to the subset of all articles published by each other source; for all articles within a topic, and for all articles published in each year within a topic.
@@ -1114,7 +1131,7 @@ The sample contains 5 sentences from each source (Daily Express, Daily Mail, Gua
 The sample contains 180 sentences in total. % 180 = 5*3*12
 
 Each sentence in the sample are then manually labelled to: positive, negative, neutral, or irrelevant.
-These labels are measured by the perceived `sentiment' of a sentence towards a disability, disabilities, a person with disabilit(y/ies), or people with disabilit(y/ies) (or `irrelevant' if it did not refer to any disability-related topic).
+These labels are measured by the perceived `sentiment' of a sentence towards a disability, disabilities, a person with disabilit(y/ies), or people with disabilit(y/ies), or `irrelevant' if it did not refer to any disability-related topic.
 
 The sentiment score distributions of positive (blue), negative (red), and neutral (green) sentences for each topic were plotted as follows:
 % results for how open-source sentiment scorers compare: plots
