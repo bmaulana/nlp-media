@@ -1,6 +1,8 @@
 # nlp-media
 A project to use NLP and sentiment analysis to analyse media representations of people with disabilities.
 
-Set up environment: Requires conda (https://www.anaconda.com/download/). Follow instructions in 'ENV SETUP INSTRUCTIONS' to set up a conda environment and install dependencies (e.g. SpaCy, TensorFlow).
+Set up conda environment: Follow instructions in 'ENV SETUP INSTRUCTIONS.txt' to set up a conda environment (https://www.anaconda.com/download/) and install required dependencies (e.g. SpaCy, TensorFlow).
 
-To run: 'python pipeline.py' in cmd/sh (while within the conda env, otherwise run 'activate \<env-name\>' first e.g 'activate nlp-media').
+Activate conda environment: Run 'activate \<env-name\>' in cmd/sh, e.g 'activate nlp-media'.
+
+Run script: 'python pipeline.py' in cmd/sh while within the conda environment. 
