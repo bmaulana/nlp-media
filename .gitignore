@@ -110,7 +110,7 @@ out-plot*
 out-eval*
 eval*
 *.csv
-*.txt
+out*
 
 # LaTeX outputs
 *.aux
