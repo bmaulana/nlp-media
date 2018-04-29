@@ -25,7 +25,7 @@ TOPICS2 = {'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'inv
                                  'language disorder', 'language disability', 'speech impediment', 'stammer'],
            'mental illness': ['mental illness', 'mental health', 'mental disability', 'mental disorder', 'mental issue',
                               'brain injured', 'brain injury', 'brain damaged', 'psychological', 'psychiatric',
-                              'emotional disorder', 'behavioural disorder', 'retardation', 'intellectual disability',
+                              'emotional disorder', 'behavioural disorder', 'intellectual disability',
                               'mentally ill', 'mentally disabled', 'mentally handicapped'],
            'developmental delay': ['developmental delay', 'developmental disability', 'developmental disorder',
                                    'learning disability', 'slow learner', 'retardation', 'intellectual disability'],
