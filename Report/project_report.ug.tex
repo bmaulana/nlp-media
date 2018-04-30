@@ -1621,7 +1621,7 @@ Such a solution would provide researchers with the tools to perform similar rese
 
 \printbibliography[heading=bibintoc]
 
-\chapter{Appendix: All results}  % appendix A
+\chapter{Evaluation Results}  % appendix A
 
 \newpage
 \section{Topic: `disabled'}
@@ -2073,6 +2073,39 @@ Key Terms: `speech impairment', `stutter', `speech disability', `speech disorder
 \subsection{Key Term Trend Plots}
 \includegraphics[width=\textwidth]{raw/speech-impairment-terms.png}
 
-% \chapter{Test Appendix B}
+\chapter{System Manual}
+
+The source code that was developed to conduct the experiment and produce the results described in this report are available at \url{https://github.com/bmaulana/nlp-media}.
+
+\vspace{1em}
+
+\noindent To run the pipeline used for this experiment, follow these instructions:
+
+\section{Set up conda environment}
+
+First, download and install Anaconda (\url{https://www.anaconda.com/download/})
+
+\vspace{1em}
+
+\noindent Then, run the following commands in your command line:
+\begin{itemize}
+	\item `conda update conda'
+	\item `conda create -n $<$env-name$>$ anaconda'
+	\item `activate $<$env-name$>$'
+	\item `conda install -n $<$env-name$>$ spacy'
+	\item `python -m spacy download en\_core\_web\_lg'
+	\item `pip install -U vaderSentiment'
+	\item `pip install -U tqdm'
+\end{itemize}
+
+\section{Activate conda environment}
+
+Run `activate $<$env-name$>$' in your command line, e.g `activate nlp-media'.
+
+\section{Run pipeline script}
+
+In your command line, navigate to the root directory of the `nlp-media' repository, then run `python pipeline.py' while within the conda environment.
+
+\chapter{Project Plan and Interim Report}
 
 \end{document}

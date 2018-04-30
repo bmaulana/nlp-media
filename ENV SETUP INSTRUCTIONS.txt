@@ -14,3 +14,4 @@ Ensure the folder is named 'stanford-corenlp-full-2018-02-27', otherwise rename 
 12) `pip install -U stanfordcorenlp`
 13) `pip install -U textblob`
 14) `python -m textblob.download_corpora`
+15) `pip install -U tqdm`
