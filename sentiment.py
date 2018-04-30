@@ -51,7 +51,6 @@ def sentiment(fname, max_articles=10):
             print(count, "/", total, "articles analysed (last article skipped)")
             continue
 
-        # TODO test relevance scores to see which performs better (sample n articles from each)
         to_write['relevance_score_sents'] = to_write['num_relevant_sentences'] / to_write['num_sentences']
         to_write['relevance_score_keyword_rank'] = 1 / to_write['keyword_rank']  # Assume Zipf distribution with s ~= 1
 
@@ -127,8 +126,6 @@ def sentiment(fname, max_articles=10):
         # print(time.time() - score_time, 'seconds to analyse article using TextBlob (Pattern Analyser)')
         scorer_times.append(time.time() - score_time)
 
-        # TODO nltk-sentiment (http://www.nltk.org/api/nltk.sentiment.html)
-
         # 'summarise' sentiment score of an article via weighted average of each sentence
         # TODO measure relevance score of each sentence & use it as weight for sentiment score? instead of keyword_count
         sentiment_score_labels = ['vader', 'xiaohan', 'kcobain', 'openai', 'stanford', 'textblob', 'textblob_bayes']
@@ -144,7 +141,6 @@ def sentiment(fname, max_articles=10):
             except ZeroDivisionError:
                 to_write[full_label] = 'ERROR'
 
-        # Used to only analyse one article per topic/source to test performance of each scorer, comment out otherwise
         f_out_time.write('\n')
         f_out_time.write(",".join([str(t) for t in scorer_times]))
 
@@ -198,7 +194,6 @@ def sentiment_openai(fname):
         if to_write['num_relevant_sentences'] == 0:
             continue
 
-        # TODO test relevance scores to see which performs better (sample n articles from each)
         to_write['relevance_score_sents'] = to_write['num_relevant_sentences'] / to_write['num_sentences']
         to_write['relevance_score_keyword_rank'] = 1 / to_write['keyword_rank']  # Assume Zipf distribution with s ~= 1
 
@@ -207,7 +202,6 @@ def sentiment_openai(fname):
             sents[sent]['sentiment_score'] = float(sentiment_vector[sentence_index[sent]])
 
         # 'summarise' sentiment score of an article via weighted average of each sentence
-        # TODO measure relevance score of each sentence & use it as weight for sentiment score? instead of keyword_count
         weighted_avg, keyword_total_count = 0.0, 0
         for sent in sents:
             if sents[sent]['sentiment_score'] != 'ERROR':
@@ -218,7 +212,6 @@ def sentiment_openai(fname):
         except ZeroDivisionError:
             to_write['sentiment_score'] = 'ERROR'
 
-        # Used to only analyse one article per topic/source to test performance of each scorer, comment out otherwise
         f_out.write(json.dumps(to_write))
         f_out.write('\n')
 
@@ -245,7 +238,6 @@ def sentiment_vader(fname):
         if to_write['num_relevant_sentences'] == 0:
             continue
 
-        # TODO test relevance scores to see which performs better (sample n articles from each)
         to_write['relevance_score_sents'] = to_write['num_relevant_sentences'] / to_write['num_sentences']
         to_write['relevance_score_keyword_rank'] = 1 / to_write['keyword_rank']  # Assume Zipf distribution with s ~= 1
 
@@ -256,7 +248,6 @@ def sentiment_vader(fname):
             sents[sent]['sentiment_score'] = vader_analyser.polarity_scores(sent)['compound']  # y = -1 to 1
 
         # 'summarise' sentiment score of an article via weighted average of each sentence
-        # TODO measure relevance score of each sentence & use it as weight for sentiment score? instead of keyword_count
         weighted_avg, keyword_total_count = 0.0, 0
         for sent in sents:
             if sents[sent]['sentiment_score'] != 'ERROR':
@@ -267,7 +258,6 @@ def sentiment_vader(fname):
         except ZeroDivisionError:
             to_write['sentiment_score'] = 'ERROR'
 
-        # Used to only analyse one article per topic/source to test performance of each scorer, comment out otherwise
         f_out.write(json.dumps(to_write))
         f_out.write('\n')
 

@@ -106,7 +106,6 @@ def parse(fname, keywords=None):
         to_write['relevant_sentences'] = sents
         to_write['keywords_used'] = keywords_used
 
-        # TODO maybe skip filter and filter here instead based on num_relevant_sents / num_sents?
         if len(sents) == 0:
             continue
 

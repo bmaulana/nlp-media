@@ -21,7 +21,6 @@ def sentiment_vader(fname):
         if to_write['num_relevant_sentences'] == 0:
             continue
 
-        # TODO test relevance scores to see which performs better (sample n articles from each)
         to_write['relevance_score_sents'] = to_write['num_relevant_sentences'] / to_write['num_sentences']
         to_write['relevance_score_keyword_rank'] = 1 / to_write['keyword_rank']  # Assume Zipf distribution with s ~= 1
 
@@ -32,7 +31,6 @@ def sentiment_vader(fname):
             sents[sent]['sentiment_score'] = vader_analyser.polarity_scores(sent)['compound']  # y = -1 to 1
 
         # 'summarise' sentiment score of an article via weighted average of each sentence
-        # TODO measure relevance score of each sentence & use it as weight for sentiment score? instead of keyword_count
         weighted_avg, keyword_total_count = 0.0, 0
         for sent in sents:
             if sents[sent]['sentiment_score'] != 'ERROR':
@@ -43,7 +41,6 @@ def sentiment_vader(fname):
         except ZeroDivisionError:
             to_write['sentiment_score'] = 'ERROR'
 
-        # Used to only analyse one article per topic/source to test performance of each scorer, comment out otherwise
         f_out.write(json.dumps(to_write))
         f_out.write('\n')
 

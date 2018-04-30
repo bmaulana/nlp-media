@@ -49,7 +49,6 @@ QUERIES = {'cerebral palsy': ['cerebral palsy', 'spastic'],
            }
 
 
-# TODO add more
 SOURCES = [oop_scraper.GuardianScraper("7f2c7c42-2600-4292-a417-1b8efc5271a6"),
            oop_scraper.DailyMailScraper(),
            oop_scraper.DailyExpressScraper()
