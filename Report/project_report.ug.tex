@@ -419,9 +419,9 @@ A GitHub search for the topic `sentiment-analysis' as of 18 April 2018 reported 
 Furthermore, there exists a community-curated list of sentiment analysis implementations on GitHub \cite{awesome-sentiment-analysis}, which served as a useful starting point to explore open-source sentiment analysis implementations.
 
 A variety of open-source tools and pre-trained models dedicated to sentiment analysis were researched for comparison.
-Except for VADER and TextBlob's PatternAnalyser, these models were based on supervised machine learning or neural network approaches, which infers patterns between features (information extracted from text using NLP) and labels (sentiment scores) from a labelled training dataset, and uses these learned patterns to estimate the label of `unseen' text.
-However, patterns learned from other domains (e.g. social media posts) may not be fully relevant in the domain of this experiment (news articles related to disabilities).
-On the other hand, VADER and TextBlob's PatternAnalyser implement a relatively less complex rule-based model, which computes sentiment scores based on the presence of pre-defined rules or patterns.
+Except for VADER and TextBlob's PatternAnalyser, these models were based on supervised machine learning or neural network approaches, which learns the relationship between features (information extracted from text using NLP) and labels (sentiment scores) from a labelled training dataset, and uses this learned model to estimate the label of `unseen' text.
+However, the model learned from other domains (e.g. social media posts) may not be fully relevant in the domain of this experiment (news articles related to disabilities).
+On the other hand, VADER and TextBlob's PatternAnalyser implement a relatively less complex rule-based model, which computes sentiment scores based on the presence of pre-defined rules.
 Unless otherwise stated below, these tools all return a real-valued sentiment score between -1.0 and 1.0 for each sentence.
 
 The sentiment analysis implementations that were explored in this paper are:
@@ -456,7 +456,6 @@ For statistical analysis and data visualisation, the conventionally used librari
 
 Numpy \cite{Numpy} provides a powerful and efficient $n$-dimensional array object, often required for other libraries.
 It provides efficient functions that perform mathematical computations over real values, vectors (1-dimensional arrays), and matrices (2-dimensional arrays) such as scalar/vector/matrix addition and multiplication, extracting vectors from matrices, and boolean filtering.
-Numpy is highly efficient as its functions are a Python wrapper for functions written in C, which allows for more direct hardware-level manipulation than pure Python \cite{Numpy-c}.
 
 Scipy \cite{Scipy} is a library that extends numpy to provide additional domain-specific functions. 
 It extends numpy's 2-dimensional array to implement a sparse matrix which only stores non-zero values in memory, useful in the case of a very large matrix where most elements are zero; such as a term frequency matrix of `all tokens' $\times$ `all documents' where most documents only contain values for a very small subset of tokens.
@@ -1307,8 +1306,8 @@ These plots showed that the version implementing VADER was more consistent in di
 
 % discuss about how VADER, although much simpler than other models, is more generalisable than stat-ML/NN models trained on different domains ("These results came as a surprise as...")
 These results came as a surprise, due to the simplicity of VADER's rule-based model relative to other implemented models based on supervised machine learning or neural network approaches (refer to section \ref{tc-sentiment} or \ref{des-sentiment-comparison} for a list and short description of these sentiment scorer implementations).
-The suspected reason was that these supervised machine learning and neural network models were trained on data from other domains (tweets, movie reviews, Amazon reviews, etc.), the patterns learned by the model may not necessarily translate well to this domain of sentences from news articles referring to disabilities or people with disabilities. 
-Meanwhile, VADER's simpler rule-based model proved to be more generalisable as it simply checks for the presence of pre-defined rules that determine a general positive/negative sentiment instead of learning patterns from training data.
+The suspected reason was that these supervised machine learning and neural network models were trained on data from other domains (tweets, movie reviews, Amazon reviews, etc.), the learned model may not necessarily translate well to this domain of sentences from news articles referring to disabilities or people with disabilities. 
+Meanwhile, VADER's simpler rule-based model proved to be more generalisable as it simply checks for the presence of pre-defined rules that determine a general positive/negative sentiment instead of learning these rules from training data.
 
 It is likely that a supervised machine learning or neural network model, trained on an adequately large labelled dataset from this domain, could strongly out-perform VADER. 
 This was encouraged by the fact that the sentiment score accuracy of OpenAI's implementation, based on a neural network model, was very close to VADER's, despite the model being trained on a different domain of 82 million Amazon product reviews. 
@@ -2216,17 +2215,19 @@ for tpc, words in TOPICS.items():
 
 `QUERIES' is a mapping of topic names to a list of query terms as defined in section \ref{topics}.
 
-`SOURCES' is a list of implementations of scraper objects as described in section \ref{des-data-collection} for each supported source mentioned in section \ref{sources}
+`SOURCES' is a list of implementations of scraper objects as described in section \ref{des-data-collection} for each supported source mentioned in section \ref{sources}.
 
-`crawler()' implements the data collection component as described in section \ref{des-data-collection}
+`crawler()' implements the data collection component as described in section \ref{des-data-collection}.
 
-`filter()' implements the dataset filtering component as described in section \ref{des-filtering}
+`filter()' implements the dataset filtering component as described in section \ref{des-filtering}.
 
-`parse()' implements the feature extraction component as described in section \ref{des-matching}
+`parse()' implements the feature extraction component as described in section \ref{des-matching}.
 
-`sentiment\_vader()' implements the sentiment scoring component as described in section \ref{des-sentiment-final}
+`sentiment\_vader()' implements the sentiment scoring component as described in section \ref{des-sentiment-final}.
 
-`plot()' implements the statistical analysis and data visualisation component, as described in section \ref{des-visualisation}
+`plot()' implements the statistical analysis and data visualisation component as described in section \ref{des-visualisation}.
+
+`NUM\_DOCS' was set to -1 (unlimited), and `FILTER\_THRESHOLD' was set to 20.
 
 \chapter{Project Plan and Interim Report}
 
