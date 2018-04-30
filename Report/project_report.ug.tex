@@ -138,7 +138,7 @@ For example, a 2002 study analysed a sample of 600 print articles relating to me
 There were attempts to discover trends, such as a study conducted in 1998 \cite{gold1999media} and replicated in 2008 \cite{devotta2013representations} which assessed change in representations of disability and people with disability in Canadian news media.
 However, the study provided only two data points (1998 and 2008) with relatively small sample sizes of 196 news articles in 1998 and 166 news articles in 2008.
 
-Applying computational NLP to this domain would allow the possibility of analysing a much larger sample of articles and identifying trends by creating and comparing subsets based on independent variables such as year of publication and publisher.
+Applying computational NLP to this domain would allow the possibility of analysing a much larger sample of articles and identifying trends by creating and comparing subsets based on independent variables such as time of publication and publisher.
 In this project, a sample of 305,185 news articles (48,967 after filtering off-topic articles) from British online news sources was used.
 However, challenges remain in this application of NLP, as contemporary syntax-based NLP approaches tend to be more limited in scope and are prone to inconsistencies (false positives and negatives), where mitigating these inconsistencies is currently an open area of research. % inconsistencies due to type-I and type-II errors? (false positives and negatives)
 % Just give a short summary, expand this later and give more papers in Chapter 2
@@ -617,7 +617,7 @@ The second iteration of the sentiment scorer component was the one used in the f
 It must only compute one sentiment score, using the best-performing sentiment scorer that runs in reasonable time, as shown by the results of the first iteration (section \ref{req-sentiment-comparison}).
 It must compute the sentiment scores for all relevant sentences in the dataset.
 
-After the sentiment scores of all relevant sentences within an article had been computed, this component must also compute the average sentiment score for each article, based on the sentiment scores of relevant sentences in the article.
+After the sentiment scores of all relevant sentences within an article had been computed, this component must also calculate the average sentiment score for each article based on the sentiment scores of relevant sentences in the article.
 Furthermore, the component must run in reasonable time (less than a day for each topic), given available hardware and a scale of up to tens of thousands of articles per topic.
 
 After the sentiment scorer component had scored all relevant sentences and articles in the dataset, it must save information about all articles, with score labels appended to each sentence and article, to a new output file.
@@ -1037,7 +1037,7 @@ To reduce bias in manual labelling, a second output file which contained only se
 
 The second script is the analyser.
 Given a dataset of sentences, labels, and sentiment scores, with the format shown above, the analyser plotted sentiment score distributions of positive, negative, and neutral sentences in 7 histograms, one for each sentiment scorer.
-Additionally, it also computed these statistics for each sentiment scorer:
+Additionally, it also calculated these statistics for each sentiment scorer:
 \begin{itemize}
 	\item Mean positive: mean sentiment score for all positive-labelled sentences
 	\item Mean neutral: mean sentiment score for all neutral-labelled sentences
@@ -1114,7 +1114,7 @@ To quantify the distribution of each data subset, the mean, standard deviation, 
 These metrics were saved to an output text file unique to each topic.
 
 The component also measured whether the sentiment scores of articles published by a source was significantly higher than the sentiment scores of articles published by other sources. 
-The Mann-Whitney $U$ Test \cite{mann1947test} is a non-parametric statistical test where if the null hypothesis holds true, then there is no statistically significant difference between the two distributions (refer to section \ref{tc-visualisation} for a more formal definition).
+The Mann-Whitney $U$ Test \cite{mann1947test} is a non-parametric statistical test where if the null hypothesis holds true, then there is no statistically significant difference between two distributions (refer to section \ref{tc-visualisation} for a more formal definition).
 It returns the $U$ statistic and a $p$-value between 0 and 1, which corresponds to how likely the null hypothesis is to be true; the null hypothesis is rejected if the $p$-value is lower than 0.05.
 This test was performed to compare the subset of all articles published by each source to the subset of all articles published by each other source; for all articles within a topic, and for all articles published in each year within a topic.
 These test results were saved to the same output text file.
@@ -1393,7 +1393,7 @@ This is a common occurrence for most other topics (as mentioned in section \ref{
 
 % Mann-Whitney U analysis (re-define it again, what it means for statistical significance etc)
 To test whether the differences between the distributions of each source were statistically significant, the Mann-Whitney $U$ Test \cite{mann1947test} was invoked.
-The Mann-Whitney $U$ Test is a non-parametric statistical test where if the null hypothesis holds true, then there is no statistically significant difference between the two distributions (refer to section \ref{tc-visualisation} for a more formal definition).
+The Mann-Whitney $U$ Test is a non-parametric statistical test where if the null hypothesis holds true, then there is no statistically significant difference between two distributions (refer to section \ref{tc-visualisation} for a more formal definition).
 The Mann-Whitney $U$ Test function returns a $p$-value score, which is a measure of the probability that the null hypothesis holds.
 In this experiment, two distributions were considered significantly different if the $p$-value returned by the Mann-Whitney $U$ Test is lower than 0.05, where the null hypothesis would be rejected.
 
@@ -1489,7 +1489,7 @@ A weak custom stemmer that only stems plural and past/future tense forms and no 
 For example, `illness' and `illnesses' are equivalent, but `ill' and `illness' are still considered distinct.
 Terms were also converted to lower case to ignore capitalisation, thus e.g. `Disability' and `disability' are equivalent.
 
-For each term, a measure of average term occurrence, which measures the expected number of occurrences of a term within any given article for a given source and year, was computed for each year between 2000 and 2018.
+For each term, a measure of average term occurrence, which measures the expected number of occurrences of a term within any given article for a given source and year, was calculated for each year between 2000 and 2018.
 Refer to section \ref{des-visualisation} for a formal definition of this metric.
 
 With this approach, the year-on-year average term occurrence trends of each key term in the `disabled' topic were plotted in line graphs, one for each key term:
@@ -1550,45 +1550,46 @@ For example, the Guardian referred to `disability' or `disabl(ed)' by name consi
 %% Summarise the achievements to confirm the project goals have been met.
 %% A summary of what the project has achieved. Make sure that you address each goal set out in the Introduction chapter, to show that you have achieved what you claimed you would. Don’t leave any loose ends
 
-The aim of this project was to explore the feasibility of utilising NLP technologies to discover trends with regards to specific topics, within the context of the representation of disabilities and people with disabilities in British online news media.
+The aim of this project was to explore the feasibility of utilising NLP technologies to discover trends such as how term popularity and sentiment varies over time and between different publications, within the context of news articles relating to disabilities and people with disabilities in British online news media.
 The results of this experiment showed that this was feasible.
+
 By analysing a dataset of 16,411 news articles related to the key terms `disabled', `disability', `handicapped', `cripple', `invalid', `accessible', `ablism', and `ableism'; the results in section \ref{Sentiment score: plots and trends} plotted trends showing the variation of modelled sentiment scores across three different news publishers (Daily Express, Daily Mail, and Guardian) and over time.
-The results of Mann-Whitney $U$ statistical test in section \ref{Sentiment score: statistical comparison of different sources} showed that the differences of sentiment score distributions between the three publishers were statistically significant for the `disabled' topic, and showed that `Guardian \textgreater\space Daily Mail' and `Guardian \textgreater\space Daily Express' was true for every year between 2010 and 2017.
+The results of Mann-Whitney $U$ statistical test in section \ref{Sentiment score: statistical comparison of different sources} showed that the differences of sentiment score distributions between the three publications were statistically significant for the `disabled' topic, and showed that `Guardian \textgreater\space Daily Mail' and `Guardian \textgreater\space Daily Express' was true for every year between 2010 and 2017.
 Furthermore, the results of analysing average term occurrences of key terms, as shown in section \ref{Key terms: plots and trends}, identified increasing or decreasing trends for the terms `invalid', `handicap(ped)', and `accessibl(e)' for the Guardian; and showed variations in term usage/popularity between different publishers.
 
 This experiment was repeated across 11 other topics (as defined in section \ref{topics}), with varying degrees of success. 
-The lower sample size of news articles related to other topics in the dataset, and decreased effectiveness of the filter with regards to topics with more ambiguous keywords (e.g. `blind', `mute', `paralysed', and `stutter'), were major factors in the variability of results.
+The lower sample size of news articles related to other topics in the dataset and the decreased effectiveness of the filter with regards to topics with more ambiguous keywords (e.g. `blind', `mute', `paralysed', and `stutter') were major factors in the variability of results.
 The full results of the experiment for all 12 topics are available in the Appendix.
  
 The experiment showed that it was feasible to collect and analyse a large dataset of 305,185 news articles, reduced to 48,967 articles after filtering, within a reasonable time frame using consumer-grade hardware (Intel i7-6700HQ CPU @ 2.60GHz, NVIDIA GeForce GTX 1060 GPU, 200 Mbit/s download speed).
 Additionally, the vast majority of the time was spent on data collection from online sources.
 An analysis of an existing news article corpus would take less time, approximately 0.37 seconds per article in extracting text features, with negligible sentiment scoring runtime using VADER.
-With more powerful hardware available to institutions and large corporations, this approach should scale well to analyse corpora consisting of millions of news articles in reasonable time.
+With more powerful hardware available to large institutions, this approach should scale well to analyse millions of documents in reasonable time.
 
 \section{Evaluation} \label{Evaluation}
 %% Evaluation of the work (this may be in a separate chapter if there is substantial evaluation).
 %% A critical evaluation of the results of the project (e.g., how well were the goals met, is the application fit for purpose, has good design and implementation practice been followed, was the right implementation technology chosen and so on).
 
-This experiment showed that it was feasible to apply existing open-source NLP technologies to discover trends on a large dataset of news articles in this domain, which achieved the primary aim of this project.
-The solution developed to perform this experiment delivered in performing the data collection and filtering of a dataset of 305,185 news articles before filtering; 
+This experiment showed that it was feasible to apply existing open-source NLP technologies to discover trends on a large dataset of news articles relating to disabilities and people with disabilities, which achieved the primary aim of this project.
+The solution developed to perform this experiment delivered in performing the data collection and filtering of 305,185 news articles before filtering; 
 and the extraction of relevant sentences and key term frequencies, sentiment scoring, statistical analysis, and data visualisation of 48,967 news articles after filtering.
-The modular approach to solution design, with five separate components for each goal or task (data collection, filtering, feature extraction, sentiment scoring, and data analysis/visualisation), were ideal in this research, as it enabled experimentation, e.g. trying multiple sentiment scorer implementations and data visualisation plots, without affecting or needing to rewrite or recompute code for other components.
+The modular approach to solution design, with five separate components for each goal or task (data collection, filtering, feature extraction, sentiment scoring, and data analysis/visualisation) were ideal in this research, as it enabled experimentation e.g. trying multiple sentiment scorer implementations and data visualisation plots, without affecting or needing to rewrite or recompute code for other components.
 This solution achieved the project's goals sufficiently as a proof of concept and delivered meaningful results.
 
 % Choice of technologies (what's good e.g. Python, range of libraries, plotting, etc.; what can be improved i.e. try other methods e.g. topic models for filtering, inconsistency of models used e.g. stemming with NLTK for filtering vs lemmatising with SpaCy for rule-based sentence matching)
-The choice of NLP techniques and technologies, extracted features, statistical metrics, and visualisation tools were sufficient, and achieved results, but leaves room for further improvement.
-The main limitation in this research was the lack of labelled data for both filtering off-topic articles and sentiment scoring, which led to inconsistencies in both tasks.
+The choice of NLP techniques and technologies, extracted features, statistical metrics, and visualisation tools were sufficient and achieved results, but leaves room for further improvement.
+The main limitation of this research was the lack of labelled data for both filtering off-topic articles and sentiment scoring, which led to inconsistencies in both tasks.
 The filter had issues with ambiguous terms such as `blind', `mute', `paralysed', and `stutter'; 
-a supervised filter may be able to overcome this issue by taking the word's context in the sentence into account, for example, by also evaluating other words in the sentence, and provide a better evaluation of filter accuracy. 
-Given this constraint, the filter worked adequately well to prepare the dataset for the experiment;
-limited sampling of on-topic/off-topic articles showed that the approach was sufficiently accurate for most topics.
+a supervised filter may be able to overcome this issue by taking the word's context in the sentence into account e.g. by also evaluating other words in the sentence, and provide a better evaluation of filter accuracy. 
+Given this constraint, the filter worked adequately well to prepare the dataset for the experiment, where
+limited sampling of on-topic/off-topic articles showed that the filter was sufficiently accurate for most topics.
 
-Without labelled data for sentiment scoring, the only possible options were to use generalised supervised models trained on other domains, or to use a less complex model based on rule matching.
+Without labelled data for sentiment scoring, the only possible options were to use generalised supervised models trained on other domains or to use a less complex model based on rule matching.
 It was found that a less complex model based on rule matching, VADER \cite{VADER}, outperformed more complex supervised models based on statistical classifiers or neural networks trained on other domains, such as Amazon reviews or tweets.
 However, VADER was still highly inconsistent in this domain, with an accuracy of 0.789, and although it was sufficient to discover trends in this experiment, it is likely that a domain-specific supervised model would outperform it.
 With a more consistent sentiment scorer, it is likely that the variance of sentiment scores within subsets would be lower, and the trend lines generated in data visualisation would be more consistent.
 
-The usage of different NLP libraries in separate components such as NLTK's stemmer for filtering and SpaCy's lemmatiser for feature extraction left occasional inconsistencies such as rare cases of the feature extractor not finding any relevant sentences in articles the filter deemed on-topic.
+The usage of different NLP libraries in separate components such as NLTK's stemmer for filtering and SpaCy's lemmatiser for feature extraction also left occasional inconsistencies, such as rare cases of the feature extractor not finding any relevant sentences in articles the filter deemed on-topic.
 
 \section{Future Work} \label{Future Work}
 %% How the project might be continued, but don't give the impression you ran out of time!
@@ -1597,16 +1598,17 @@ The usage of different NLP libraries in separate components such as NLTK's stemm
 % Implications of NLP for future media studies, call for similar analyses to be conducted in other domains (mention additional information that can be discovered by using computational NLP and processing a much larger sample of text) 
 The results showed that this computational NLP-based approach was effective in analysing news media with regards to the media representation of disabilities and people with disabilities.
 This could have a substantial impact on how research will be conducted for similar studies.
-Past studies (such as \cite{gold1999media, coverdale2002depictions, jones2009representations, devotta2013representations}) could be revisited using computational approaches to analyse a much larger sample size of articles, which would improve the certainty and representativeness of the conclusion, and possibly identify trends by varying for independent variables such as time and source.
+Past studies (such as \cite{gold1999media, coverdale2002depictions, jones2009representations, devotta2013representations}) could be revisited using computational NLP-based approaches to analyse a much larger sample size of articles, which would improve the certainty and representativeness of the conclusion, and possibly identify trends by varying for independent variables such as time and source.
 
 % Purpose built sentiment model trained to a a labelled sample: in this analysis vader performed best although it's a very simple model as other, more complex pre-trained models were trained on other domains and is less generalisable. However, OpenAI's model came very close despite this, and a similar approach using deep learning or statistical ML models, trained on a labelled sample of positive/negative/neutral sentences in this domain, would have much improved sentiment score reliability (and thus quality of analyses)
 As mentioned in section \ref{Evaluation}, the lack of labelled domain-specific dataset of sentences from news articles relating to disabilities with `positive' or `negative' labels limited the sentiment scores' accuracy in this experiment.
-While exploring general purpose open-source sentiment scorer implementations, it was found that a simple rule-based model, VADER \cite{VADER}, outperformed more sophisticated supervised machine learning or neural network models for the sentiment scoring task, as they were trained with labelled datasets from other domains.
+While exploring general-purpose open-source sentiment scorer implementations, it was found that a simple rule-based model, VADER \cite{VADER}, outperformed more sophisticated supervised machine learning or neural network models for the sentiment scoring task, as they were trained with labelled datasets from other domains.
 However, one of the neural network based models, OpenAI \cite{OpenAI}, came close to VADER in accuracy, despite being trained on a separate domain (Amazon reviews), suggesting that a domain-specific supervised model would strongly outperform VADER given sufficient high-quality training data.
-If an adequately large dataset of labelled sentences for this domain could be compiled, future work could use this dataset to train a supervised model to improve the accuracy of sentiment scores.
-With a more accurate sentiment scorer, it is likely that the variance of sentiment scores within subsets would be lower due to increased consistency, and it would be possible to derive clearer trends and obtain statistically-significant comparisons on subsets with lower sample sizes, e.g. smaller time intervals.
 
-Similarly, a supervised filter, trained on a labelled dataset of on-topic and off-topic news articles, would likely improve filtering accuracy and reduce off-topic articles in the filtered dataset, especially for trickier topics with ambiguous terms such as `blind' or `mute'.
+If an adequately large dataset of labelled sentences for this domain could be compiled, future work could use this dataset to train a supervised model, which would improve upon the accuracy of sentiment scores used in this experiment.
+With a more accurate and more consistent sentiment scorer, it is likely that the variance of sentiment scores within subsets would be lower, and it would be possible to derive clearer trends and obtain statistically significant comparisons on subsets with lower sample sizes, e.g. smaller time intervals.
+
+Similarly, a supervised filter, trained on a labelled dataset of on-topic and off-topic news articles, would likely improve filtering accuracy and reduce the proportion of off-topic articles in the filtered dataset, especially for trickier topics with ambiguous terms such as `blind' or `mute'.
 
 % Expand sources - Develop API where others can use and adapt the code, change topics / keywords / key phrases / query terms, add/change sources by developing their own scrapers (with an interface for the scraper), document code and improve code readability and output file structure, output sample on-topic/off-topic articles to help them set rank threshold, maybe even an API to provide their own sentiment model(s) as parameter given an interface
 Another potential application is to develop a public interface that allows users to retrieve the results of analyses performed in this experiment for other domains, given a list of topics, key terms, and query terms, and/or an existing text corpus provided by the user.
