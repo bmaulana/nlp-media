@@ -78,7 +78,7 @@ def filter(fname, keywords=None, threshold=20, sample=0):
     f_out = open(out_path, 'w')
     for i in tqdm(range(len(corpus))):
         vectors = matrix[i].toarray()
-        keyword_vector = vectors[0][keyword_index]
+        keyword_vector = vectors[0][keyword_index]  # keyword count
         vectors.sort()
         vectors = np.fliplr(vectors)
 
@@ -90,9 +90,12 @@ def filter(fname, keywords=None, threshold=20, sample=0):
                 relevant.append((True, rank))
 
             # Save info on rank of keyword
-            data[i]['keyword_count'] = int(keyword_vector)
-            data[i]['keyword_rank'] = int(rank)
-            data[i]['num_tokens'] = int(np.sum(vectors))
+            try:
+                data[i]['keyword_count'] = int(keyword_vector)
+                data[i]['keyword_rank'] = int(rank)
+                data[i]['num_tokens'] = int(np.sum(vectors))
+            except TypeError:
+                continue  # weird bug that crashes the program, just skip this file
 
             # Output to file
             f_out.write(json.dumps(data[i]))
