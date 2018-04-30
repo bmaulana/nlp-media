@@ -65,10 +65,10 @@ $\Box$ \end{quotation}}
 {\bf Disclaimer:}
 This report is submitted as part requirement for the MEng Degree in Computer Science at UCL. It is
 substantially the result of my own work except where explicitly indicated in the text.
-\emph{The report may be freely copied and distributed provided the source is explicitly acknowledged}}
+\emph{The report may be freely copied and distributed provided the source is explicitly acknowledged.}}
 \\ \\
 MEng Computer Science\\ \\
-Catherine Holloway, Nicholas C. Firth}
+Supervisors: Catherine Holloway, Nicholas C. Firth}
 
 
 
@@ -78,14 +78,14 @@ Catherine Holloway, Nicholas C. Firth}
 \maketitle
 \begin{abstract}
 
-\textbf{Report Title:}  Using Natural Language Processing (NLP) to develop a pipeline to analyse media representation of people with disabilities in Web-based news articles
+\textbf{Project Title:}  Using Natural Language Processing (NLP) to develop a pipeline to analyse media representation of people with disabilities in Web-based news articles
 %: Collection and filtering of online news articles, comparison of open-source sentiment models, and applications of the technology
 
-\textbf{Author’s Name:} Bagus Maulana
+\textbf{Author's Name:} Bagus Maulana
 
-\textbf{Supervisor’s Name:} Catherine Holloway, Nicholas C. Firth
+\textbf{Supervisor's Name:} Catherine Holloway, Nicholas C. Firth
 
-\textbf{Date and Year of Submission:} \nth{30} April 2018\\
+\textbf{Submission Date:} \nth{30} April 2018\\
 %% Three paragraphs:
 
 %% What the project is about, the principle aims and goals, and specific challenges.
@@ -113,7 +113,7 @@ While the results showed the promise of performing quantitative analysis upon la
 
 % Talk about NLP
 Natural Language Processing (NLP) encompasses a wide range of computational techniques, often used alongside each other, for machine understanding of human (natural) language.
-A review article \cite{cambria2014jumping} defined Natural Language Processing as ``a theory-motivated range of computational techniques for the automatic analysis and representation of human language.''
+A review article \cite{cambria2014jumping} defined Natural Language Processing as ``a theory-motivated range of computational techniques for the automatic analysis and representation of human language''.
 The techniques that fall under the NLP umbrella include extracting term frequency distributions, text processing (e.g. tokenisation, stemming), part-of-speech tagging, text classification, information extraction (e.g. entity recognition), sentence structure parsing (parse tree), and sentiment analysis (or opinion mining) \cite{Nltk, liu2012sentiment}.
 The computational models used in NLP range from simple models, such as term frequency (counting words), to statistical machine learning and neural network models \cite{awesome-sentiment-analysis}. 
 % Applications of NLP are used in everyday technologies, for example, information retrieval for search engines such as Google and Bing, and categorisation and topic modelling for recommendation engines used to suggest `similar' articles. % todo cite or remove
@@ -193,7 +193,7 @@ It also showed a decreasing trend over time on the use of `invalid' and `handica
 
 These results could have a substantial impact on how research should be conducted for similar studies on the media's representation of groups of people, as it showed that NLP could be used to analyse a much larger sample of text documents than traditional approaches and derive meaningful trends.
 However, challenges remained due to the sentiment scorer's inaccuracy.
-The accuracy and consistency of results could be further improved in future work by developing a domain-specific supervised model for filtering and sentiment scoring, trained on an adequately-sized labelled dataset of news articles within the domain.   
+The accuracy and consistency of results could be further improved in future work by developing a domain-specific supervised model for filtering and sentiment scoring, trained on an adequately-sized labelled dataset of news articles within the domain.
 
 %% This chapter is relatively short (2-4 pages) and must leave the reader very clear on what the project is about and what your goals are
 
@@ -482,7 +482,7 @@ The types of plots and statistical metrics that were deemed relevant in this pro
 		Available on matplotlib.
 	\item Mean and standard deviation, to quantify the distribution of articles within different subsets of the data separated by independent variables (e.g. publisher and year of publication) and provide a quantitative measure to compare different subsets.
 		Available on numpy.
-	\item The Mann-Whitney $U$ Test \cite{mann1947test} is a non-parametric statistical test that measures the null hypothesis that ``given a randomly-selected value from a distribution, and another randomly-selected value from another distribution, the first value is equally likely to be less or greater than the second value.''
+	\item The Mann-Whitney $U$ Test \cite{mann1947test} is a non-parametric statistical test that measures the null hypothesis that ``given a randomly-selected value from a distribution, and another randomly-selected value from another distribution, the first value is equally likely to be less or greater than the second value''.
 		If the null hypothesis holds, then there is no statistically significant difference between the two distributions.
 		The Mann-Whitney $U$ Test returns the $U$ statistic and a $p$-value between 0 and 1, which corresponds to how likely the null hypothesis is to be true.
 		Available on scipy.
@@ -930,9 +930,9 @@ As a result, many off-topic articles remained in the filtered dataset.
 These topics were `blind', `mute', `paralysis' (`paralysed'), and `speech impairment' (`stutter'), where the keywords can have other meanings irrelevant to the context of people with disabilities.
 For example, consider these sampled sentences taken from articles that were mislabelled as on-topic:
 \begin{itemize}
-	\item ``When Harry met Meghan: How Prince Charles's family friend set up blind date.''
-	\item ``Kate Garraway gets flustered as she struggles to mute her ringing phone live on air.''
-	\item ``Snooker: Higgins stutters then stages another late comeback.''
+	\item ``When Harry met Meghan: How Prince Charles's family friend set up blind date''.
+	\item ``Kate Garraway gets flustered as she struggles to mute her ringing phone live on air''.
+	\item ``Snooker: Higgins stutters then stages another late comeback''.
 \end{itemize}
 
 As term frequency does not distinguish between multiple meanings of words, it is unlikely that this limitation could be solved using any term frequency based approach, or similar syntactic approaches such as tf-idf and word vectors.
@@ -1160,7 +1160,7 @@ This topic was chosen as it had the largest sample of news articles within the d
 
 This focus on one topic for the whole of Chapter \ref{Results Evaluation} ensures the consistency of numbers and results throughout Chapter \ref{Results Evaluation}.
 That said, results from other topics are also discussed at a few points in this chapter.
-Information from other topics will be explicitly mentioned (e.g. ``For topics other than `disabled','') such that the reader understands where the data does not refer to the `disabled' topic.
+Information from other topics will be explicitly mentioned (e.g. ``For topics other than `disabled', '') such that the reader understands where the data does not refer to the `disabled' topic.
 Furthermore, the full result plots for all topics are available in the Appendix.
 
 % Explain the 'disabled' dataset first: provide a table with no. of articles for each source in each year.
