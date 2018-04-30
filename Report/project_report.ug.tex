@@ -17,6 +17,7 @@
 \usepackage{longtable}  % tables
 \usepackage{tabu}  % tables
 \usepackage{textcomp}  % symbols
+\usepackage{pdfpages}  % project plan and interim report
 
 \newtheorem{theorem}{THEOREM}
 \newtheorem{lemma}[theorem]{LEMMA}
@@ -2193,5 +2194,9 @@ Run `activate $<$env-name$>$' in your command line, e.g `activate nlp-media'.
 In your command line, navigate to the root directory of the `nlp-media' repository, then run `python pipeline.py' while within the conda environment.
 
 \chapter{Project Plan and Interim Report}
+
+\includepdf[pages=-]{project-plan.pdf}
+
+\includepdf[pages=-]{interim-report.pdf}
 
 \end{document}
