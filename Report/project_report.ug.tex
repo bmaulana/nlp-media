@@ -103,8 +103,8 @@ While the results showed the promise of performing quantitative analysis upon la
 
 %% Half a page’s length.}
 \end{abstract}
-\tableofcontents
 \setcounter{page}{1}
+\tableofcontents
 
 
 \chapter{Introduction} \label{Introduction} % 2-4 pages
@@ -1621,7 +1621,93 @@ Such a solution would provide researchers with the tools to perform similar rese
 
 \printbibliography[heading=bibintoc]
 
-\chapter{Evaluation Results}  % appendix A
+\chapter{Evaluation Data and Results}  % appendix A
+
+\section{Sample Data}
+
+\subsection{After the Data Collection Component}
+
+\begin{lstlisting}
+{
+	"https://content.guardianapis.com/media/2017/nov/30/guardian-wins...": {
+		"source": "Guardian",
+		"title": "Guardian wins Walkley for film on Bolivian disability ...",
+		"datetime": "2017-11-29T21:26:31Z",
+		"section": "Media",
+		"text": "The Guardian has won a Walkley award for a moving ..."
+	}
+}
+\end{lstlisting}
+
+\newpage
+\subsection{After the Feature Extraction Component}
+
+\begin{lstlisting}
+{
+	"url": "https://content.guardianapis.com/media/2017/nov/30/guardian...",
+	"title": "Guardian wins Walkley for film on Bolivian disability ...",
+	"datetime": "2017-11-29T21:26:31Z",
+	"source": "Guardian",
+	"keyword_rank": 5,
+	"keyword_count": 3,
+	"num_tokens": 262,
+	"num_sentences": 27,
+	"num_relevant_sentences": 3,
+	"relevant_sentences": {
+		"Guardian wins Walkley for film on Bolivian disability ...": {
+			"keyword_count": 1
+		},
+		"The Guardian has won a Walkley award for a moving ...": {
+			"keyword_count": 1
+		},
+		"Fighting for a pension: disability rights protesters in ...": {
+			"keyword_count": 1
+		}
+	},
+	"keywords_used": {
+		"disability": 2,
+		"disabilities": 1
+	}
+}
+\end{lstlisting}
+
+\newpage
+\subsection{After the Sentiment Scoring Component}
+
+\begin{lstlisting}
+{
+	"url": "https://content.guardianapis.com/media/2017/nov/30/guardian...",
+	"title": "Guardian wins Walkley for film on Bolivian disability ...",
+	"datetime": "2017-11-29T21:26:31Z",
+	"source": "Guardian",
+	"keyword_rank": 5,
+	"keyword_count": 3,
+	"num_tokens": 262,
+	"num_sentences": 27,
+	"num_relevant_sentences": 3,
+	"relevant_sentences": {
+		"Guardian wins Walkley for film on Bolivian disability ...": {
+			"keyword_count": 1,
+			"sentiment_score": 0.5719
+		},
+		"The Guardian has won a Walkley award for a moving ...": {
+			"keyword_count": 1,
+			"sentiment_score": 0.802
+		},
+		"Fighting for a pension: disability rights protesters in ...": {
+			"keyword_count": 1,
+			"sentiment_score": -0.5267
+		}
+	},
+	"keywords_used": {
+		"disability": 2,
+		"disabilities": 1
+	},
+	"relevance_score_sents": 0.1111111111111111,
+	"relevance_score_keyword_rank": 0.2,
+	"sentiment_score": 0.2824
+}
+\end{lstlisting}
 
 \newpage
 \section{Topic: `disabled'}
