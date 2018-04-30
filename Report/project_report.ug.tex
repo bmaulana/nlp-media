@@ -495,11 +495,11 @@ The types of plots and statistical metrics that were deemed relevant in this pro
 % This project involves the development of a computational pipeline capable of performing data collection, natural language processing, statistical analysis, and data visualisation tasks
 
 % Expand aims & goals
-The primary aim of this project was to utilise available NLP-based technologies to perform a high-level meta-analysis of online news articles relating to people with disabilities available in the online British news media. 
-The main objective was to reveal trends with regards to sentiment and word usage, by varying the dataset for independent variables such as source and date published.
+The primary aim of this project was to utilise available NLP-based technologies to perform a high-level meta-analysis of online news articles from British media relating to people with disabilities. 
+The main objective was to reveal trends with regards to sentiment and word usage, by varying the dataset for independent variables such as source (the publisher) and date published.
 
-The solution had to collect and scrape online news articles from the Internet, filter irrelevant articles, use available NLP-based tools to extract information from these articles, perform statistical analyses, and display visualisations of the data to show trends.
-Of particular interest as a dependent variable was a sentiment (or opinion/polarity) index of articles (``how positively does an article view disabilities or people with disabilities?'') and how it varies over independent variables such as source and date published.
+The solution had to collect and scrape news articles from the Internet, filter irrelevant articles, extract information from these articles, perform statistical analyses, and display visualisations of the data to show trends.
+Of particular interest as a dependent variable was a sentiment (or opinion/polarity) index of articles, to measure how positively does an article view disabilities or people with disabilities, and how the sentiment index varies over independent variables such as source and date published.
 Thus, the general solution defined by this aim involved the completion of several sub-problems, primarily data collection, filtering, parsing, sentiment scoring, statistical analysis, and data visualisation.
 
 To achieve this aim, the project's goals were to develop a computational pipeline that implements all components required for the general solution.
@@ -525,10 +525,10 @@ Given this scale, the solution must be able to compute the full pipeline for the
 
 % Short paragraph about component based design
 The solution followed a component-based design, where each task or goal must be implemented by a component that focuses only the specific task.
-These components must be linked together via a main `pipeline' script that executes each component in sequential order, iterating through the full list of topics and sources.
+These components must be linked together via the main pipeline script, that must execute each component in sequential order, iterating through the full list of topics and sources.
 
 This design was ideal as changes could be made to a component without affecting or needing to rewrite code in other components.
-Additionally, each component's output was saved to a JSON \cite{rfc8259} file and the next component reads the previous component's output file, which ensured that computation can be `resumed' without recomputing the previous component.
+Additionally, each component's output was saved to a JSON \cite{rfc8259} file and the next component reads the previous component's output file, which ensured that computation could be `resumed' without recomputing the previous component.
 
 The list of required components was as follows: data collection, dataset filtering, feature and relevant sentence extraction, sentiment scoring, and statistical analysis and visualisation.
 
@@ -538,13 +538,13 @@ The list of required components was as follows: data collection, dataset filteri
 
 % crawler finding articles from each source's built in search engines, look up multiple query terms
 The data collection component must be able to find a list of news articles for each supported online source (Daily Mail, Daily Express, and Guardian), given a list of query terms related to each topic.
-For each article, the only information required at this stage was a working URL pointing to an online resource containing the article text and relevant metadata.
-Thus, the information that had to be provided by the component after this stage was a list of URLs pointing to relevant articles given a list of search queries.
+For each article, the only information required at this stage was a working URL pointing to an online resource containing the article's web page.
+Thus, the information that must be provided by the component at this stage was a list of URLs pointing to relevant articles, given a list of search query terms.
 
 % scraper for each source - what needs to be scraped from each article
-After the list of URLs pointing to online news articles had been compiled, the component must be able to scrape these articles and extract the full article text and relevant metadata from each URL.
+After the list of URLs pointing to online news articles had been compiled, the component must be able to scrape the web pages pointed by these URLs and extract the full article text and relevant metadata from each URL.
 Aside from the full article text, the relevant metadata that must be extracted was the article's headline, URL, date of publication, and publication source.
-The information must be returned in the form of an array of JSON objects, with each JSON object containing the text and metadata of a single news article.
+The information must be returned in a JSON object format, with each JSON object containing the text and metadata of a single news article.
 
 This information must then be saved locally to a file where it could be read by the next component. 
 The file and directory structure of the output file must be consistent given source and topic, such that the next component could find it programmatically.
@@ -555,19 +555,19 @@ As data collection was expected to consume the longest time compared to other co
 The data collection component must run in reasonable time (i.e. less than a day for each topic), given available hardware and a scale of up to tens of thousands of articles per topic.
 Additionally, it should be possible to resume progress on data collection, such that it is possible to re-run the program at a later date to add new articles, without sending web requests for articles already in the collection.
 It would also help in cases where the program is interrupted, Internet connection is lost, the machine is shut down, etc.
-Thus, the component should immediately store already parsed articles to an external file, and read from the external file upon starting to gather a list of already saved URLs, and avoid re-parsing saved articles.
+Thus, the component should immediately store collected articles to an external file, and read from the external file upon starting to gather a list of saved URLs and avoid re-requesting saved articles.
 
 \subsection{Dataset Filtering} \label{req-filtering}
 
 This component handled dataset filtering.
-Initially, this component must be able to load the dataset of parsed articles, from the output file saved by the data collection component.
-Each file contains a subset of all parsed articles for a specified topic and a specified source.
+Initially, this component must be able to load the dataset of collected articles from the output file saved by the data collection component.
+Each file contains a subset of all collected articles for a specified topic and a specified source.
 
-For each article, it must decide whether it is relevant to the topic defined by the subset, given a list of key terms related to each topic.
+For each article, it must decide whether the article is relevant to the topic defined by the subset, given a list of key terms related to each topic.
 This decision should be based on the article's full text and headline and should take all key terms associated with the current topic into account.
 It should also be able to display a sample of an arbitrary number of articles, and the component's decision (on-topic/off-topic) for each sampled article, which would be used to analyse and improve the filter's accuracy.
 
-The component must save all articles deemed on-topic (relevant to the topic) to a new output file, containing a list of JSON objects in the same format and retaining the same information as in the data collection component's output file.
+This component must save all articles deemed on-topic (relevant to the topic) to a new output file, containing a collection of JSON objects retaining the same format and information as in the data collection component's output file.
 Articles deemed off-topic (not relevant to the topic) must not be saved to the output file.
 
 \subsection{Feature Extraction and Rule-based Sentence Matching} \label{req-matching}
@@ -575,19 +575,20 @@ Articles deemed off-topic (not relevant to the topic) must not be saved to the o
 This component parsed the article text using open-source NLP tools to extract relevant information required by the sentiment scoring and statistical analysis components.
 Given the output file of the dataset filtering component, this component must be able to load the article text and metadata of all on-topic articles.
 
-The sentiment scoring component required all `relevant' sentences relating to a key term (containing a keyword, key phrase, or an equivalent term) to be extracted from each article.
-Thus, this component must extract all relevant sentences, as defined above, from all articles.
+The sentiment scoring component required all relevant sentences relating to a key term (containing a keyword, key phrase, or an equivalent term) to be extracted from each article.
+This component must extract all relevant sentences, as defined above, from all articles.
 
-The component should also extract other information as required by the sentiment scoring and statistical analysis components, including the total number of sentences and the number of relevant sentences in each article, and the term frequency of each key term in each article.
+This component should also extract other information as required by the sentiment scoring and statistical analysis components, including the total number of sentences and the number of relevant sentences in each article, and the term frequency of each key term in each article.
 
-After these data had been extracted from each article, it must save the information to a new output file as a list of JSON objects, where each JSON object contains all the extracted information about a single news article, with a key for each extracted feature e.g. relevant sentences.
-The metadata of each article (headline, date of publication, and source) must also be retained in the new output file, as they were required as independent variables for the statistical analysis component to analyse trends in the dataset.
+After these data had been extracted from each article, it must save the information to a new output file as a collection of JSON objects, where each JSON object contains all the extracted information about a single news article, with a key for each extracted feature e.g. relevant sentences.
+The metadata of each article (headline, date of publication, and source) must be retained in the new output file, as they were required as independent variables for the statistical analysis component.
 
 \subsection{Sentiment Scoring} \label{req-sentiment}
 
 The sentiment scoring component computed a real-valued sentiment score for each relevant sentence extracted by the feature extraction component.
-This sentiment score which must correspond to the perceived `sentiment' of the sentence towards a disability, disabilities, a person with a disability or disabilities, or people with disabilit(y/ies), referred by the key term(s) in the sentence, with sufficient accuracy.
-Given the output file of the feature extraction component, this component must be able to load the dataset of relevant sentences, and other data for all saved articles.
+Given the output file of the feature extraction component, this component must be able to load the dataset of relevant sentences and other data for all saved articles.
+
+The sentiment scores computed by this component must correspond to the perceived `sentiment' of the sentence towards a disability, disabilities, a person with a disability or disabilities, or people with disabilit(y/ies), referred by the key term(s) in the sentence, with sufficient accuracy.
 
 Two iterations of the sentiment scorer component must be developed.
 The first iteration of the sentiment scorer component was used to perform a comparison between several open-source sentiment analysis implementations for this sentiment scoring task.
@@ -599,9 +600,9 @@ The second iteration was the one used in the final pipeline.
 \subsubsection{Comparison of Open Source Implementations} \label{req-sentiment-comparison}
 
 The first iteration of the component must select an arbitrarily-sized sample of sentences from the dataset of relevant sentences.
-Also, it must implement all open-source sentiment analysis implementations (`sentiment scorer') that were listed in section \ref{tc-sentiment}.
+Also, it must implement all open-source sentiment analysis implementations that were listed in section \ref{tc-sentiment}.
 
-All sentences in the sample must be given a real-valued score between -1.0 and 1.0 by all sentiment scorers. 
+All sentences in the sample must be given real-valued sentiment scores between -1.0 and 1.0, with a score from each sentiment analysis implementation.
 The component should also allow the user to manually label these sentences as positive, neutral, or negative.
 With this information, the component must be able to show the accuracy of each sentiment scorer, i.e. the proportion of true positives and true negatives, and show a confusion matrix.
 It must also show the total, per-sentence, and per-article runtime of each sentiment scorer.
@@ -613,27 +614,27 @@ Instead, it was only used as a tool to compare the performance of open-source se
 \subsubsection{Final Implementation} \label{req-sentiment-final}
 
 The second iteration of the sentiment scorer component was the one used in the final pipeline.
-It must only compute one sentiment score, using the best-performing sentiment scorer that runs in reasonable time, as shown by the results of the first iteration of this component.
-It must compute the sentiment scores for all relevant sentences in the dataset (instead of only a limited sample of sentences).
+It must only compute one sentiment score, using the best-performing sentiment scorer that runs in reasonable time, as shown by the results of the first iteration (section \ref{req-sentiment-comparison}).
+It must compute the sentiment scores for all relevant sentences in the dataset.
 
-After the sentiment scores of all relevant sentences within an article had been computed, this component must also compute the average sentiment score for each article.
+After the sentiment scores of all relevant sentences within an article had been computed, this component must also compute the average sentiment score for each article, based on the sentiment scores of relevant sentences in the article.
 Furthermore, the component must run in reasonable time (less than a day for each topic), given available hardware and a scale of up to tens of thousands of articles per topic.
 
-After the sentiment scorer component had scored all relevant sentences and articles in the dataset, it must then save information about all articles, with score labels appended to each sentence and article, to a new output file.
+After the sentiment scorer component had scored all relevant sentences and articles in the dataset, it must save information about all articles, with score labels appended to each sentence and article, to a new output file.
 The JSON objects of each article in the output file must retain the same format and information as the feature extraction component's output file, except for an additional `sentiment score' key-value pair that must be added in each sentence's and each article's JSON object.
 
 \subsection{Statistical Analysis and Visualisation} \label{req-visualisation}
 
 The last component performed statistical analysis and data visualisation.
-This component must read the sentiment scoring component's output files, to load the dataset of news articles and features extracted by previous components about each article.
-At this point, information extracted from each article by previous components must include the source, publication date, and sentiment score, alongside other information.
+This component must read the sentiment scoring component's output files to load the dataset of news articles and features extracted by previous components about each article.
+At this point, information extracted from each article by previous components must include the source, publication date, and sentiment score.
 To combine information about articles relating to the same topic from different sources, represented by different files, this component must be able to read multiple files in a single call and collate the information into a single dataset.
 
 This component must be able to show trends and visualisations that show how dependent variables (e.g. sentiment score) differ relative to the independent variables (e.g. publication year and source).
 It should also compute statistical metrics to show whether the differences between subsets, as divided by the independent variables, are statistically significant.
 The plot types and statistical metrics relevant to this analysis were defined at the end of section \ref{tc-visualisation}.
 
-At a minimum, this component must visualise how sentiment score varies relative to publication year and source.
+At a minimum, this component must visualise how the sentiment score varies relative to publication year and source.
 It should also show metrics related to the distribution of sentiment scores on subsets divided by publication year and source.
 Additionally, the component should also show visualisations based on information extracted by previous components other than sentiment scores, such as how the term frequency of each key term varies over time.
 
@@ -664,6 +665,7 @@ For example, the JSON object format of an article in the data collection compone
 	}
 }
 \end{lstlisting}
+
 Where the URL and `source', `title', `datetime', and `text' fields correspond to requirements defined for the data collection component.
 
 %% The level of detail of the requirements and use cases will depend on the nature of your project. If you are doing a Software Engineering based design and implementation project, then they will need to be done thoroughly. If there is a substantial body of requirements and use cases, then a summary should be given in the chapter, with the full set included in an appendix section.
