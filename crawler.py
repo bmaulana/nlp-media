@@ -5,10 +5,12 @@ import oop_scraper as scr
 import time
 from tqdm import tqdm
 
+# Usage: python crawler.py topic source [max. articles] [keywords(comma-delimited)]
+
 
 def crawler(query, scraper, num_articles=-1, keywords=None):
     """
-    Format: python crawler.py query source [max. articles]
+    Format: python crawler.py topic source [max. articles] [keywords(comma-delimited)]
     """
     if keywords is None:
         keywords = [query]

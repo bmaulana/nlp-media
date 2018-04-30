@@ -4,10 +4,16 @@ import os
 from tqdm import tqdm
 from vaderSentiment import vaderSentiment
 
+# Usage: python sentiment_barebones.py filename  (Final sentiment scorer)
+
 vader_analyser = vaderSentiment.SentimentIntensityAnalyzer()
 
 
 def sentiment_vader(fname):
+    """
+    Format: python sentiment_barebones.py filename
+    """
+
     if not os.path.exists('./out-sentiment-vader/'):
         os.makedirs('./out-sentiment-vader/')
     in_path = './out-parse/' + fname

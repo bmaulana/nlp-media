@@ -11,6 +11,8 @@ from sklearn.preprocessing import LabelEncoder
 from collections import defaultdict
 from scipy.stats import mannwhitneyu
 
+# Usage: python plot.py topic
+
 
 class Reader:
 
@@ -80,7 +82,7 @@ def basic_stemmer(word):
 
 def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/', separate_files=False):
     """
-    Format: python plot.py keyword
+    Format: python plot.py topic
     """
     if not os.path.exists(out_folder):
         os.makedirs(out_folder)

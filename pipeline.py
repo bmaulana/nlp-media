@@ -7,6 +7,8 @@ from parse import parse
 from sentiment_barebones import sentiment_vader
 from plot import plot
 
+# Usage: python pipeline.py
+
 # topic: [keywords]
 TOPICS = {'disabled': ['disabled', 'disability', 'handicapped', 'cripple', 'invalid', 'accessible', 'ablism',
                        'ableism', 'differently abled'],

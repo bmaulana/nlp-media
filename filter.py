@@ -7,6 +7,8 @@ from nltk.stem.snowball import SnowballStemmer
 # from sklearn.feature_extraction.text import TfidfTransformer
 from tqdm import tqdm
 
+# Usage: python filter.py filename [keywords(comma-delimited)]
+
 KEYWORD_TOKEN = 'KEYWORDTOKEN'  # something that shouldn't naturally occur in a document
 
 

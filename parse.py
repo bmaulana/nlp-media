@@ -7,6 +7,8 @@ import re
 from spacy.matcher import Matcher
 from tqdm import tqdm
 
+# Usage: python parse.py filename [keywords(comma-delimited)]
+
 start_time = time.time()
 nlp = spacy.load('en_core_web_lg')
 print('Loading SpaCy model took', time.time() - start_time, 'seconds\n')

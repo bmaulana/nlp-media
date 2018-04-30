@@ -10,6 +10,9 @@ from stanfordcorenlp import StanfordCoreNLP
 from textblob.en.sentiments import NaiveBayesAnalyzer, PatternAnalyzer
 from tqdm import tqdm
 
+# Usage: python sentiment_barebones.py filename no.articles (Sentiment scorer comparison)
+# The output files of this are used for sentiment_eval.eval_sentiment's input files
+
 openai_time = time.time()
 openai_model = Model()
 print('\nLoading OpenAI sentiment model took', time.time() - openai_time, 'seconds\n')
@@ -266,4 +269,4 @@ def sentiment_vader(fname):
 
 
 if __name__ == '__main__':
-    sentiment_vader(sys.argv[1])
+    sentiment(sys.argv[1], int(sys.argv[2]))
