@@ -115,7 +115,7 @@ While the results showed the promise of performing quantitative analysis upon la
 % Talk about NLP
 Natural Language Processing (NLP) encompasses a wide range of computational techniques, often used alongside each other, for machine understanding of human (natural) language.
 A review article \cite{cambria2014jumping} defined Natural Language Processing as ``a theory-motivated range of computational techniques for the automatic analysis and representation of human language''.
-The techniques that fall under the NLP umbrella include extracting term frequency distributions, text processing (e.g. tokenisation, stemming), part-of-speech tagging, text classification, information extraction (e.g. entity recognition), sentence structure parsing (parse tree), and sentiment analysis (or opinion mining) \cite{Nltk, liu2012sentiment}.
+The techniques that fall under the NLP umbrella include extracting term frequency distributions, text processing (e.g. tokenisation, stemming), part-of-speech tagging, text classification, information extraction (e.g. entity recognition), sentence structure parsing, and sentiment analysis or opinion mining \cite{Nltk, liu2012sentiment}.
 The computational models used in NLP range from simple models, such as term frequency (counting words), to statistical machine learning and neural network models \cite{awesome-sentiment-analysis}. 
 % Applications of NLP are used in everyday technologies, for example, information retrieval for search engines such as Google and Bing, and categorisation and topic modelling for recommendation engines used to suggest `similar' articles. % todo cite or remove
 
@@ -496,7 +496,7 @@ The types of plots and statistical metrics that were deemed relevant in this pro
 % This project involves the development of a computational pipeline capable of performing data collection, natural language processing, statistical analysis, and data visualisation tasks
 
 % Expand aims & goals
-The primary aim of this project was to utilise available NLP-based technologies to perform a high-level meta-analysis of online news articles from British media relating to people with disabilities. 
+The primary aim of this project was to utilise available NLP-based technologies to perform a high-level meta-analysis of online news articles from British media relating to disabilities and people with disabilities. 
 The main objective was to reveal trends with regards to sentiment and word usage, by varying the dataset for independent variables such as source (the publisher) and date published.
 
 The solution had to collect and scrape news articles from the Internet, filter irrelevant articles, extract information from these articles, perform statistical analyses, and display visualisations of the data to show trends.
@@ -2192,6 +2192,41 @@ Run `activate $<$env-name$>$' in your command line, e.g `activate nlp-media'.
 \section{Run pipeline script}
 
 In your command line, navigate to the root directory of the `nlp-media' repository, then run `python pipeline.py' while within the conda environment.
+
+\chapter{Code Listing}
+
+\section{The Pipeline Script}
+
+A simplified version of the main pipeline script (pipeline.py) that was used to conduct the experiment and produce the results described in this report is provided below:
+
+\begin{lstlisting}[language=Python]
+def pipeline(topic, keywords, source):
+	fname = crawler(topic, source, NUM_DOCS, QUERIES[topic])
+	filter(fname, keywords, FILTER_THRESHOLD, sample=0)
+	parse(fname, keywords)
+	sentiment_vader(fname)
+
+for tpc, words in TOPICS.items():
+	for src in SOURCES:
+		pipeline(tpc, words, src)
+	plot(tpc, in_folder='...', out_folder='...')
+\end{lstlisting}
+
+`TOPICS' is a mapping of topic names to a list of key terms as defined in section \ref{topics}.
+
+`QUERIES' is a mapping of topic names to a list of query terms as defined in section \ref{topics}.
+
+`SOURCES' is a list of implementations of scraper objects as described in section \ref{des-data-collection} for each supported source mentioned in section \ref{sources}
+
+`crawler()' implements the data collection component as described in section \ref{des-data-collection}
+
+`filter()' implements the dataset filtering component as described in section \ref{des-filtering}
+
+`parse()' implements the feature extraction component as described in section \ref{des-matching}
+
+`sentiment\_vader()' implements the sentiment scoring component as described in section \ref{des-sentiment-final}
+
+`plot()' implements the statistical analysis and data visualisation component, as described in section \ref{des-visualisation}
 
 \chapter{Project Plan and Interim Report}
 
