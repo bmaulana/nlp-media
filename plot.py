@@ -102,6 +102,7 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     le = LabelEncoder()
     colours = le.fit_transform(data[:, 2])
     sources = le.classes_
+
     # 2000 to 2019
     years = list(map(mdates.date2num,
                      np.array([datetime.datetime(i+2000, 1, 1, tzinfo=datetime.timezone.utc) for i in range(20)])))
@@ -129,7 +130,6 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     axs[1, 0].xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     for tick in axs[1, 0].get_xticklabels():
         tick.set_rotation(30)
-    # From https://stackoverflow.com/questions/32462881/add-colorbar-to-existing-axis
     divider = make_axes_locatable(axs[1, 0])
     cax = divider.append_axes('right', size='5%', pad=0.05)
     fig.colorbar(img, cax=cax)
@@ -143,7 +143,6 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     axs[0, 1].set_yticklabels(sources)
     for tick in axs[0, 1].get_xticklabels():
         tick.set_rotation(30)
-    # From https://stackoverflow.com/questions/32462881/add-colorbar-to-existing-axis
     divider = make_axes_locatable(axs[0, 1])
     cax = divider.append_axes('right', size='5%', pad=0.05)
     fig.colorbar(img, cax=cax)
@@ -155,7 +154,6 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     axs[1, 1].set_xlabel('Source')
     axs[1, 1].set_xticks(np.arange(0, len(sources)))
     axs[1, 1].set_xticklabels(sources)
-    # From https://stackoverflow.com/questions/32462881/add-colorbar-to-existing-axis
     divider = make_axes_locatable(axs[1, 1])
     cax = divider.append_axes('right', size='5%', pad=0.05)
     fig.colorbar(img, cax=cax)
@@ -167,11 +165,6 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     axs[0, 2].set_ylabel('No. of articles')
     for tick in axs[0, 2].get_xticklabels():
         tick.set_rotation(30)
-
-    # histogram of sentiment score (X) vs no. of articles (Y)
-    # axs[1, 2].hist(list(map(float, data[:, 1])), bins=np.arange(-1.0, 1.1, 0.1))
-    # axs[1, 2].set_xlabel('Sentiment Score')
-    # axs[1, 2].set_ylabel('No. of articles')
 
     # plot line graphs for annual mean (or rolling average mean) for each source
     rolling_avg = moving_average(data[:, 1], moving_avg_window)
@@ -222,7 +215,6 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     for tick in axs[2, 2].get_xticklabels():
         tick.set_rotation(30)
 
-    # plt.savefig('./out-plot/' + datetime.now().strftime('%Y%m%d%H%M%S') + '.png')
     if separate_files:
         i = 1
         for row in axs:
@@ -283,13 +275,11 @@ def plot(keyword, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vad
     years = np.array([datetime.datetime(i+2000, 1, 1, tzinfo=datetime.timezone.utc) for i in range(20)])
     for i in range(len(years)-1):
         data_in_year = np.array([a[1] for a in data if years[i] <= a[0] < years[i+1]], dtype=np.float32)
-        # print(years[i].year, ':', data_in_year.shape[0], 'articles with mean sentiment', np.average(data_in_year))
         f_out.write(str(years[i].year) + ': ' + str(data_in_year.shape[0]) + ' articles with mean sentiment ' +
                     str(np.average(data_in_year)) + ' and std. dev. ' + str(np.std(data_in_year)) + '\n')
 
     for source in sources:
         data_in_source = np.array(data[data[:, 2] == source][:, 1], dtype=np.float32)
-        # print(source, ':', data_in_source.shape[0], 'articles with mean sentiment', np.average(data_in_source))
         f_out.write(source + ': ' + str(data_in_source.shape[0]) + ' articles with mean sentiment ' +
                     str(np.average(data_in_source)) + ' and std. dev. ' + str(np.std(data_in_source)) + '\n')
         print(data_in_source.shape[0], 'articles from', source)

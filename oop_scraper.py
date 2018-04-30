@@ -176,8 +176,6 @@ class DailyMailScraper(Scraper):
 
 
 class GuardianScraper(Scraper):
-    # TODO fix to get around 5000/day API calls limit (try: get body on search_phrase, map[link] = body
-    # TODO and have get_article_text return map[link])
 
     def __init__(self, api_key):
         self.api_key = api_key

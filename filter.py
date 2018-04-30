@@ -3,7 +3,7 @@ import sys
 import os
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
-from nltk.stem.snowball import SnowballStemmer  # TODO test which is better between this and cyhunspell
+from nltk.stem.snowball import SnowballStemmer
 # from sklearn.feature_extraction.text import TfidfTransformer
 from tqdm import tqdm
 
@@ -24,6 +24,7 @@ def filter(fname, keywords=None, threshold=20, sample=0):
     f_in = open(in_path, 'r')
     in_lines, out_lines = 0, 0
 
+    # Stem keywords
     stemmer = SnowballStemmer('english')
     if keywords is None:
         keywords = [topic]
@@ -36,7 +37,7 @@ def filter(fname, keywords=None, threshold=20, sample=0):
         js = json.loads(line)
         data.append(js)
 
-        # Stem text & replace up to 3-gram keywords with KEYWORD_TOKEN
+        # Stem text in article & replace key terms (up to 3-gram) with KEYWORD_TOKEN
         text = list(js.values())[0]['title'].split() + list(js.values())[0]['text'].split()
         for i in range(len(text)):
             word = stemmer.stem(text[i])
@@ -57,6 +58,7 @@ def filter(fname, keywords=None, threshold=20, sample=0):
     f_in.close()
     # print(corpus[0])  # to test stemmer
 
+    # Measure tf
     vectoriser = CountVectorizer(stop_words='english')
     matrix = vectoriser.fit_transform(corpus)
     # print(matrix[:2])
@@ -102,8 +104,8 @@ def filter(fname, keywords=None, threshold=20, sample=0):
             f_out.write('\n')
             out_lines += 1
 
-        # else:
-            # relevant.append((False, rank))
+        elif sample > 0:
+            relevant.append((False, rank))
     f_out.close()
 
     if sample > 0:

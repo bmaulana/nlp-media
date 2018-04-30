@@ -81,7 +81,6 @@ def pipeline(topic, keywords, source):
 for tpc, words in TOPICS.items():
     for src in SOURCES:
         pipeline(tpc, words, src)
-    # TODO sleep / wait until in_folder + fname exist (occasional crash: plot called before sent output written)
     print('Plotting:')
     try:
         plot(tpc, in_folder='./out-sentiment-vader/', out_folder='./out-plot-vader/')

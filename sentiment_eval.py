@@ -109,6 +109,7 @@ def eval_sentiment(num_samples=5):
     plt.close()
 
 
+# Converts a JSON-object-in-each-line file to a JSON array file
 def json_to_list(fname):
     f_in = open(fname, 'r', encoding='utf-8')
     json_list = []
@@ -121,7 +122,7 @@ def json_to_list(fname):
     pass
 
 
-# TODO function that reads a labelled JSON file with +/-/n and scores for each scorer
+# function that reads a labelled JSON file with +/-/n and scores for each scorer
 def eval_sentiment_read(fname):
     f_in = open(fname, 'r', encoding='utf-8')
     data = json.load(f_in)
