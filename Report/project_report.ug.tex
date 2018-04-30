@@ -185,7 +185,7 @@ Furthermore, the bibliography lists sources that were used as references in this
 
 % Brief results & conclusions
 The performance of several open-source sentiment analysis implementations was compared to judge their suitability for the sentiment scoring task, given the domain of sentences from news articles related to disabilities or people with disabilities.
-Results indicated that a relatively simpler rule-based model, VADER \cite{VADER}, outperformed more complex supervised machine learning or neural network models, which had been trained on other domains such as tweets and IMDb/Amazon reviews, and proved to be less generalisable for this domain.
+Results indicated that a relatively simpler rule-based model, VADER \cite{VADER}, outperformed more complex supervised machine learning or neural network models which had been trained on other domains such as tweets and IMDb/Amazon reviews and proved to be less generalisable for this domain.
 
 This project proved the feasibility of utilising NLP-based technologies to derive trends from a large corpus of online news articles relating to disabilities or people with disabilities.
 The results showed that, for example, the perceived sentiment of Guardian articles are on average significantly higher than Daily Express and Daily Mail articles for the topic `disabled'.
@@ -219,8 +219,8 @@ The accuracy and consistency of results could be further improved in future work
 
 % Similar research being done on media representation of (disability/mental illness/etc.).
 Analyses of news media had been a popular research method.
-News media provides an overview of the prevailing society's conceptions or views regarding a theme or topic, which could be analysed to deduce quantitative information.
-This approach has been commonly used to study representations of particular groups of people, such as women, youth, or people with disabilities, as the language used in the media reflected and shaped prevailing views, and had been shown to differ (with statistical significance) in different societies.
+News media provides an overview of the prevailing society's conceptions or views regarding a theme or topic, which could be analysed to obtain quantitative information.
+This approach has been commonly used to study representations of particular groups of people, such as women, youth, or people with disabilities, as the language used in the media reflected and shaped prevailing views, and had been shown to differ with statistical significance in different societies.
 For example, it was shown that the Canadian press was more likely to name individuals with disabilities and use appropriate labelling than the Israeli press in 1998 \cite{gold1999media}.
 Furthermore, there is evidence to suggest that news media sources contribute to shape and reinforce beliefs among the society, such as misconceptions and stigma \cite{wahl1992mass}.
 
@@ -236,9 +236,9 @@ Analyses of news media were primarily carried out by obtaining a small sample of
 	\item In a 2002 study \cite{coverdale2002depictions}, researchers analysed a sample of 600 print articles published in New Zealand relating to mental health or mental illness that were collected by a commercial clipping bureau.
 		The articles were categorised into positive or negative depictions; and further into themes such as danger to others, criminality, vulnerability, etc.
 		The study found that negative themes predominate about 3 to 1, with 27\% being positive.
-		Given the study's scope, this conclusion cannot be generalised to learn trends of how the conclusion varies given certain variables such as time or location.
+		Given the study's scope, this conclusion cannot be expanded to learn trends of how the conclusion varies given certain variables such as time or location.
 	\item A similar study in 2005 \cite{jones2009representations} analysed 1,515 articles relating to autism in Australian news media.
-		All articles were read by two research assistants to ensure they are on-topic and then coded as either `negative' or `positive' in overall focus, and then coded into themes (e.g. funding, education, etc.).
+		All articles were read by two research assistants to ensure they are on-topic and then coded as either `negative' or `positive' in overall focus, and then coded into themes (e.g. funding, education).
 		% Key findings include a relatively limited amount of helpful information, and a 'dual stereotype' of people with autism labelled as either dangerous and uncontrollable, or unloved and poorly treated. % is this relevant?
 		% Relative to other similar studies, this study appears to be focused more on qualitative discussion compared to quantitative results. % is this relevant?
 	\item A study conducted in 1998 \cite{gold1999media} and replicated in 2008 \cite{devotta2013representations} assessed change in representations of disability and people with disabilities in the Canadian news media.
@@ -249,19 +249,19 @@ Analyses of news media were primarily carried out by obtaining a small sample of
 
 % Why using computational NLP will allow the discovery of more (high-level) information: trends, patterns, etc
 Data collection and processing of text documents using computational techniques based on NLP are much more feasible in scale, cost, and time, relative to manual collection and reading of text documents. 
-An automated script could be used to collect thousands of news articles published on the Internet per hour, a vast improvement over contracting a commercial clipping bureau to provide 600 articles as done in past studies \cite{coverdale2002depictions}.
+An automated script could be used to collect thousands of news articles published on the Internet per hour, a vast improvement over e.g. contracting a commercial clipping bureau to provide 600 articles as in \cite{coverdale2002depictions}.
 By applying NLP-based computational techniques in analysing text, it would be possible to develop a pipeline that could analyse and extract quantitative information from news articles' text at a much faster pace than manual reading, enabling the analyses of a much larger scale of documents.
 
-While a sample of few hundred documents was usually enough to provide statistically significant conclusions, by providing an analysis of the full corpora or a much larger sample, it would be possible to uncover additional information from the dataset.
-Higher-level trends, such as how word usage varies by year or publisher, could be discovered from a quantitative analysis of the larger dataset; by `splitting' the result set into smaller subsets based on independent variables such as publication year and publisher, then comparing these subsets based on dependent variables such as term frequency.
+While a sample of few hundred documents was usually enough to provide statistically significant conclusions, by providing an analysis of the full corpora or a much larger sample, additional information could be uncovered from the dataset.
+Higher-level trends, such as how word usage varies by year or publisher, could be discovered from a quantitative analysis of the larger dataset, by `splitting' the result set into smaller subsets based on independent variables such as publication year and publisher, and comparing dependent variables such as term frequency between subsets.
 Furthermore, computational pipelines for data collection and scoring news articles are more objective and reproducible than manual methods, which may vary due to each researcher's individual biases.
 
 % Similar research on applying NLP for news media, social media, etc. in other domains - techniques & features they used, solutions they came up with, etc. - what could be applicable for this domain (sentiment relative to a certain topic)
-There had been numerous attempts to take advantage of the NLP-based computational approach to conduct a more thorough analysis of large text corpora. 
+There had been numerous attempts to take advantage of an NLP-based computational approach to conduct a more thorough analysis of large text corpora. 
 A team of researchers assembled a corpus of 35.9 million news articles from 120 publishers in the United Kingdom between 1800 and 1950, which represented 14\% of all news articles published in the United Kingdom over that period \cite{lansdall2017content}.
 Using a computational NLP-based approach, the researchers extracted quantitative time-series information from the vast dataset, represented as $n$-grams and named entities, which allowed them to discover macroscopic cultural trends. 
 They analysed and compared $n$-gram trends across various topics and identified trends that reflect cultural shifts, such as `train' overtaking `horse' in popularity around 1900, or `labour party' overtaking `conservative party' and `liberal party' in news coverage from the 1920s.
-Additionally, they used entity recognition to extract named entities and identified trends based on known information about these entities, such as the proportion of female and male entities over time.
+Additionally, they used entity recognition to extract named entities and identify trends based on known information about these entities, such as the proportion of female and male entities over time.
 They also considered the geographical location of the publication, to identify how usage trends of $n$-grams such as `british' and `english' differ based on location.
 
 The British news media study was inspired by prior discussions and studies on the potential of exploiting large text corpora to detect macroscopic, long-term cultural changes. 
@@ -269,6 +269,7 @@ A seminal study in 2011 \cite{michel2011quantitative} started the field of `cult
 In the seminal study, a corpus of 5 million digitised English language books published over 200 years, or about 4\% of all books ever published, were analysed to extract how often $n$-grams were used over time.
 This data is available on \url{http://www.culturomics.org/}.
 This information was then used to analyse trends in the English language: the size of the English lexicon, regularisation of English verbs from irregular to regular (`-ed') suffixes, or how quickly mentions of years (e.g. `1950') decline in use.
+
 Influenced by the seminal study, numerous other studies adopted similar approaches to analyse large datasets: 
 \begin{itemize}
 	\item an analysis of 1.7 million Victorian-era books \cite{gibbs2011conversation}
@@ -276,20 +277,22 @@ Influenced by the seminal study, numerous other studies adopted similar approach
 	\item an analysis of a 3.9 million news articles sampled from the Summary of World Broadcasts (SWB) collection \cite{leetaru2011culturomics}
 	\item an analysis of 2.5 million English-language news articles from 498 online news outlets from 99 countries \cite{flaounas2013research}
 \end{itemize}
+
 This approach had also been criticised for ignoring semantics and context.
-For example, critics noted that ``thirteen hundred words of gibberish and the Declaration of Independence are digitally equivalent'' \cite{gooding2013mass}, issues with OCR quality and duplicate editions \cite{gooding2013mass}, or that the selection of digitised books were biased \cite{schwartz2011culturomics}.
+For example, critics noted that ``thirteen hundred words of gibberish and the Declaration of Independence are digitally equivalent'' \cite{gooding2013mass}, issues with OCR quality and duplicate editions \cite{gooding2013mass}, or that the selection of digitised books was biased \cite{schwartz2011culturomics}.
 
 There had been some progress in applying similar NLP-based approaches specifically in the domain of how specific groups of people are represented in the media:
 \begin{itemize}
-	\item An attempt to classify racist and sexist posts in social media, which used NLP to extract features (such as $n$-grams and part-of-speech tags) from social media posts, then used to annotate 6,909 tweets \cite{waseem2016you}.
+	\item An attempt to classify racist and sexist posts in social media, which used NLP to extract features such as $n$-grams and part-of-speech tags from social media posts, which were used to label 6,909 tweets \cite{waseem2016you}.
 	\item A study explored potential linguistic markers of schizophrenia in social media; using a dataset of 174 users with self-reported schizophrenia and up to 3,200 tweets per user, and a similarly-sized dataset of `control' (non-schizophrenic) users.
-		The researchers used NLP to extract features based on lexicon-based approaches (i.e. a list of mental health related keywords), latent Dirichlet allocation (LDA), Brown clustering, character $n$-grams, and perplexity from tweets, which were fed to a support vector machine (SVM) classifier \cite{mitchell2015quantifying}.
+		The researchers used NLP to extract features from tweets such as lexicon-based approaches (i.e. a list of mental health related keywords), latent Dirichlet allocation (LDA), Brown clustering, character $n$-grams, and perplexity, which were fed to a support vector machine (SVM) classifier \cite{mitchell2015quantifying}.
 \end{itemize}
+
 Despite these studies, there is still a visible research gap on applying computational NLP approaches with regards to the representations of specific groups, such as people with disabilities (or a specific disability).
 This project focused on studying the representations of people with disabilities from online news articles.
 
 % Research on relevant libraries, frameworks, etc.:
-To date, advances in NLP research had made the `culturomics' approach much more feasible, efficient, and effective, even under limited time and hardware constraints.
+To date, advances in NLP research has made the `culturomics' approach much more feasible, efficient, and effective, even under limited time and hardware constraints.
 A growing number of free and open-source tools for computational NLP and statistical analysis had been developed by the research community; including general NLP tools such as nltk \cite{Nltk}, SpaCy \cite{SpaCy}, and StanfordNLP \cite{StanfordNLP}, statistical analysis tools such as numpy \cite{Numpy}, scipy \cite{Scipy}, and scikit-learn \cite{Scikit-learn}, and data visualisation tools such as matplotlib \cite{Matplotlib}.
 Section \ref{Technical Context} contains a further listing and discussion of these tools, alongside the specific libraries and NLP techniques used for this research project.
 
@@ -299,25 +302,25 @@ Section \ref{Technical Context} contains a further listing and discussion of the
 % How background research was carried out
 Background research was carried out by investigating papers from public sources such as Google Scholar.
 Research articles were gathered from a list of important topics and query terms related to NLP, specific NLP techniques, disability, and news media: for example, `natural language processing review', `news media' AND `disability', `natural language processing' AND (`news media' OR `cultural trends'), `natural language processing' AND `disability', and `sentiment analysis'.
-Highly-cited research articles were prioritised as examples, as they were deemed to be more `important' papers or studies within its topic.
-Additionally, the author looked for highly-cited `key' papers and review articles on each specific topic, and consulted its list of citations (older papers) and research articles that cited the review article (newer papers) to expand the list of relevant research papers further.
+Highly-cited research articles were prioritised as examples, as they were deemed to be the more important papers on its topic.
+Additionally, the author looked for highly-cited `key' papers and review articles on each specific topic and consulted its list of citations (older papers) and articles that cited the review article (newer papers) to expand the list of reviewed research papers further.
 
 % How technical research was carried out: for each component, determine neccesary or potentially useful techniques. Look up online for papers defining it, web resources, frameworks/libraries. Research done alongside development of code (do research as I plan/develop, which in turn may change how I'm doing things)
 Technical research, on the other hand, was carried out as necessary.
-After the requirements and components for the pipeline had been decided, research was carried out to find relevant techniques, formulae, algorithms, tools, libraries/packages, and existing implementations that would be useful to implement each necessary component.
+After the requirements and components for the pipeline had been decided, research was carried out to find relevant techniques, formulae, algorithms, tools, repositories, packages, and existing implementations that would be useful to implement each necessary component.
 This research was carried out in an iterative approach alongside software development. 
-Initial planning and research would provide an initial implementation plan, the plan's implementation would uncover the feasibility of these approaches and possible alternatives/refinements to be researched, further research may reveal new options/refinements to be implemented, and so on.
+Initial planning and research would provide an initial implementation plan, the plan's implementation would uncover the feasibility of the initial approach and possible alternatives/refinements to be researched, further research may reveal new options/refinements to be implemented, and so on.
 Research or work done for a component may also reveal possible improvements and/or alternatives for another component, which may require further research and implementation.  
-Again, more popular tools and libraries were prioritised; although several approaches and implementations were considered for most components and sub-tasks, to be compared for suitability, runtime, results, etc.
+Again, more popular tools and libraries were prioritised, although several approaches and implementations were considered for most components and sub-tasks to compare for suitability, runtime, results, etc.
 
 % Sources: Google Scholar, papers cited by other papers, GitHub pages, Python repositories (Pip, Conda), Python and library documentation, etc. + 'state how each source relates to your work'.
 The sources that were used for this literature review are:
 \begin{itemize}
 	\item Google Scholar, often used to find research articles related to a research topic, to find other studies similar to a research article, or to retrieve citation information with regards to a research paper, book, or popular Python package.
-	\item GitHub topics, used to find repositories that are relevant to help implement a specific NLP technique or component, find similar/alternative implementations, and was also used as a benchmark for the popularity and range of solutions for a topic in each programming language.
+	\item GitHub topics, used to find repositories that are relevant to help implement a specific NLP technique or component and find similar/alternative implementations and was also used as a benchmark for the popularity and range of solutions for a topic in each programming language.
 	\item Several GitHub pages also curate a list of repositories for a specific topic \cite{awesome-sentiment-analysis, awesome-nlp, awesome-machine-learning}.
-	\item Python package repositories such as PyPi \cite{PyPi} and Anaconda Cloud \cite{Anaconda-Cloud}, which listed all available Python packages and provided general information regarding them, and provides a search function; useful to find relevant packages for a component/task and gather information about a Python package.
-	\item Official websites and documentation of Python packages, which listed and defined the capabilities of the package, used to explore a package's functionality and capacity to solve a specific task, and to understand the technologies and approaches used by the package's implementation. 
+	\item Python package repositories such as PyPi \cite{PyPi} and Anaconda Cloud \cite{Anaconda-Cloud}, which lists all available Python packages and general information regarding them, and provides a search function; useful to find relevant packages for a component/task and gather information about a Python package.
+	\item Official websites and documentation of Python packages, which list and define capabilities of the package, used to explore a package's functionality and capacity to solve a specific task, and to understand the technologies and approaches used by the package's implementation. 
 		On more popular packages, citation information regarding the package would often be available from its website.
 \end{itemize}
 
@@ -326,7 +329,7 @@ The sources that were used for this literature review are:
 
 % general NLP: define NLP again, classify & list techniques, then mention 'the techniques used in this project are ...'
 Natural language processing (NLP), defined as ``a theory-motivated range of computational techniques for the automatic analysis and representation of human language'' \cite{cambria2014jumping}, encompasses a range of computational techniques to extract information from text.
-In this project, NLP techniques were used to filter irrelevant articles, extract features such as relevant sentences from text, and score sentiment of articles, as defined in the project's goals.
+In this project, NLP techniques were used to filter irrelevant articles, extract features such as relevant sentences from article text, and score sentiment of articles, as defined in the project's goals.
 
 Text processing was used by all components to `prepare' text for further analyses, where tokenisation was implemented to transform raw text into a list of tokens, and normalisation techniques such as stemming and stop word removal \cite{Nltk} were used to remove the distinction between equivalent tokens.
 Dataset filtering was implemented by measuring term frequency, the counts of words and phrases (sequences of words).
@@ -335,15 +338,15 @@ Sentiment scoring was implemented using a selection of open-source sentiment ana
 
 Not every component defined in the project goals required NLP techniques.
 Data collection was performed using established general-purpose tools for sending web requests and scraping text from websites.
-Similarly, statistical analysis and data visualisation were performed using general purpose statistical and data visualisation tools.
-This section covers the technical tools that were researched for all components of the solution and alternatives that were considered, regardless of whether NLP was utilised.
+Similarly, statistical analysis and data visualisation were performed using general-purpose statistical and data visualisation tools.
+This section covers the technical tools that were researched and alternatives that were considered for all components of the solution, regardless of whether NLP was utilised.
 
 NLP covers three main `curves' or areas: syntax, semantics, and pragmatics (narratives, understanding) \cite{cambria2014jumping}. 
 Syntax specifies the way symbols and groups of symbols are arranged and whether they are well-formed in an expression, whereas semantics specifies what these expressions mean, and pragmatics specifies contextual information.
 Contemporary approaches to NLP mainly focus on syntactic analysis, due to the relative ease of extracting syntactic features of text documents, such as term frequency and part-of-speech tags.
 However, syntactic analysis is much more limited, as it often misses information about the semantic context of a word.
 For example, the distinction between the word `one' in ``there's no one there'' (referring to a person) and in ``we have only one car'' (referring to a quantity) is lost.
-This report focuses on syntactic techniques and features, as these are more relevant to the necessary text processing, filtering, feature extraction, and sentiment analysis techniques that are feasible with current technology at this scale.
+This report focuses on syntactic techniques and features, as these are more relevant to the NLP techniques used for text processing, filtering, feature extraction, and sentiment analysis that are feasible with current technology at this scale.
 
 % Programming language: written in Python
 Python 3.6.3 \cite{Python} was used as the main programming language for this project.
@@ -358,10 +361,10 @@ The Anaconda distribution of Python \cite{Anaconda} was used due to its suitabil
 General-purpose tools for sending HTTP requests (to open web addresses/URLs and store HTML web pages programmatically) and parsing HTML code (to parse article text and metadata from raw HTML web pages) were sufficient for data collection.
 
 The Requests library \cite{Requests} is a popular Python tool with 400,000+ daily downloads for sending HTTP/1.1 requests.
-An HTTP GET request retrieves the HTML code, alongside other information, associated with a given URL from a web server, similar to opening the page on a web browser. 
+An HTTP GET request retrieves the HTML code, alongside other information, associated with a given URL from a web server, similar to opening the URL on a web browser. 
 Requests stores the web server's response, including the HTML code, as a Python object.
 
-BeautifulSoup \cite{BeautifulSoup} is a Python library that provides simple functions to navigate and search a parse tree, such as HTML code.
+BeautifulSoup \cite{BeautifulSoup} is a Python library that provides simple functions to navigate and search HTML code.
 As the web pages of online news articles from the same source/publisher tend to follow a similar HTML structure, BeautifulSoup could be used to parse article text and relevant metadata such as headline and date of publication, by searching for specific tags and attributes within the HTML code.
 Similarly, BeautifulSoup could be used to parse outgoing links from a search page.
 
@@ -396,7 +399,7 @@ Additionally, LDA is significantly more computationally expensive than tf or tf-
 % Rule-based matching to find sentences relevant to one or more keyword(s) or key phrase(s)
 % match similar sentences if it contains a phrase that has the same lemma (root word) as the keyword or key phrase (in the same order), for example, 'Mental illnesses' will match 'mental illness'
 % Cite SpaCy, 'used SpaCy to perform rule-based sentence matching'
-Before the sentiment scores of news articles could be measured, the sentences that are relevant to each topic, given a list of key terms, had to be extracted from the article's text.
+Before the sentiment scores of news articles could be measured, the sentences that are relevant to each topic had to be extracted from the article's text, given a list of key terms.
 This required NLP tools to parse text and extract structural information, such as sentence structure.
 Other features, such as the frequency of each key term on each article, could also be extracted while parsing text.
 
@@ -422,13 +425,13 @@ Unless otherwise stated below, these tools all return a real-valued sentiment sc
 
 The sentiment analysis implementations that were explored in this paper are:
 \begin{itemize}
-	\item VADER \cite{VADER} is a relatively simple rule-based model that scores the sentiment of a given sentence based on rules such as: the presence of `sentiment lexicons', a list of lexical features common to sentiment expression, such as `good' and `bad', including slang words, emoticons, and acronyms; negations (e.g. `not good'); and `emphasis', or increased sentiment intensity due to punctuation, capitalisation, and degree modifiers (e.g. `very').
+	\item VADER \cite{VADER} is a relatively simple rule-based model that scores the sentiment of a given sentence based on rules such as the presence of `sentiment lexicons', a list of terms common to sentiment expression, such as `good' and `bad', including slang words, emoticons, and acronyms; negations (e.g. `not good'); and `emphasis', or increased sentiment intensity due to punctuation, capitalisation, and degree modifiers (e.g. `very').
 	\item xiaohan2012's `twitter-sent-dnn' repository provides a trained convolutional neural network model with dynamic k-max pooling (DCNN).
 		The model considers features based on word and $n$-gram order of the sentence, and an induced feature graph generated by the DCNN.
 		It was trained on a dataset of 1.6 million tweets with inferred labels based on emoticons.
 		It is an implementation of \cite{kalchbrennerACL2014}.
 	\item kevincobain2000's `sentiment\_classifier' repository \cite{kevincobain} provides a trained supervised machine learning model based on Na\"{i}ve Bayes and Maximum Entropy Classifier, which transforms a sentence into positive and negative sentiment scores.
-		It uses bigrams (a 2-gram, sequence of 2 adjacent words) as features, implements Word Sense Disambiguation using wordnet \cite{banerjee2002adapted} to transform bigrams into `senses', and considers word occurrence statistics from nltk's movie review corpus.
+		It uses bigrams (2-grams, sequences of 2 adjacent words) as features, implements Word Sense Disambiguation using wordnet \cite{banerjee2002adapted} to transform bigrams into `senses', and considers word occurrence statistics from nltk's movie review corpus.
 		Its training data is a mixture of nltk's movie review corpus, Twitter posts, and Amazon customer reviews data. 
 	\item OpenAI's `generating-reviews-discovering-sentiment' repository provides a pre-trained single-layer multiplicative LSTM recurrent neural network model with 4096 units, a relatively simple model optimised for training/convergence time.
 		It was trained on a dataset of over 82 million Amazon product reviews from May 1996 to July 2014, a substantially larger training set than any previous work, and outperforms state-of-the-art models when tested on similar-domain corpora such as Rotten Tomatoes and IMDb reviews.
@@ -436,24 +439,26 @@ The sentiment analysis implementations that were explored in this paper are:
 		% For each byte, the model updates its hidden state and predicts a probability distribution over the next possible byte. 
 		It is an implementation of \cite{OpenAI}.
 	\item Stanford CoreNLP \cite{StanfordNLP} provides a set of linguistic analysis tools, including sentiment analysis, that runs on a local server.
-		Its sentiment analysis tool uses a recursive neural network model, converts sentences to parse trees to be used as features, and was trained on a dataset of fully-labelled parse trees for 215,154 unique phrases and 11,855 sentences from the Rotten Tomatoes movie review corpus. 
-		Unlike other scorers on this list, it classifies sentences into five sentiment classes, from `very negative' to `very positive', instead of assigning a real-valued score. \cite{socher2013recursive}.
+		Its sentiment analysis tool uses a recursive neural network model that converts sentences to parse trees to be used as features. 
+		It was trained on a dataset of fully-labelled parse trees for 215,154 unique phrases and 11,855 sentences from the Rotten Tomatoes movie review corpus. 
+		Unlike other scorers on this list, it classifies sentences into five sentiment classes, from `very negative' to `very positive', instead of assigning a real-valued score \cite{socher2013recursive}.
 		Although Stanford CoreNLP was written in Java, several packages exist that allow a Stanford CoreNLP local server to be started and queried programmatically in Python \cite{stanfordcorenlp}.
 	\item TextBlob \cite{textblob} is a general-purpose NLP library similar to nltk, SpaCy, or CoreNLP.
 		It provides two sentiment analysis models: PatternAnalyzer, a rule-based classifier based on part-of-speech pattern matching, and NaiveBayesAnalyzer, a Na\"{i}ve Bayes classifier trained on a dataset of movie reviews (with no information on features used or dataset size). 
 \end{itemize}
 
-Several other repositories were also explored, however, they were deemed unsuitable for this project either due to requiring labelled training data, which were unavailable for the domain of news articles relating to disabilities, instead of providing a pre-trained model, or the implementations are broken or infeasible.
+Several other repositories were also explored, however, they were deemed unsuitable for this project either due to requiring labelled training data, which were unavailable for the domain of the experiment (news articles relating to disabilities), instead of providing a pre-trained model, or the implementations were broken or infeasible.
 
 \subsection{Statistical Analysis and Data Visualisation Methods} \label{tc-visualisation}
 % Statistical analysis: matplotlib, papers (or at least a link to matplotlib's docs) for each statistical tool used (mean, standard deviation, scatterplot, moving average, 2d histogram, box and whiskers plot, violin plot, Mann-Whitney U test, etc.)
 For statistical analysis and data visualisation, the conventionally used libraries in Python are numpy \cite{Numpy}, scipy \cite{Scipy}, scikit-learn \cite{Scikit-learn}, and matplotlib \cite{Matplotlib}.
 
-Numpy \cite{Numpy} provides a powerful and efficient $n$-dimensional array object (often required for other libraries).
-It provides efficient functions that perform mathematical computations over real values, vectors (1-dimensional arrays), and matrices (2-dimensional arrays) such as scalar/vector/matrix addition and multiplication, extracting a vector from a matrix's column, and boolean filtering.
-Numpy is efficient as its functions are a Python wrapper for functions written in C, which allows for more direct hardware-level access than pure Python \cite{Numpy-c}.
+Numpy \cite{Numpy} provides a powerful and efficient $n$-dimensional array object, often required for other libraries.
+It provides efficient functions that perform mathematical computations over real values, vectors (1-dimensional arrays), and matrices (2-dimensional arrays) such as scalar/vector/matrix addition and multiplication, extracting vectors from matrices, and boolean filtering.
+Numpy is highly efficient as its functions are a Python wrapper for functions written in C, which allows for more direct hardware-level manipulation than pure Python \cite{Numpy-c}.
 
-Scipy \cite{Scipy} is a library that extends numpy to provide additional domain-specific functions. It extends numpy's 2-dimensional array to implement a sparse matrix, which only stores non-zero values in memory, useful in cases of a very large matrix where most elements are zero; such as a term frequency matrix of `all tokens' $\times$ `all documents' where most documents only contain values for a very small subset of tokens.
+Scipy \cite{Scipy} is a library that extends numpy to provide additional domain-specific functions. 
+It extends numpy's 2-dimensional array to implement a sparse matrix which only stores non-zero values in memory, useful in the case of a very large matrix where most elements are zero; such as a term frequency matrix of `all tokens' $\times$ `all documents' where most documents only contain values for a very small subset of tokens.
 It also provides implementations of statistical equations, such as the Mann-Whitney $U$ Test used to compare subsets of data, defined below. 
 
 Scikit-learn \cite{Scikit-learn} provides efficient implementations of algorithms for data analysis, feature extraction, and machine learning, built on top of numpy and scipy.
@@ -469,15 +474,17 @@ The types of plots and statistical metrics that were deemed relevant in this pro
 	\item Scatter plot, used to show the distribution of data within two variables (e.g. year published and sentiment score). 
 		Colour could be added to show a third variable (e.g. the publisher).
 		Available on matplotlib.
-	\item Histogram (and two-dimensional histogram), used to show the distribution of articles relative to variables such as publisher, year of publication, and sentiment score ranges. 
+	\item Histogram (and two-dimensional histogram), used to show the distribution of articles relative to variables such as the publisher, year of publication, and sentiment score ranges. 
 		Available on matplotlib.
-	\item Box-and-whiskers \cite{tukey1977exploratory} and violin plot \cite{hintze1998violin}, also used to show and compare the distribution of dependent variables (e.g. sentiment score) within different subsets of the data separated by independent variables (e.g. the publisher).
+	\item Box-and-whiskers \cite{tukey1977exploratory} and violin plots \cite{hintze1998violin}, used to show and compare the distribution of dependent variables (e.g. sentiment score) within different subsets of the data separated by independent variables (e.g. the publisher).
 		Available on matplotlib.
 	\item Line graph, used to show trends in a dependent variable (e.g. sentiment score) over an independent variable (e.g. year of publication).
 		Available on matplotlib.
 	\item Mean and standard deviation, to quantify the distribution of articles within different subsets of the data separated by independent variables (e.g. publisher and year of publication) and provide a quantitative measure to compare different subsets.
 		Available on numpy.
-	\item Mann-Whitney $U$ Test \cite{mann1947test}, a non-parametric statistical test that measures whether it is true that given a randomly-selected value from a distribution, and another randomly-selected value from another distribution, the first value is equally likely to be less than or greater than the second value (i.e. there are no statistically significant difference between the two distributions), to show if the difference between two subsets are statistically significant.
+	\item The Mann-Whitney $U$ Test \cite{mann1947test} is a non-parametric statistical test that measures the null hypothesis that ``given a randomly-selected value from a distribution, and another randomly-selected value from another distribution, the first value is equally likely to be less or greater than the second value.''
+		If the null hypothesis holds, then there is no statistically significant difference between the two distributions.
+		The Mann-Whitney $U$ Test returns the $U$ statistic and a $p$-value between 0 and 1, which corresponds to how likely the null hypothesis is to be true.
 		Available on scipy.
 \end{itemize}
 
@@ -926,6 +933,7 @@ For example, consider these sampled sentences, taken from articles that were mis
 	\item ``Kate Garraway gets flustered as she struggles to mute her ringing phone live on air.''
 	\item ``Snooker: Higgins stutters then stages another late comeback.''
 \end{itemize}
+
 As term frequency does not distinguish between multiple meanings of words, it is unlikely that this limitation could be solved using any term frequency based approach, or similar syntactic approaches such as tf-idf and word vectors.
 
 % Alternatives I considered
@@ -1039,6 +1047,7 @@ Additionally, it also computed these statistics for each sentiment scorer:
 	\item False negative: count of positive-labelled sentences with sentiment score $\le$ 0.0
 	\item Accuracy: (True positive + false positive) / (count of all positive or negative sentences)
 \end{itemize}
+
 The results of this sentiment scorer comparison were documented in section \ref{Comparison of sentiment scorers}.
 
 \subsubsection{Final Implementation} \label{des-sentiment-final}
@@ -1096,6 +1105,7 @@ The component then used the matrix to produce the following plots using matplotl
 	\item A violin plot \cite{hintze1998violin} and box-and-whiskers plot \cite{tukey1977exploratory} that showed the sentiment score distributions (including mean, upper and lower quartiles, and density plots) for each data subset, separated by source.
 	\item A violin plot that showed the sentiment score distributions for each data subset separated by source and publication year, with intervals of 2 years, separated to two plots: one for 2000--2009 and one for 2010--2019.
 \end{itemize}
+
 These plots were arranged in a 3x3 grid and saved to an output file, unique to each topic. 
 Refer to section \ref{tc-visualisation} for a further description of each plots' usage.
 
