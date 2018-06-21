@@ -46,10 +46,15 @@ class DailyExpressScraper(Scraper):
         if soup is None:
             return None
 
-        selector = '#singleArticle > div.ctx_content.p402_premium > div > section > p'
+        header_selector = '#singleArticle > article > header > h3'
+        h_res = soup.select(header_selector)
+        h_res = [r.text for r in h_res if not len(r.attrs)]
+        h_res = ' '.join(h_res)
+        selector = '#singleArticle > article > div > div > div > p'
         res = soup.select(selector)
         res = [r.text for r in res if not len(r.attrs)]
         res = ' '.join(res)
+        res = h_res + ' ' + res
         res.replace('\xe2\x80', '')
 
         datetime = soup.find('meta', property="article:published_time")
